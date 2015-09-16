@@ -59,7 +59,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helpers\ViewModelLocator.cs" />
     <Compile Include="ViewModel\TradeViewModel.cs" />
+    <Compile Include="ViewModel\TradingViewModel.cs" />
     <Compile Include="View\TradeView.xaml.cs">
       <DependentUpon>TradeView.xaml</DependentUpon>
     </Compile>
