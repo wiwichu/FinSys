@@ -5,15 +5,15 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinSys", "FinSys\FinSys.csproj", "{99DC5BD2-568C-4F48-A1B0-763F8C75BD4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinSys.Wpf", "FinSysWpf\FinSys.Wpf.csproj", "{599D00BB-3953-4C5B-9B19-0A356BF67B0A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinSys.Wpf", "FinSys.Wpf\FinSys.Wpf.csproj", "{599D00BB-3953-4C5B-9B19-0A356BF67B0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinSys.UnitTest", "FinSysUnitTest\FinSys.UnitTest.csproj", "{ED83BF9C-0AE8-4A15-BDAE-FB0E3F02CBCB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinSys.UnitTest", "FinSys.UnitTest\FinSys.UnitTest.csproj", "{ED83BF9C-0AE8-4A15-BDAE-FB0E3F02CBCB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinSys.Wcf", "FinSysWcf\FinSys.Wcf.csproj", "{D39F38D7-4E6B-40CA-9190-D0E957A3EA43}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinSys.Wcf", "FinSys.Wcf\FinSys.Wcf.csproj", "{D39F38D7-4E6B-40CA-9190-D0E957A3EA43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinSys.WebApi", "FinSysWebApi\FinSys.WebApi.csproj", "{F78A5285-5CC3-472E-8D75-AC03BB273B74}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinSys.WebApi", "FinSys.WebApi\FinSys.WebApi.csproj", "{F78A5285-5CC3-472E-8D75-AC03BB273B74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinSys.WebApi.Tests", "FinSysWebApi.Tests\FinSys.WebApi.Tests.csproj", "{FA3A4FC7-0A92-4B5F-87EE-B9C8D736B91A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinSys.WebApi.Tests", "FinSys.WebApi.Tests\FinSys.WebApi.Tests.csproj", "{FA3A4FC7-0A92-4B5F-87EE-B9C8D736B91A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinSys.WindowsService", "FinSys.WindowsService\FinSys.WindowsService.csproj", "{9D6D98DB-880C-4878-AC11-B17AE57857C3}"
 EndProject

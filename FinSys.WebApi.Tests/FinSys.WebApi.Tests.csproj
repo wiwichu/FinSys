@@ -9,8 +9,8 @@
     <ProjectGuid>{FA3A4FC7-0A92-4B5F-87EE-B9C8D736B91A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FinSysWebApi.Tests</RootNamespace>
-    <AssemblyName>FinSysWebApi.Tests</AssemblyName>
+    <RootNamespace>FinSys.WebApi.Tests</RootNamespace>
+    <AssemblyName>FinSys.WebApi.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -102,7 +102,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FinSysWebApi\FinSys.WebApi.csproj">
+    <ProjectReference Include="..\FinSys.WebApi\FinSys.WebApi.csproj">
       <Project>{F78A5285-5CC3-472E-8D75-AC03BB273B74}</Project>
       <Name>FinSys.WebApi</Name>
     </ProjectReference>
