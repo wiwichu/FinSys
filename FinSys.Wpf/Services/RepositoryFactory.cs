@@ -15,5 +15,12 @@ namespace FinSys.Wpf.Services
                 return new PositionsRepository();
             }
         }
+        public static ITradesRepository Trades
+        {
+            get
+            {
+                return new TradesRepository();
+            }
+        }
     }
 }

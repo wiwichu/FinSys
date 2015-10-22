@@ -62,8 +62,10 @@
     <Compile Include="Helpers\NotifyPropertyChanged.cs" />
     <Compile Include="Helpers\ViewModelLocator.cs" />
     <Compile Include="Services\IPositionsRepository.cs" />
+    <Compile Include="Services\ITradesRepository.cs" />
     <Compile Include="Services\PositionsRepository.cs" />
     <Compile Include="Services\RepositoryFactory.cs" />
+    <Compile Include="Services\TradesRepository.cs" />
     <Compile Include="ViewModel\TradeViewModel.cs" />
     <Compile Include="ViewModel\TradingViewModel.cs" />
     <Compile Include="View\TradeView.xaml.cs">

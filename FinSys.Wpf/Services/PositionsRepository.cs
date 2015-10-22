@@ -10,6 +10,9 @@ namespace FinSys.Wpf.Services
     class PositionsRepository : IPositionsRepository
     {
         static List<Position> positions = new List<Position>();
+        public static void BuildPositions(List<Trade> trades)
+        {
+        }
         static PositionsRepository()
         {
             Position a1 = new Position
