@@ -15,7 +15,9 @@ namespace FinSys.Wpf.ViewModel
     class TradingViewModel : NotifyPropertyChanged
     {
         private ObservableCollection<Position> positions = new ObservableCollection<Position>();
+        private ObservableCollection<Trade> trades = new ObservableCollection<Trade>();
         private IPositionsRepository positionsRepo = RepositoryFactory.Positions;
+        private ITradesRepository tradesRepo = RepositoryFactory.Trades;
         private ManualResetEvent initialized = new ManualResetEvent(false);
         public TradingViewModel()
         {
@@ -23,6 +25,7 @@ namespace FinSys.Wpf.ViewModel
             Task.Run(() => // avoids blocking UI thread.
             {
                 positions = new ObservableCollection<Position>(positionsRepo.GetPositionsAsync().Result);
+                trades = new ObservableCollection<Trade>(tradesRepo.GetTradesAsync().Result);
                 initialized.Set();   
             });     
         }
@@ -52,6 +55,24 @@ namespace FinSys.Wpf.ViewModel
             }
         }
         public int SelectedPositionIndex { get; set; }
+
+        object _SelectedTrade;
+        public object SelectedTrade
+        {
+            get
+            {
+                return _SelectedTrade;
+            }
+            set
+            {
+                if (_SelectedTrade != value)
+                {
+                    _SelectedTrade = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public int SelectedTradeIndex { get; set; }
 
     }
 }
