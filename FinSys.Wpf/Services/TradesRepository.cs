@@ -10,7 +10,7 @@ namespace FinSys.Wpf.Services
     class TradesRepository : ITradesRepository
     {
         static List<Trade> trades = new List<Trade>();
-        public TradesRepository()
+        static TradesRepository()
         {
             Trade t1 = new Trade()
             {

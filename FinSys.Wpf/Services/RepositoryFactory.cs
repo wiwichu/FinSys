@@ -22,5 +22,12 @@ namespace FinSys.Wpf.Services
                 return new TradesRepository();
             }
         }
+        public static IPortfoliosRepository Portfolios
+        {
+            get
+            {
+                return new PortfoliosRepository();
+            }
+        }
     }
 }
