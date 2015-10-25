@@ -1,5 +1,6 @@
 ﻿using FinSys.Wpf.Helpers;
 using FinSys.Wpf.Model;
+using FinSys.Wpf.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -62,11 +63,28 @@ namespace FinSys.Wpf.ViewModel
                 if (_SelectedPosition != value)
                 {
                     _SelectedPosition = value;
+                    PositionViewModel pvm = _SelectedPosition as PositionViewModel;
+                    if (pvm != null)
+                    {
+                        GetPositionsAsync(pvm);
+                    }
                     OnPropertyChanged();
                 }
             }
         }
         public int SelectedPositionIndex { get; set; }
+        private async void GetPositionsAsync(PositionViewModel pvm)
+        {
+            Task<ObservableCollection<TradeViewModel>> t1 = Task.Run(() =>
+            {
+                return new ObservableCollection<TradeViewModel>(RepositoryFactory.Trades.GetTradesAsync().Result
+                .Where((t) => pvm.Portfolio == t.Portfolio && pvm.Instrument == t.Instrument)
+                    .Select((p) => new TradeViewModel(p)));
+            }
+            );
+
+            pvm.Trades = await t1;
+        }
 
     }
 }

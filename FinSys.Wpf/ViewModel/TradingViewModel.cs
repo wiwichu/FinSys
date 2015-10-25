@@ -21,43 +21,42 @@ namespace FinSys.Wpf.ViewModel
         private IPortfoliosRepository portfoliosRepo = RepositoryFactory.Portfolios;
         private IPositionsRepository positionsRepo = RepositoryFactory.Positions;
         private ITradesRepository tradesRepo = RepositoryFactory.Trades;
-        private ManualResetEvent initialized = new ManualResetEvent(false);
         public TradingViewModel()
         {
             //positions = new ObservableCollection<Position>(positionsRepo.GetPositionsAsync().Result);       
-            Task.Run(() => // avoids blocking UI thread.
+            Task< ObservableCollection < PortfolioViewModel > > t1 = Task.Run(() => // avoids blocking UI thread.
             {
-            portfolios = new ObservableCollection<PortfolioViewModel>();
+                ObservableCollection < PortfolioViewModel > pvms  = new ObservableCollection<PortfolioViewModel>();
             foreach (Portfolio p in portfoliosRepo.GetPortfoliosAsync().Result)
             {
                     PortfolioViewModel portvm = new PortfolioViewModel(p);
                     portvm.Positions = new ObservableCollection<PositionViewModel>();
 
-                    portfolios.Add(portvm);
-                    foreach (Position pos in RepositoryFactory.Positions.GetPositionsAsync().Result)
-                    {
-                        if (pos.Portfolio == p.Id)
-                        {
-                            PositionViewModel pvm = new PositionViewModel(pos);
-                            portvm.Positions.Add(pvm);
-                            pvm.Trades = new ObservableCollection<TradeViewModel>();
-                            foreach (Trade t in RepositoryFactory.Trades.GetTradesAsync().Result)
-                            {
-                                if (pvm.Portfolio == t.Portfolio && pvm.Instrument == t.Instrument)
-                                {
-                                    TradeViewModel tvm = new TradeViewModel(t);
-                                    pvm.Trades.Add(tvm);
-                                }
-                            }
-                        }
-                    }
+                    pvms.Add(portvm);
+                    //foreach (Position pos in RepositoryFactory.Positions.GetPositionsAsync().Result)
+                    //{
+                    //    if (pos.Portfolio == p.Id)
+                    //    {
+                    //        PositionViewModel pvm = new PositionViewModel(pos);
+                    //        portvm.Positions.Add(pvm);
+                    //        pvm.Trades = new ObservableCollection<TradeViewModel>();
+                    //        foreach (Trade t in RepositoryFactory.Trades.GetTradesAsync().Result)
+                    //        {
+                    //            if (pvm.Portfolio == t.Portfolio && pvm.Instrument == t.Instrument)
+                    //            {
+                    //                TradeViewModel tvm = new TradeViewModel(t);
+                    //                pvm.Trades.Add(tvm);
+                    //            }
+                    //        }
+                    //    }
+                    //}
                 }
-
+                return pvms;
                 // portfolios = new ObservableCollection<Portfolio>(portfoliosRepo.GetPortfoliosAsync().Result); 
-                positions = new ObservableCollection<Position>(positionsRepo.GetPositionsAsync().Result);
-                trades = new ObservableCollection<Trade>(tradesRepo.GetTradesAsync().Result);
-                initialized.Set();
-            });     
+                //positions = new ObservableCollection<Position>(positionsRepo.GetPositionsAsync().Result);
+                //trades = new ObservableCollection<Trade>(tradesRepo.GetTradesAsync().Result);
+            });
+            portfolios = t1.Result;
         }
         public ObservableCollection<Position> Positions
         {
@@ -94,6 +93,18 @@ namespace FinSys.Wpf.ViewModel
                 OnPropertyChanged();
             }
         }
+        private async void GetPositionsAsync(PortfolioViewModel pvm)
+        {
+            Task< ObservableCollection < PositionViewModel >> t1 = Task.Run(() =>
+                { 
+                    return new ObservableCollection<PositionViewModel>(RepositoryFactory.Positions.GetPositionsAsync().Result
+                    .Where((p) => pvm.Id == p.Portfolio)
+                        .Select((p) => new PositionViewModel(p)));
+                }
+            );
+
+            pvm.Positions = await t1;
+        }
         object _SelectedPortfolio;
         public object SelectedPortfolio
         {
@@ -106,6 +117,11 @@ namespace FinSys.Wpf.ViewModel
                 if (_SelectedPortfolio != value)
                 {
                     _SelectedPortfolio = value;
+                    PortfolioViewModel pvm = _SelectedPortfolio as PortfolioViewModel;
+                    if (pvm != null)
+                    {
+                        GetPositionsAsync(pvm);
+                    }
                     OnPropertyChanged();
                 }
             }
