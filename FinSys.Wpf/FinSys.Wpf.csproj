@@ -69,8 +69,19 @@
     <Compile Include="Services\PositionsRepository.cs" />
     <Compile Include="Services\RepositoryFactory.cs" />
     <Compile Include="Services\TradesRepository.cs" />
+    <Compile Include="ViewModel\PortfolioViewModel.cs" />
+    <Compile Include="ViewModel\PositionViewModel.cs" />
     <Compile Include="ViewModel\TradeViewModel.cs" />
     <Compile Include="ViewModel\TradingViewModel.cs" />
+    <Compile Include="View\PortfolioListView.xaml.cs">
+      <DependentUpon>PortfolioListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PositionListView.xaml.cs">
+      <DependentUpon>PositionListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TradeListView.xaml.cs">
+      <DependentUpon>TradeListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TradeView.xaml.cs">
       <DependentUpon>TradeView.xaml</DependentUpon>
     </Compile>
@@ -90,6 +101,18 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\PortfolioListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PositionListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TradeListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\TradeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

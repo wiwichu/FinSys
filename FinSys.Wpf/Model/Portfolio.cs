@@ -25,18 +25,5 @@ namespace FinSys.Wpf.Model
                 OnPropertyChanged();
             }
         }
-        private ObservableCollection<Position> positions = new ObservableCollection<Position>();
-        public ObservableCollection<Position> Positions
-        {
-            get
-            {
-                return positions;
-            }
-            set
-            {
-                positions = value;
-                OnPropertyChanged();
-            }
-        }
     }
 }
