@@ -41,6 +41,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -62,6 +63,7 @@
     <Compile Include="Helpers\NotifyPropertyChanged.cs" />
     <Compile Include="Helpers\ViewModelLocator.cs" />
     <Compile Include="Model\Portfolio.cs" />
+    <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\IPortfoliosRepository.cs" />
     <Compile Include="Services\IPositionsRepository.cs" />
     <Compile Include="Services\ITradesRepository.cs" />
@@ -78,6 +80,9 @@
     </Compile>
     <Compile Include="View\PositionListView.xaml.cs">
       <DependentUpon>PositionListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TradeEditView.xaml.cs">
+      <DependentUpon>TradeEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TradeListView.xaml.cs">
       <DependentUpon>TradeListView.xaml</DependentUpon>
@@ -106,6 +111,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\PositionListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TradeEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -6,6 +6,15 @@
              xmlns:v="clr-namespace:FinSys.Wpf.View"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <DataTemplate x:Key="RowButtons">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="View" Command="{Binding ViewCommand}"/>
+                <!-- <Button x:Name="btnDeleteCustomer" Content="Delete" Command="{Binding DeleteCommand}"/> -->
+            </StackPanel>
+        </DataTemplate>
+
+    </UserControl.Resources>
     <StackPanel>
         <ListView x:Name="lsvTradeList" ItemsSource="{Binding Trades}" SelectedItem="{Binding Path=SelectedTrade}">
             <ListView.View>
@@ -14,7 +23,7 @@
                     <GridViewColumn Header="Instrument" DisplayMemberBinding="{Binding Path=Instrument}" Width="100"/>
                     <GridViewColumn Header="Amount" DisplayMemberBinding="{Binding Path=Amount}" Width="100"/>
                     <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Path=Price}" Width="100"/>
-                    <!--  <GridViewColumn CellTemplate="{StaticResource RowButtons}"/> -->
+                    <GridViewColumn CellTemplate="{StaticResource RowButtons}"/> 
                 </GridView>
             </ListView.View>
         </ListView>

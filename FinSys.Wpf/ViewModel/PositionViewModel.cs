@@ -7,11 +7,13 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace FinSys.Wpf.ViewModel
 {
     class PositionViewModel : NotifyPropertyChanged
     {
+
         public PositionViewModel(Position p)
         {
             this.Amount = p.Amount;
@@ -20,6 +22,7 @@ namespace FinSys.Wpf.ViewModel
             this.Price = p.Price;
             this.Trades = new ObservableCollection<TradeViewModel>();
         }
+        public ICommand ViewTradeCommand { get; set; }
         public PositionViewModel()
         {
             if (DesignerProperties.GetIsInDesignMode(new System.Windows.DependencyObject()))

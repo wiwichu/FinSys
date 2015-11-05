@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FinSys.Wpf.Helpers
 {
-    class NotifyPropertyChanged : INotifyPropertyChanged
+    public class NotifyPropertyChanged : INotifyPropertyChanged
     {        
 
         public NotifyPropertyChanged()
