@@ -6,7 +6,7 @@
         xmlns:v="clr-namespace:FinSys.Wpf.View" 
         xmlns:local="clr-namespace:FinSys.Wpf.View"
         mc:Ignorable="d"
-        Title="TradeEditView" Height="300" Width="300">
+        Title="TradeEditView" Height="500" Width="300">
     <Grid>
         <v:TradeView/>
     </Grid>

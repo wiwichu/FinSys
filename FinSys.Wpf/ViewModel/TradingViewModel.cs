@@ -19,15 +19,18 @@ namespace FinSys.Wpf.ViewModel
         {
             Task< ObservableCollection < PortfolioViewModel > > t1 = Task.Run(() => // avoids blocking UI thread.
             {
-                ObservableCollection < PortfolioViewModel > pvms  = new ObservableCollection<PortfolioViewModel>();
-            foreach (Portfolio p in RepositoryFactory.Portfolios.GetPortfoliosAsync().Result)
-            {
+                TradesRepository tp = new TradesRepository(); // initialize data
+                ObservableCollection < PortfolioViewModel > pvm = new ObservableCollection<PortfolioViewModel>(
+                RepositoryFactory.Portfolios.GetPortfoliosAsync().Result
+                .Select((p) =>
+                {
                     PortfolioViewModel portvm = new PortfolioViewModel(p);
                     portvm.Positions = new ObservableCollection<PositionViewModel>();
 
-                    pvms.Add(portvm);
-                }
-                return pvms;
+                    return portvm;
+                    
+                }).ToList());
+                return pvm;
             });
             portfolios = t1.Result;
         }

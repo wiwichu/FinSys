@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:FinSys.Wpf"
         xmlns:View="clr-namespace:FinSys.Wpf.View" x:Class="FinSys.Wpf.MainWindow"
         mc:Ignorable="d"
-        Title="FINSYS" Height="350" Width="525">
+        Title="FINSYS" Height="350" Width="700">
     <Grid>
         <!-- <View:TradingView HorizontalAlignment="Left" Height="500" Margin="0,0,0,0" VerticalAlignment="Top" Width="500"/> -->
         <View:TradingView/> 

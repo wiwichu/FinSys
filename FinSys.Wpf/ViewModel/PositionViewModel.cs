@@ -95,18 +95,18 @@ namespace FinSys.Wpf.ViewModel
                 OnPropertyChanged();
             }
         }
-        object _SelectedPosition;
-        public object SelectedPosition
+        object _SelectedTrade;
+        public object SelectedTrade
         {
             get
             {
-                return _SelectedPosition;
+                return _SelectedTrade;
             }
             set
             {
-                if (_SelectedPosition != value)
+                if (_SelectedTrade != value)
                 {
-                    _SelectedPosition = value;
+                    _SelectedTrade = value;
                     OnPropertyChanged();
                 }
             }

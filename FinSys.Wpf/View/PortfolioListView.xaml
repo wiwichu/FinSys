@@ -7,8 +7,8 @@
              xmlns:h="clr-namespace:FinSys.Wpf.Helpers"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <StackPanel>
-        <ListView x:Name="lsvPortfolioList" ItemsSource="{Binding Portfolios}" SelectedItem="{Binding SelectedPortfolio}">
+ <!--   <StackPanel> -->
+        <ListView x:Name="lsvPortfolioList" ItemsSource="{Binding Portfolios}" SelectedItem="{Binding SelectedPortfolio}" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Portfolio Name" DisplayMemberBinding="{Binding Id}" Width="100"/>
@@ -16,5 +16,5 @@
                 </GridView>
             </ListView.View>
         </ListView>
-    </StackPanel>
+<!--    </StackPanel> -->
 </UserControl>
