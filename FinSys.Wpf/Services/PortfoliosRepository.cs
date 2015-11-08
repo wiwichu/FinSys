@@ -19,6 +19,7 @@ namespace FinSys.Wpf.Services
 
         private static void Initialize()
         {
+            /*
             lock (Repositories.repositoryLock)
             {
                 portfolios.Clear();
@@ -48,6 +49,22 @@ namespace FinSys.Wpf.Services
                 };
                 portfolios.AddOrUpdate(porte, 0, (p, v) => 0);
             }
+            */
+        }
+
+        public async Task AddOrUpdateAsync(Portfolio portfolio)
+        {
+            await Task.Run(() =>
+            {
+                portfolios.AddOrUpdate(portfolio, 0, (p,v) => 0);
+            })
+            .ConfigureAwait(false) //necessary on UI Thread
+            ;
+
+        }
+        public void AddOrUpdate(Portfolio portfolio)
+        {
+            portfolios.AddOrUpdate(portfolio, 0, (p, v) => 0);
         }
 
         public async Task<List<Portfolio>> GetPortfoliosAsync()
@@ -59,15 +76,6 @@ namespace FinSys.Wpf.Services
             .ConfigureAwait(false) //necessary on UI Thread
             ;
             return port;
-        }
-        public async Task AddOrUpdateAsync(Portfolio portfolio)
-        {
-            await Task.Run(() =>
-            {
-                portfolios.AddOrUpdate(portfolio, 0, (p, v) => 0);
-            })
-            .ConfigureAwait(false) //necessary on UI Thread
-            ;
         }
     }
 }

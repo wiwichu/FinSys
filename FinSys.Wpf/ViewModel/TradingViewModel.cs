@@ -17,22 +17,37 @@ namespace FinSys.Wpf.ViewModel
         private ObservableCollection<PortfolioViewModel> portfolios = new ObservableCollection<PortfolioViewModel>();
         public TradingViewModel()
         {
-            Task< ObservableCollection < PortfolioViewModel > > t1 = Task.Run(() => // avoids blocking UI thread.
+           Initialize();
+        }
+        async public void Initialize()
+        {
+            ManualResetEvent mre = new ManualResetEvent(false);
+            Task<ObservableCollection<PortfolioViewModel>> t1 = Task.Run(() => // avoids blocking UI thread.
             {
-                TradesRepository tp = new TradesRepository(); // initialize data
-                ObservableCollection < PortfolioViewModel > pvm = new ObservableCollection<PortfolioViewModel>(
-                RepositoryFactory.Portfolios.GetPortfoliosAsync().Result
-                .Select((p) =>
+                try
                 {
-                    PortfolioViewModel portvm = new PortfolioViewModel(p);
-                    portvm.Positions = new ObservableCollection<PositionViewModel>();
+                    Repositories.repositoriesInitialized.WaitOne(10000);
+                    TradesRepository tp = new TradesRepository(); // initialize data
+                    ObservableCollection<PortfolioViewModel> pvm = new ObservableCollection<PortfolioViewModel>(
+                    RepositoryFactory.Portfolios.GetPortfoliosAsync().Result
+                    .Select((p) =>
+                    {
+                        PortfolioViewModel portvm = new PortfolioViewModel(p);
+                        portvm.Positions = new ObservableCollection<PositionViewModel>();
 
-                    return portvm;
-                    
-                }).ToList());
-                return pvm;
+                        return portvm;
+
+                    }).ToList());
+                    return pvm;
+                }
+                finally
+                {
+                    mre.Set();
+                }
             });
+            mre.WaitOne(20000);
             portfolios = t1.Result;
+
         }
         public int SelectedPositionIndex { get; set; }
         public ObservableCollection<PortfolioViewModel> Portfolios

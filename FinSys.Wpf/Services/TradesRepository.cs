@@ -12,11 +12,11 @@ namespace FinSys.Wpf.Services
     {
         static long id;
         //static List<Trade> trades = new List<Trade>();
-        static ConcurrentDictionary<Trade, int> trades = new ConcurrentDictionary<Trade, int>();
+        public static ConcurrentDictionary<Trade, int> trades = new ConcurrentDictionary<Trade, int>();
         static TradesRepository()
         {
             Initialize();
-            PositionsRepository.BuildPositions(trades.Keys.ToList());
+            //PositionsRepository.BuildPositions(trades.Keys.ToList());
         }
         private static void Initialize()
         {

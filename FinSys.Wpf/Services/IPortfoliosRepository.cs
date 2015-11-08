@@ -9,6 +9,8 @@ namespace FinSys.Wpf.Services
 {
     interface IPortfoliosRepository
     {
+        Task AddOrUpdateAsync(Portfolio portfolio);
+        void AddOrUpdate(Portfolio portfolio);
         Task<List<Portfolio>> GetPortfoliosAsync();
     }
 }

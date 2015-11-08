@@ -12,46 +12,52 @@ namespace FinSys.Wpf.Services
     {
         //static List<Position> positions = new List<Position>();
         static ConcurrentDictionary<Position, int> positions = new ConcurrentDictionary<Position, int>();
-        public static void BuildPositions(List<Trade> trades)
+        public async Task BuildPositions(List<Trade> trades)
         {
-            lock (Repositories.repositoryLock)
+            await Task.Run(() =>
             {
-                string currentPortfolio = null;
-                string currentInstrument = null;
-                trades.OrderBy((t) => t.Portfolio).ThenBy((t) => t.Instrument).ThenBy((t) => t.ValueDate).ThenBy((t) => t.Id)
-                    .All((t) =>
-                    {
-                        if (!(t.Portfolio == currentPortfolio && t.Instrument == currentInstrument))
+                lock (Repositories.repositoryLock)
+                {
+                    string currentPortfolio = null;
+                    string currentInstrument = null;
+                    trades.OrderBy((t) => t.Portfolio).ThenBy((t) => t.Instrument).ThenBy((t) => t.ValueDate).ThenBy((t) => t.Id)
+                        .All((t) =>
                         {
-                            currentInstrument = t.Instrument;
-                            currentPortfolio = t.Portfolio;
+                            if (!(t.Portfolio == currentPortfolio && t.Instrument == currentInstrument))
+                            {
+                                RepositoryFactory.Portfolios.AddOrUpdate(new Portfolio { Id = t.Portfolio });
+                                RepositoryFactory.Positions.AddOrUpdate(new Position { Portfolio = t.Portfolio, Instrument = t.Instrument });
+
+                                currentInstrument = t.Instrument;
+                                currentPortfolio = t.Portfolio;
+                                positions.Keys.Where((p) =>
+                                    p.Portfolio == currentPortfolio && p.Instrument == currentInstrument
+                                ).All((p) =>
+                                {
+                                    p.Amount = 0;
+                                    p.Price = 0;
+                                    return true;
+                                });
+                            }
+
                             positions.Keys.Where((p) =>
-                                p.Portfolio == currentPortfolio && p.Instrument == currentInstrument
-                            ).All((p) =>
-                            {
-                                p.Amount = 0;
-                                p.Price = 0;
-                                return true;
-                            });
-                        }
+                                    p.Portfolio == currentPortfolio && p.Instrument == currentInstrument
+                                ).All((p) =>
+                                {
+                                    double newAmount = p.Amount + t.Amount;
+                                    double newPrice = p.Amount * newAmount < 0
+                                        ? t.Price : newAmount == 0
+                                            ? 0 : Math.Abs(newAmount) > Math.Abs(p.Amount)
+                                                ? ((p.Amount * p.Price) + (t.Amount * t.Price)) / (p.Amount + t.Amount) : p.Price;
+                                    p.Amount = newAmount;
+                                    p.Price = newPrice;
+                                    return true;
+                                });
 
-                        positions.Keys.Where((p) =>
-                                p.Portfolio == currentPortfolio && p.Instrument == currentInstrument
-                            ).All((p) =>
-                            {
-                                double newAmount = p.Amount + t.Amount;
-                                double newPrice = p.Amount * newAmount < 0
-                                    ? t.Price : newAmount == 0
-                                        ? 0 : Math.Abs(newAmount) > Math.Abs(p.Amount)
-                                            ? ((p.Amount * p.Price) + (t.Amount * t.Price)) / (p.Amount + t.Amount) : p.Price;
-                                p.Amount = newAmount;
-                                p.Price = newPrice;
-                                return true;
-                            });
-
-                        return true;
-                    });
-            }
+                            return true;
+                        });
+                }
+            });
         }
         static PositionsRepository()
         {
@@ -60,9 +66,11 @@ namespace FinSys.Wpf.Services
 
         private static void Initialize()
         {
+            /*
             lock(Repositories.repositoryLock)
             {
                 positions.Clear();
+                
                 Position a1 = new Position
                 {
                     Portfolio = "Porta",
@@ -144,6 +152,21 @@ namespace FinSys.Wpf.Services
                 positions.AddOrUpdate(a5,0,(p,v)=>0);
                 positions.AddOrUpdate(b5,0,(p,v)=>0);
             }
+            */
+        }
+        public async Task AddOrUpdateAsync(Position position)
+        {
+            await Task.Run(() =>
+            {
+                positions.AddOrUpdate(position, 0, (p, v) => 0);
+            })
+            .ConfigureAwait(false) //necessary on UI Thread
+            ;
+
+        }
+        public void AddOrUpdate(Position position)
+        {
+            positions.AddOrUpdate(position, 0, (p, v) => 0);
         }
 
         public async Task<List<Position>> GetPositionsAsync()

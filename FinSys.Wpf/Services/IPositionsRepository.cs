@@ -9,6 +9,10 @@ namespace FinSys.Wpf.Services
 {
     interface IPositionsRepository
     {
+        Task BuildPositions(List<Trade> trades);
+        void AddOrUpdate(Position portfolio);
+
+        Task AddOrUpdateAsync(Position portfolio);
         Task<List<Position>> GetPositionsAsync();
     }
 }
