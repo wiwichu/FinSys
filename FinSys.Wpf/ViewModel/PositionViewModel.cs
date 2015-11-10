@@ -35,6 +35,7 @@ namespace FinSys.Wpf.ViewModel
         }
         public override void RegisterWithMessenger()
         {
+            UnregisterWithMessenger();
             Messenger.Default.Register<PositionUpdate>(this, (d) =>
             {
                 if (Trades.Contains(LastSelectedTrade))

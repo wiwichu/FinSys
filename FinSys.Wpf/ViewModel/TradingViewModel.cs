@@ -10,18 +10,26 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace FinSys.Wpf.ViewModel
 {
     class TradingViewModel : NotifyPropertyChanged
     {
+
         private ObservableCollection<PortfolioViewModel> portfolios = new ObservableCollection<PortfolioViewModel>();
         public TradingViewModel()
         {
-           Initialize();
-           RegisterWithMessenger();
-
+            Initialize();
+            RegisterWithMessenger();
         }
+
+
+        private bool CanNewTrade(object obj)
+        {
+            return true;
+        }
+
         async public Task Initialize()
         {
             ManualResetEvent mre = new ManualResetEvent(false);
@@ -78,6 +86,7 @@ namespace FinSys.Wpf.ViewModel
             get;
             set;
         }
+
         public object SelectedPortfolio
         {
             get
@@ -110,7 +119,15 @@ namespace FinSys.Wpf.ViewModel
                 }
             }
         }
-        private async Task LoadData()
+        public TradeViewModel NewTradeViewModel
+        {
+            get
+            {
+                return new TradeViewModel(new Trade());
+            }
+        }
+
+    private async Task LoadData()
         {
             PortfolioViewModel pvm = _SelectedPortfolio as PortfolioViewModel;
             if (pvm != null)
@@ -126,12 +143,22 @@ namespace FinSys.Wpf.ViewModel
             {
                 object selectedPortfolio = SelectedPortfolio;
                 await Initialize();
+                await LoadData();
+                OnPropertyChanged("Portfolios");
+                OnPropertyChanged("SelectedPortfolio");
                 if (Portfolios.Contains(LastSelectedPortfolio))
                 {
+                    TradingViewModel tvm = SelectedPortfolio as TradingViewModel;
+                    if (tvm != null)
+                    {
+                        tvm.UnregisterWithMessenger();
+                    }
                     SelectedPortfolio = LastSelectedPortfolio;
-                    await LoadData();
-                    OnPropertyChanged("SelectedPortfolio");
-                    OnPropertyChanged("Portfolios");
+                    tvm = SelectedPortfolio as TradingViewModel;
+                    if (tvm != null)
+                    {
+                        tvm.RegisterWithMessenger();
+                    }
 
                 }
                 Messenger.Default.Send<PortfolioUpdate>(new PortfolioUpdate());

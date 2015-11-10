@@ -19,8 +19,8 @@
         <ListView x:Name="lsvTradeList" ItemsSource="{Binding Trades}" SelectedItem="{Binding Path=SelectedTrade}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Value Date" DisplayMemberBinding="{Binding Path=ValueDate}" Width="100"/>
                     <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Path=Id}" Width="100"/>
+                    <GridViewColumn Header="Value Date" DisplayMemberBinding="{Binding Path=ValueDate}" Width="100"/>
                     <GridViewColumn Header="Portfolio Name" DisplayMemberBinding="{Binding Path=Portfolio}" Width="100"/>
                     <GridViewColumn Header="Instrument" DisplayMemberBinding="{Binding Path=Instrument}" Width="100"/>
                     <GridViewColumn Header="Amount" DisplayMemberBinding="{Binding Path=Amount}" Width="100"/>

@@ -21,7 +21,7 @@ namespace FinSys.Wpf.Services
             //BuildPositions();
 
         }
-       static async public void BuildPositions()
+       static async public Task BuildPositions()
         {
             try
             {

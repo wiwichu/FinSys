@@ -31,13 +31,25 @@ namespace FinSys.Wpf.ViewModel
         }
         public override void RegisterWithMessenger()
         {
+            UnregisterWithMessenger();
             Messenger.Default.Register<PortfolioUpdate>(this, (d) =>
             {
+                LoadData();
+                OnPropertyChanged("Positions");
+                OnPropertyChanged("SelectedPosition");
                 if (Positions.Contains(LastSelectedPosition))
                 {
+                    PortfolioViewModel pvm = SelectedPosition as PortfolioViewModel;
+                    if (pvm != null)
+                    {
+                        pvm.UnregisterWithMessenger();
+                    }
                     SelectedPosition = LastSelectedPosition;
-                    LoadData();
-                    OnPropertyChanged("SelectedPosition");
+                    pvm = SelectedPosition as PortfolioViewModel;
+                    if (pvm != null)
+                    {
+                        pvm.RegisterWithMessenger();
+                    }
                 }
                 Messenger.Default.Send<PositionUpdate>(new PositionUpdate());
             });

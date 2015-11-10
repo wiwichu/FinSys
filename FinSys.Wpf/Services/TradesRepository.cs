@@ -215,7 +215,7 @@ namespace FinSys.Wpf.Services
 
         public async Task AddOrUpdateAsync(List<Trade> tradesArg)
         {
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 tradesArg.All((trade) =>
                 {
@@ -227,7 +227,7 @@ namespace FinSys.Wpf.Services
                     return true;
                 }
                 );
-                RepositoryFactory.BuildPositions();
+                await RepositoryFactory.BuildPositions();
             })
             .ConfigureAwait(false) //necessary on UI Thread
             ;
@@ -235,30 +235,30 @@ namespace FinSys.Wpf.Services
 
         public async Task AddOrUpdateAsync(Trade trade)
         {
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 if (trade.Id == 0)
                 {
                     trade.Id = id++;
                 }
                 trades.AddOrUpdate(trade, trade, (t, v) => trade);
-                RepositoryFactory.BuildPositions();
+                await RepositoryFactory.BuildPositions();
             })
             .ConfigureAwait(false) //necessary on UI Thread
             ;
         }
         public async Task DeleteAsync(List<Trade> tradesArg)
         {
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 tradesArg.All((trade) =>
                 {
                     Trade val;
-                    trades.TryRemove(trade,out val);
+                    trades.TryRemove(trade, out val);
                     return true;
                 }
                 );
-                RepositoryFactory.BuildPositions();
+                await RepositoryFactory.BuildPositions();
             })
             .ConfigureAwait(false) //necessary on UI Thread
             ;
@@ -266,11 +266,11 @@ namespace FinSys.Wpf.Services
 
         public async Task DeleteAsync(Trade trade)
         {
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 Trade val;
                 trades.TryRemove(trade, out val);
-                RepositoryFactory.BuildPositions();
+                await RepositoryFactory.BuildPositions();
             })
             .ConfigureAwait(false) //necessary on UI Thread
             ;
