@@ -11,7 +11,7 @@ namespace FinSys.Wpf.Services
     class PositionsRepository : IPositionsRepository
     {
         //static List<Position> positions = new List<Position>();
-        static ConcurrentDictionary<Position, int> positions = new ConcurrentDictionary<Position, int>();
+        static ConcurrentDictionary<Position, Position> positions = new ConcurrentDictionary<Position, Position>();
         public async Task BuildPositions(List<Trade> trades)
         {
             await Task.Run(() =>
@@ -40,7 +40,7 @@ namespace FinSys.Wpf.Services
                                 });
                             }
 
-                            positions.Keys.Where((p) =>
+                            positions.Values.Where((p) =>
                                     p.Portfolio == currentPortfolio && p.Instrument == currentInstrument
                                 ).All((p) =>
                                 {
@@ -57,7 +57,7 @@ namespace FinSys.Wpf.Services
                             return true;
                         });
                 }
-            });
+            }).ConfigureAwait(false);
         }
         static PositionsRepository()
         {
@@ -158,7 +158,7 @@ namespace FinSys.Wpf.Services
         {
             await Task.Run(() =>
             {
-                positions.AddOrUpdate(position, 0, (p, v) => 0);
+                positions.AddOrUpdate(position, position, (p, v) => position);
             })
             .ConfigureAwait(false) //necessary on UI Thread
             ;
@@ -166,14 +166,14 @@ namespace FinSys.Wpf.Services
         }
         public void AddOrUpdate(Position position)
         {
-            positions.AddOrUpdate(position, 0, (p, v) => 0);
+            positions.AddOrUpdate(position, position, (p, v) => position);
         }
 
         public async Task<List<Position>> GetPositionsAsync()
         {
             List<Position> pos = await Task.Run(() =>
             {
-                return positions.Keys.OrderBy((p)=>p.Portfolio).ThenBy((p)=>p.Instrument).ToList();
+                return positions.Values.OrderBy((p)=>p.Portfolio).ThenBy((p)=>p.Instrument).ToList();
             })
             .ConfigureAwait(false) //necessary on UI Thread
             ;

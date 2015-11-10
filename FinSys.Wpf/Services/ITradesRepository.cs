@@ -10,7 +10,9 @@ namespace FinSys.Wpf.Services
     interface ITradesRepository
     {
         Task<List<Trade>> GetTradesAsync();
-        Task AddOrUpdate(Trade trade);
-        Task AddOrUpdate(List<Trade> trades);
+        Task AddOrUpdateAsync(Trade trade);
+        Task AddOrUpdateAsync(List<Trade> trades);
+        Task DeleteAsync(Trade trade);
+        Task DeleteAsync(List<Trade> trades);
     }
 }

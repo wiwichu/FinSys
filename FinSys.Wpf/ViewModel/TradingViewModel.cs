@@ -1,4 +1,5 @@
 ﻿using FinSys.Wpf.Helpers;
+using FinSys.Wpf.Messages;
 using FinSys.Wpf.Model;
 using FinSys.Wpf.Services;
 using System;
@@ -18,16 +19,17 @@ namespace FinSys.Wpf.ViewModel
         public TradingViewModel()
         {
            Initialize();
+           RegisterWithMessenger();
+
         }
-        async public void Initialize()
+        async public Task Initialize()
         {
             ManualResetEvent mre = new ManualResetEvent(false);
-            Task<ObservableCollection<PortfolioViewModel>> t1 = Task.Run(() => // avoids blocking UI thread.
+            Task < ObservableCollection<PortfolioViewModel>> t1 = Task.Run(() => // avoids blocking UI thread.
             {
                 try
                 {
                     Repositories.repositoriesInitialized.WaitOne(10000);
-                    TradesRepository tp = new TradesRepository(); // initialize data
                     ObservableCollection<PortfolioViewModel> pvm = new ObservableCollection<PortfolioViewModel>(
                     RepositoryFactory.Portfolios.GetPortfoliosAsync().Result
                     .Select((p) =>
@@ -46,8 +48,7 @@ namespace FinSys.Wpf.ViewModel
                 }
             });
             mre.WaitOne(20000);
-            portfolios = t1.Result;
-
+            Portfolios = await t1;
         }
         public int SelectedPositionIndex { get; set; }
         public ObservableCollection<PortfolioViewModel> Portfolios
@@ -59,7 +60,7 @@ namespace FinSys.Wpf.ViewModel
                 OnPropertyChanged();
             }
         }
-        private async void GetPositionsAsync(PortfolioViewModel pvm)
+        private async Task GetPositionsAsync(PortfolioViewModel pvm)
         {
             Task< ObservableCollection < PositionViewModel >> t1 = Task.Run(() =>
                 { 
@@ -72,6 +73,11 @@ namespace FinSys.Wpf.ViewModel
             pvm.Positions = await t1;
         }
         object _SelectedPortfolio;
+        public static object LastSelectedPortfolio
+        {
+            get;
+            set;
+        }
         public object SelectedPortfolio
         {
             get
@@ -82,16 +88,74 @@ namespace FinSys.Wpf.ViewModel
             {
                 if (_SelectedPortfolio != value)
                 {
-                    _SelectedPortfolio = value;
+                    if (value != null)
+                    {
+                        LastSelectedPortfolio = value;
+                    }
                     PortfolioViewModel pvm = _SelectedPortfolio as PortfolioViewModel;
                     if (pvm != null)
+
                     {
-                        GetPositionsAsync(pvm);
+                        pvm.UnregisterWithMessenger();
                     }
+                    _SelectedPortfolio = value;
+                    pvm = _SelectedPortfolio as PortfolioViewModel;
+                    if (pvm != null)
+
+                    {
+                        pvm.RegisterWithMessenger();
+                    }
+                    LoadData();
                     OnPropertyChanged();
                 }
             }
         }
+        private async Task LoadData()
+        {
+            PortfolioViewModel pvm = _SelectedPortfolio as PortfolioViewModel;
+            if (pvm != null)
+            {
+                await GetPositionsAsync(pvm);
+            }
+
+        }
+
+        public override void RegisterWithMessenger()
+        {
+            Messenger.Default.Register<DataUpdate>(this, async (d) =>
+            {
+                object selectedPortfolio = SelectedPortfolio;
+                await Initialize();
+                if (Portfolios.Contains(LastSelectedPortfolio))
+                {
+                    SelectedPortfolio = LastSelectedPortfolio;
+                    await LoadData();
+                    OnPropertyChanged("SelectedPortfolio");
+                    OnPropertyChanged("Portfolios");
+
+                }
+                Messenger.Default.Send<PortfolioUpdate>(new PortfolioUpdate());
+            });
+            Messenger.Default.Register<DataBuilt>(this, async (d) =>
+            {
+                object selectedPortfolio = SelectedPortfolio;
+                await Initialize();
+                if (Portfolios.Contains(LastSelectedPortfolio))
+                {
+                    SelectedPortfolio = LastSelectedPortfolio;
+                    await LoadData();
+                    OnPropertyChanged("SelectedPortfolio");
+                    OnPropertyChanged("Portfolios");
+
+                }
+            });
+        }
+
+        public override void UnregisterWithMessenger()
+        {
+            Messenger.Default.UnRegister(this);
+        }
+
         public int SelectedPortfolioIndex { get; set; }
 
     }

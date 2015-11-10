@@ -1,4 +1,5 @@
 ﻿using FinSys.Wpf.Helpers;
+using FinSys.Wpf.Messages;
 using FinSys.Wpf.Model;
 using FinSys.Wpf.Services;
 using System;
@@ -8,6 +9,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
 
 namespace FinSys.Wpf.ViewModel
 {
@@ -17,6 +20,7 @@ namespace FinSys.Wpf.ViewModel
         {
             this.Id = p.Id;
             this.Positions = new ObservableCollection<PositionViewModel>();
+
         }
         public PortfolioViewModel()
         {
@@ -25,6 +29,76 @@ namespace FinSys.Wpf.ViewModel
                 return;
             }
         }
+        public override void RegisterWithMessenger()
+        {
+            Messenger.Default.Register<PortfolioUpdate>(this, (d) =>
+            {
+                if (Positions.Contains(LastSelectedPosition))
+                {
+                    SelectedPosition = LastSelectedPosition;
+                    LoadData();
+                    OnPropertyChanged("SelectedPosition");
+                }
+                Messenger.Default.Send<PositionUpdate>(new PositionUpdate());
+            });
+        }
+
+        public override void UnregisterWithMessenger()
+        {
+            Messenger.Default.UnRegister(this);
+        }
+        public override bool Equals(object obj)
+        {
+            PortfolioViewModel portfolio = obj as PortfolioViewModel;
+            if (obj == BindingOperations.DisconnectedSource || obj == DependencyProperty.UnsetValue || obj == null || portfolio == null)
+            {
+                return base.Equals(obj);
+            }
+            else
+            {
+                return this.Id == portfolio.Id;
+            }
+        }
+        public bool Equals(PortfolioViewModel p)
+        {
+            PortfolioViewModel arg = p as PortfolioViewModel;
+            if (arg != null)
+            {
+                return arg.Id == this.Id;
+            }
+            else
+            {
+                return base.Equals(p);
+            }
+        }
+        public override int GetHashCode()
+        {
+            return this.Id.GetHashCode();
+        }
+
+        public static bool operator ==(PortfolioViewModel p1, PortfolioViewModel p2)
+        {
+            try
+            {
+                return p1.Equals(p2);
+            }
+            catch (NullReferenceException)
+            {
+                return false;
+            }
+        }
+        public static bool operator !=(PortfolioViewModel p1, PortfolioViewModel p2)
+        {
+            try
+            {
+                return !p1.Equals(p2);
+            }
+            catch (NullReferenceException)
+            {
+                return false;
+            }
+        }
+
         private string id;
         public string Id
         {
@@ -51,6 +125,11 @@ namespace FinSys.Wpf.ViewModel
                 OnPropertyChanged();
             }
         }
+        public static object LastSelectedPosition
+        {
+            get;
+            set;
+        }
         object _SelectedPosition;
         public object SelectedPosition
         {
@@ -62,15 +141,36 @@ namespace FinSys.Wpf.ViewModel
             {
                 if (_SelectedPosition != value)
                 {
-                    _SelectedPosition = value;
+                    if (value != null)
+                    {
+                        LastSelectedPosition = value;
+                    }
                     PositionViewModel pvm = _SelectedPosition as PositionViewModel;
                     if (pvm != null)
+
                     {
-                        GetPositionsAsync(pvm);
+                        pvm.UnregisterWithMessenger();
                     }
+                    _SelectedPosition = value;
+                    pvm = _SelectedPosition as PositionViewModel;
+                    if (pvm != null)
+
+                    {
+                        pvm.RegisterWithMessenger();
+                    }
+                    LoadData();
                     OnPropertyChanged();
                 }
             }
+        }
+        private void LoadData()
+        {
+            PositionViewModel pvm = _SelectedPosition as PositionViewModel;
+            if (pvm != null)
+            {
+                GetPositionsAsync(pvm);
+            }
+
         }
         public int SelectedPositionIndex { get; set; }
         private async void GetPositionsAsync(PositionViewModel pvm)

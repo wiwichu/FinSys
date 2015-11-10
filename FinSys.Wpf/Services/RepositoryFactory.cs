@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FinSys.Wpf.Helpers;
+using FinSys.Wpf.Messages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,20 +21,17 @@ namespace FinSys.Wpf.Services
             //BuildPositions();
 
         }
-        private static bool built = false;
-        static async public void BuildPositions()
+       static async public void BuildPositions()
         {
-            if (!built)
+            try
             {
-                built = true;
-                try
-                {
-                    await Positions.BuildPositions(Trades.GetTradesAsync().Result);
-                }
-                finally
-                {
-                    Repositories.repositoriesInitialized.Set();
-                }
+                await Positions.BuildPositions(Trades.GetTradesAsync().Result).ConfigureAwait(false);
+                Messenger.Default.Send<DataBuilt>(new DataBuilt());
+
+            }
+            finally
+            {
+                Repositories.repositoriesInitialized.Set();
             }
         }
         public static IPositionsRepository Positions

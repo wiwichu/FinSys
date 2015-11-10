@@ -11,7 +11,7 @@ namespace FinSys.Wpf.Services
     class PortfoliosRepository : IPortfoliosRepository
     {
         //static List<Portfolio> portfolios = new List<Portfolio>();
-        static ConcurrentDictionary<Portfolio, int> portfolios = new ConcurrentDictionary<Portfolio, int>();
+        static ConcurrentDictionary<Portfolio, Portfolio> portfolios = new ConcurrentDictionary<Portfolio, Portfolio>();
         static PortfoliosRepository()
         {
             Initialize();
@@ -56,7 +56,7 @@ namespace FinSys.Wpf.Services
         {
             await Task.Run(() =>
             {
-                portfolios.AddOrUpdate(portfolio, 0, (p,v) => 0);
+                portfolios.AddOrUpdate(portfolio, portfolio, (p,v) => portfolio);
             })
             .ConfigureAwait(false) //necessary on UI Thread
             ;
@@ -64,14 +64,14 @@ namespace FinSys.Wpf.Services
         }
         public void AddOrUpdate(Portfolio portfolio)
         {
-            portfolios.AddOrUpdate(portfolio, 0, (p, v) => 0);
+            portfolios.AddOrUpdate(portfolio, portfolio, (p, v) => portfolio);
         }
 
         public async Task<List<Portfolio>> GetPortfoliosAsync()
         {
             List<Portfolio> port = await Task.Run(() =>
             {
-                return portfolios.Keys.OrderBy((p)=>p.Id).ToList();
+                return portfolios.Values.OrderBy((p)=>p.Id).ToList();
             })
             .ConfigureAwait(false) //necessary on UI Thread
             ;

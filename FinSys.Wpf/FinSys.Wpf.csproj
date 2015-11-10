@@ -63,6 +63,11 @@
     <Compile Include="Helpers\Messenger.cs" />
     <Compile Include="Helpers\NotifyPropertyChanged.cs" />
     <Compile Include="Helpers\ViewModelLocator.cs" />
+    <Compile Include="Messages\DataBuilt.cs" />
+    <Compile Include="Messages\DataUpdate.cs" />
+    <Compile Include="Messages\PortfolioUpdate.cs" />
+    <Compile Include="Messages\PositionUpdate.cs" />
+    <Compile Include="Messages\TradeUpdate.cs" />
     <Compile Include="Model\Portfolio.cs" />
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\IPortfoliosRepository.cs" />
@@ -77,6 +82,7 @@
     <Compile Include="ViewModel\PositionViewModel.cs" />
     <Compile Include="ViewModel\TradeViewModel.cs" />
     <Compile Include="ViewModel\TradingViewModel.cs" />
+    <Compile Include="ViewModel\UpdateData.cs" />
     <Compile Include="View\PortfolioListView.xaml.cs">
       <DependentUpon>PortfolioListView.xaml</DependentUpon>
     </Compile>

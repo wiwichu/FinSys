@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
 
 namespace FinSys.Wpf.Helpers
 {
@@ -19,6 +21,67 @@ namespace FinSys.Wpf.Helpers
                 this.context = context;
             }
             public object Context { get { return context; } }
+            public object Recipient { get { return recipient; } }
+            public override bool Equals(object obj)
+            {
+                MessengerKey t = obj as MessengerKey;
+                if (obj == BindingOperations.DisconnectedSource || obj == DependencyProperty.UnsetValue || obj == null || t == null)
+                {
+                    return base.Equals(obj);
+                }
+                else
+                {
+                    return this.Context == t.Context && this.Recipient == t.Recipient;
+                }
+            }
+            public bool Equals(MessengerKey t)
+            {
+                MessengerKey arg = t as MessengerKey;
+                if (arg != null)
+                {
+                    return arg.Recipient == this.Recipient && arg.Context == t.Context;
+                }
+                else
+                {
+                    return base.Equals(t);
+                }
+            }
+            public override int GetHashCode()
+            {
+                if (this.Context == null)
+                {
+                    return this.recipient.GetHashCode();
+                }
+                else
+                {
+                    return this.recipient.GetHashCode() ^ this.Context.GetHashCode();
+                }
+            }
+
+            public static bool operator ==(MessengerKey t1, MessengerKey t2)
+            {
+                try
+                {
+                    return t1.Equals(t2);
+                }
+                catch (NullReferenceException)
+                {
+                    return false;
+                }
+            }
+            public static bool operator !=(MessengerKey t1, MessengerKey t2)
+            {
+                try
+                {
+                    return !t1.Equals(t2);
+                }
+                catch (NullReferenceException)
+                {
+                    return false;
+                }
+            }
+
+
 
         }
         private static readonly ConcurrentDictionary<MessengerKey, object> Dictionary = new ConcurrentDictionary<MessengerKey, object>();
@@ -53,21 +116,21 @@ namespace FinSys.Wpf.Helpers
 
         private void Send<T>(T message, object context)
         {
-            foreach (MessengerKey recipient in Dictionary.Keys)
+            //foreach (MessengerKey recipient in Dictionary.Keys)
+            Dictionary.Keys.Where((k) => k.Context == context).All((k) =>
             {
-                if (recipient.Context == context)
+                object callback;
+                if (Dictionary.TryGetValue(k, out callback))
                 {
-                    object callback;
-                    if (Dictionary.TryGetValue(recipient,out callback))
+                    Action<T> action = callback as Action<T>;
+                    if (action != null)
                     {
-                        Action<T> action = callback as Action<T>;
-                        if (action != null)
-                        {
-                            action(message);
-                        }
+                        action(message);
                     }
                 }
+                return true;
             }
+            );
         }
     }
 }

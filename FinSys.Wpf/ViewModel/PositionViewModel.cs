@@ -1,4 +1,5 @@
 ﻿using FinSys.Wpf.Helpers;
+using FinSys.Wpf.Messages;
 using FinSys.Wpf.Model;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace FinSys.Wpf.ViewModel
@@ -30,6 +33,75 @@ namespace FinSys.Wpf.ViewModel
                 return;
             }
         }
+        public override void RegisterWithMessenger()
+        {
+            Messenger.Default.Register<PositionUpdate>(this, (d) =>
+            {
+                if (Trades.Contains(LastSelectedTrade))
+                {
+                    SelectedTrade = LastSelectedTrade;
+                    OnPropertyChanged("SelectedTrade");
+                }
+            });
+        }
+
+        public override void UnregisterWithMessenger()
+        {
+            Messenger.Default.UnRegister(this);
+        }
+        public override bool Equals(object obj)
+        {
+            PositionViewModel pos = obj as PositionViewModel;
+            if (obj == BindingOperations.DisconnectedSource || obj == DependencyProperty.UnsetValue || obj == null || pos == null)
+            {
+                return base.Equals(obj);
+            }
+            else
+            {
+                return this.Portfolio == pos.Portfolio && this.Instrument == pos.Instrument;
+            }
+        }
+        public bool Equals(PositionViewModel p)
+        {
+            PositionViewModel arg = p as PositionViewModel;
+            if (arg != null)
+            {
+                return arg.Portfolio == this.Portfolio && arg.Instrument == this.Instrument;
+            }
+            else
+            {
+                return base.Equals(p);
+            }
+        }
+        public override int GetHashCode()
+        {
+            return this.Portfolio.GetHashCode() ^ this.Instrument.GetHashCode();
+        }
+
+        public static bool operator ==(PositionViewModel p1, PositionViewModel p2)
+        {
+            try
+            {
+                return p1.Equals(p2);
+            }
+            catch (NullReferenceException)
+            {
+                return false;
+            }
+        }
+        public static bool operator !=(PositionViewModel p1, PositionViewModel p2)
+        {
+            try
+            {
+                return !p1.Equals(p2);
+            }
+            catch (NullReferenceException)
+            {
+                return false;
+            }
+        }
+
+
         private string portfolio;
         public string Portfolio
         {
@@ -96,6 +168,11 @@ namespace FinSys.Wpf.ViewModel
             }
         }
         object _SelectedTrade;
+        static public object LastSelectedTrade
+        {
+            get;
+            set;
+        }
         public object SelectedTrade
         {
             get
@@ -106,6 +183,10 @@ namespace FinSys.Wpf.ViewModel
             {
                 if (_SelectedTrade != value)
                 {
+                    if (value != null)
+                    {
+                        LastSelectedTrade = value;
+                    }
                     _SelectedTrade = value;
                     OnPropertyChanged();
                 }
