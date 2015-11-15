@@ -73,7 +73,7 @@ namespace FinSys.Wpf.ViewModel
             Task< ObservableCollection < PositionViewModel >> t1 = Task.Run(() =>
                 { 
                     return new ObservableCollection<PositionViewModel>(RepositoryFactory.Positions.GetPositionsAsync().Result
-                    .Where((p) => pvm.Id == p.Portfolio)
+                    .Where((p) => pvm.Id == p.PortfolioId)
                         .Select((p) => new PositionViewModel(p)));
                 }
             );

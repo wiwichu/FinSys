@@ -20,8 +20,8 @@ namespace FinSys.Wpf.ViewModel
         public PositionViewModel(Position p)
         {
             this.Amount = p.Amount;
-            this.Instrument = p.Instrument;
-            this.Portfolio = p.Portfolio;
+            this.InstrumentId = p.InstrumentId;
+            this.PortfolioId = p.PortfolioId;
             this.Price = p.Price;
             this.Trades = new ObservableCollection<TradeViewModel>();
         }
@@ -59,7 +59,7 @@ namespace FinSys.Wpf.ViewModel
             }
             else
             {
-                return this.Portfolio == pos.Portfolio && this.Instrument == pos.Instrument;
+                return this.PortfolioId == pos.PortfolioId && this.InstrumentId == pos.InstrumentId;
             }
         }
         public bool Equals(PositionViewModel p)
@@ -67,7 +67,7 @@ namespace FinSys.Wpf.ViewModel
             PositionViewModel arg = p as PositionViewModel;
             if (arg != null)
             {
-                return arg.Portfolio == this.Portfolio && arg.Instrument == this.Instrument;
+                return arg.PortfolioId == this.PortfolioId && arg.InstrumentId == this.InstrumentId;
             }
             else
             {
@@ -76,7 +76,7 @@ namespace FinSys.Wpf.ViewModel
         }
         public override int GetHashCode()
         {
-            return this.Portfolio.GetHashCode() ^ this.Instrument.GetHashCode();
+            return this.PortfolioId.GetHashCode() ^ this.InstrumentId.GetHashCode();
         }
 
         public static bool operator ==(PositionViewModel p1, PositionViewModel p2)
@@ -104,7 +104,7 @@ namespace FinSys.Wpf.ViewModel
 
 
         private string portfolio;
-        public string Portfolio
+        public string PortfolioId
         {
             get
             {
@@ -117,7 +117,7 @@ namespace FinSys.Wpf.ViewModel
             }
         }
         private string instrument;
-        public string Instrument
+        public string InstrumentId
         {
             get
             {

@@ -20,18 +20,18 @@ namespace FinSys.Wpf.Services
                 {
                     string currentPortfolio = null;
                     string currentInstrument = null;
-                    trades.OrderBy((t) => t.Portfolio).ThenBy((t) => t.Instrument).ThenBy((t) => t.ValueDate).ThenBy((t) => t.Id)
+                    trades.OrderBy((t) => t.PortfolioId).ThenBy((t) => t.InstrumentId).ThenBy((t) => t.ValueDate).ThenBy((t) => t.Id)
                         .All((t) =>
                         {
-                            if (!(t.Portfolio == currentPortfolio && t.Instrument == currentInstrument))
+                            if (!(t.PortfolioId == currentPortfolio && t.InstrumentId == currentInstrument))
                             {
-                                RepositoryFactory.Portfolios.AddOrUpdate(new Portfolio { Id = t.Portfolio });
-                                RepositoryFactory.Positions.AddOrUpdate(new Position { Portfolio = t.Portfolio, Instrument = t.Instrument });
+                                RepositoryFactory.Portfolios.AddOrUpdate(new Portfolio { Id = t.PortfolioId });
+                                RepositoryFactory.Positions.AddOrUpdate(new Position { PortfolioId = t.PortfolioId, InstrumentId = t.InstrumentId });
 
-                                currentInstrument = t.Instrument;
-                                currentPortfolio = t.Portfolio;
+                                currentInstrument = t.InstrumentId;
+                                currentPortfolio = t.PortfolioId;
                                 positions.Keys.Where((p) =>
-                                    p.Portfolio == currentPortfolio && p.Instrument == currentInstrument
+                                    p.PortfolioId == currentPortfolio && p.InstrumentId == currentInstrument
                                 ).All((p) =>
                                 {
                                     p.Amount = 0;
@@ -41,7 +41,7 @@ namespace FinSys.Wpf.Services
                             }
 
                             positions.Values.Where((p) =>
-                                    p.Portfolio == currentPortfolio && p.Instrument == currentInstrument
+                                    p.PortfolioId == currentPortfolio && p.InstrumentId == currentInstrument
                                 ).All((p) =>
                                 {
                                     double newAmount = p.Amount + t.Amount;
@@ -173,7 +173,7 @@ namespace FinSys.Wpf.Services
         {
             List<Position> pos = await Task.Run(() =>
             {
-                return positions.Values.OrderBy((p)=>p.Portfolio).ThenBy((p)=>p.Instrument).ToList();
+                return positions.Values.OrderBy((p)=>p.PortfolioId).ThenBy((p)=>p.InstrumentId).ToList();
             })
             .ConfigureAwait(false) //necessary on UI Thread
             ;

@@ -190,7 +190,7 @@ namespace FinSys.Wpf.ViewModel
             Task<ObservableCollection<TradeViewModel>> t1 = Task.Run(() =>
             {
                 return new ObservableCollection<TradeViewModel>(RepositoryFactory.Trades.GetTradesAsync().Result
-                .Where((t) => pvm.Portfolio == t.Portfolio && pvm.Instrument == t.Instrument)
+                .Where((t) => pvm.PortfolioId == t.PortfolioId && pvm.InstrumentId == t.InstrumentId)
                     .Select((p) => new TradeViewModel(p)));
             }
             );

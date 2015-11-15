@@ -11,8 +11,8 @@
         <ListView x:Name="lsvPositionList" ItemsSource="{Binding Positions}" SelectedItem="{Binding Path=SelectedPosition}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Portfolio Name" DisplayMemberBinding="{Binding Path=Portfolio}" Width="100"/>
-                    <GridViewColumn Header="Instrument" DisplayMemberBinding="{Binding Path=Instrument}" Width="100"/>
+                    <GridViewColumn Header="Portfolio Name" DisplayMemberBinding="{Binding Path=PortfolioId}" Width="100"/>
+                    <GridViewColumn Header="Instrument" DisplayMemberBinding="{Binding Path=InstrumentId}" Width="100"/>
                     <GridViewColumn Header="Amount" DisplayMemberBinding="{Binding Path=Amount}" Width="100"/>
                     <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Path=Price}" Width="100"/>
                     <!--  <GridViewColumn CellTemplate="{StaticResource RowButtons}"/> -->

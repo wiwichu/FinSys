@@ -10,7 +10,7 @@ namespace FinSys.Wpf.Services
 {
     class TradesRepository : ITradesRepository
     {
-        static long id;
+        static int id;
         //static List<Trade> trades = new List<Trade>();
         public static ConcurrentDictionary<Trade, Trade> trades = new ConcurrentDictionary<Trade, Trade>();
         static TradesRepository()
@@ -26,8 +26,8 @@ namespace FinSys.Wpf.Services
                 Trade t1 = new Trade()
                 {
                     Id = ++id,
-                    Portfolio = "Porta",
-                    Instrument = "Instr1",
+                    PortfolioId = "Porta",
+                    InstrumentId = "Instr1",
                     Amount = 5000,
                     Price = .80,
                     ValueDate = DateTime.Now.Date,
@@ -37,8 +37,8 @@ namespace FinSys.Wpf.Services
                 Trade t2 = new Trade()
                 {
                     Id = ++id,
-                    Portfolio = "Porta",
-                    Instrument = "Instr1",
+                    PortfolioId = "Porta",
+                    InstrumentId = "Instr1",
                     Amount = 5000,
                     Price = 1.0,
                     ValueDate = DateTime.Now.Date,
@@ -48,8 +48,8 @@ namespace FinSys.Wpf.Services
                 Trade t3 = new Trade
                 {
                     Id = ++id,
-                    Portfolio = "Portb",
-                    Instrument = "Instr2",
+                    PortfolioId = "Portb",
+                    InstrumentId = "Instr2",
                     Amount = 20000,
                     Price = 1.10,
                     ValueDate = DateTime.Now.Date,
@@ -59,8 +59,8 @@ namespace FinSys.Wpf.Services
                 Trade t4 = new Trade
                 {
                     Id = ++id,
-                    Portfolio = "Portb",
-                    Instrument = "Instr2",
+                    PortfolioId = "Portb",
+                    InstrumentId = "Instr2",
                     Amount = -10000,
                     Price = 1.15,
                     ValueDate = DateTime.Now.Date,
@@ -70,8 +70,8 @@ namespace FinSys.Wpf.Services
                 Trade t5 = new Trade
                 {
                     Id = ++id,
-                    Portfolio = "Porta",
-                    Instrument = "Instr2",
+                    PortfolioId = "Porta",
+                    InstrumentId = "Instr2",
                     Amount = 10000,
                     Price = .89,
                     ValueDate = DateTime.Now.Date,
@@ -81,8 +81,8 @@ namespace FinSys.Wpf.Services
                 Trade t6 = new Trade
                 {
                     Id = ++id,
-                    Portfolio = "Porta",
-                    Instrument = "Instr2",
+                    PortfolioId = "Porta",
+                    InstrumentId = "Instr2",
                     Amount = 10000,
                     Price = .91,
                     ValueDate = DateTime.Now.Date,
@@ -92,8 +92,8 @@ namespace FinSys.Wpf.Services
                 Trade t7 = new Trade
                 {
                     Id = ++id,
-                    Portfolio = "Porta",
-                    Instrument = "Instr2",
+                    PortfolioId = "Porta",
+                    InstrumentId = "Instr2",
                     Amount = -10000,
                     Price = .86,
                     ValueDate = DateTime.Now.Date,
@@ -103,8 +103,8 @@ namespace FinSys.Wpf.Services
                 Trade t8 = new Trade
                 {
                     Id = ++id,
-                    Portfolio = "Portb",
-                    Instrument = "Instr1",
+                    PortfolioId = "Portb",
+                    InstrumentId = "Instr1",
                     Amount = 20000,
                     Price = 1.0,
                     ValueDate = DateTime.Now.Date,
@@ -114,8 +114,8 @@ namespace FinSys.Wpf.Services
                 Trade t9 = new Trade
                 {
                     Id = ++id,
-                    Portfolio = "Portb",
-                    Instrument = "Instr1",
+                    PortfolioId = "Portb",
+                    InstrumentId = "Instr1",
                     Amount = 20000,
                     Price = 1.20,
                     ValueDate = DateTime.Now.Date,
@@ -125,8 +125,8 @@ namespace FinSys.Wpf.Services
                 Trade t10 = new Trade
                 {
                     Id = ++id,
-                    Portfolio = "Portb",
-                    Instrument = "Instr1",
+                    PortfolioId = "Portb",
+                    InstrumentId = "Instr1",
                     Amount = -20000,
                     Price = 1.25,
                     ValueDate = DateTime.Now.Date,
@@ -136,8 +136,8 @@ namespace FinSys.Wpf.Services
                 Trade t11 = new Trade
                 {
                     Id = ++id,
-                    Portfolio = "Porta",
-                    Instrument = "Instr3",
+                    PortfolioId = "Porta",
+                    InstrumentId = "Instr3",
                     Amount = 10000,
                     Price = .90,
                     ValueDate = DateTime.Now.Date,
@@ -147,8 +147,8 @@ namespace FinSys.Wpf.Services
                 Trade t12 = new Trade
                 {
                     Id = ++id,
-                    Portfolio = "Portb",
-                    Instrument = "Instr3",
+                    PortfolioId = "Portb",
+                    InstrumentId = "Instr3",
                     Amount = 20000,
                     Price = 1.10,
                     ValueDate = DateTime.Now.Date,
@@ -158,8 +158,8 @@ namespace FinSys.Wpf.Services
                 Trade t13 = new Trade
                 {
                     Id = ++id,
-                    Portfolio = "Porta",
-                    Instrument = "Instr4",
+                    PortfolioId = "Porta",
+                    InstrumentId = "Instr4",
                     Amount = 10000,
                     Price = .90,
                     ValueDate = DateTime.Now.Date,
@@ -169,8 +169,8 @@ namespace FinSys.Wpf.Services
                 Trade t14 = new Trade
                 {
                     Id = ++id,
-                    Portfolio = "Portb",
-                    Instrument = "Instr4",
+                    PortfolioId = "Portb",
+                    InstrumentId = "Instr4",
                     Amount = 20000,
                     Price = 1.10,
                     ValueDate = DateTime.Now.Date,
@@ -180,8 +180,8 @@ namespace FinSys.Wpf.Services
                 Trade t15 = new Trade
                 {
                     Id = ++id,
-                    Portfolio = "Porta",
-                    Instrument = "Instr5",
+                    PortfolioId = "Porta",
+                    InstrumentId = "Instr5",
                     Amount = 10000,
                     Price = .90,
                     ValueDate = DateTime.Now.Date,
@@ -191,8 +191,8 @@ namespace FinSys.Wpf.Services
                 Trade t16 = new Trade
                 {
                     Id = ++id,
-                    Portfolio = "Portb",
-                    Instrument = "Instr5",
+                    PortfolioId = "Portb",
+                    InstrumentId = "Instr5",
                     Amount = 20000,
                     Price = 1.10,
                     ValueDate = DateTime.Now.Date,
@@ -202,8 +202,8 @@ namespace FinSys.Wpf.Services
                 Trade t17 = new Trade
                 {
                     Id = ++id,
-                    Portfolio = "Portx",
-                    Instrument = "Instrx",
+                    PortfolioId = "Portx",
+                    InstrumentId = "Instrx",
                     Amount = 20000,
                     Price = 1.10,
                     ValueDate = DateTime.Now.Date,
