@@ -13,8 +13,22 @@ namespace FinSys.EFConsoleTester
         static void Main(string[] args)
         {
             InsertPortfolio();
+            DeleteProcedureViaId();
+            RetrieveDataWithStoredProcedure();
+            DeleteProcedureViaId();
             RetrieveDataWithStoredProcedure();
             Console.ReadLine();
+        }
+
+        private static void DeleteProcedureViaId()
+        {
+            var keyVal = "PortA";
+            using (var context = new FinSysContext())
+            {
+                context.Database.Log = Console.WriteLine;
+                var portfolios = context.Portfolios.SqlQuery("exec DeletePortfolioViaId (0)", keyVal);
+                
+            }
         }
 
         private static void RetrieveDataWithStoredProcedure()
