@@ -54,10 +54,15 @@
     <Compile Include="Migrations\201511142244075_Initial.Designer.cs">
       <DependentUpon>201511142244075_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511171304444_PositionsKey.cs" />
+    <Compile Include="Migrations\201511171304444_PositionsKey.Designer.cs">
+      <DependentUpon>201511171304444_PositionsKey.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +74,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201511142244075_Initial.resx">
       <DependentUpon>201511142244075_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511171304444_PositionsKey.resx">
+      <DependentUpon>201511171304444_PositionsKey.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

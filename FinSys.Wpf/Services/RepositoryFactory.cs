@@ -15,9 +15,9 @@ namespace FinSys.Wpf.Services
         private static ITradesRepository trades = null;
         static RepositoryFactory()
         {
-            portfolios = new PortfoliosRepository();
-            positions = new PositionsRepository();
-            trades = new TradesRepository();
+            portfolios = new PortfoliosRepositoryEF();
+            positions = new PositionsRepositoryEF();
+            trades = new TradesRepositoryEF();
             //BuildPositions();
 
         }
@@ -25,14 +25,17 @@ namespace FinSys.Wpf.Services
         {
             try
             {
-                await Positions.BuildPositions(Trades.GetTradesAsync().Result).ConfigureAwait(false);
-                Messenger.Default.Send<DataBuilt>(new DataBuilt());
-
+                await BuildPositions(Trades.GetTradesAsync().Result).ConfigureAwait(false);
             }
             finally
             {
                 Repositories.repositoriesInitialized.Set();
             }
+        }
+        static async public Task BuildPositions(List<Model.Trade> trades)
+        {
+            await Positions.BuildPositions(trades).ConfigureAwait(false);
+            Messenger.Default.Send<DataBuilt>(new DataBuilt());
         }
         public static IPositionsRepository Positions
         {
