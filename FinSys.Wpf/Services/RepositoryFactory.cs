@@ -15,9 +15,9 @@ namespace FinSys.Wpf.Services
         private static ITradesRepository trades = null;
         static RepositoryFactory()
         {
-            portfolios = new PortfoliosRepositoryEF();
-            positions = new PositionsRepositoryEF();
-            trades = new TradesRepositoryEF();
+            portfolios = new PortfoliosRepositoryWcf();
+            positions = new PositionsRepositoryWcf();
+            trades = new TradesRepositoryWcf();
             //BuildPositions();
 
         }

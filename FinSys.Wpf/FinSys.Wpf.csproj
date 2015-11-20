@@ -50,6 +50,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -192,6 +194,14 @@
     <ProjectReference Include="..\FinSys.EFClasses\FinSys.EFClasses.csproj">
       <Project>{2cd24127-715f-4ae1-a089-7641987e3dcd}</Project>
       <Name>FinSys.EFClasses</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FinSys.Wcf.Contracts\FinSys.Wcf.Contracts.csproj">
+      <Project>{283fb1ab-9587-44ca-bb88-4a8ebcb051f7}</Project>
+      <Name>FinSys.Wcf.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FinSyS.Wcf.Proxies\FinSyS.Wcf.Proxies.csproj">
+      <Project>{a38b2e45-d63b-46e6-a3a1-ddbef6ade319}</Project>
+      <Name>FinSyS.Wcf.Proxies</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
