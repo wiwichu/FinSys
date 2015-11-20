@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace FinSys.Wcf.Data
 {
-    interface IPortfoliosRepository
+    public interface IPortfoliosRepository
     {
         Task AddOrUpdateAsync(PortfolioData portfolio);
         void AddOrUpdate(PortfolioData portfolio);

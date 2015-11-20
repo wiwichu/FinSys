@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{006D7C04-2E12-4297-BB32-A5BE6EF39D22}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{65720CE9-B32C-4739-AF38-08480BE61F2F}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FinSys.Wcf.Services</RootNamespace>
-    <AssemblyName>FinSys.Wcf.Services</AssemblyName>
+    <RootNamespace>FinSyS.Wcf.ConsoleHost</RootNamespace>
+    <AssemblyName>FinSyS.Wcf.ConsoleHost</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -42,20 +45,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FinSysManager.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FinSys.Wcf.Contracts\FinSys.Wcf.Contracts.csproj">
       <Project>{283fb1ab-9587-44ca-bb88-4a8ebcb051f7}</Project>
       <Name>FinSys.Wcf.Contracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FinSys.Wcf.Data\FinSys.Wcf.Data.csproj">
-      <Project>{b78862a0-a4df-42fe-88eb-a864a0165879}</Project>
-      <Name>FinSys.Wcf.Data</Name>
+    <ProjectReference Include="..\FinSys.Wcf.Services\FinSys.Wcf.Services.csproj">
+      <Project>{006d7c04-2e12-4297-bb32-a5be6ef39d22}</Project>
+      <Name>FinSys.Wcf.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

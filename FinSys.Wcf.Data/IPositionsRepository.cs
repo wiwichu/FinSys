@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace FinSys.Wcf.Data
 {
-    interface IPositionsRepository
+    public interface IPositionsRepository
     {
-        Task BuildPositions(List<TradeData> trades);
+        Task BuildPositions(IEnumerable<TradeData> trades);
         void AddOrUpdate(PositionData positiion);
         Task AddOrUpdateAsync(PositionData position);
-        Task<List<PositionData>> GetPositionsAsync();
+        Task<IEnumerable<PositionData>> GetPositionsAsync();
     }
 }

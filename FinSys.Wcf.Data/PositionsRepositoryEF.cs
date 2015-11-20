@@ -8,7 +8,7 @@ using FinSys.EFData;
 
 namespace FinSys.Wcf.Data
 {
-    class PositionsRepositoryEF : IPositionsRepository
+    internal class PositionsRepositoryEF : IPositionsRepository
     {
         public void AddOrUpdate(PositionData position)
         {
@@ -48,7 +48,7 @@ namespace FinSys.Wcf.Data
             .ConfigureAwait(false) //necessary on UI Thread
             ;
         }
-        public async Task BuildPositions(List<TradeData> trades)
+        public async Task BuildPositions(IEnumerable<TradeData> trades)
         {
             await Task.Run(() =>
             {
@@ -92,7 +92,7 @@ namespace FinSys.Wcf.Data
             }).ConfigureAwait(false);
         }
 
-        public async Task<List<PositionData>> GetPositionsAsync()
+        public async Task<IEnumerable<PositionData>> GetPositionsAsync()
         {
             List<PositionData> pos = await Task.Run(() =>
             {

@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace FinSys.Wcf.Data
 {
-    interface ITradesRepository
+    public interface ITradesRepository
     {
-        Task<List<TradeData>> GetTradesAsync();
+        Task<IEnumerable<TradeData>> GetTradesAsync();
         Task AddOrUpdateAsync(TradeData trade);
-        Task AddOrUpdateAsync(List<TradeData> trades);
+        Task AddOrUpdateAsync(IEnumerable<TradeData> trades);
         Task DeleteAsync(TradeData trade);
-        Task DeleteAsync(List<TradeData> trades);
+        Task DeleteAsync(IEnumerable<TradeData> trades);
     }
 }

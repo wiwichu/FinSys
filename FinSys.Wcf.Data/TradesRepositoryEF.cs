@@ -8,9 +8,9 @@ using FinSys.EFData;
 
 namespace FinSys.Wcf.Data
 {
-    class TradesRepositoryEF : ITradesRepository
+    internal class TradesRepositoryEF : ITradesRepository
     {
-        public async Task AddOrUpdateAsync(List<TradeData> trades)
+        public async Task AddOrUpdateAsync(IEnumerable<TradeData> trades)
         {
             await Task.Run(async () =>
             {
@@ -65,7 +65,7 @@ namespace FinSys.Wcf.Data
             await AddOrUpdateAsync(new List<TradeData> { trade });
         }
 
-        public async Task DeleteAsync(List<TradeData> trades)
+        public async Task DeleteAsync(IEnumerable<TradeData> trades)
         {
             await Task.Run(async () =>
             {
@@ -94,7 +94,7 @@ namespace FinSys.Wcf.Data
             await DeleteAsync(new List<TradeData> { trade });
         }
 
-        public async Task<List<TradeData>> GetTradesAsync()
+        public async Task<IEnumerable<TradeData>> GetTradesAsync()
         {
             List<TradeData> trade = await Task.Run(() =>
             {

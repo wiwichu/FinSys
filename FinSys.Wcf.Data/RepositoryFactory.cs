@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace FinSys.Wcf.Data
 {
-    static class RepositoryFactory
+    public static class RepositoryFactory
     {
         private static IPortfoliosRepository portfolios = null;
         private static IPositionsRepository positions = null;
@@ -21,7 +21,7 @@ namespace FinSys.Wcf.Data
         {
             await BuildPositions(Trades.GetTradesAsync().Result).ConfigureAwait(false);
         }
-        static async public Task BuildPositions(List<TradeData> trades)
+        static async public Task BuildPositions(IEnumerable<TradeData> trades)
         {
             await Positions.BuildPositions(trades).ConfigureAwait(false);
             //Messenger.Default.Send<DataBuilt>(new DataBuilt());

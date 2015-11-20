@@ -7,7 +7,7 @@ using FinSys.Wcf.Contracts;
 
 namespace FinSys.Wcf.Data
 {
-    class PortfoliosRepositoryEF : IPortfoliosRepository
+    internal class PortfoliosRepositoryEF : IPortfoliosRepository
     {
         public void AddOrUpdate(PortfolioData portfolio)
         {
