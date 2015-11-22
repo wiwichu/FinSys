@@ -53,7 +53,7 @@ namespace FinSys.Wpf.ViewModel
         public override bool Equals(object obj)
         {
             PositionViewModel pos = obj as PositionViewModel;
-            if (obj == BindingOperations.DisconnectedSource || obj == DependencyProperty.UnsetValue || obj == null || pos == null)
+            if (obj == BindingOperations.DisconnectedSource || obj == DependencyProperty.UnsetValue )
             {
                 return base.Equals(obj);
             }

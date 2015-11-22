@@ -60,7 +60,7 @@ namespace FinSys.Wpf.ViewModel
         public override bool Equals(object obj)
         {
             PortfolioViewModel portfolio = obj as PortfolioViewModel;
-            if (obj == BindingOperations.DisconnectedSource || obj == DependencyProperty.UnsetValue || obj == null || portfolio == null)
+            if (obj == BindingOperations.DisconnectedSource || obj == DependencyProperty.UnsetValue )
             {
                 return base.Equals(obj);
             }

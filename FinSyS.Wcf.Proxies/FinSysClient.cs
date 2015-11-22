@@ -15,6 +15,14 @@ namespace FinSyS.Wcf.Proxies
         {
 
         }
+        public void Register()
+        {
+            Channel.Register();
+        }
+        public void UnRegister()
+        {
+            Channel.UnRegister();
+        }
         public void AddOrUpdatePortfolio(PortfolioData portfolio)
         {
             Channel.AddOrUpdatePortfolio(portfolio);

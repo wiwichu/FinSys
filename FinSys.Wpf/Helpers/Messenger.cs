@@ -27,7 +27,7 @@ namespace FinSys.Wpf.Helpers
             public override bool Equals(object obj)
             {
                 MessengerKey t = obj as MessengerKey;
-                if (obj == BindingOperations.DisconnectedSource || obj == DependencyProperty.UnsetValue || obj == null || t == null)
+                if (obj == BindingOperations.DisconnectedSource || obj == DependencyProperty.UnsetValue )
                 {
                     return base.Equals(obj);
                 }

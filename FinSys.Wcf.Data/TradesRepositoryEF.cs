@@ -22,6 +22,7 @@ namespace FinSys.Wcf.Data
                         context.Trades.Find(new object[] { t.Id }) != null)
                     .All((tr) =>
                     {
+                        RepositoryFactory.Portfolios.AddOrUpdate(new PortfolioData { Id = tr.PortfolioId });
                         EFClasses.Trade trd = context.Trades.Where((tdb) => tdb.Id == tr.Id).FirstOrDefault();
                         trd.Amount = tr.Amount;
                         trd.CounterParty = tr.CounterParty;

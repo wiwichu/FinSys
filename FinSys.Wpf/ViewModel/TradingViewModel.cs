@@ -78,7 +78,7 @@ namespace FinSys.Wpf.ViewModel
                 }
             );
 
-            pvm.Positions = await t1;
+            pvm.Positions = t1.Result;
         }
         object _SelectedPortfolio;
         public static object LastSelectedPortfolio

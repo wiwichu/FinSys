@@ -1,5 +1,6 @@
 ﻿using FinSys.Wpf.Helpers;
 using FinSys.Wpf.Messages;
+using FinSyS.Wcf.Proxies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,12 @@ namespace FinSys.Wpf.Services
         private static IPortfoliosRepository portfolios = null;
         private static IPositionsRepository positions = null;
         private static ITradesRepository trades = null;
+        static FinSysClient statProxy = null;
         static RepositoryFactory()
         {
+            statProxy = new FinSysClient(new System.ServiceModel.InstanceContext(Messenger.Default));
+            statProxy.Register();
+            //statProxy.Close();
             portfolios = new PortfoliosRepositoryWcf();
             positions = new PositionsRepositoryWcf();
             trades = new TradesRepositoryWcf();
