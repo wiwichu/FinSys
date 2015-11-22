@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using FinSys.Wpf.Model;
 using FinSyS.Wcf.Proxies;
 using System.Linq;
+using FinSys.Wpf.Helpers;
 
 namespace FinSys.Wpf.Services
 {
@@ -30,7 +31,7 @@ namespace FinSys.Wpf.Services
                     tradesData.Add(data);
                     return true;
                 });
-                FinSysClient proxy = new FinSysClient();
+                FinSysClient proxy = new FinSysClient(new System.ServiceModel.InstanceContext(Messenger.Default));
                 proxy.AddOrUpdateTrades(tradesData);
                 proxy.Close();
             })
@@ -52,7 +53,7 @@ namespace FinSys.Wpf.Services
                     Id = trade.Id,
                     ValueDate = trade.ValueDate
                 };
-                FinSysClient proxy = new FinSysClient();
+                FinSysClient proxy = new FinSysClient(new System.ServiceModel.InstanceContext(Messenger.Default));
                 proxy.AddOrUpdateTrade(data);
                 proxy.Close();
             })
@@ -75,7 +76,7 @@ namespace FinSys.Wpf.Services
                     tradesData.Add(data);
                     return true;
                 });
-                FinSysClient proxy = new FinSysClient();
+                FinSysClient proxy = new FinSysClient(new System.ServiceModel.InstanceContext(Messenger.Default));
                 proxy.AddOrUpdateTrades(tradesData);
                 proxy.Close();
             })
@@ -91,7 +92,7 @@ namespace FinSys.Wpf.Services
                 {
                     Id = trade.Id
                 };
-                FinSysClient proxy = new FinSysClient();
+                FinSysClient proxy = new FinSysClient(new System.ServiceModel.InstanceContext(Messenger.Default));
                 proxy.DeleteTrade(data);
                 proxy.Close();
             })
@@ -106,7 +107,7 @@ namespace FinSys.Wpf.Services
             {
                 List<Model.Trade> tradesData = new List<Model.Trade>();
 
-                FinSysClient proxy = new FinSysClient();
+                FinSysClient proxy = new FinSysClient(new System.ServiceModel.InstanceContext(Messenger.Default));
                 IEnumerable<Wcf.Contracts.TradeData> data = proxy.GetTrades();
 
                 data.All((t) =>

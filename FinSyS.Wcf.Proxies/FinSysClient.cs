@@ -8,8 +8,13 @@ using System.Threading.Tasks;
 
 namespace FinSyS.Wcf.Proxies
 {
-    public class FinSysClient : ClientBase<IFinSysService>, IFinSysService
+    public class FinSysClient : DuplexClientBase<IFinSysService>, IFinSysService
     {
+        public FinSysClient(InstanceContext instanceContext)
+            : base(instanceContext)
+        {
+
+        }
         public void AddOrUpdatePortfolio(PortfolioData portfolio)
         {
             Channel.AddOrUpdatePortfolio(portfolio);

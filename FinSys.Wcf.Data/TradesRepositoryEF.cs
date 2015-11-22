@@ -36,6 +36,7 @@ namespace FinSys.Wcf.Data
                     context.Trades.Find(new object[] { t.Id }) == null)
                     .All((tr) =>
                     {
+                        RepositoryFactory.Portfolios.AddOrUpdate(new PortfolioData { Id = tr.PortfolioId });
                         EFClasses.Trade trd = new EFClasses.Trade
                         {
                             Amount = tr.Amount,

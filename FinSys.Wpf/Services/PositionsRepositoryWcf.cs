@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FinSys.Wpf.Model;
 using FinSyS.Wcf.Proxies;
+using FinSys.Wpf.Helpers;
 
 namespace FinSys.Wpf.Services
 {
@@ -19,7 +20,7 @@ namespace FinSys.Wpf.Services
                 PortfolioId=position.PortfolioId,
                 Price=position.Price
             };
-            FinSysClient proxy = new FinSysClient();
+            FinSysClient proxy = new FinSysClient(new System.ServiceModel.InstanceContext(Messenger.Default));
             proxy.AddOrUpdatePosition(data);
             proxy.Close();
         }
@@ -46,7 +47,7 @@ namespace FinSys.Wpf.Services
             {
                 List<Model.Position> poss = new List<Model.Position>();
 
-                FinSysClient proxy = new FinSysClient();
+                FinSysClient proxy = new FinSysClient(new System.ServiceModel.InstanceContext(Messenger.Default));
                 IEnumerable<Wcf.Contracts.PositionData> data = proxy.GetPositions();
 
                 data.All((p) =>

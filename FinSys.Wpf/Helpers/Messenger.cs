@@ -6,10 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using FinSys.Wcf.Contracts;
+using FinSys.Wpf.Messages;
 
 namespace FinSys.Wpf.Helpers
 {
-    class Messenger
+    class Messenger : IFinSysServiceCallback
     {
         private class MessengerKey
         {
@@ -131,6 +133,11 @@ namespace FinSys.Wpf.Helpers
                 return true;
             }
             );
+        }
+
+        public void DataUpdated()
+        {
+            Send<DataUpdate>(new DataUpdate());
         }
     }
 }
