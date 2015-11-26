@@ -17,8 +17,8 @@ namespace FinSys.Wpf.Services
         static FinSysClient statProxy = null;
         static RepositoryFactory()
         {
-            statProxy = new FinSysClient(new System.ServiceModel.InstanceContext(Messenger.Default));
-            statProxy.Register();
+            //statProxy = new FinSysClient(new System.ServiceModel.InstanceContext(Messenger.Default));
+            //statProxy.Register();
             //statProxy.Close();
             portfolios = new PortfoliosRepositoryWcf();
             positions = new PositionsRepositoryWcf();

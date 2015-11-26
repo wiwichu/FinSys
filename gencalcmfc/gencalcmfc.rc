@@ -1,0 +1,744 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#pragma code_page(1252)\r\n"
+    "#endif\r\n"
+    "#include ""res\\gencalcmfc.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""         // Standard components\r\n"
+    "#include ""afxprint.rc""       // printing/print preview resources\r\n"
+    "#endif\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\gencalcmfc.ico"
+IDR_GENCALTYPE          ICON    DISCARDABLE     "res\\gencalcmfcDoc.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP  MOVEABLE PURE   "res\\Toolbar.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR DISCARDABLE  16, 15
+BEGIN
+    BUTTON      ID_FILE_NEW
+    BUTTON      ID_FILE_OPEN
+    BUTTON      ID_FILE_SAVE
+    SEPARATOR
+    BUTTON      ID_EDIT_CUT
+    BUTTON      ID_EDIT_COPY
+    BUTTON      ID_EDIT_PASTE
+    SEPARATOR
+    BUTTON      ID_FILE_PRINT
+    BUTTON      ID_APP_ABOUT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU PRELOAD DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
+        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
+        MENUITEM SEPARATOR
+        MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
+        MENUITEM SEPARATOR
+        MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&About gencalcmfc...",        ID_APP_ABOUT
+    END
+    POPUP "&Calculator"
+    BEGIN
+        MENUITEM "Rate Curves",                 ID_CALCULATOR_RATECURVES
+        MENUITEM "New Bond",                    ID_CALCULATOR_NEWBOND
+        MENUITEM "FRN",                         ID_CALCULATOR_FRNS
+    END
+    POPUP "Dates"
+    BEGIN
+        MENUITEM "Holidays",                    ID_DATES_HOLIDAYS, HELP
+        MENUITEM "Quick Holiday",               ID_DATES_QUICKHOLIDAY
+        MENUITEM "Holiday Codes",               ID_HolidayCode
+    END
+END
+
+IDR_GENCALTYPE MENU PRELOAD DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
+        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
+        MENUITEM "&Close",                      ID_FILE_CLOSE
+        MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
+        MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
+        MENUITEM SEPARATOR
+        MENUITEM "&Print...\tCtrl+P",           ID_FILE_PRINT
+        MENUITEM "Print Pre&view",              ID_FILE_PRINT_PREVIEW
+        MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
+        MENUITEM SEPARATOR
+        MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO
+        MENUITEM SEPARATOR
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Toolbar",                    ID_VIEW_TOOLBAR
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+    END
+    POPUP "&Window"
+    BEGIN
+        MENUITEM "&New Window",                 ID_WINDOW_NEW
+        MENUITEM "&Cascade",                    ID_WINDOW_CASCADE
+        MENUITEM "&Tile",                       ID_WINDOW_TILE_HORZ
+        MENUITEM "&Arrange Icons",              ID_WINDOW_ARRANGE
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&About gencalcmfc...",        ID_APP_ABOUT
+    END
+    MENUITEM "&Calculator",                 65535
+    POPUP "Dates"
+    BEGIN
+        MENUITEM "Holidays",                    ID_DATES_HOLIDAYS
+        MENUITEM "Quick Holiday",               ID_DATES_QUICKHOLIDAY
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS PRELOAD MOVEABLE PURE 
+BEGIN
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL
+    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY 
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 217, 55
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About gencalcmfc"
+FONT 8, "MS Sans Serif"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    LTEXT           "gencalcmfc Version 1.0",IDC_STATIC,40,10,119,8,
+                    SS_NOPREFIX
+    LTEXT           "Copyright (C) 1995",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "OK",IDOK,178,7,32,14,WS_GROUP
+END
+
+IDD_RateCurves DIALOG DISCARDABLE  0, 0, 460, 263
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Rate Curves"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,221,242,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,403,242,50,14
+    COMBOBOX        IDC_COMBO_Type_1,2,53,34,48,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT_Term1_1,36,53,22,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_Term2_1,61,53,22,13,ES_AUTOHSCROLL
+    COMBOBOX        IDC_COMBO_Unit_1,84,53,34,55,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_Frequency_1,118,53,49,58,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_DayCount_1,167,53,46,57,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_EOM_1,214,53,30,60,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_DayAdjust_1,246,53,47,56,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT_Rate_1,295,53,32,13,ES_AUTOHSCROLL
+    LTEXT           "Type",IDC_STATIC,5,38,17,8
+    LTEXT           "Term1",IDC_STATIC,35,38,21,8
+    LTEXT           "Term2",IDC_STATIC,62,38,21,8
+    LTEXT           "Unit",IDC_STATIC,88,38,14,8
+    LTEXT           "Frequency",IDC_STATIC,125,37,34,8
+    LTEXT           "DayCount",IDC_STATIC,172,37,32,8
+    LTEXT           "EOM",IDC_STATIC,216,37,17,8
+    LTEXT           "DayAdjust",IDC_STATIC,247,37,33,8
+    LTEXT           "Rate",IDC_STATIC,301,37,16,8
+    LISTBOX         IDC_LIST_Curve,2,91,310,127,LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LISTBOX         IDC_LIST_Boot_Result,317,91,124,127,LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Source",IDC_STATIC,5,21,24,8
+    COMBOBOX        IDC_COMBO_Source,35,19,66,48,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Value_Date",IDC_STATIC,121,22,38,8
+    EDITTEXT        IDC_EDIT_Value_Date,167,19,44,13,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "Boot",IDOK_Boot,2,222,50,14
+    CTEXT           "Start Date",IDC_STATIC,335,37,33,8
+    EDITTEXT        IDC_EDIT_Start_Date,330,53,47,13,ES_AUTOHSCROLL
+    CTEXT           "End Date",IDC_STATIC,385,37,31,8
+    EDITTEXT        IDC_EDIT_End_Date,381,53,47,13,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "Add",IDOK_Add,2,71,50,14
+    DEFPUSHBUTTON   "Remove",IDOK_Remove,118,71,50,14
+    DEFPUSHBUTTON   " Select Instr",IDOK_Select,60,71,50,14
+END
+
+IDD_BondCalculator DIALOG DISCARDABLE  0, 0, 434, 247
+STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | 
+    WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Bond Calculator"
+FONT 8, "MS Sans Serif"
+BEGIN
+    COMBOBOX        IDC_COMBO_Instrument_Class,68,10,66,48,CBS_DROPDOWNLIST | 
+                    CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT_Interest_Rate,68,38,44,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_Value_Date,68,54,44,13,ES_AUTOHSCROLL
+    LTEXT           "",IDC_STATIC_Previous_Coupon_Value,69,72,44,9
+    LTEXT           "",IDC_STATIC_Next_Coupon_Value,70,87,44,8
+    EDITTEXT        IDC_EDIT_Clean_Price,68,100,66,13,ES_AUTOHSCROLL
+    LTEXT           "",IDC_STATIC_Accrued_Interest_Value,69,117,62,9
+    LTEXT           "",IDC_STATIC_Dirty_Price_Value,69,130,64,9
+    EDITTEXT        IDC_EDIT_Yield_Discount,68,141,65,13,ES_AUTOHSCROLL
+    COMBOBOX        IDC_COMBO_Yield_Days,68,156,66,48,CBS_DROPDOWNLIST | 
+                    CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_Yield_Frequency,68,172,66,48,CBS_DROPDOWNLIST | 
+                    CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT_Maturity_Date,195,11,44,13,ES_AUTOHSCROLL
+    COMBOBOX        IDC_COMBO_Day_Count,195,26,66,48,CBS_DROPDOWNLIST | 
+                    CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_Pay_Frequency,195,41,66,48,CBS_DROPDOWNLIST | 
+                    CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "Default Dates",ID_Default_Dates,195,56,66,14
+    EDITTEXT        IDC_EDIT_Issue_Date,195,72,44,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_First_Pay_Date,195,88,44,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_Next_To_Last_Pay_Date,196,104,44,13,
+                    ES_AUTOHSCROLL
+    LTEXT           "",IDC_STATIC_Ex_Coup_Days_Value,198,120,44,9
+    LTEXT           "",IDC_STATIC_Interest_Days_Value,198,137,44,9
+    COMBOBOX        IDC_COMBO_Yield_method,196,150,66,48,CBS_DROPDOWNLIST | 
+                    CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_EOM,280,9,66,48,CBS_DROPDOWNLIST | 
+                    CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_Ex_Coup,280,118,66,48,CBS_DROPDOWNLIST | 
+                    CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Calculate",IDC_STATIC_Calculation_Choice,138,166,52,46,
+                    WS_GROUP
+    CONTROL         "Yield",IDC_RADIO1_Yield_from_Price,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,143,178,31,10
+    CONTROL         "Price",IDC_RADIO1_Price_from_Yield,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,143,191,32,10
+    DEFPUSHBUTTON   "Calculate",ID_Calculate,197,197,50,14
+    DEFPUSHBUTTON   "OK",IDOK,377,216,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,377,231,50,14
+    LTEXT           "Instrument Class",IDC_STATIC_Instrument_Class,12,11,52,
+                    8
+    LTEXT           "Interest_Rate",IDC_STATIC_Interest_Rate,12,40,44,8
+    LTEXT           "Value Date",IDC_STATIC_Value_Date,12,56,36,8
+    LTEXT           "Previous Coupon",IDC_STATIC_Previous_Coupon,12,72,55,8
+    LTEXT           "Next Coupon",IDC_STATIC_Next_Coupon,12,87,42,8
+    LTEXT           "Clean Price",IDC_STATIC_Clean_Price,12,102,37,8
+    LTEXT           "Accrued Interest",IDC_STATIC_Accrued_Interest,13,119,53,
+                    8
+    LTEXT           "Dirty Price",IDC_STATIC_Dirty_Price,13,131,33,8
+    LTEXT           "Yield/Discount",IDC_STATIC_Yield_Discount,14,144,48,8
+    LTEXT           "Yield Days",IDC_STATIC_Yield_Days,14,159,34,8
+    LTEXT           "Yield Frequency",IDC_STATIC_Yield_Frequency,15,174,52,8
+    LTEXT           "Duration",IDC_STATIC_Duration,15,189,28,8
+    LTEXT           "",IDC_STATIC_Duration_Value,70,188,63,9
+    LTEXT           "Mod. Duration",IDC_STATIC_Modified_Duration,16,201,46,8
+    LTEXT           "",IDC_STATIC_Modified_Duration_Value,70,200,64,9
+    LTEXT           "Convexity",IDC_STATIC_Convexity,16,213,32,8
+    LTEXT           "",IDC_STATIC_Convexity_Value,71,212,62,9
+    LTEXT           "PVBP (+.01)",IDC_STATIC_PVBP,16,225,40,8
+    LTEXT           "",IDC_STATIC_PVBP_Value,71,224,61,9
+    LTEXT           "Maturity Date",IDC_STATIC_Maturity_Date,138,12,43,8
+    LTEXT           "Day Count",IDC_STATIC_Day_Count,138,28,34,8
+    LTEXT           "Pay Frequency",IDC_STATIC_Pay_Frequency,138,43,48,8
+    LTEXT           "Dates: dd/mm/yyyy",IDC_STATIC_Date_Format,124,56,62,8
+    LTEXT           "Issue Date",IDC_STATIC_Issue_Date,138,73,35,8
+    LTEXT           "First Pay Date",IDC_STATIC_First_Pay_Date,138,89,45,8
+    LTEXT           "Ex-Coup Days",IDC_STATIC_Ex_Coup_Days,138,121,46,8
+    LTEXT           "Interest Days",IDC_STATIC_Interest_Days,139,138,42,8
+    LTEXT           "Yield Method",IDC_STATIC_Yield_Method,140,153,42,8
+    LTEXT           "EOM",IDC_STATIC_EOM,261,12,17,8
+    LTEXT           "Ex-Coup",IDC_STATIC_Ex_Coup,252,121,28,8
+    LTEXT           "Next to Last Pay ",IDC_STATIC_Next_To_Last_Pay_Date,138,
+                    106,55,8
+    COMBOBOX        IDC_COMBO_Holidays,68,24,35,48,CBS_DROPDOWNLIST | 
+                    CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Holidays",IDC_STATIC_Holidays,12,26,28,8
+    EDITTEXT        IDC_EDIT_Service_Fee,345,26,44,13,ES_AUTOHSCROLL | NOT 
+                    WS_VISIBLE
+    LTEXT           "Service Fee",IDC_STATIC_Service_Fee,281,29,58,8,NOT 
+                    WS_VISIBLE
+    EDITTEXT        IDC_EDIT_Lag,345,41,44,13,ES_AUTOHSCROLL | NOT 
+                    WS_VISIBLE
+    LTEXT           "Payment Delay",IDC_STATIC_Lag,281,44,58,8,NOT 
+                    WS_VISIBLE
+    COMBOBOX        IDC_COMBO_Prepay,345,57,44,48,CBS_DROPDOWNLIST | 
+                    CBS_AUTOHSCROLL | CBS_SORT | NOT WS_VISIBLE | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Prepay Model",IDC_STATIC_Prepay,281,58,58,8,NOT 
+                    WS_VISIBLE
+END
+
+IDD_CHolidayCode DIALOG DISCARDABLE  0, 0, 448, 95
+STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | 
+    WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Holiday Code Maintenance"
+FONT 8, "MS Sans Serif"
+BEGIN
+    COMBOBOX        IDC_CHolidayCode,62,6,62,42,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Choose",IDC_Code,7,6,46,12
+    LTEXT           "Description",IDC_CodeDescription,7,48,46,14
+    EDITTEXT        IDC_Edit_Codedescription,61,49,322,13,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "Update",UpdateCode,104,66,50,14
+    DEFPUSHBUTTON   "Delete",DeleteCode,159,66,50,14
+    LTEXT           "Code",IDC_NewCode,7,30,46,12
+    EDITTEXT        IDC_Edit_Code,61,28,62,13,ES_AUTOHSCROLL
+END
+
+IDD_FastDates DIALOG DISCARDABLE  0, 0, 346, 143
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Holiday Date Input"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,289,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,289,24,50,14
+    LTEXT           "Holiday Code",IDC_STATIC_Holiday_Code,7,12,43,12
+    LTEXT           "Month",IDC_STATIC_Holiday_Month,7,27,43,9
+    LTEXT           "Day",IDC_STATIC_Holiday_Day,7,39,43,10
+    EDITTEXT        IDC_EDIT_Holiday_Year,54,52,32,12,ES_AUTOHSCROLL
+    LTEXT           "Year",IDC_STATIC_Holiday_Year,7,52,43,12
+    DEFPUSHBUTTON   "ADD",IDADD,128,13,50,14
+    DEFPUSHBUTTON   "DELETE",IDDELETE,128,29,50,14
+    COMBOBOX        IDC_COMBO_Holiday_Month,53,25,69,57,CBS_DROPDOWNLIST | 
+                    CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO_Holiday_Day,53,39,69,57,CBS_DROPDOWNLIST | 
+                    CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "Test Date",IDTest,128,46,50,14
+    COMBOBOX        IDC_COMBO_Code,54,9,67,40,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_FRNCalc DIALOG DISCARDABLE  0, 0, 449, 206
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Floating Rate Notes"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,392,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,392,24,50,14
+    COMBOBOX        IDC_Holidays,52,7,36,40,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Holidays",IDC_STATIC_Holidays,7,7,39,12
+    COMBOBOX        IDC_Holidays_Adjust,52,23,73,40,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Holiday Adj",IDC_STATIC_Holiday_Adjust,7,23,39,12
+    COMBOBOX        IDC_Simp_Comp,52,39,73,40,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Simp/Comp",IDC_STATIC_Simp_Comp,7,39,39,12
+    COMBOBOX        IDC_Pay_Freq,52,55,73,40,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Pay Freq",IDC_STATIC_Pay_Freq,7,55,39,12
+    COMBOBOX        IDC_Day_Count,52,70,73,40,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Day Count",IDC_STATIC_Day_Count,7,71,39,12
+    EDITTEXT        IDC_EDIT_Issue_Date,52,86,72,15,ES_AUTOHSCROLL
+    LTEXT           "Issue Date",IDC_STATIC_Issue_Date,7,88,39,12
+    EDITTEXT        IDC_EDIT_Maturity_Date,52,104,72,15,ES_AUTOHSCROLL
+    LTEXT           "Mat Date",IDC_STATIC_Maturity_Date,7,105,39,12
+    EDITTEXT        IDC_EDIT_Value_Date,52,122,72,15,ES_AUTOHSCROLL
+    LTEXT           "Value Date",IDC_STATIC_Value_Date,7,122,39,12
+    DEFPUSHBUTTON   "Set Dates",SetDates,7,156,89,14
+    COMBOBOX        IDC_Rerate_Freq,52,140,73,40,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Rerate Freq",IDC_STATIC_Rerate_Freq,7,141,39,12
+    LTEXT           "Rerate Dates",IDC_STATIC_Rerate_Dates,127,7,54,12
+    LTEXT           "Rates",IDC_STATIC_Rerate_Rates,197,7,54,12
+    LTEXT           "",IDC_STATIC_Rerate_Dates1,126,22,54,12
+    LTEXT           "",IDC_STATIC_Rerate_Dates2,125,39,54,12
+    LTEXT           "",IDC_STATIC_Rerate_Dates3,126,55,54,12
+    LTEXT           "",IDC_STATIC_Rerate_Dates4,126,70,54,12
+    LTEXT           "",IDC_STATIC_Rerate_Dates5,125,87,54,12
+    LTEXT           "",IDC_STATIC_Rerate_Dates6,125,104,54,12
+    EDITTEXT        IDC_EDIT_Rerate_Rate1,187,23,60,15,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_Rerate_Rate2,187,39,60,15,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_Rerate_Rate3,187,55,60,15,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_Rerate_Rate4,187,71,60,15,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_Rerate_Rate5,188,86,60,15,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_Rerate_Rate6,188,103,60,15,ES_AUTOHSCROLL
+    LTEXT           "Previous Coup",IDC_STATIC_Previous_Coup,127,123,54,12
+    LTEXT           "Next Coup",IDC_STATIC_Next_Coup,127,140,54,12
+    LTEXT           "",IDC_STATIC_Previous_Coup_Display,187,121,54,12
+    LTEXT           "",IDC_STATIC_Next_Coup_Display,189,137,54,12
+    DEFPUSHBUTTON   "Calculate Interest",CalcInterest,7,177,89,14
+    LTEXT           "Accrued Interest",IDC_STATIC_Accrued_Interest,250,24,54,
+                    12
+    LTEXT           "",IDC_STATIC_Interest_Display,311,23,54,12
+    LTEXT           "Interest Days",IDC_STATIC_Interest_Days,249,40,54,12
+    LTEXT           "",IDC_STATIC_Interest_Days_Display,314,39,54,12
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "gencalcmfc MFC Application\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "gencalcmfc\0"
+            VALUE "LegalCopyright", "Copyright (C) 1995\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "gencalcmfc.EXE\0"
+            VALUE "ProductName", "gencalcmfc Application\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 210
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_RateCurves, DIALOG
+    BEGIN
+        RIGHTMARGIN, 453
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 256
+    END
+
+    IDD_BondCalculator, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 427
+        TOPMARGIN, 7
+    END
+
+    IDD_CHolidayCode, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 441
+        TOPMARGIN, 6
+        BOTTOMMARGIN, 88
+    END
+
+    IDD_FastDates, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 339
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 136
+    END
+
+    IDD_FRNCalc, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 442
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 199
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE PRELOAD DISCARDABLE 
+BEGIN
+    IDR_MAINFRAME           "gencalcmfc"
+    IDR_GENCALTYPE          "\nGencal\nGencal\n\n\nGencalcmfc.Document\nGencal Document"
+END
+
+STRINGTABLE PRELOAD DISCARDABLE 
+BEGIN
+    AFX_IDS_APP_TITLE       "gencalcmfc"
+    AFX_IDS_IDLEMESSAGE     "Ready"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_INDICATOR_EXT        "EXT"
+    ID_INDICATOR_CAPS       "CAP"
+    ID_INDICATOR_NUM        "NUM"
+    ID_INDICATOR_SCRL       "SCRL"
+    ID_INDICATOR_OVR        "OVR"
+    ID_INDICATOR_REC        "REC"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_NEW             "Create a new document\nNew"
+    ID_FILE_OPEN            "Open an existing document\nOpen"
+    ID_FILE_CLOSE           "Close the active document\nClose"
+    ID_FILE_SAVE            "Save the active document\nSave"
+    ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
+    ID_FILE_PAGE_SETUP      "Change the printing options\nPage Setup"
+    ID_FILE_PRINT_SETUP     "Change the printer and printing options\nPrint Setup"
+    ID_FILE_PRINT           "Print the active document\nPrint"
+    ID_FILE_PRINT_PREVIEW   "Display full pages\nPrint Preview"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
+    ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FILE_MRU_FILE1       "Open this document"
+    ID_FILE_MRU_FILE2       "Open this document"
+    ID_FILE_MRU_FILE3       "Open this document"
+    ID_FILE_MRU_FILE4       "Open this document"
+    ID_FILE_MRU_FILE5       "Open this document"
+    ID_FILE_MRU_FILE6       "Open this document"
+    ID_FILE_MRU_FILE7       "Open this document"
+    ID_FILE_MRU_FILE8       "Open this document"
+    ID_FILE_MRU_FILE9       "Open this document"
+    ID_FILE_MRU_FILE10      "Open this document"
+    ID_FILE_MRU_FILE11      "Open this document"
+    ID_FILE_MRU_FILE12      "Open this document"
+    ID_FILE_MRU_FILE13      "Open this document"
+    ID_FILE_MRU_FILE14      "Open this document"
+    ID_FILE_MRU_FILE15      "Open this document"
+    ID_FILE_MRU_FILE16      "Open this document"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
+    ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_WINDOW_NEW           "Open another window for the active document\nNew Window"
+    ID_WINDOW_ARRANGE       "Arrange icons at the bottom of the window\nArrange Icons"
+    ID_WINDOW_CASCADE       "Arrange windows so they overlap\nCascade Windows"
+    ID_WINDOW_TILE_HORZ     "Arrange windows as non-overlapping tiles\nTile Windows"
+    ID_WINDOW_TILE_VERT     "Arrange windows as non-overlapping tiles\nTile Windows"
+    ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_EDIT_CLEAR           "Erase the selection\nErase"
+    ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
+    ID_EDIT_COPY            "Copy the selection and put it on the Clipboard\nCopy"
+    ID_EDIT_CUT             "Cut the selection and put it on the Clipboard\nCut"
+    ID_EDIT_FIND            "Find the specified text\nFind"
+    ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
+    ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
+    ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
+    ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
+    ID_EDIT_UNDO            "Undo the last action\nUndo"
+    ID_EDIT_REDO            "Redo the previously undone action\nRedo"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCSIZE          "Change the window size"
+    AFX_IDS_SCMOVE          "Change the window position"
+    AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    AFX_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    AFX_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    AFX_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_SCRESTORE       "Restore the window to normal size"
+    AFX_IDS_SCTASKLIST      "Activate Task List"
+    AFX_IDS_MDICHILD        "Activate this window"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDS_PREVIEW_CLOSE   "Close print preview mode\nCancel Preview"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_BOND_CALC            "Bond Calculations"
+    ID_CALCULATOR_BONDS     "General Bond Calculations"
+    ID_DATES_HOLIDAYS       "Holiday date maintenance"
+    ID_DATES_QUICKHOLIDAY   "Enter the Holidays by date"
+    ID_CALCULATOR_RATECURVES "Define Rate Curves"
+    ID_CALCULATOR_NEWBOND   "Bond Calculations"
+    HolidayCode             "Set up holiday codes."
+    ID_CALCULATOR_FRNS      "Floating Rate Note Calculations"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE 9, 1
+#pragma code_page(1252)
+#endif
+#include "res\gencalcmfc.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"         // Standard components
+#include "afxprint.rc"       // printing/print preview resources
+#endif
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

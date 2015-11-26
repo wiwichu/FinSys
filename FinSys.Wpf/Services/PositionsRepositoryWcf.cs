@@ -11,6 +11,19 @@ namespace FinSys.Wpf.Services
 {
     class PositionsRepositoryWcf : IPositionsRepository
     {
+        static object statLock = new object();
+        static FinSysClient statProxy = null;
+        public PositionsRepositoryWcf()
+        {
+            //lock (statLock)
+            //{
+            //    if (statProxy == null)
+            //    {
+            //        statProxy = new FinSysClient(new System.ServiceModel.InstanceContext(Messenger.Default));
+            //        statProxy.Register();
+            //    }
+            //}
+        }
         public void AddOrUpdate(Position position)
         {
             Wcf.Contracts.PositionData data = new Wcf.Contracts.PositionData

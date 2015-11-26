@@ -42,6 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\IFinSysService.cs" />
+    <Compile Include="Contracts\PortfolioData.cs" />
+    <Compile Include="Contracts\PositionData.cs" />
+    <Compile Include="Contracts\TradeData.cs" />
     <Compile Include="FinSysClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

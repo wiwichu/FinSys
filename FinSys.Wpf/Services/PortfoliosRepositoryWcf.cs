@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using FinSys.Wpf.Model;
 using FinSyS.Wcf.Proxies;
 using FinSys.Wpf.Helpers;
+using System.ServiceModel;
+using FinSys.Wcf.Proxies.Contracts;
 
 namespace FinSys.Wpf.Services
 {
