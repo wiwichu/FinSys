@@ -1,0 +1,227 @@
+Output of the Calculator Test	
+
+Test the findday method:	
+
+20011222 is a Saturday
+20011223 is a Sunday
+20011224 is a Monday
+20011225 is a Tuesday
+20011226 is a Wednesday
+20011227 is a Thursday
+20011228 is a Friday
+20011229 is a Saturday
+20000229 is a Tuesday
+20010229 is a Bad day
+20010630 is a Saturday
+20010631 is a Bad day
+20060123 is a Monday
+
+Now test the forecast method:	
+
+20010101 plus 1 months  plus 0 days using DATEACTCAL is 20010201
+20010101 plus 1 months  plus 0 days using DATE30CAL is 20010201
+20010101 plus 1 months  plus 0 days using DATE30ECAL is 20010201
+20010101 plus -1 months  plus 0 days using DATEACTCAL is 20001201
+20010101 plus -1 months  plus 0 days using DATE30CAL is 20001201
+20010101 plus -1 months  plus 0 days using DATE30ECAL is 20001201
+20010101 plus 0 months  plus 30 days using DATEACTCAL is 20010131
+20010101 plus 0 months  plus 30 days using DATE30CAL is 20010201
+20010101 plus 0 months  plus 30 days using DATE30ECAL is 20010201
+20010130 plus 0 months  plus 30 days using DATEACTCAL is 20010301
+20010130 plus 0 months  plus 30 days using DATE30CAL is 20010228
+20010130 plus 0 months  plus 30 days using DATE30ECAL is 20010228
+20000130 plus 0 months  plus 30 days using DATEACTCAL is 20000229
+20000130 plus 0 months  plus 30 days using DATE30CAL is 20000229
+20000130 plus 0 months  plus 30 days using DATE30ECAL is 20000229
+20010130 plus 0 months  plus 1 days using DATEACTCAL is 20010131
+20010130 plus 0 months  plus 1 days using DATE30CAL is 20010201
+20010130 plus 0 months  plus 1 days using DATE30ECAL is 20010201
+20010201 plus 0 months  plus -61 days using DATEACTCAL is 20001202
+20010201 plus 0 months  plus -61 days using DATE30CAL is 20001130
+20010201 plus 0 months  plus -61 days using DATE30ECAL is 20001130
+20010115 plus 0 months  plus 1 days using DATEACTCAL is 20010116
+20010115 plus 0 months  plus 1 days using DATE30CAL is 20010116
+20010115 plus 0 months  plus 1 days using DATE30ECAL is 20010116
+
+Now test the tenor method:	
+
+20010101 to 20010201 is 31 days using DATEACTCAL
+20010101 to 20010201 is 30 days using DATE30CAL
+20010101 to 20010201 is 30 days using DATE30ECAL
+20010131 to 20010201 is 1 days using DATEACTCAL
+20010131 to 20010201 is 1 days using DATE30CAL
+20010131 to 20010201 is 1 days using DATE30ECAL
+20010130 to 20010201 is 2 days using DATEACTCAL
+20010130 to 20010201 is 1 days using DATE30CAL
+20010130 to 20010201 is 1 days using DATE30ECAL
+20010130 to 20010131 is 1 days using DATEACTCAL
+20010130 to 20010131 is 0 days using DATE30CAL
+20010130 to 20010131 is 0 days using DATE30ECAL
+20010129 to 20010130 is 1 days using DATEACTCAL
+20010129 to 20010130 is 1 days using DATE30CAL
+20010129 to 20010130 is 1 days using DATE30ECAL
+20010129 to 20010131 is 2 days using DATEACTCAL
+20010129 to 20010131 is 2 days using DATE30CAL
+20010129 to 20010131 is 1 days using DATE30ECAL
+20010501 to 20010530 is 29 days using DATEACTCAL
+20010501 to 20010530 is 29 days using DATE30CAL
+20010501 to 20010530 is 29 days using DATE30ECAL
+20010501 to 20010531 is 30 days using DATEACTCAL
+20010501 to 20010531 is 30 days using DATE30CAL
+20010501 to 20010531 is 29 days using DATE30ECAL
+20010501 to 20010601 is 31 days using DATEACTCAL
+20010501 to 20010601 is 30 days using DATE30CAL
+20010501 to 20010601 is 30 days using DATE30ECAL
+
+Test setting different instrument classes:	
+
+ Setting class GERMANBUND
+	 Day Count is 30E/360
+	 Pay Frequency is 12 MONTHS
+	 Yield Day Count is 30E/360
+	 Yield Frequency is 12 MONTHS
+ Setting class GOVOFJAPAN
+	 Day Count is ACT/365
+	 Pay Frequency is 6 MONTHS
+	 Yield Day Count is ACT/365
+	 Yield Frequency is 6 MONTHS
+ Setting class EURO
+	 Day Count is 30E/360
+	 Pay Frequency is 12 MONTHS
+	 Yield Day Count is 30E/360
+	 Yield Frequency is 12 MONTHS
+ Setting class UKGILT
+	 Day Count is ACT/365
+	 Pay Frequency is 6 MONTHS
+	 Yield Day Count is ACT/365
+	 Yield Frequency is 6 MONTHS
+ Setting class UKCD
+	 Day Count is ACT/365CD
+	 Pay Frequency is 6 MONTHS
+	 Yield Day Count is ACT/365CD
+	 Yield Frequency is 6 MONTHS
+ Setting class UKDSC
+	 Day Count is ACT/365
+	 Pay Frequency is 12 MONTHS
+	 Yield Day Count is ACT/365
+	 Yield Frequency is 12 MONTHS
+ Setting class USCD
+	 Day Count is ACT/360
+	 Pay Frequency is 6 MONTHS
+	 Yield Day Count is ACT/360
+	 Yield Frequency is 6 MONTHS
+ Setting class USDSC
+	 Day Count is ACT/360
+	 Pay Frequency is 12 MONTHS
+	 Yield Day Count is ACT/360
+	 Yield Frequency is 12 MONTHS
+ Setting class USTBOND
+	 Day Count is ACT/ACT
+	 Pay Frequency is 6 MONTHS
+	 Yield Day Count is ACT/ACT
+	 Yield Frequency is 6 MONTHS
+ Setting class CP
+	 Day Count is ACT/360
+	 Pay Frequency is 12 MONTHS
+	 Yield Day Count is ACT/360
+	 Yield Frequency is 12 MONTHS
+ Setting class FINANZSCHATZ
+	 Day Count is 30E/360
+	 Pay Frequency is 12 MONTHS
+	 Yield Day Count is 30E/360
+	 Yield Frequency is 12 MONTHS
+ Setting class USCHATZ
+	 Day Count is 30E/360
+	 Pay Frequency is 12 MONTHS
+	 Yield Day Count is 30E/360
+	 Yield Frequency is 12 MONTHS
+ Setting class USCHATZBUBA
+	 Day Count is 30E/360
+	 Pay Frequency is 12 MONTHS
+	 Yield Day Count is 30E/360
+	 Yield Frequency is 12 MONTHS
+ Setting class SCHULDSCHEIN
+	 Day Count is 30E/360
+	 Pay Frequency is 12 MONTHS
+	 Yield Day Count is 30E/360
+	 Yield Frequency is 12 MONTHS
+ Setting class MBS
+	 Day Count is 30/360
+	 Pay Frequency is 1 MONTHS
+	 Yield Day Count is 30/360
+	 Yield Frequency is 1 MONTHS
+
+Test different price/yield examples:	
+
+ Setting class USDSC
+ Value Date is 19860220
+ Maturity Date is 19860313
+ Price is 0.99592
+ Discount Rate is 6.99428571428567e-02
+ Set Discount Rate to 7.e-02
+ Price Result is 0.995916666666667
+ Discount Rate from this price is 7.e-02
+ MM Yield is 7.02870052715238e-02
+ Bond Equivalent Yield is 7.12632136780728e-02
+ Calculate Price from this BE yield 7.12632136780728e-02
+ Price Result is 0.995916666666667
+ Value Date is 19860104
+ Maturity Date is 19861217
+ Price is 0.942167
+ BE Yield is 6.45670913000919e-02
+ Calculate Price from this BE yield 6.45670913000919e-02
+ Price Result is 0.942167
+
+ Maturity Date is 20011031
+ Bought on 20010606
+ at a Discount Rate of 6.e-02
+ Price Result is 0.976405756781339
+ Sold on 20010606
+ at a Discount Rate of 5.85e-02
+ Price Result is 0.97698203557553
+
+ Setting class USCD
+ Value Date is 19860516
+ Issue Date is 19860101
+ First Pay Date is 19863006
+ Next to Last Pay Date is 19860101
+ Maturity Date is 19860630
+ Interest Rate is 8.e-02
+ Yield is 7.75e-02
+ Price is 1.00002166511916
+ Interest is 3.e-02
+ Price is 1.000022
+ Yield is 7.74973738425011e-02
+ Interest is 3.e-02
+
+ Value Date is 19860824
+ Issue Date is 19860804
+ First Pay Date is 19860810
+ Next to Last Pay Date is 19870804
+ Maturity Date is 19871008
+ Interest Rate is 8.e-02
+ Yield is 7.75e-02
+ Price is 1.00238511382701
+ Interest is 3.06666666666666e-02
+ Price is 1.002385
+ Yield is 7.75001118951193e-02
+
+ Price is 0.96
+ Yield is 8.33333333333333e-02
+ Interest is 3.06666666666666e-02
+ Yield is 8.33e-02
+ Price is 0.960384153661465
+ Interest is 3.06666666666666e-02
+
+ Value Date is 20020101
+ Issue Date is 20020101
+ First Pay Date is 20030101
+ Next to Last Pay Date is 20060101
+ Maturity Date is 20070101
+ Interest Rate is 8.e-02
+ Price is 0.96
+ Yield is 9.16621029572837e-02
+
+ Yield is 9.17e-02
+ Price is 0.96
+
