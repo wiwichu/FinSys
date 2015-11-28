@@ -1,0 +1,153 @@
+﻿using FinSys.Wpf.Helpers;
+using FinSys.Wpf.Model;
+using FinSys.Wpf.Services;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
+
+namespace FinSys.Wpf.ViewModel
+{
+    public class BondCalculatorViewModel : NotifyPropertyChanged
+    {
+        public BondCalculatorViewModel()
+        {
+            if (DesignerProperties.GetIsInDesignMode(new System.Windows.DependencyObject()))
+            {
+                return;
+            }
+            this.InstrumentClasses = new ObservableCollection<InstrumentClass>();
+            this.DayCounts = new ObservableCollection<string>();
+            ValueDate = DateTime.Today;
+            MaturityDate = DateTime.Today.AddYears(1);
+            Initializer();
+            LoadCommands();
+        }
+
+        private void Initializer()
+        {
+            InstrumentClasses = new ObservableCollection<InstrumentClass>(RepositoryFactory.Calculator.GetInstrumentClassesAsync().Result);
+            if (instrumentClasses.Count>0)
+            {
+                SelectedInstrumentClass = instrumentClasses[0];
+            }
+            DayCounts = new ObservableCollection<string>(RepositoryFactory.Calculator.GetDayCountsAsync().Result);
+            if (DayCounts.Count > 0)
+            {
+                SelectedDayCount = dayCounts[0];
+            }
+        }
+
+        public ICommand OpenWindowCommand
+        {
+            get;
+            set;
+        }
+        DialogService dialogService = new DialogService();
+
+        private void LoadCommands()
+        {
+            OpenWindowCommand = new RelayCommand(OpenWindow, CanOpenWindow);
+        }
+
+        private bool CanOpenWindow(object obj)
+        {
+            return true;
+        }
+
+        private void OpenWindow(object obj)
+        {
+            dialogService.ShowDialog(DialogService.DIALOG.CALCULATORVIEW, this);
+        }
+        private ObservableCollection<InstrumentClass> instrumentClasses = new ObservableCollection<InstrumentClass>();
+        public ObservableCollection<InstrumentClass> InstrumentClasses
+        {
+            get
+            {
+                return instrumentClasses;
+            }
+            set
+            {
+                instrumentClasses = value;
+                OnPropertyChanged();
+            }
+        }
+        object selectedInstrumentClass;
+        public object SelectedInstrumentClass
+        {
+            get
+            {
+                return selectedInstrumentClass;
+            }
+            set
+            {
+                if (selectedInstrumentClass != value)
+                {
+                    selectedInstrumentClass = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private ObservableCollection<string> dayCounts = new ObservableCollection<string>();
+        public ObservableCollection<string> DayCounts
+        {
+            get
+            {
+                return dayCounts;
+            }
+            set
+            {
+                dayCounts = value;
+                OnPropertyChanged();
+            }
+        }
+        object selectedDayCount;
+        public object SelectedDayCount
+        {
+            get
+            {
+                return selectedDayCount;
+            }
+            set
+            {
+                if (selectedDayCount != value)
+                {
+                    selectedDayCount = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private DateTime valueDate;
+        public DateTime ValueDate
+        {
+            get
+            {
+                return valueDate;
+            }
+            set
+            {
+                valueDate = value;
+                OnPropertyChanged();
+            }
+        }
+        private DateTime maturityDate;
+        public DateTime MaturityDate
+        {
+            get
+            {
+                return maturityDate;
+            }
+            set
+            {
+                maturityDate = value;
+                OnPropertyChanged();
+            }
+        }
+
+    }
+}

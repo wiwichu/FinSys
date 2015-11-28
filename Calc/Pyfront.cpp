@@ -25,6 +25,18 @@ typedef struct 	actions		{
 				char next_action;}
 		actions;
 */
+
+char** getclassdescriptions(int& size)
+{
+	size = instr_last_class;
+	return (char**)instr_class_descs;
+}
+char** getdaycounts(int& size)
+{
+	size = date_last_day_count;
+	return (char**)day_count_names;
+}
+
 Py_Front::Py_Front()
 {
 	scr_meth = scr_meth_general;

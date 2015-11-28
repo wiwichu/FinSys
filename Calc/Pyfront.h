@@ -27,6 +27,9 @@
 #include "errdecs.h"
 #include "holicodeproc.h"
 
+extern "C" __declspec(dllexport) char**  getclassdescriptions(int& size);
+extern "C" __declspec(dllexport) char**  getdaycounts(int& size);
+
 
 const char change_new = 0;
 const char change_step = 1;
@@ -582,8 +585,12 @@ unsigned long  _FAR_FUNC _EX_IN_FUNC   getsimpcomp(int *simpcomp_number);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   getsimpcomp(char simpcompparm [simp_comp_names_len]);
 //unsigned long  _FAR_FUNC _EX_IN_FUNC   getcprrate(int *cprrate);
 
-
-
+static Py_Front& getInstance()
+{
+	static Py_Front instance; // Guaranteed to be destroyed.
+						  // Instantiated on first use.
+	return instance;
+}
 
 //extern unsigned long  _FAR_FUNC _EX_IN_FUNC    _FAR_FUNC _EX_IN_FUNC	pyproc	(
 unsigned long pyproc45	(

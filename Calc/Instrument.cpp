@@ -174,9 +174,15 @@ switch (in_instr->instr_class)
     memcpy(&in_instr->class_name,instr_gilt_class_name,string_size);
     string_size = instr_class_desc_len;
     memcpy(&in_instr->class_desc,instr_gilt_class_desc,string_size);
+	/*
     in_instr->day_count		= date_act_365_day_count;
     in_instr->cal_num		= date_act_cal;
     in_instr->cal_den 		= date_365_cal;
+	*/
+	in_instr->day_count = date_act_act_day_count;
+	in_instr->cal_num = date_act_cal;
+	in_instr->cal_den = date_act_cal;
+
     in_instr->pay_factor	= instr_no_pay_factor;
     in_instr->pay_type		= instr_fixed_pay_type;
     in_instr->pay_sched		= instr_str_pay_sched;

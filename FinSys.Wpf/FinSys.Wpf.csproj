@@ -71,8 +71,11 @@
     <Compile Include="Messages\PortfolioUpdate.cs" />
     <Compile Include="Messages\PositionUpdate.cs" />
     <Compile Include="Messages\TradeUpdate.cs" />
+    <Compile Include="Model\InstrumentClass.cs" />
     <Compile Include="Model\Portfolio.cs" />
+    <Compile Include="Services\CalculatorRepository.cs" />
     <Compile Include="Services\DialogService.cs" />
+    <Compile Include="Services\ICalculatorRepository.cs" />
     <Compile Include="Services\IPortfoliosRepository.cs" />
     <Compile Include="Services\IPositionsRepository.cs" />
     <Compile Include="Services\ITradesRepository.cs" />
@@ -81,11 +84,14 @@
     <Compile Include="Services\Repositories.cs" />
     <Compile Include="Services\RepositoryFactory.cs" />
     <Compile Include="Services\TradesRepositoryWcf.cs" />
+    <Compile Include="ViewModel\BondCalculatorViewModel.cs" />
     <Compile Include="ViewModel\PortfolioViewModel.cs" />
     <Compile Include="ViewModel\PositionViewModel.cs" />
     <Compile Include="ViewModel\TradeViewModel.cs" />
     <Compile Include="ViewModel\TradingViewModel.cs" />
-    <Compile Include="ViewModel\UpdateData.cs" />
+    <Compile Include="View\BondCalculatorView.xaml.cs">
+      <DependentUpon>BondCalculatorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\PortfolioListView.xaml.cs">
       <DependentUpon>PortfolioListView.xaml</DependentUpon>
     </Compile>
@@ -117,6 +123,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\BondCalculatorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\PortfolioListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -170,7 +180,9 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FinSys.Wcf.Contracts\FinSys.Wcf.Contracts.csproj">

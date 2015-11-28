@@ -29,19 +29,28 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="3*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
-            <ContentControl Name="PortList" Content="{Binding}" ContentTemplate="{StaticResource PortfolioListTemplate}" Grid.Row="0" Grid.ColumnSpan="2" />
-            <ContentControl Name="PosList" Content="{Binding SelectedPortfolio}" ContentTemplate="{StaticResource PositionListTemplate}" Grid.Row="1" Grid.ColumnSpan="2" />
-            <ContentControl Name="TradeList" Content="{Binding SelectedPortfolio.SelectedPosition}" ContentTemplate="{StaticResource TradeListTemplate}" Grid.Row="2" Grid.ColumnSpan="2" />
-            <Button DataContext="{Binding NewTradeViewModel}" Content="New Trade" Command="{Binding ViewCommand}" Grid.Row="3"/>
+        <DockPanel  Grid.Row="0" Grid.ColumnSpan="2">
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_Tools">
+                    <MenuItem DataContext="{Binding NewBondCalculatorViewModel}" Header="_Bond Calculator" Command="{Binding OpenWindowCommand}"/>
+                </MenuItem>
+            </Menu>
+            <StackPanel></StackPanel>
+        </DockPanel>
+        <ContentControl Name="PortList" Content="{Binding}" ContentTemplate="{StaticResource PortfolioListTemplate}" Grid.Row="1" Grid.ColumnSpan="2" />
+            <ContentControl Name="PosList" Content="{Binding SelectedPortfolio}" ContentTemplate="{StaticResource PositionListTemplate}" Grid.Row="2" Grid.ColumnSpan="2" />
+            <ContentControl Name="TradeList" Content="{Binding SelectedPortfolio.SelectedPosition}" ContentTemplate="{StaticResource TradeListTemplate}" Grid.Row="3" Grid.ColumnSpan="2" />
+            <Button DataContext="{Binding NewTradeViewModel}" Content="New Trade" Command="{Binding ViewCommand}" Grid.Row="4"/>
     </Grid>
     
 </UserControl>

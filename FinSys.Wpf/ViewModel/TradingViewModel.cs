@@ -126,8 +126,15 @@ namespace FinSys.Wpf.ViewModel
                 return new TradeViewModel(new Trade());
             }
         }
+        public BondCalculatorViewModel NewBondCalculatorViewModel
+        {
+            get
+            {
+                return new BondCalculatorViewModel();
+            }
+        }
 
-    private async Task LoadData()
+        private async Task LoadData()
         {
             PortfolioViewModel pvm = _SelectedPortfolio as PortfolioViewModel;
             if (pvm != null)

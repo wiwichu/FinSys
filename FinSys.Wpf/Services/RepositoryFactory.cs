@@ -14,7 +14,7 @@ namespace FinSys.Wpf.Services
         private static IPortfoliosRepository portfolios = null;
         private static IPositionsRepository positions = null;
         private static ITradesRepository trades = null;
-        static FinSysClient statProxy = null;
+        private static ICalculatorRepository calculator = null;
         static RepositoryFactory()
         {
             //statProxy = new FinSysClient(new System.ServiceModel.InstanceContext(Messenger.Default));
@@ -23,6 +23,7 @@ namespace FinSys.Wpf.Services
             portfolios = new PortfoliosRepositoryWcf();
             positions = new PositionsRepositoryWcf();
             trades = new TradesRepositoryWcf();
+            calculator = new CalculatorRepository();
             //BuildPositions();
 
         }
@@ -61,6 +62,13 @@ namespace FinSys.Wpf.Services
             get
             {
                 return portfolios;
+            }
+        }
+        public static ICalculatorRepository Calculator
+        {
+            get
+            {
+                return calculator;
             }
         }
     }

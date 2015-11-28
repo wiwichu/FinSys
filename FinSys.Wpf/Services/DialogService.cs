@@ -14,7 +14,8 @@ namespace FinSys.Wpf.Services
     {
         public enum DIALOG
         {
-            TRADEEDITVIEW
+            TRADEEDITVIEW,
+            CALCULATORVIEW
         }
 
         private static ConcurrentDictionary<DIALOG, Window> dialogMap = new ConcurrentDictionary<DIALOG, Window>();
@@ -25,6 +26,13 @@ namespace FinSys.Wpf.Services
             {
                 case DIALOG.TRADEEDITVIEW:
                     view = new TradeEditView();
+                    if (viewModel != null)
+                    {
+                        view.DataContext = viewModel;
+                    }
+                    break;
+                case DIALOG.CALCULATORVIEW:
+                    view = new BondCalculatorView();
                     if (viewModel != null)
                     {
                         view.DataContext = viewModel;
