@@ -534,7 +534,7 @@ accrued interest and number of days of interest for that date.
 
 	switch (in_instr.cal_den)
 	{
-
+	  case date_365L_cal:
 	  case date_act_cal: 	/*{ If calendar denominator is ACT, then
 				determine number of quasi periods (ACT is
 				not permitted when payment period is in days).}*/
@@ -586,6 +586,13 @@ accrued interest and number of days of interest for that date.
 						in_instr.cal_den,
 						&divisor_days);
 
+					if (in_instr.cal_den == date_365L_cal && !isLeapDayInRange(quasi_prv_pay,quasi_nxt_pay))
+					{
+						if (isLeapYear(in_date))
+						{
+							divisor_days = divisor_days * 366 / 365;
+						}
+					}
 
 					if (return_status != return_success)
 					{
@@ -750,6 +757,13 @@ accrued interest and number of days of interest for that date.
 					in_instr.cal_den,
 					&divisor_days);
 
+				if (in_instr.cal_den == date_365L_cal && !isLeapDayInRange(quasi_prv_pay, quasi_nxt_pay))
+				{
+					if (isLeapYear(in_date))
+					{
+						divisor_days = divisor_days * 366 / 365;
+					}
+				}
 				if (return_status != return_success)
 				{
 
@@ -777,12 +791,13 @@ accrued interest and number of days of interest for that date.
 					&sub_per_start, &sub_per_end, &comp_factor,
 					&divisor_days, &quasi_nxt_pay, &calc_end,
 					nom_adj,rate_array,whole_period_factor);
-																														  if (return_status != return_success) {
+																														  
+				if (return_status != return_success) {
 
-				goto intcalc_end;
+					goto intcalc_end;
+				}
+
 			}
-
-		 }
 
 		} /* End of regularly paying instruments. */
 		else
@@ -796,17 +811,17 @@ accrued interest and number of days of interest for that date.
 
 	  }
 
-	  case date_366_cal: 	/*{ If calendar denominator is 366, then
-				determine number of quasi periods due to
-				leap years.}*/
-	  {
-		 /*This method is not yet supported.*/
-		 /* For now always 366 */
+	  //case date_366_cal: 	/*{ If calendar denominator is 366, then
+			//	determine number of quasi periods due to
+			//	leap years.}*/
+	  //{
+		 ///*This method is not yet supported.*/
+		 ///* For now always 366 */
 
-		 divisor_days = 366;
+		 //divisor_days = 366;
 
-		 break;
-	  }
+		 //break;
+	  //}
 
 	  case date_365_cal: 	/*{ If calendar denominator is 365, days are
 				simply divided by 365.}*/

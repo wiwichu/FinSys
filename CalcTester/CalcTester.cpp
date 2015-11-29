@@ -979,5 +979,39 @@ Price =
 AccruedInt =
 
 1.2917
+
+
+//////////////////////////////////
+Accrued Interest on conventional gilts (standard dividend period)
+ORB identifiers
+Name: Treasury 5% 2025
+TIDM: TR25
+ISIN: GB0030880693
+Coupon dates: 7 March and 7 September
+Annual Coupon: 5%
+Trade Date: 13 April 2015 (T+1 settlement on 14 April 2015)
+Clean Price: 129.21
+Accrued = 38 (period between 7 Mar 2015 and 14 Apr 2015) x 5
+Interest 184 (period between 7 Mar and 7 Sep 2015) 2
+= 0.5163
+Dirty price = 129.7263 (clean price + accrued interest)
+//////////////////////////////////////////////
+
+Convert the Discount Rate on Treasury Bills
+This example shows how to convert the discount rate on Treasury bills into their respective money-market or bond-equivalent yields, given a Treasury bill with the following characteristics.
+
+Discount = 0.0497;
+Settle = '01-Oct-02';
+Maturity = '31-Mar-03';
+
+[BEYield MMYield] = tbilldisc2yield(Discount, Settle, Maturity)
+BEYield =
+
+0.0517 (USE MM YIELD)
+
+
+MMYield =
+
+0.0510 (MAKE YIELD DAYS ACT/ACT AND YIELD FREQUENCY SEMI-ANNUAL AND USE COMPOUND YTM)
 */
 

@@ -1340,6 +1340,70 @@ void  	 Date_Funcs::datecpy	(void * dest_date,
     Called by:	<[tenor]
 
 }*/
+bool Date_Funcs::isLeapYear(date_union in_date)
+{
+	int actual_year = (in_date.date.centuries * 100) +
+		in_date.date.years;
+
+	/*{If this is a leap year, add an extra day.}*/
+
+	if ((actual_year) % 4 == 0)
+	{
+		if (!((actual_year % 400 != 0) &&
+			(actual_year % 100 == 0)))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+bool Date_Funcs::isLeapDayInRange(date_union start_date, date_union end_date)
+{
+	if (!isLeapYear(start_date) && !isLeapYear(end_date))
+	{
+		return false;
+	}
+	if (start_date.date.months <= 2 || end_date.date.months >= 2)
+	{
+		if (
+			(start_date.date.months == 2 && start_date.date.days == 29)
+			||
+			(end_date.date.months == 2 && end_date.date.days == 29)
+			)
+		{
+			return true;
+		}
+		if (isLeapYear(start_date))
+		{
+			date_union leapDay = start_date;
+			leapDay.date.months = 2;
+			leapDay.date.days = 29;
+			if (
+				datecmp(start_date.date_string, leapDay.date_string) <= 0
+				&&
+				datecmp(end_date.date_string, leapDay.date_string) >= 0
+				)
+			{
+				return true;
+			}
+		}
+		else if (isLeapYear(end_date))
+		{
+			date_union leapDay = end_date;
+			leapDay.date.months = 2;
+			leapDay.date.days = 29;
+			if (
+				datecmp(start_date.date_string, leapDay.date_string) <= 0
+				&&
+				datecmp(end_date.date_string, leapDay.date_string) >= 0
+				)
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
 
 unsigned long Date_Funcs::date_to_days	(date_union in_date, long *out_days)
 {

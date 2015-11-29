@@ -1110,10 +1110,10 @@ unsigned long	_PYFUNCS py_days_in_year(long double *days_in_year,
 			*days_in_year = 365;
 			break;
 		 }
-		 case date_366_cal:
+		 case date_365L_cal:
 		 {
 
-			*days_in_year = 366;
+			*days_in_year = 365;
 			break;
 		 }
 		 case date_30_cal:
