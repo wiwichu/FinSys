@@ -959,3 +959,25 @@ int main(int argc, char* argv[])
 				return 0;
 }
 
+/*
+Compute the Price and Accrued Interest for a Certificate of Deposit
+This example shows how to compute the price and the accrued interest due on the settlement date, given a certificate of deposit with the following characteristics.
+
+Yield           =  0.0525;
+CouponRate      =  0.05;
+Settle          =  '02-Jan-02';
+Maturity        =  '31-Mar-02';
+IssueDate       =  '1-Oct-01';
+
+[Price, AccruedInt] = cdprice(Yield, CouponRate, Settle, ...
+Maturity, IssueDate)
+Price =
+
+99.9233
+
+
+AccruedInt =
+
+1.2917
+*/
+
