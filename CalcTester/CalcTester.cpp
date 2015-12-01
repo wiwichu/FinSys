@@ -1076,7 +1076,73 @@ NL365
 The number of days is calculated as the actual number of days between the effective date and the terminating date without including any occurrences of the leap day, February 29th.  This number is divided by 365.
 The main differences between the various 30/360 methods is the treatment of dates landing on the 31st of a month, or the end of February.  The ISMA, ISDA, and 30E+/360 methods make adjustments for dates landing on the 31st of a month, but not for dates landing on the last day of February.  The SIA, BMA, and German methods make adjustments for dates landing on the 31st of a month, as well as for dates landing on the last day of February.
 
+///////////////////////////////////////
 
+Below are few of the examples chosen to highlight the differences between the stated conventions
+Example 1
+
+Let us assume D1.M1.Y1 = 28/12/2007 and D2.M2.Y2 = 28/2/2008 (Remember Y2 is Leap).
+Table 3: DCF calculations (1/4)
+Convention	Calculation	DCF
+Act/Act	4/365+58/366	0.16942884946478
+Act/365F	62/365	0.16986301369863
+Act/360	62/360	0.172222222222222
+Act/365A	62/365	0.16986301369863
+Act/365L	62/366	0.169398907103825
+NL/365	62/365	0.16986301369863
+30/360 ISDA	60/360	0.166666666666667
+30E/360	60/360	0.166666666666667
+30E+/360	60/360	0.166666666666667
+30/360 German	60/360	0.166666666666667
+30/360 US	60/360	0.166666666666667
+Example 2
+
+Now let us suppose D1.M1.Y1 = 28/12/2007 and D2.M2.Y2 = 29/2/2008 (Remember Y2 is Leap).
+Table 4: DCF calculations (2/4)
+Convention	Calculation	DCF
+Act/Act	4/365+59/366	0.172161089901939
+Act/365F	63/365	0.172602739726027
+Act/360	63/360	0.175
+Act/365A	63/366	0.172131147540984
+Act/365L	63/366	0.172131147540984
+NL/365	62/365	0.16986301369863
+30/360 ISDA	61/360	0.169444444444444
+30E/360	61/360	0.169444444444444
+30E+/360	61/360	0.169444444444444
+30/360 German	62/360	0.172222222222222
+30/360 US	61/360	0.169444444444444
+Example 3
+
+Now let us suppose D1.M1.Y1 = 31/10/2007 and D2.M2.Y2 = 30/11/2008 (Remember Y2 is Leap).
+Table 5: DCF calculations (3/4)
+Convention	Calculation	DCF
+Act/Act	62/365+334/366	1.08243131970956
+Act/365F	396/365	1.08493150684932
+Act/360	396/360	1.1000000000000
+Act/365A	396/366	1.08196721311475
+Act/365L	396/366	1.08196721311475
+NL/365	395/365	1.08219178082192
+30/360 ISDA	390/360	1.08333333333333
+30E/360	390/360	1.08333333333333
+30E+/360	390/360	1.08333333333333
+30/360 German	390/360	1.08333333333333
+30/360 US	390/360	1.08333333333333
+Example 4
+
+Let's take one last example. D1.M1.Y1 = 2/1/2008 and D2.M2.Y2 = 5/31/2009
+Table 6: DCF calculations (4/4)
+Convention	Calculation	DCF
+Act/Act	335/366+150/365	1.32625945055768
+Act/365F	485/365	1.32876712328767
+Act/360	485/360	1.34722222222222
+Act/365A	485/366	1.32513661202186
+Act/365L	485/365	1.32876712328767
+NL/365	484/365	1.32602739726027
+30/360 ISDA	480/360	1.33333333333333
+30E/360	479/360	1.33055555555556
+30E+/360	480/360	1.33333333333333
+30/360 German	479/360	1.33055555555556
+30/360 US	480/360	1.33333333333333
 
 */
 
