@@ -257,6 +257,11 @@ accrued interest and number of days of interest for that date.
 					date_act_cal,
 					&n_pay);
 				valueDate = n_pay;
+
+				if (return_status != return_success)
+				{
+					return return_status;
+				}
 			}
 			if (datecmp(in_date.date_string, valueDate.date_string) < 0)
 			{
@@ -273,6 +278,10 @@ accrued interest and number of days of interest for that date.
 				-1,
 				date_act_cal,
 				&preValueDate);
+			if (return_status != return_success)
+			{
+				return return_status;
+			}
 			if (isLeapYear(preValueDate))
 			{
 				inst->cal_den = date_366_cal;
@@ -281,7 +290,7 @@ accrued interest and number of days of interest for that date.
 			{
 				inst->cal_den = date_365_cal;
 			}
-			intcalc(*inst
+			return_status = intcalc(*inst
 				, valueDate
 				, &interestParm
 				, &int_daysParm
@@ -296,6 +305,10 @@ accrued interest and number of days of interest for that date.
 				, rate_array
 				, &whole_period_factorParm
 				);
+			if (return_status != return_success)
+			{
+				return return_status;
+			}
 
 			*interest += interestParm;
 			*int_days += int_daysParm;
@@ -308,6 +321,10 @@ accrued interest and number of days of interest for that date.
 				1,
 				date_act_cal,
 				&p_pay);
+			if (return_status != return_success)
+			{
+				return return_status;
+			}
 
 			n_pay = nxt_pay;
 			inst->pay_freq.first_date = n_pay;
@@ -318,6 +335,43 @@ accrued interest and number of days of interest for that date.
 		delete inst;
 		return return_success;
 	}
+
+	if (in_instr.cal_den == date_365L_cal)
+	{
+		instr *inst = new instr(in_instr);
+		if (isLeapYear(in_date))
+		{
+			inst->cal_den = date_366_cal;
+		}
+		else
+		{
+			inst->cal_den = date_365_cal;
+		}
+		return_status = intcalc(*inst
+			, in_date
+			, interest
+			, int_days
+			, holi_chan
+			, ex_coup_ind
+			, total_per
+			, nom_adj
+			, sett_to_first_fact_parm
+			, redeem_adj
+			, event_chan
+			, holiSet
+			, rate_array
+			, whole_period_factor
+			);
+		if (return_status != return_success)
+		{
+			return return_status;
+		}
+
+
+		delete inst;
+		return return_success;
+	}
+
 
 		  /* Note whether the first period is also the last.*/
 

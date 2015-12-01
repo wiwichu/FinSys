@@ -112,6 +112,9 @@ long PatCalc::tenor (const string &startdate,const string &enddate, FinCalc::_CA
 	case DATE30CAL:
 		_caltype = date_30_cal;
 		break;
+	case DATE30GERMANCAL:
+		_caltype = date_30german_cal;
+		break;
 	case DATE30ECAL:
 		_caltype = date_30e_cal;
 		break;
@@ -161,6 +164,9 @@ string PatCalc::forecast (const string &date,int months,long days, FinCalc::_CAL
 		break;
 	case DATE30CAL:
 		_caltype = date_30_cal;
+		break;
+	case DATE30GERMANCAL:
+		_caltype = date_30german_cal;
 		break;
 	case DATE30ECAL:
 		_caltype = date_30e_cal;
@@ -415,6 +421,11 @@ FinCalc::_DAYCOUNT	PatCalc::convertDaycount(int rawDaycount)
 			_daycount = FinCalc::_30_360;
 			break;
 		}
+		case date_30_360german_day_count:
+		{
+			_daycount = FinCalc::_30_360GERMAN;
+			break;
+		}
 		case date_act_360_day_count:
 		{
 			_daycount = FinCalc::_ACT_360;
@@ -475,6 +486,11 @@ int	PatCalc::convertDaycount(FinCalc::_DAYCOUNT rawDaycount)
 		case FinCalc::_30_360:
 		{
 			_daycount = date_30_360_day_count;
+			break;
+		}
+		case FinCalc::_30_360GERMAN:
+		{
+			_daycount = date_30_360german_day_count;
 			break;
 		}
 		case FinCalc::_ACT_360:

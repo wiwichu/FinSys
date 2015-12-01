@@ -2639,6 +2639,7 @@ unsigned long Date_Funcs::forecast	(date_union base_date,
 			} /* Actual days */
 
 			case date_30_cal:
+			case date_30german_cal:
 			case date_30e_cal: /* {30 and 30e are almost identical.} */
 			{
 
@@ -3198,7 +3199,8 @@ unsigned long Date_Funcs::tenor	(date_union start_date,
 	switch (cal_type)
 	  {
 
-		 case date_30_cal:
+	case date_30german_cal:
+	case date_30_cal:
 		 case date_30e_cal: /* {30 and 30e are almost identical.} */
 
 		 {
@@ -3234,6 +3236,17 @@ unsigned long Date_Funcs::tenor	(date_union start_date,
 					{
 						end_date.date.days = 30;
 					}
+				}
+			}
+			if (cal_type == date_30german_cal)
+			{
+				if (start_date.date.months == 2 && start_date.date.days == 29)
+				{
+					start_date.date.days = 30;
+				}
+				if (end_date.date.months == 2 && end_date.date.days == 29)
+				{
+					end_date.date.days = 30;
 				}
 			}
 

@@ -2056,7 +2056,6 @@ size_t num_bytes = 0;
 
 										}
 										else
-								{
 									if (strcmp(current_day_count_name,
 										day_count_names[date_act_actISDA_day_count]) == 0)
 									{
@@ -2066,7 +2065,16 @@ size_t num_bytes = 0;
 										in_instr.cal_den = day_count_dens[date_act_actISDA_day_count];
 
 									}
-								}
+										else
+											if (strcmp(current_day_count_name,
+												day_count_names[date_30_360german_day_count]) == 0)
+											{
+
+												in_instr.day_count = date_30_360german_day_count;
+												in_instr.cal_num = day_count_nums[date_30_360german_day_count];
+												in_instr.cal_den = day_count_dens[date_30_360_day_count];
+
+											}
 							}
 						}
 					}
@@ -2293,6 +2301,15 @@ size_t num_bytes = 0;
 				pyparm.day_count = date_30e_360_day_count;
 				pyparm.date_cal_num = day_count_nums[date_30e_360_day_count];
 				pyparm.date_cal_den = day_count_dens[date_30e_360_day_count];
+
+			}
+			else if (strcmp(current_yield_days_name,
+				day_count_names[date_30_360german_day_count]) == 0)
+			{
+
+				pyparm.day_count = date_30_360german_day_count;
+				pyparm.date_cal_num = day_count_nums[date_30_360german_day_count];
+				pyparm.date_cal_den = day_count_dens[date_30_360_day_count];
 
 			}
 			else

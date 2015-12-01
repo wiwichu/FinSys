@@ -341,8 +341,8 @@ switch (in_instr->instr_class)
 	 memcpy(&in_instr->class_name,instr_bund_class_name,string_size);
 	 string_size = instr_class_desc_len;
 	 memcpy(&in_instr->class_desc,instr_bund_class_desc,string_size);
-	 in_instr->day_count		= date_30e_360_day_count;
-	 in_instr->cal_num		= date_30e_cal;
+	 in_instr->day_count		= date_30_360german_day_count;
+	 in_instr->cal_num		= date_30german_cal;
 	 in_instr->cal_den 		= date_30_cal;
 	 in_instr->pay_factor	= instr_no_pay_factor;
 	 in_instr->pay_type		= instr_fixed_pay_type;
@@ -396,8 +396,8 @@ switch (in_instr->instr_class)
     memcpy(&in_instr->class_name,instr_bund_class_name,string_size);
     string_size = instr_class_desc_len;
     memcpy(&in_instr->class_desc,instr_bund_class_desc,string_size);
-    in_instr->day_count		= date_30e_360_day_count;
-    in_instr->cal_num		= date_30e_cal;
+    in_instr->day_count		= date_30_360german_day_count;
+    in_instr->cal_num		= date_30german_cal;
     in_instr->cal_den 		= date_30_cal;
     in_instr->pay_factor	= instr_no_pay_factor;
 	 in_instr->pay_type		= instr_fixed_pay_type;
@@ -424,8 +424,8 @@ switch (in_instr->instr_class)
     memcpy(&in_instr->class_name,instr_bund_class_name,string_size);
     string_size = instr_class_desc_len;
     memcpy(&in_instr->class_desc,instr_bund_class_desc,string_size);
-    in_instr->day_count		= date_30e_360_day_count;
-    in_instr->cal_num		= date_30e_cal;
+    in_instr->day_count		= date_30_360german_day_count;
+    in_instr->cal_num		= date_30german_cal;
     in_instr->cal_den 		= date_30_cal;
     in_instr->pay_factor	= instr_no_pay_factor;
 	 in_instr->pay_type		= instr_fixed_pay_type;
