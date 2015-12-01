@@ -99,7 +99,9 @@ const	unsigned char	date_act_365_day_count	= 3;
 const	unsigned char	date_act_365cd_day_count = 4;
 const	unsigned char	date_act_act_day_count	= 5;
 const	unsigned char	date_act_365L_day_count	= 6;
-const	unsigned char	date_last_day_count	= 7;
+const	unsigned char	date_act_actISDA_day_count = 7;
+const	unsigned char	date_act_366_day_count = 8;
+const	unsigned char	date_last_day_count	= 9;
 
 		 
 
@@ -110,6 +112,8 @@ char *const	date_act_365_day_count_name	= "ACT/365";
 char *const	date_act_365cd_day_count_name = "ACT/365CD";
 char *const	date_act_act_day_count_name	= "ACT/ACT";
 char *const	date_act_365L_day_count_name	= "ACT/365L";
+char *const	date_act_actISDA_day_count_name = "ACT/ACTISDA";
+char *const	date_act_366_day_count_name = "ACT/366";
 
 const	unsigned char    date_no_cal = 0;
 const	unsigned char    date_act_cal = 1;
@@ -117,7 +121,9 @@ const	unsigned char	date_30_cal  = 2;
 const	unsigned char	date_30e_cal = 3;
 const	unsigned char	date_365_cal = 4;
 const	unsigned char	date_365L_cal = 5;
-const	unsigned char	date_365_25_cal = 6;
+const	unsigned char	date_actISDA_cal = 6;
+const	unsigned char	date_365_25_cal = 7;
+const	unsigned char	date_366_cal = 8;
 
 const	unsigned day_counts[date_last_day_count] =
 		{
@@ -128,7 +134,9 @@ const	unsigned day_counts[date_last_day_count] =
 		,date_act_365cd_day_count
 		,date_act_act_day_count
 		,date_act_365L_day_count
-		};
+	,date_act_actISDA_day_count
+	,date_act_366_day_count
+};
 
 char *const day_count_names[date_last_day_count] =
 //		 {"30E/360","30/360","ACT/360","ACT/365","ACT/365CD","ACT/ACT","ACT/366"};
@@ -140,13 +148,15 @@ char *const day_count_names[date_last_day_count] =
 		,date_act_365cd_day_count_name
 		,date_act_act_day_count_name
 		,date_act_365L_day_count_name
-		};
+	,date_act_actISDA_day_count_name
+	,date_act_366_day_count_name
+};
 char const  day_count_nums[date_last_day_count] =
 			 {date_30e_cal,date_30_cal,date_act_cal,date_act_cal,
 			date_act_cal,date_act_cal,date_act_cal};
 char const  day_count_dens[date_last_day_count] =
 			 {date_30_cal,date_30_cal,date_30_cal,date_365_cal,
-			date_365_cal,date_act_cal,date_365L_cal};
+			date_365_cal,date_act_cal,date_365L_cal,date_actISDA_cal,date_366_cal };
 
 const	int	day_count_names_len = 10;
 const	int	date_len = 5;

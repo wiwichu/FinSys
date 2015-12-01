@@ -168,6 +168,12 @@ string FinCalc::getDAYCOUNT_Text(FinCalc::_DAYCOUNT daycount)
 	case FinCalc::_ACT_365L:
 		_DAYCOUNT_Text.assign("ACT/365L");
 		break;
+	case FinCalc::_ACT_366:
+		_DAYCOUNT_Text.assign("ACT/366");
+		break;
+	case FinCalc::_ACT_ISDA:
+		_DAYCOUNT_Text.assign("ACT/ACTISDA");
+		break;
 	default:
 		_DAYCOUNT_Text.assign("BADDAYCOUNT");
 		break;

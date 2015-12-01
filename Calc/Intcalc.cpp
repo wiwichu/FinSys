@@ -206,6 +206,13 @@ accrued interest and number of days of interest for that date.
 
 //	strcpy(module_name,"intcalc");
 
+	*interest = 0;
+	*int_days = 0;
+	*nom_adj = 0;
+	*sett_to_first_fact_parm = 0;
+	*whole_period_factor = 0;
+
+
 	*nom_adj = 1;
 
 	comp_factor = 1;
@@ -226,9 +233,90 @@ accrued interest and number of days of interest for that date.
 
 	if (return_status != return_success)
 	{
-
-
 	  goto intcalc_end;
+	}
+	
+	if (in_instr.cal_den == date_actISDA_cal 
+		&& (prv_pay.date.years != nxt_pay.date.years))
+	{
+		//divide period by year and use 365/366 depending on leap year.
+		date_union p_pay = prv_pay;
+		date_union n_pay = nxt_pay;
+		instr *inst = new instr(in_instr);
+		date_union valueDate = in_date;
+		do
+		{
+			if (p_pay.date.years != n_pay.date.years)
+			{
+				n_pay = p_pay;
+				n_pay.date.months = 12;
+				n_pay.date.days = 31;
+				return_status = forecast(n_pay,
+					0,
+					1,
+					date_act_cal,
+					&n_pay);
+				valueDate = n_pay;
+			}
+			if (datecmp(in_date.date_string, valueDate.date_string) < 0)
+			{
+				valueDate = in_date;
+			}
+			long double interestParm;
+			long int_daysParm;
+			long double nom_adjParm;
+			long double sett_to_first_factParm;
+			long double whole_period_factorParm;
+			date_union preValueDate = valueDate;
+			return_status = forecast(valueDate,
+				0,
+				-1,
+				date_act_cal,
+				&preValueDate);
+			if (isLeapYear(preValueDate))
+			{
+				inst->cal_den = date_366_cal;
+			}
+			else
+			{
+				inst->cal_den = date_365_cal;
+			}
+			intcalc(*inst
+				, valueDate
+				, &interestParm
+				, &int_daysParm
+				, holi_chan
+				, ex_coup_ind
+				, total_per
+				, &nom_adjParm
+				, &sett_to_first_factParm
+				, redeem_adj
+				, event_chan
+				, holiSet
+				, rate_array
+				, &whole_period_factorParm
+				);
+
+			*interest += interestParm;
+			*int_days += int_daysParm;
+			*nom_adj = nom_adjParm;
+			*sett_to_first_fact_parm += sett_to_first_factParm;
+			*whole_period_factor += whole_period_factorParm;
+
+			return_status = forecast(n_pay,
+				0,
+				1,
+				date_act_cal,
+				&p_pay);
+
+			n_pay = nxt_pay;
+			inst->pay_freq.first_date = n_pay;
+			inst->issue_date = valueDate;
+			inst->accrue_date = valueDate;
+			valueDate = in_date;
+		} while (datecmp(p_pay.date_string, in_date.date_string) < 0);
+		delete inst;
+		return return_success;
 	}
 
 		  /* Note whether the first period is also the last.*/
@@ -534,8 +622,9 @@ accrued interest and number of days of interest for that date.
 
 	switch (in_instr.cal_den)
 	{
-	  case date_365L_cal:
-	  case date_act_cal: 	/*{ If calendar denominator is ACT, then
+		case date_actISDA_cal:
+		case date_365L_cal:
+		case date_act_cal: 	/*{ If calendar denominator is ACT, then
 				determine number of quasi periods (ACT is
 				not permitted when payment period is in days).}*/
 	  {
@@ -586,19 +675,90 @@ accrued interest and number of days of interest for that date.
 						in_instr.cal_den,
 						&divisor_days);
 
-					if (in_instr.cal_den == date_365L_cal && !isLeapDayInRange(quasi_prv_pay,quasi_nxt_pay))
-					{
-						if (isLeapYear(in_date))
-						{
-							divisor_days = divisor_days * 366 / 365;
-						}
-					}
-
 					if (return_status != return_success)
 					{
-
 						goto intcalc_end;
+					}
 
+					//if (in_instr.cal_den == date_actISDA_cal)
+					//{
+					//	date_union end_date = in_date;
+					//	cmpint = datecmp(in_date.date_string,
+					//		quasi_nxt_pay.date_string);
+
+					//	if (cmpint > 0)
+					//	{
+					//		end_date = quasi_nxt_pay;
+					//	}
+
+					//	double base_fact = 365;
+					//	if (isLeapDayInRange(quasi_prv_pay, end_date))
+					//	{
+					//		base_fact = 366;
+					//	}
+					//	long perDays = 0;
+					//	return_status = tenor(quasi_prv_pay,
+					//		end_date,
+					//		in_instr.cal_den,
+					//		&perDays);
+					//	if (return_status != return_success)
+					//	{
+					//		goto intcalc_end;
+					//	}
+					//	long per1Days = 0;
+					//	long per2Days = 0;
+					//	if (quasi_prv_pay.date.years == in_date.date.years)
+					//	{
+					//		per1Days = perDays;
+					//	}
+					//	else
+					//	{
+					//		date_union eoy = prv_pay;
+					//		eoy.date.months = 12;
+					//		eoy.date.days = 31;
+					//		return_status = tenor(quasi_prv_pay,
+					//			eoy,
+					//			in_instr.cal_den,
+					//			&per1Days);
+					//		if (return_status != return_success)
+					//		{
+					//			goto intcalc_end;
+					//		}
+					//		return_status = tenor(
+					//			eoy, end_date,
+					//			in_instr.cal_den,
+					//			&per2Days);
+					//		if (return_status != return_success)
+					//		{
+					//			goto intcalc_end;
+					//		}
+					//	}
+					//	double p1Fact = 0;
+					//	double p2Fact = 0;
+					//	if (isLeapYear(quasi_prv_pay))
+					//	{
+					//		p1Fact = (366.0 / base_fact)*(double)((double)per1Days / (double)perDays);
+					//	}
+					//	else
+					//	{
+					//		p1Fact = (365.0 / base_fact)*(double)((double)per1Days / (double)perDays);
+					//	}
+					//	if (isLeapYear(end_date))
+					//	{
+					//		p2Fact = (366.0 / base_fact)*(double)((double)per2Days / (double)perDays);
+					//	}
+					//	else
+					//	{
+					//		p2Fact = (365.0 / base_fact)*(double)((double)per2Days / (double)perDays);
+					//	}
+					//	divisor_days = divisor_days * (double)(p1Fact + p2Fact);
+					//}
+					if (
+						(in_instr.cal_den == date_365L_cal && isLeapYear(in_date))
+						&& !isLeapDayInRange(quasi_prv_pay, quasi_nxt_pay)
+						)
+					{
+						divisor_days = divisor_days * 366 / 365;
 					}
 
 					cmpint = datecmp(quasi_prv_pay.date_string,
@@ -756,19 +916,84 @@ accrued interest and number of days of interest for that date.
 					nxt_pay,
 					in_instr.cal_den,
 					&divisor_days);
-
-				if (in_instr.cal_den == date_365L_cal && !isLeapDayInRange(quasi_prv_pay, quasi_nxt_pay))
-				{
-					if (isLeapYear(in_date))
-					{
-						divisor_days = divisor_days * 366 / 365;
-					}
-				}
 				if (return_status != return_success)
 				{
-
 					goto intcalc_end;
 				}
+
+				//if (in_instr.cal_den == date_actISDA_cal)
+				//{
+				//	double base_fact = 365;
+				//	if (isLeapDayInRange(prv_pay, in_date))
+				//	{
+				//		base_fact = 366;
+				//	}
+				//	long perDays = 0;
+				//	return_status = tenor(prv_pay,
+				//		in_date,
+				//		in_instr.cal_den,
+				//		&perDays);
+				//	if (return_status != return_success)
+				//	{
+				//		goto intcalc_end;
+				//	}
+				//	long per1Days = 0;
+				//	long per2Days = 0;
+				//	if (prv_pay.date.years == in_date.date.years)
+				//	{
+				//		per1Days = perDays;
+				//	}
+				//	else
+				//	{
+				//		date_union eoy = prv_pay;
+				//		eoy.date.months = 12;
+				//		eoy.date.days = 31;
+				//		return_status = tenor(prv_pay,
+				//			eoy,
+				//			in_instr.cal_den,
+				//			&per1Days);
+				//		if (return_status != return_success)
+				//		{
+				//			goto intcalc_end;
+				//		}
+				//		return_status = tenor(
+				//			eoy,in_date,
+				//			in_instr.cal_den,
+				//			&per2Days);
+				//		if (return_status != return_success)
+				//		{
+				//			goto intcalc_end;
+				//		}
+				//	}
+				//	double p1Fact = 0;
+				//	double p2Fact = 0;
+				//	if (isLeapYear(prv_pay))
+				//	{
+				//		p1Fact = (366.0/base_fact)*(double)((double)per1Days/ (double)perDays);
+				//	}
+				//	else
+				//	{
+				//		p1Fact = (365.0 / base_fact)*(double)((double)per1Days / (double)perDays);
+				//	}
+				//	if (isLeapYear(in_date))
+				//	{
+				//		p2Fact = (366.0 / base_fact)*(double)((double)per2Days / (double)perDays);
+				//	}
+				//	else
+				//	{
+				//		p2Fact = (365.0 / base_fact)*(double)((double)per2Days / (double)perDays);
+				//	}
+				//	divisor_days = divisor_days * (p1Fact + p2Fact);
+				//}
+
+				if (
+					(in_instr.cal_den == date_365L_cal && isLeapYear(in_date))
+					&& !isLeapDayInRange(quasi_prv_pay, quasi_nxt_pay)
+					)
+				{
+					divisor_days = divisor_days * 366 / 365;
+				}
+
 
 				/*{ Calculate fraction of period between settlement and coupon.}*/
 
@@ -851,6 +1076,35 @@ accrued interest and number of days of interest for that date.
 		 }
 
 		 break;
+	  }
+	  case date_366_cal: 	/*{ If calendar denominator is 365, days are
+							simply divided by 365.}*/
+	  {
+
+		  /*{ For a 365 day denominator the divisor days is always 365.}*/
+
+		  divisor_days = 366;
+
+		  /*{ Calculate fraction of period between settlement and coupon.}*/
+
+		  sett_to_first_fact = ((long double)days_to_next /
+			  ((long double)divisor_days*(long double)months_per / 12));
+
+		  /*{Interest is calculated in periods defined by rerate
+		  and compounding boundaries.}*/
+
+		  return_status = per_calc(&in_instr, &holi_chan, &event_chan,
+			  &sub_per_start, &sub_per_end, &comp_factor,
+			  &divisor_days, &nxt_pay, &calc_end, nom_adj,
+			  rate_array, whole_period_factor);
+
+		  if (return_status != return_success)
+		  {
+
+			  goto intcalc_end;
+		  }
+
+		  break;
 	  }
 
 	  case date_30_cal: 	/*{ If calendar denominator is 30, days are

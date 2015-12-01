@@ -1013,5 +1013,70 @@ BEYield =
 MMYield =
 
 0.0510 (MAKE YIELD DAYS ACT/ACT AND YIELD FREQUENCY SEMI-ANNUAL AND USE COMPOUND YTM)
+
+
+
+///////////////////////////////////////////////////////
+
+
+Accrual Method List
+Accrual Method
+Description
+Actual/365 (fixed)
+The number of accrued days is equal to the actual number of days between the effective date and the terminating date.  The accrual factor is the number of accrued days divided by 365.
+Actual/360
+The number of accrued days is equal to the actual number of days between the effective date and the terminating date.  The accrual factor is the number of accrued days divided by 360.
+Actual/365 (actual)
+The number of accrued days is equal to the actual number of days between the effective date and the terminating date.  Calculation of the accrual factor assumes the year basis to be 365 days for non-leap years and 366 for leap years.  If a short stub period (< 1 year) contains a leap day, the number of days is divided by 366; otherwise, the number of days is divided by 365.
+30/360 (ISDA)
+(same as U.S. Muni – 30/360)
+The number of accrued days is calculated on the basis of a year of 360 days with 12 30-day months, subject to the following rules:
+1.       If the first date of the accrual period falls on the 31st of the month, the date will be changed to the 30th.
+2.       If the first date of the accrual period falls on the 30th of the month after applying (1) above, and the last date of the accrual period falls on the 31st of the month, the last date will be changed to the 30th.
+The accrual factor is calculated as the number of accrued days divided by 360.
+30E/360 (30/360 ISMA)
+The number of accrued days is calculated on the basis of a year of 360 days with 12 30-day months, subject to the following rules:
+1.       If either the first date or last date of the accrual period falls on the 31st of a month, that date will be changed to the 30th.
+2.       If the last day of the accrual period falls on the last day of February, the month of February will not be extended to a 30-day month.  Rather, the actual number of days in February will be used.
+The accrual factor is calculated as the number of accrued days divided by 360.
+30E+/360
+The number of accrued days is calculated on the basis of a year of 360 days with 12 30-day months, subject to the following rules:
+1.       If the first date of the accrual period falls on the 31st of a month, it will be changed to the 30th of that month.
+2.       If the last date of the accrual period falls on the 31st of a month, it will be changed to the 1st of the next month.
+The accrual factor is calculated as the number of accrued days divided by 360.
+Actual/Actual (ISMA-99)
+This accrual method is primarily related to bonds.  In the context of accrual factors, the time in years is calculated as follows: if the period is less than one year the accrual factor is equal to the actual number of days between the effective date (d_e) and the terminating date (d_t) divided by the number of days in the period from (d_t – 1 year) to d_t (either 365 or 366).  If the period is greater than one year, the accrual factor is equal to the number of whole years plus the accrual of a stub period calculated as above.  In the context of bonds, there are two ISMA-99 methods: Normal and Ultimo.  The methods differ only in the assumption made regarding coupon dates.  The ISMA-99 Normal method assumes that regular coupons fall on the same day of the month (non end-of-month), and the ISMA-99 Ultimo method assumes that regular coupons fall on the last day of the month (end-of-month).  The ISMA-99 methods make a distinction between regular and irregular interest periods.  Regular interest periods are always an exact multiple of a number of months long, whereas irregular interest periods require that notional interest periods be generated.  The accrual factor for a period is the number of accrued days falling in that period divided by the actual number of days in the period.  The overall accrual factor is then the sum of the individual interest period accrual factors, multiplied by the year fraction of a regular interest period.  For more details, see Reference [1].
+Actual/Actual (ISDA)
+The number of accrued days is equal to the actual number of days between the effective date and the terminating date.  The accrual factor is the sum of the accrued days falling in a non-leap year divided by 365 and the accrued days falling in a leap year divided by 366.
+30/360 (Old)
+This method is old and should not be used.  This method used to be labeled 30/360 (ISDA).
+30E/360 (Old)
+This method is old and should not be used.  This method used to be labeled 30E/360 (ISDA).
+30/360 (SIA)
+The number of accrued days is calculated on the basis of a year of 360 days with 12 30-day months, subject to the following rules:
+1.       If the last date of the accrual period is the last day of February and the first date of the period is the last day of February, then the last date of the period will be changed to the 30th.
+2.       If the first date of the accrual period falls on the 31st of a month or is the last day of February, that date will be changed to the 30th of the month.
+3.       If the first date of the accrual period falls on the 30th of a month after applying (2) above, and the last date of the period falls on the 31st of a month, the last date will be changed to the 30th of the month.
+The accrual factor is calculated as the number of accrued days divided by 360.  Note that these rules assume that the security follows the end-of-month rule. (see the Date Generation Functions FINCAD Math Reference document.) If the security does not follow the end-of-month rule, then 30/360 (ISDA) should be used.
+30/360 (BMA)
+The number of accrued days is calculated on the basis of a year of 360 days with 12 30-day months, subject to the following rules:
+1.       If the first date of the accrual period falls on the 31st of a month or is the last day of February, the date will be changed to the 30th.
+2.       If the first date of the accrual period falls on the 30th of the month after applying 1) above, and the last date of the accrual period falls on the 31st of the month, the last date will be changed to the 30th.
+The accrual factor is calculated as the number of accrued days divided by 360.  Note that prior to 1997, the BMA was known as the PSA, and this method was referred to as 30/360 (PSA).
+30/360 (German)
+The number of accrued days is calculated on the basis of a year of 360 days with 12 30-day months, subject to the following rules:
+1.       If either the first date or last date of the accrual period falls on the 31st of a month, that date will be changed to the 30th.
+2.       If either the first date or last date of the accrual period is the last day of February, that date will be changed to the 30th.
+The accrual factor is calculated as the number of accrued days divided by 360.
+Bus/252
+The number of accrued days is calculated as the number of market days in the accrual period.  The accrual factor is calculated as the number of accrued (market) days divided by 252.
+Actual/365L
+The number of accrued days is calculated as the actual number of days between the effective date and the terminating date.  This number is divided by 366 if the terminating date falls in a leap year and 365 otherwise.
+NL365
+The number of days is calculated as the actual number of days between the effective date and the terminating date without including any occurrences of the leap day, February 29th.  This number is divided by 365.
+The main differences between the various 30/360 methods is the treatment of dates landing on the 31st of a month, or the end of February.  The ISMA, ISDA, and 30E+/360 methods make adjustments for dates landing on the 31st of a month, but not for dates landing on the last day of February.  The SIA, BMA, and German methods make adjustments for dates landing on the 31st of a month, as well as for dates landing on the last day of February.
+
+
+
 */
 
