@@ -130,8 +130,8 @@ string FinCalc::getCALENDARBASIS_Text(_CALENDARBASIS calendarbasis)
 	case DATE30CAL:
 		_CALENDARBASIS_Text.assign("DATE30CAL");
 		break;
-	case DATE30ECAL:
-		_CALENDARBASIS_Text.assign("DATE30ECAL");
+	case DATE30EPLUSCAL:
+		_CALENDARBASIS_Text.assign("DATE30EPLUSCAL");
 		break;
 	case DATE30GERMANCAL:
 		_CALENDARBASIS_Text.assign("DATE30GERMANCAL");
@@ -152,6 +152,9 @@ string FinCalc::getDAYCOUNT_Text(FinCalc::_DAYCOUNT daycount)
 	{
 	case FinCalc::_30E_360:
 		_DAYCOUNT_Text.assign("30E/360");
+		break;
+	case FinCalc::_30EPLUS_360:
+		_DAYCOUNT_Text.assign("30E+/360");
 		break;
 	case FinCalc::_30_360:
 		_DAYCOUNT_Text.assign("30/360");

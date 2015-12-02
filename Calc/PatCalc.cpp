@@ -118,6 +118,9 @@ long PatCalc::tenor (const string &startdate,const string &enddate, FinCalc::_CA
 	case DATE30ECAL:
 		_caltype = date_30e_cal;
 		break;
+	case DATE30EPLUSCAL:
+		_caltype = date_30eplus_cal;
+		break;
 	default:
 			throw new ExceptionCalc("Invalid Day Count Basis.");
 	}
@@ -170,6 +173,9 @@ string PatCalc::forecast (const string &date,int months,long days, FinCalc::_CAL
 		break;
 	case DATE30ECAL:
 		_caltype = date_30e_cal;
+		break;
+	case DATE30EPLUSCAL:
+		_caltype = date_30eplus_cal;
 		break;
 	default:
 			throw new ExceptionCalc("Invalid Day Count Basis.");
@@ -416,6 +422,11 @@ FinCalc::_DAYCOUNT	PatCalc::convertDaycount(int rawDaycount)
 			_daycount = FinCalc::_30E_360;
 			break;
 		}
+		case date_30eplus_360_day_count:
+		{
+			_daycount = FinCalc::_30EPLUS_360;
+			break;
+		}
 		case date_30_360_day_count:
 		{
 			_daycount = FinCalc::_30_360;
@@ -486,6 +497,11 @@ int	PatCalc::convertDaycount(FinCalc::_DAYCOUNT rawDaycount)
 		case FinCalc::_30E_360:
 		{
 			_daycount = date_30e_360_day_count;
+			break;
+		}
+		case FinCalc::_30EPLUS_360:
+		{
+			_daycount = date_30eplus_360_day_count;
 			break;
 		}
 		case FinCalc::_30_360:

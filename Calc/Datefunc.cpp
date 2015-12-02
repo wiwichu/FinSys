@@ -2637,7 +2637,7 @@ unsigned long Date_Funcs::forecast	(date_union base_date,
 				break;
 
 			} /* Actual days */
-
+			case date_30eplus_cal:
 			case date_30_cal:
 			case date_30german_cal:
 			case date_30e_cal: /* {30 and 30e are almost identical.} */
@@ -2755,7 +2755,7 @@ unsigned long Date_Funcs::forecast	(date_union base_date,
 
 				/*{ For 30e method, never end on the 31st. }*/
 
-				if ((days_hold == 31)  && (cal_type == date_30e_cal))
+				if ((days_hold == 31)  && ((cal_type == date_30e_cal)||(cal_type == date_30german_cal)))
 				{
 
 					days_hold = 30;
@@ -3205,6 +3205,7 @@ unsigned long Date_Funcs::tenor	(date_union start_date,
 			break;
 		}
 
+	case date_30eplus_cal:
 	case date_30german_cal:
 	case date_30_cal:
 		 case date_30e_cal: /* {30 and 30e are almost identical.} */
@@ -3237,8 +3238,12 @@ unsigned long Date_Funcs::tenor	(date_union start_date,
 
 				else
 				{
-
-					if (start_date.date.days == 30)
+					if (cal_type == date_30eplus_cal)
+					{
+						forecast(end_date, 0, 1, date_act_cal, &end_date);
+						days_month += 30;
+					}
+					else if (start_date.date.days == 30)
 					{
 						end_date.date.days = 30;
 					}

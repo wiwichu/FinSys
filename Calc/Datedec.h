@@ -102,10 +102,12 @@ const	unsigned char	date_act_365L_day_count	= 6;
 const	unsigned char	date_act_actISDA_day_count = 7;
 const	unsigned char	date_30_360german_day_count = 8;
 const	unsigned char	date_NL_365_day_count = 9;
-const	unsigned char	date_act_366_day_count = 10;
-const	unsigned char	date_last_day_count	= 11;
+const	unsigned char	date_30eplus_360_day_count = 10;
+const	unsigned char	date_act_366_day_count = 11;
+const	unsigned char	date_last_day_count	= 12;
 
 
+char *const	date_30eplus_360_day_count_name = "30E+/360";
 char *const	date_30e_360_day_count_name	= "30E/360";
 char *const	date_30_360german_day_count_name = "30/360 German";
 char *const	date_30_360_day_count_name	= "30/360";
@@ -128,7 +130,8 @@ const	unsigned char	date_actISDA_cal = 6;
 const	unsigned char	date_365_25_cal = 7;
 const	unsigned char	date_30german_cal = 8;
 const	unsigned char	date_NL365_cal = 9;
-const	unsigned char	date_366_cal = 10;
+const	unsigned char	date_30eplus_cal = 10;
+const	unsigned char	date_366_cal = 11;
 
 const	unsigned day_counts[date_last_day_count] =
 		{
@@ -142,6 +145,7 @@ const	unsigned day_counts[date_last_day_count] =
 	,date_act_actISDA_day_count
 	,date_30_360german_day_count
 	,date_NL_365_day_count
+	,date_30eplus_360_day_count
 	,date_act_366_day_count
 };
 
@@ -158,14 +162,15 @@ char *const day_count_names[date_last_day_count] =
 	,date_act_actISDA_day_count_name
 	,date_30_360german_day_count_name
 	,date_NL_365_day_count_name
+	,date_30eplus_360_day_count_name
 	,date_act_366_day_count_name
 };
 char const  day_count_nums[date_last_day_count] =
 			 {date_30e_cal,date_30_cal,date_act_cal,date_act_cal,
-			date_act_cal,date_act_cal,date_act_cal,date_366_cal,date_30german_cal,date_NL365_cal };
+			date_act_cal,date_act_cal,date_act_cal,date_366_cal,date_30german_cal,date_NL365_cal,date_30eplus_cal };
 char const  day_count_dens[date_last_day_count] =
 			 {date_30_cal,date_30_cal,date_30_cal,date_365_cal,
-			date_365_cal,date_act_cal,date_365L_cal,date_actISDA_cal,date_30german_cal,date_NL365_cal,date_366_cal };
+			date_365_cal,date_act_cal,date_365L_cal,date_actISDA_cal,date_30german_cal,date_NL365_cal,date_30_cal,date_366_cal };
 
 const	int	day_count_names_len = 10;
 const	int	date_len = 5;

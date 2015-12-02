@@ -1160,7 +1160,6 @@ accrued interest and number of days of interest for that date.
 
 		  break;
 	  }
-
 	  case date_30_cal: 	/*{ If calendar denominator is 30, days are
 				simply divided by 360.}*/
 	  {

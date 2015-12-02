@@ -1125,6 +1125,7 @@ unsigned long	_PYFUNCS py_days_in_year(long double *days_in_year,
 			break;
 		 }
 		 case date_30_cal:
+		 case date_30eplus_cal:
 		 {
 
 			*days_in_year = 360;
