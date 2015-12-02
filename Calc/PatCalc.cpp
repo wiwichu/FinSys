@@ -436,6 +436,11 @@ FinCalc::_DAYCOUNT	PatCalc::convertDaycount(int rawDaycount)
 			_daycount = FinCalc::_ACT_365;
 			break;
 		}
+		case date_NL_365_day_count:
+		{
+			_daycount = FinCalc::_NL_365;
+			break;
+		}
 		case date_act_365cd_day_count:
 		{
 			_daycount = FinCalc::_ACT_365CD;
@@ -501,6 +506,11 @@ int	PatCalc::convertDaycount(FinCalc::_DAYCOUNT rawDaycount)
 		case FinCalc::_ACT_365:
 		{
 			_daycount = date_act_365_day_count;
+			break;
+		}
+		case FinCalc::_NL_365:
+		{
+			_daycount = date_NL_365_day_count;
 			break;
 		}
 		case FinCalc::_ACT_365CD:

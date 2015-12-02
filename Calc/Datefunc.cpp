@@ -3198,6 +3198,12 @@ unsigned long Date_Funcs::tenor	(date_union start_date,
 
 	switch (cal_type)
 	  {
+	case date_NL365_cal:
+		if (isLeapDayInRange(start_date, end_date))
+		{
+			(*tenor_days)--;
+			break;
+		}
 
 	case date_30german_cal:
 	case date_30_cal:
@@ -3223,7 +3229,7 @@ unsigned long Date_Funcs::tenor	(date_union start_date,
 			if (end_date.date.days == 31)
 			{
 
-				if (cal_type == date_30e_cal)
+				if (cal_type == date_30e_cal || cal_type == date_30german_cal)
 				{
 
 					end_date.date.days = 30;

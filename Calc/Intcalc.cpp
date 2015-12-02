@@ -1101,7 +1101,7 @@ accrued interest and number of days of interest for that date.
 
 		 //break;
 	  //}
-
+	  case date_NL365_cal:
 	  case date_365_cal: 	/*{ If calendar denominator is 365, days are
 				simply divided by 365.}*/
 	  {

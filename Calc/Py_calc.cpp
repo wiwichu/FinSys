@@ -1103,7 +1103,8 @@ unsigned long	_PYFUNCS py_days_in_year(long double *days_in_year,
 
 	  switch (py_cal_den)
 	  {
-		 case date_365_cal:
+	  case date_NL365_cal:
+	  case date_365_cal:
 		 case date_act_cal:
 		 {
 
