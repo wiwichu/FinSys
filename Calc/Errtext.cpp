@@ -37,6 +37,12 @@ void _errtext::errtext(unsigned long errnum, char error_text [error_text_len])
 
   switch (errnum)
   {
+  case	return_success:
+  { strcpy(error_text,
+	  "Success");
+
+  break;
+  }
 
 	case	return_info_max_mat_exc	:
 	{ strcpy(error_text,

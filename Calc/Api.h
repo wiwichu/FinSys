@@ -1,0 +1,21 @@
+#pragma once
+
+typedef struct DateStruct
+{
+	int year;
+	int month;
+	int day;
+} DateStruct;
+
+typedef struct InstrumentStruct
+{
+	int					instrumentClass;
+	int					intDayCount;
+	DateStruct			*maturityDate;
+} InstrumnentStruct;
+
+extern "C" __declspec(dllexport) char**  getclassdescriptions(int& size);
+extern "C" __declspec(dllexport) char**  getdaycounts(int& size);
+extern "C" __declspec(dllexport) int  getDefaultInstrument(InstrumentStruct &instrument);
+extern "C" __declspec(dllexport) int  getStatusText(int status, char* text, int&textSize);
+

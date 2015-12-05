@@ -66,6 +66,9 @@
     <ClCompile Include="insevent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Api.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Calc.h">
@@ -141,6 +144,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="holicodeproc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Api.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

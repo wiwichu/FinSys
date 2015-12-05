@@ -125,6 +125,7 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Api.cpp" />
     <ClCompile Include="Calc.cpp" />
     <ClCompile Include="Coupload.cpp" />
     <ClCompile Include="Datefunc.cpp" />
@@ -147,6 +148,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Api.h" />
     <ClInclude Include="Calc.h" />
     <ClInclude Include="Datedec.h" />
     <ClInclude Include="Envir.h" />
