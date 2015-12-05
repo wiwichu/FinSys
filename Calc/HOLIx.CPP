@@ -48,7 +48,7 @@ unsigned long holidays_class::HolidayInit()
 	{
 
 		return_state = return_err_ins_mem;
-		goto func_end;
+		return return_state;
 	}
 
 	holiday_record->base = 0;
@@ -83,14 +83,14 @@ unsigned long holidays_class::AddHolidayRec()
 
 //	DB_holiday->AddHolidayRec(*holiday_record, &return_state, holidayhandles);
 
-	goto func_end;
+	return return_state;
 
 	if (db_type == db_internal_array_type)
 	{
 
 		DB_holiday->AddHolidayRec(*holiday_record, &return_state, holidayhandles);
 //		return_state = AddArray();
-//		goto func_end;
+//		return return_state;
 
 	}
 	if (db_type == db_odbc_type)
@@ -111,14 +111,14 @@ unsigned long holidays_class::AddHolidayRec()
 		DB_holiday->AddHolidayRec(*holiday_record, &return_state, holidayhandles);
 
 //		return_state = AddODBC();
-//		goto func_end;
+//		return return_state;
 
 	}
 	if (db_type == db_oledb_type)
 	{
 
 //		return_state = AddOLEDB();
-//		goto func_end;
+//		return return_state;
 		DB_holiday->AddHolidayRec(*holiday_record, &return_state, holidayhandles);
 
 	}
@@ -138,7 +138,7 @@ unsigned long holidays_class::DelHolidayRec()
 
 		DB_holiday->DelHolidayRec(*holiday_record, &return_state, holidayhandles);
 //		return_state = DelArray();
-		goto func_end;
+		return return_state;
 
 	}
 	if (db_type == db_odbc_type)
@@ -158,7 +158,7 @@ unsigned long holidays_class::DelHolidayRec()
 
 //		DB_holiday->DelHolidayRec(*holiday_record, &return_state, holidayhandles);
 //		return_state = DelODBC();
-//		goto func_end;
+//		return return_state;
 
 	}
 	if (db_type == db_oledb_type)
@@ -166,7 +166,7 @@ unsigned long holidays_class::DelHolidayRec()
 
 //		return_state = DelOLEDB();
 		DB_holiday->DelHolidayRec(*holiday_record, &return_state, holidayhandles);
-		goto func_end;
+		return return_state;
 
 	}
 
@@ -190,28 +190,28 @@ unsigned long holidays_class::HolidayCheckAll()
 
 		if (return_state != return_success)
 		{
-		  goto func_end;
+		  return return_state;
 		}
 
 		return_state = CheckYear(current_year);
 
 		if (return_state != return_success)
 		{
-		  goto func_end;
+		  return return_state;
 		}
 
 		return_state = CheckMonthDay(current_day);
 
 		if (return_state != return_success)
 		{
-		  goto func_end;
+		  return return_state;
 		}
 
 		return_state = CheckDate(current_year, current_month, current_day);
 
 		if (return_state != return_success)
 		{
-		  goto func_end;
+		  return return_state;
 		}
 		break;
 	 }
@@ -228,14 +228,14 @@ unsigned long holidays_class::HolidayCheckAll()
 		  {
 
 			 return_state = return_err_day_and_weekday;
-			 goto func_end;
+			 return return_state;
 
 		  }
 		  else
 		  {
 
 			 return_state = return_success;
-			 goto func_end;
+			 return return_state;
 
 		  }
 		 }
@@ -249,14 +249,14 @@ unsigned long holidays_class::HolidayCheckAll()
 		  {
 
 			 return_state = return_err_day_nor_weekday;
-			 goto func_end;
+			 return return_state;
 
 		  }
 		 }
 		}
 		else
 		{
-		  goto func_end;
+		  return return_state;
 		}
 
 		break;
@@ -268,7 +268,7 @@ unsigned long holidays_class::HolidayCheckAll()
 	 default:
 	 {
 		return_state = return_err_holiday_base_invalid;
-		goto func_end;
+		return return_state;
 		break;
 	 }
   }
@@ -465,7 +465,7 @@ unsigned long holidays_class::SetHolidayWeekday(char name_str[holidayweekdayleng
 
 	if (return_state != return_success)
 	{
-		goto func_end;
+		return return_state;
 	}
 	else
 	{
@@ -491,7 +491,7 @@ unsigned long holidays_class::CheckHolidayWeekday(char name_str[holidayweekdayle
 		if (local_return != return_success)
 		{
 		  return_state = local_return;
-		  goto func_end;
+		  return return_state;
 		}
 		dummy_int = strcmp(name_str,weekday_hold);
 		if (dummy_int == 0)
@@ -546,7 +546,7 @@ unsigned long holidays_class::SetAdjustDirection(char name_str[adjustdirectionle
 
 	if (return_state != return_success)
 	{
-		goto func_end;
+		return return_state;
 	}
 	else
 	{
@@ -572,7 +572,7 @@ unsigned long holidays_class::CheckAdjustDirection(char name_str[adjustdirection
 		if (local_return != return_success)
 		{
 		  return_state = local_return;
-		  goto func_end;
+		  return return_state;
 		}
 		dummy_int = strcmp(name_str,direction_hold);
 		if (dummy_int == 0)
@@ -629,7 +629,7 @@ unsigned long holidays_class::SetDayAdjust(char name_str[dayadjustlength])
 
 	if (return_state != return_success)
 	{
-		goto func_end;
+		return return_state;
 	}
 	else
 	{
@@ -655,7 +655,7 @@ unsigned long holidays_class::CheckDayAdjust(char name_str[dayadjustlength],
 		if (local_return != return_success)
 		{
 		  return_state = local_return;
-		  goto func_end;
+		  return return_state;
 		}
 		dummy_int = strcmp(name_str,day_adjust_hold);
 		if (dummy_int == 0)
@@ -714,7 +714,7 @@ unsigned long holidays_class::SetBaseWeekday(char name_str[baseweekdaylength])
 
 	if (return_state != return_success)
 	{
-		goto func_end;
+		return return_state;
 	}
 	else
 	{
@@ -758,7 +758,7 @@ unsigned long holidays_class::CheckBaseWeekday(char name_str[baseweekdaylength],
 		local_return = holidays_class::GetBaseWeekday(*base_weekday_code, base_weekday_hold);
 		if (local_return != return_success)
 		{
-		  goto func_end;
+		  return return_state;
 		}
 		dummy_int = strcmp(name_str,base_weekday_hold);
 		if (dummy_int == 0)
@@ -782,7 +782,7 @@ unsigned long holidays_class::SetHolidayCode(char name_str[holidaycodelength])
 	if (dummy_size_t>=holidaycodelength)
 	{
 		return_state = return_err_holiday_code_too_big;
-		goto func_end;
+		return return_state;
 	}
 	else
 	{
@@ -791,7 +791,7 @@ unsigned long holidays_class::SetHolidayCode(char name_str[holidaycodelength])
 	  {
 
 		return_state = return_err_holiday_code_blank;
-		goto func_end;
+		return return_state;
 
 	  }
 	  else
@@ -814,7 +814,7 @@ unsigned long holidays_class::SetHolidayBase(char name_str[holidaybaselength])
 
 	if (return_state != return_success)
 	{
-		goto func_end;
+		return return_state;
 	}
 	else
 	{
@@ -840,7 +840,7 @@ unsigned long holidays_class::CheckHolidayBase(char name_str[holidaybaselength],
 		if (local_return != return_success)
 		{
 		  return_state = local_return;
-		  goto func_end;
+		  return return_state;
 		}
 		dummy_int = strcmp(name_str,base_hold);
 		if (dummy_int == 0)
@@ -865,7 +865,7 @@ unsigned long holidays_class::SetHolidayMonth(char name_str[month_names_length])
 
 	if (return_state != return_success)
 	{
-		goto func_end;
+		return return_state;
 	}
 	else
 	{
@@ -891,7 +891,7 @@ unsigned long holidays_class::CheckHolidayMonth(char name_str[month_names_length
 		if (local_return != return_success)
 		{
 		  return_state = local_return;
-		  goto func_end;
+		  return return_state;
 		}
 		dummy_int = strcmp(name_str,month_hold);
 		if (dummy_int == 0)
@@ -913,7 +913,7 @@ unsigned long holidays_class::SetHolidayYear(unsigned int base_year)
 
   if (return_state != return_success)
   {
-	 goto func_end;
+	 return return_state;
   }
   else
   {
@@ -945,7 +945,7 @@ unsigned long holidays_class::SetHolidayDay(char name_str[holidaybasedaylength])
 
 	if (return_state != return_success)
 	{
-	 goto func_end;
+	 return return_state;
 	}
 	 else
 	{
@@ -980,7 +980,7 @@ unsigned long holidays_class::SetBaseAdj(char name_str[holidaybaseadjlength])
 
 	if (return_state != return_success)
 	{
-		goto func_end;
+		return return_state;
 	}
 	else
 	{
@@ -1006,7 +1006,7 @@ unsigned long holidays_class::CheckBaseAdj(char name_str[holidaybaseadjlength],
 		if (local_return != return_success)
 		{
 		  return_state = local_return;
-		  goto func_end;
+		  return return_state;
 		}
 		dummy_int = strcmp(name_str,adj_hold);
 		if (dummy_int == 0)
@@ -1043,7 +1043,7 @@ unsigned long holidays_class::SetBaseAdjTimes(char name_str[holidaybaseadjtimesl
 
 	if (return_state != return_success)
 	{
-		goto func_end;
+		return return_state;
 	}
 	else
 	{
@@ -1077,7 +1077,7 @@ unsigned long holidays_class::SetHolidayAdjTimes(char name_str[holidayadjtimesle
 	if (dummy_size_t>=holidayadjtimeslength)
 	{
 		return_state = return_err_holiday_adj_times_too_big;
-		goto func_end;
+		return return_state;
 	}
 	else
 	{
@@ -1089,7 +1089,7 @@ unsigned long holidays_class::SetHolidayAdjTimes(char name_str[holidayadjtimesle
 		 {
 
 			return_state = return_err_holiday_adj_times_blank;
-			goto func_end;
+			return return_state;
 
 		 }
 		 else
@@ -1230,7 +1230,7 @@ unsigned long holidays_class::SetDesignate(char designate_str[designatelength])
 
 	if (return_state != return_success)
 	{
-		goto func_end;
+		return return_state;
 	}
 	else
 	{
@@ -1256,7 +1256,7 @@ unsigned long holidays_class::CheckDesignate(char designate_str[designatelength]
 		if (local_return != return_success)
 		{
 		  return_state = local_return;
-		  goto func_end;
+		  return return_state;
 		}
 		dummy_int = strcmp(designate_str,designate_hold);
 		if (dummy_int == 0)

@@ -1140,7 +1140,7 @@ unsigned long	_PYFUNCS py_days_in_year(long double *days_in_year,
 		 default:
 		 {
 			return_status = return_err_py_incomp;
-			goto py_days_in_year_end;
+			return return_status;
 			break;
 		 }
 	  }
@@ -1170,7 +1170,7 @@ unsigned long	_PYFUNCS py_days_sett_to_mat(long *days_sett_to_mat, date_union py
 	  if (return_status != return_success) {
 
 
-		goto py_days_sett_to_mat_end;
+		return return_status;
 
 	  }
 	}
@@ -1201,7 +1201,7 @@ long double	disc_rate;		/*{ disc_rate is the discount rate.}*/
 	  {
 
 		 return_status = return_err_py_incomp;
-		 goto py_mmdisc_end;
+		 return return_status;
 
 	  }
 
@@ -1225,7 +1225,7 @@ long double	disc_rate;		/*{ disc_rate is the discount rate.}*/
 		 {
 
 			return_status = return_err_py_incomp;
-			goto py_mmdisc_end;
+			return return_status;
 
 			break;
 
@@ -1266,7 +1266,7 @@ long double years_to_mat;
 	  {
 
 		 return_status = return_err_py_incomp;
-		 goto py_simp_end;
+		 return return_status;
 
 	  }
 
@@ -1297,7 +1297,7 @@ long double years_to_mat;
 		 {
 
 			return_status = return_err_py_incomp;
-			goto py_simp_end;
+			return return_status;
 
 			break;
 
@@ -1682,7 +1682,7 @@ date_union base_date;
 				  if (return_status != return_success)
 				  {
 
-					goto py_part_pay_load_end;
+					return return_status;
 
 				  }
 
@@ -1954,7 +1954,7 @@ long double part_pay_prime_factor;
 		 {
 
 
-			goto py_pv_part_pays_end;
+			return return_status;
 		 }
 
 		 period_fraction = days_to_pay * comp_freq/days_in_year;
@@ -2193,7 +2193,7 @@ date_union next_coup;
   if (return_status != return_success)
   {
 
-	 goto func_end;
+	 return return_status;
 
   }
 
@@ -2237,7 +2237,7 @@ date_union next_coup;
 	 if (return_status != return_success)
 	 {
 
-		goto func_end;
+		return return_status;
 
 	 }
 
@@ -2282,7 +2282,7 @@ date_union next_coup;
 
 		if (return_status != return_success) {
 
-		  goto func_end;
+		  return return_status;
 
 		}
 

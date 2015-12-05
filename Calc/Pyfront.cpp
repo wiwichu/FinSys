@@ -351,7 +351,7 @@ size_t num_bytes = 0;
 
 //					//errproc(return_state,module_name,"","","");
 
-					goto func_end;
+					return return_state;
 
 					break;
 
@@ -441,7 +441,7 @@ size_t num_bytes = 0;
 
 //					//errproc(return_state,module_name,"","","");
 
-					goto func_end;
+					return return_state;
 
 					break;
 
@@ -578,7 +578,7 @@ size_t num_bytes = 0;
 
 					////errproc(return_state,module_name,"","","");
 
-					goto func_end;
+					return return_state;
 
 					break;
 
@@ -720,7 +720,7 @@ size_t num_bytes = 0;
 
 					////errproc(return_state,module_name,"","","");
 
-					goto func_end;
+					return return_state;
 
 					break;
 
@@ -743,7 +743,7 @@ size_t num_bytes = 0;
 
 				  return_state = return_err_partpay_bad_date;
 				  ////errproc(return_state,module_name,"","","");
-				  goto func_end;
+				  return return_state;
 
 				}
 
@@ -755,7 +755,7 @@ size_t num_bytes = 0;
 
 				  return_state = return_err_partpay_date_out_bounds;
 				  ////errproc(return_state,module_name,"","","");
-				  goto func_end;
+				  return return_state;
 
 				}
 
@@ -767,7 +767,7 @@ size_t num_bytes = 0;
 
 				  return_state = return_err_partpay_date_out_bounds;
 				  ////errproc(return_state,module_name,"","","");
-				  goto func_end;
+				  return return_state;
 
 				}
 
@@ -783,7 +783,7 @@ size_t num_bytes = 0;
 
 					  return_state = return_err_partpay_date_nonasc;
 					  ////errproc(return_state,module_name,"","","");
-					  goto func_end;
+					  return return_state;
 
 					}
 
@@ -806,7 +806,7 @@ size_t num_bytes = 0;
 
 				  return_state = return_err_partpay_total_pay_bad;
 				  ////errproc(return_state,module_name,"","","");
-				  goto func_end;
+				  return return_state;
 
 			}
 
@@ -906,7 +906,7 @@ size_t num_bytes = 0;
 
 							////errproc(return_state,module_name,"","","");
 
-							goto func_end;
+							return return_state;
 
 				}
 
@@ -1372,7 +1372,7 @@ size_t num_bytes = 0;
 
 			  ////errproc(return_state,module_name,"","","");
 
-			  goto func_end;
+			  return return_state;
 
 			}
 
@@ -1646,7 +1646,7 @@ size_t num_bytes = 0;
 
 							////errproc(return_state,module_name,"","","");
 
-							goto func_end;
+							return return_state;
 
 						}
 					}
@@ -1695,7 +1695,7 @@ size_t num_bytes = 0;
 
 				////errproc(return_state,module_name,"","","");
 
-				goto func_end;
+				return return_state;
 
 			  }
 			}
@@ -1784,7 +1784,7 @@ size_t num_bytes = 0;
 
 									////errproc(return_state,module_name,"","","");
 
-									goto func_end;
+									return return_state;
 
 								}
 							}
@@ -1857,7 +1857,7 @@ size_t num_bytes = 0;
 
 					  ////errproc(return_state,module_name,"","","");
 
-					  goto func_end;
+					  return return_state;
 
 					}
 				  }
@@ -1920,7 +1920,7 @@ size_t num_bytes = 0;
 
 						////errproc(return_state,module_name,"","","");
 
-						goto func_end;
+						return return_state;
 
 					}
 				  }
@@ -2257,7 +2257,7 @@ size_t num_bytes = 0;
 
 																	 ////errproc(return_state,module_name,"","","");
 
-																	 goto func_end;
+																	 return return_state;
 																  }
 																}
 															}
@@ -2475,7 +2475,7 @@ size_t num_bytes = 0;
 
 				////errproc(return_state,module_name,"","","");
 
-				goto func_end;
+				return return_state;
 
 			}
 
@@ -2499,7 +2499,7 @@ size_t num_bytes = 0;
 
 							 return_state = return_err_mat_date_bad;
 				////errproc(return_state,module_name,"","","");
-				goto func_end;
+				return return_state;
 			  }
 
 			   datecpy(in_instr.mat_date.date_string,
@@ -2546,7 +2546,7 @@ size_t num_bytes = 0;
 
 				return_state = return_err_iss_date_bad;
 				////errproc(return_state,module_name,"","","");
-				goto func_end;
+				return return_state;
 			  }
 
 			   datecpy(in_instr.issue_date.date_string,
@@ -2589,7 +2589,7 @@ size_t num_bytes = 0;
 
 				return_state = return_err_val_date_bad;
 				////errproc(return_state,module_name,"","","");
-				goto func_end;
+				return return_state;
 			  }
 
 			  break;
@@ -2694,7 +2694,7 @@ size_t num_bytes = 0;
 
 					////errproc(return_state,module_name,"","","");
 
-					goto func_end;
+					return return_state;
 
 				}
 
@@ -2736,7 +2736,7 @@ size_t num_bytes = 0;
 
 					////errproc(return_state,module_name,"","","");
 
-					goto func_end;
+					return return_state;
 
 				}
 
@@ -2756,7 +2756,7 @@ size_t num_bytes = 0;
 
 						////errproc(return_state,module_name,"","","");
 
-						goto func_end;
+						return return_state;
 
 					}
 				}
@@ -2772,7 +2772,7 @@ size_t num_bytes = 0;
 
 					////errproc(return_state,module_name,"","","");
 
-					goto func_end;
+					return return_state;
 
 				}
 
@@ -2786,7 +2786,7 @@ size_t num_bytes = 0;
 
 						////errproc(return_state,module_name,"","","");
 
-						goto func_end;
+						return return_state;
 
 					}
 				}
@@ -2802,7 +2802,7 @@ size_t num_bytes = 0;
 
 					////errproc(return_state,module_name,"","","");
 
-					goto func_end;
+					return return_state;
 
 				}
 
@@ -2820,7 +2820,7 @@ size_t num_bytes = 0;
 
 					////errproc(return_state,module_name,"","","");
 
-					goto func_end;
+					return return_state;
 
 				}
 
@@ -2870,7 +2870,7 @@ size_t num_bytes = 0;
 
 					////errproc(return_state,module_name,"","","");
 
-					goto func_end;
+					return return_state;
 
 			  }
 
@@ -2926,7 +2926,7 @@ size_t num_bytes = 0;
 
 					return_state = return_err_val_ge_cf;
 					////errproc(return_state,module_name,"","","");
-					goto func_end;
+					return return_state;
 
 				}
 
@@ -3048,7 +3048,7 @@ size_t num_bytes = 0;
 
 					////errproc(return_state,module_name,"","","");
 
-					goto func_end;
+					return return_state;
 
 				}
 
@@ -3082,7 +3082,7 @@ size_t num_bytes = 0;
 
 					////errproc(return_state,module_name,"","","");
 
-					goto func_end;
+					return return_state;
 
 				}
 /*
@@ -3102,7 +3102,7 @@ size_t num_bytes = 0;
 
 						////errproc(return_state,module_name,"","","");
 
-						goto func_end;
+						return return_state;
 
 					}
 				}
@@ -3118,7 +3118,7 @@ size_t num_bytes = 0;
 
 					////errproc(return_state,module_name,"","","");
 
-					goto func_end;
+					return return_state;
 
 				}
 
@@ -3132,7 +3132,7 @@ size_t num_bytes = 0;
 
 						////errproc(return_state,module_name,"","","");
 
-						goto func_end;
+						return return_state;
 
 					}
 				}
@@ -3148,7 +3148,7 @@ size_t num_bytes = 0;
 
 					////errproc(return_state,module_name,"","","");
 
-					goto func_end;
+					return return_state;
 
 				}
 
@@ -3166,7 +3166,7 @@ size_t num_bytes = 0;
 
 					////errproc(return_state,module_name,"","","");
 
-					goto func_end;
+					return return_state;
 
 				}
 
@@ -3183,7 +3183,7 @@ size_t num_bytes = 0;
 
 					////errproc(return_state,module_name,"","","");
 
-					goto func_end;
+					return return_state;
 
 				}
 
@@ -3201,7 +3201,7 @@ size_t num_bytes = 0;
 
 					////errproc(return_state,module_name,"","","");
 
-					goto func_end;
+					return return_state;
 
 				}
 
@@ -3284,7 +3284,7 @@ size_t num_bytes = 0;
 
 						////errproc(return_state,module_name,"","","");
 
-						goto func_end;
+						return return_state;
 
 					}
 
@@ -3335,7 +3335,7 @@ size_t num_bytes = 0;
 
 			  ////errproc(return_state,module_name,"","","");
 
-			  goto func_end;
+			  return return_state;
 
 			}
 			actions_index ++;
@@ -3362,7 +3362,7 @@ size_t num_bytes = 0;
 
 			  ////errproc(return_state,module_name,"","","");
 
-			  goto func_end;
+			  return return_state;
 
 			}
 
@@ -3401,7 +3401,7 @@ size_t num_bytes = 0;
 
 			  ////errproc(return_state,module_name,"","","");
 
-			  goto func_end;
+			  return return_state;
 
 			}
 			actions_index ++;
@@ -3426,7 +3426,7 @@ size_t num_bytes = 0;
 
 			  ////errproc(return_state,module_name,"","","");
 
-			  goto func_end;
+			  return return_state;
 
 			}
 
@@ -3451,7 +3451,7 @@ size_t num_bytes = 0;
 
 			  ////errproc(return_state,module_name,"","","");
 
-			  goto func_end;
+			  return return_state;
 
 			}
 
@@ -3476,7 +3476,7 @@ size_t num_bytes = 0;
 
 			  ////errproc(return_state,module_name,"","","");
 
-			  goto func_end;
+			  return return_state;
 
 			}
 
@@ -3501,7 +3501,7 @@ size_t num_bytes = 0;
 
 				////errproc(return_state,module_name,"","","");
 
-				goto func_end;
+				return return_state;
 
 			}
 
@@ -3526,7 +3526,7 @@ size_t num_bytes = 0;
 
 			  ////errproc(return_state,module_name,"","","");
 
-			  goto func_end;
+			  return return_state;
 
 			}
 
@@ -3576,7 +3576,7 @@ size_t num_bytes = 0;
 
 						////errproc(return_state,module_name,"","","");
 
-						goto func_end;
+						return return_state;
 
 					}
 
@@ -3591,7 +3591,7 @@ size_t num_bytes = 0;
 
 						////errproc(return_state,module_name,"","","");
 
-						goto func_end;
+						return return_state;
 
 					}
 
@@ -3639,7 +3639,7 @@ size_t num_bytes = 0;
 
 						////errproc(return_state,module_name,"","","");
 
-						goto func_end;
+						return return_state;
 
 					  }
 
@@ -3654,13 +3654,13 @@ size_t num_bytes = 0;
 
 							////errproc(return_state,module_name,"","","");
 
-							goto func_end;
+							return return_state;
 
 					  }
 
 						return_state = return_err_dates_out_synch ;
 
-						goto func_end;
+						return return_state;
 
 					}
 
@@ -3678,7 +3678,7 @@ size_t num_bytes = 0;
 
 						////errproc(return_state,module_name,"","","");
 
-						goto func_end;
+						return return_state;
 
 					}
 
@@ -3693,7 +3693,7 @@ size_t num_bytes = 0;
 
 						////errproc(return_state,module_name,"","","");
 
-						goto func_end;
+						return return_state;
 
 					}
 
@@ -3706,7 +3706,7 @@ size_t num_bytes = 0;
 
 						return_state = return_err_dates_out_synch ;
 
-						goto func_end;
+						return return_state;
 
 					}
 				}
@@ -3744,7 +3744,7 @@ size_t num_bytes = 0;
 
 			  ////errproc(return_state,module_name,"","","");
 
-				goto func_end;
+				return return_state;
 
 			}
 
@@ -3755,7 +3755,7 @@ size_t num_bytes = 0;
 
 			  ////errproc(return_state,module_name,"","","");
 
-			  goto func_end;
+			  return return_state;
 
 			}
 
@@ -3782,7 +3782,7 @@ size_t num_bytes = 0;
 
 				return_state = return_err_penult_date_bad;
 				////errproc(return_state,module_name,"","","");
-				goto func_end;
+				return return_state;
 			  }
 
 			   datecpy(in_instr.pre_last_pay.date_string,
@@ -3820,7 +3820,7 @@ size_t num_bytes = 0;
 
 					return_state = return_err_first_date_bad;
 					////errproc(return_state,module_name,"","","");
-					goto func_end;
+					return return_state;
 				}
 
 				 datecpy(in_instr.pay_freq.first_date.date_string,
@@ -3856,7 +3856,7 @@ size_t num_bytes = 0;
 
 				return_state = return_err_first_date_bad;
 				////errproc(return_state,module_name,"","","");
-				goto func_end;
+				return return_state;
 			  }
 
 			   datecpy(in_instr.rerate_freq.first_date.date_string,
@@ -4191,7 +4191,7 @@ size_t num_bytes = 0;
 
 				return_state = return_err_non_zero_disc;
 				////errproc(return_state,module_name,"","","");
-				goto func_end;
+				return return_state;
 
 			  }
 
@@ -4200,7 +4200,7 @@ size_t num_bytes = 0;
 
 				return_state = return_err_neg_int;
 				////errproc(return_state,module_name,"","","");
-				goto func_end;
+				return return_state;
 
 			  }
 
@@ -4209,7 +4209,7 @@ size_t num_bytes = 0;
 
 				return_state = return_err_int_too_high;
 				//errproc(return_state,module_name,"","","");
-				goto func_end;
+				return return_state;
 
 			  }
 			}
@@ -4233,7 +4233,7 @@ size_t num_bytes = 0;
 
 				return_state = return_err_calc_what_inv;
 				//errproc(return_state,module_name,"","","");
-				goto func_end;
+				return return_state;
 
 			}
 
@@ -4266,7 +4266,7 @@ size_t num_bytes = 0;
 
 				return_state = return_err_price_le_zero;
 				//errproc(return_state,module_name,"","","");
-				goto func_end;
+				return return_state;
 
 			}
 
@@ -4297,7 +4297,7 @@ size_t num_bytes = 0;
 				{
 
 					//errproc(return_state,module_name,"","","");
-					goto func_end;
+					return return_state;
 
 				}
 
@@ -4399,7 +4399,7 @@ size_t num_bytes = 0;
 
 				return_state = return_err_cpr_out_range;
 				//errproc(return_state,module_name,"","","");
-				goto func_end;
+				return return_state;
 
 			}
 
@@ -4420,7 +4420,7 @@ size_t num_bytes = 0;
 
 				return_state = return_err_lag_out_range;
 				//errproc(return_state,module_name,"","","");
-				goto func_end;
+				return return_state;
 
 			}
 
@@ -4486,7 +4486,7 @@ size_t num_bytes = 0;
 					{
 
 						//errproc(return_state,module_name,"","","");
-						goto func_end;
+						return return_state;
 
 					}
 					else
@@ -4497,7 +4497,7 @@ size_t num_bytes = 0;
 
 							return_state = return_err_nonasc_datelist;
 							//errproc(return_state,module_name,"","","");
-							goto func_end;
+							return return_state;
 
 						}
 						else
@@ -4511,7 +4511,7 @@ size_t num_bytes = 0;
 
 								return_state = return_err_nonasc_datelist;
 								//errproc(return_state,module_name,"","","");
-								goto func_end;
+								return return_state;
 
 							}
 
@@ -4586,7 +4586,7 @@ size_t num_bytes = 0;
 			  {
 
 				//errproc(return_state,module_name,"","","");
-				goto func_end;
+				return return_state;
 
 			  }
 			}
@@ -4631,7 +4631,7 @@ size_t num_bytes = 0;
 				{
 
 					//errproc(return_state,module_name,"","","");
-					goto func_end;
+					return return_state;
 
 				}
 
@@ -4660,7 +4660,7 @@ size_t num_bytes = 0;
 				  {
 
 					 //errproc(return_state,module_name,"","","");
-					 goto func_end;
+					 return return_state;
 
 				  }
 
@@ -4750,7 +4750,7 @@ size_t num_bytes = 0;
 					{
 
 						//errproc(return_state,module_name,"","","");
-						goto func_end;
+						return return_state;
 
 					}
 
@@ -4791,7 +4791,7 @@ size_t num_bytes = 0;
 
 			//errproc(return_state,module_name,"","","");
 
-			goto func_end;
+			return return_state;
 
 			break;
 

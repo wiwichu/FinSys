@@ -72,7 +72,7 @@ date_union base_date;
 
 		 ////errproc(return_status,module_name,"","","");
 
-		 goto py_coup_load_end;
+		 return return_status;
 	  }
 */
 	  pay_array_size = 3;
@@ -89,7 +89,7 @@ date_union base_date;
 	{
 		 return_status = return_err_ins_mem;
 		 ////errproc(return_status,module_name,"","","");
-		 goto py_coup_load_end;
+		 return return_status;
 	}
 */
 	/*{ Keep loading coupon dates and amounts into array until maturity date.}*/
@@ -116,7 +116,7 @@ date_union base_date;
 		 {
 
 
-			goto py_coup_load_end;
+			return return_status;
 
 		 }
 
@@ -133,7 +133,7 @@ date_union base_date;
 		 if (return_status != return_success)
 		 {
 
-			goto py_coup_load_end;
+			return return_status;
 
 		 }
 
@@ -156,7 +156,7 @@ date_union base_date;
 			if (return_status != return_success)
 			{
 
-			  goto py_coup_load_end;
+			  return return_status;
 
 			}
 
@@ -181,7 +181,7 @@ date_union base_date;
 			  if (return_status != return_success)
 			  {
 
-				 goto py_coup_load_end;
+				 return return_status;
 
 			  }
 
@@ -194,7 +194,7 @@ date_union base_date;
 			  {
 
 				 return_status = return_err_cashflow;
-				 goto py_coup_load_end;
+				 return return_status;
 
 			  }
 			  else
@@ -238,7 +238,7 @@ date_union base_date;
 			  if (return_status != return_success)
 			  {
 
-				 goto py_coup_load_end;
+				 return return_status;
 
 			  }
 
@@ -251,7 +251,7 @@ date_union base_date;
 			  {
 
 				 return_status = return_err_cashflow;
-				 goto py_coup_load_end;
+				 return return_status;
 
 			  }
 			  else
@@ -292,7 +292,7 @@ date_union base_date;
 			if (return_status != return_success)
 			{
 
-			 goto py_coup_load_end;
+			 return return_status;
 
 			}
 
@@ -325,7 +325,7 @@ date_union base_date;
 	  {
 
 
-		 goto py_coup_load_end;
+		 return return_status;
 	  }
 
 	  /*{ Check whether an odd first coupon must be ignored.}*/
@@ -358,7 +358,7 @@ date_union base_date;
 			  if (return_status != return_success)
 			  {
 
-				  goto py_coup_load_end;
+				  return return_status;
 
 			  }
 
@@ -376,7 +376,7 @@ date_union base_date;
 			  if (return_status != return_success)
 			  {
 
-				goto py_coup_load_end;
+				return return_status;
 
 			  }
 
@@ -414,7 +414,7 @@ date_union base_date;
 			{
 
 
-			  goto py_coup_load_end;
+			  return return_status;
 			}
 
 		 }
@@ -452,7 +452,7 @@ date_union base_date;
 			if (return_status != return_success)
 			{
 
-				goto py_coup_load_end;
+				return return_status;
 
 			}
 
@@ -496,7 +496,7 @@ date_union base_date;
 		 {
 
 
-			goto py_coup_load_end;
+			return return_status;
 
 		 }
 
@@ -515,7 +515,7 @@ date_union base_date;
 			{
 
 
-				goto py_coup_load_end;
+				return return_status;
 			}
 
 			if (ex_coup)
@@ -537,7 +537,7 @@ date_union base_date;
 			{
 
 
-				goto py_coup_load_end;
+				return return_status;
 			}
 
 			/* If the first payment is passed, load this into the first coupon.*/
@@ -621,7 +621,7 @@ long days_to_next = 0;
 	  {
 
 
-			goto py_frac_per_end;
+			return return_status;
 	  }
 
 	  if (((py_parm->parm_use == py_yes_parm_use) &&
@@ -640,7 +640,7 @@ long days_to_next = 0;
 			{
 
 
-				goto py_frac_per_end;
+				return return_status;
 			}
 
 			*sett_2_first_fact = days_to_next/(days_in_year/comp_freq);
@@ -692,7 +692,7 @@ date_union date_hold2;
 			{
 
 
-				goto py_simp_comp_frac_end;
+				return return_status;
 
 			}
 
@@ -716,7 +716,7 @@ date_union date_hold2;
 			if (return_status != return_success)
 			{
 
-				goto py_simp_comp_frac_end;
+				return return_status;
 
 			}
 
@@ -922,7 +922,7 @@ unsigned int comp_pay_int_ratio = 0;
 		 {
 
 
-			goto py_pv_coups_end;
+			return return_status;
 		 }
 
 	  }
@@ -949,7 +949,7 @@ unsigned int comp_pay_int_ratio = 0;
 			{
 
 
-				goto py_pv_coups_end;
+				return return_status;
 			}
 
 			num_pers = (long double) days_to_this_pay/days_in_per;
@@ -1032,7 +1032,7 @@ unsigned int comp_pay_int_ratio = 0;
 				{
 
 
-					goto py_pv_coups_end;
+					return return_status;
 				}
 
 				num_pers = (long double) days_to_this_pay/days_in_per;
@@ -1046,7 +1046,7 @@ unsigned int comp_pay_int_ratio = 0;
 		 {
 
 			return_status = return_err_py_incomp;
-			goto py_pv_coups_end;
+			return return_status;
 
 			break;
 

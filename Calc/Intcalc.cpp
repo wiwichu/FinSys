@@ -233,7 +233,7 @@ accrued interest and number of days of interest for that date.
 
 	if (return_status != return_success)
 	{
-	  goto intcalc_end;
+	  return return_status;
 	}
 	
 	if (in_instr.cal_den == date_actISDA_cal 
@@ -400,7 +400,7 @@ accrued interest and number of days of interest for that date.
 		 {
 
 
-			goto intcalc_end;
+			return return_status;
 
 		 }
 
@@ -418,7 +418,7 @@ accrued interest and number of days of interest for that date.
 		 if (return_status != return_success)
 		 {
 
-			goto intcalc_end;
+			return return_status;
 		 }
 
 		 /* { Set partial payment indicator if necessary.} */
@@ -451,7 +451,7 @@ accrued interest and number of days of interest for that date.
 	{
 
 
-				goto intcalc_end;
+				return return_status;
 	}
 
 	/*{ Initialize quasi period to actual period.}*/
@@ -470,7 +470,7 @@ accrued interest and number of days of interest for that date.
 	if (return_status != return_success)
 	{
 
-	  goto intcalc_end;
+	  return return_status;
 
 	}
 
@@ -569,7 +569,7 @@ accrued interest and number of days of interest for that date.
 
 		 { 
 			return_status = return_err_invalid_period;
-			goto intcalc_end;
+			return return_status;
 		 }
 	  }
 	}
@@ -610,7 +610,7 @@ accrued interest and number of days of interest for that date.
 			if (return_status != return_success)
 			{
 
-				goto intcalc_end;
+				return return_status;
 			}
 
 			/*{ Make sure the derived date falls on the last day of
@@ -657,7 +657,7 @@ accrued interest and number of days of interest for that date.
 			if (return_status != return_success)
 			{
 
-				goto intcalc_end;
+				return return_status;
 			}
 
 			/*{ Make sure the derived date falls on the last day of
@@ -713,7 +713,7 @@ accrued interest and number of days of interest for that date.
 
 		if (return_status != return_success) {
 
-		  goto intcalc_end;
+		  return return_status;
 		}
 */
 
@@ -731,7 +731,7 @@ accrued interest and number of days of interest for that date.
 
 					if (return_status != return_success)
 					{
-						goto intcalc_end;
+						return return_status;
 					}
 
 					//if (in_instr.cal_den == date_actISDA_cal)
@@ -757,7 +757,7 @@ accrued interest and number of days of interest for that date.
 					//		&perDays);
 					//	if (return_status != return_success)
 					//	{
-					//		goto intcalc_end;
+					//		return return_status;
 					//	}
 					//	long per1Days = 0;
 					//	long per2Days = 0;
@@ -776,7 +776,7 @@ accrued interest and number of days of interest for that date.
 					//			&per1Days);
 					//		if (return_status != return_success)
 					//		{
-					//			goto intcalc_end;
+					//			return return_status;
 					//		}
 					//		return_status = tenor(
 					//			eoy, end_date,
@@ -784,7 +784,7 @@ accrued interest and number of days of interest for that date.
 					//			&per2Days);
 					//		if (return_status != return_success)
 					//		{
-					//			goto intcalc_end;
+					//			return return_status;
 					//		}
 					//	}
 					//	double p1Fact = 0;
@@ -834,7 +834,7 @@ accrued interest and number of days of interest for that date.
 
 							if (return_status != return_success)
 							{
-								goto intcalc_end;
+								return return_status;
 
 							}
 
@@ -891,7 +891,7 @@ accrued interest and number of days of interest for that date.
 						  if (return_status != return_success)
 						  {
 
-								goto intcalc_end;
+								return return_status;
 
 						  }
 
@@ -925,7 +925,7 @@ accrued interest and number of days of interest for that date.
 					if (return_status != return_success)
 					{
 
-						goto intcalc_end;
+						return return_status;
 					}
 
 					/*{Set next quasi period.}*/
@@ -941,7 +941,7 @@ accrued interest and number of days of interest for that date.
 					if (return_status != return_success)
 					{
 
-						goto intcalc_end;
+						return return_status;
 
 					}
 
@@ -972,7 +972,7 @@ accrued interest and number of days of interest for that date.
 					&divisor_days);
 				if (return_status != return_success)
 				{
-					goto intcalc_end;
+					return return_status;
 				}
 
 				//if (in_instr.cal_den == date_actISDA_cal)
@@ -989,7 +989,7 @@ accrued interest and number of days of interest for that date.
 				//		&perDays);
 				//	if (return_status != return_success)
 				//	{
-				//		goto intcalc_end;
+				//		return return_status;
 				//	}
 				//	long per1Days = 0;
 				//	long per2Days = 0;
@@ -1008,7 +1008,7 @@ accrued interest and number of days of interest for that date.
 				//			&per1Days);
 				//		if (return_status != return_success)
 				//		{
-				//			goto intcalc_end;
+				//			return return_status;
 				//		}
 				//		return_status = tenor(
 				//			eoy,in_date,
@@ -1016,7 +1016,7 @@ accrued interest and number of days of interest for that date.
 				//			&per2Days);
 				//		if (return_status != return_success)
 				//		{
-				//			goto intcalc_end;
+				//			return return_status;
 				//		}
 				//	}
 				//	double p1Fact = 0;
@@ -1073,7 +1073,7 @@ accrued interest and number of days of interest for that date.
 																														  
 				if (return_status != return_success) {
 
-					goto intcalc_end;
+					return return_status;
 				}
 
 			}
@@ -1126,7 +1126,7 @@ accrued interest and number of days of interest for that date.
 		 if (return_status != return_success)
 		 {
 
-			 goto intcalc_end;
+			 return return_status;
 		 }
 
 		 break;
@@ -1155,7 +1155,7 @@ accrued interest and number of days of interest for that date.
 		  if (return_status != return_success)
 		  {
 
-			  goto intcalc_end;
+			  return return_status;
 		  }
 
 		  break;
@@ -1184,7 +1184,7 @@ accrued interest and number of days of interest for that date.
 		 if (return_status != return_success)
 		 {
 
-			 goto intcalc_end;
+			 return return_status;
 		 }
 
 		 break;
@@ -1278,7 +1278,7 @@ redemp_proc:
 	  if (return_status != return_success)
 	  {
 
-		goto intcalc_end;
+		return return_status;
 	  }
 	  else
 	  {
@@ -1298,7 +1298,7 @@ redemp_proc:
 	if (return_status != return_success)
 	{
 
-	  goto intcalc_end;
+	  return return_status;
 	}
 	else
 	{
@@ -1668,7 +1668,7 @@ unsigned long _INTCALCS per_calc (instr *in_instr, unsigned int *holi_chan, unsi
 				if (return_status != return_success)
 				{
 
-					goto per_calc_end;
+					return return_status;
 				}
 
 				/*{ Get the current rate, and the rate period boundaries.}*/
@@ -1685,7 +1685,7 @@ unsigned long _INTCALCS per_calc (instr *in_instr, unsigned int *holi_chan, unsi
 				if (return_status != return_success)
 				{
 
-					goto per_calc_end;
+					return return_status;
 				}
 
 				/*{ Get the nominal adjustment period boundaries.}*/
@@ -1699,7 +1699,7 @@ unsigned long _INTCALCS per_calc (instr *in_instr, unsigned int *holi_chan, unsi
 				if (return_status != return_success)
 				{
 
-					goto per_calc_end;
+					return return_status;
 				}
 
 				/*{Set the sub period end to the narrowest boundary.}*/
@@ -1762,7 +1762,7 @@ unsigned long _INTCALCS per_calc (instr *in_instr, unsigned int *holi_chan, unsi
 				if (return_status != return_success)
 				{
 
-					goto per_calc_end;
+					return return_status;
 
 				}
 
@@ -1848,7 +1848,7 @@ unsigned long   _INTCALCS get_pfactor (instr in_instr,
 /*{ Pool Factor processing is temporarily disabled, always returning 1.}*/
 
 *pfactor = 1;
-goto get_pfactor_end;
+return return_status;
 
 
 
@@ -1931,7 +1931,7 @@ goto get_pfactor_end;
 
 	      //errproc(return_status,module_name,"","","");
 
-	      goto get_pfactor_end;
+	      return return_status;
 
 	  };
 	}
@@ -2015,7 +2015,7 @@ unsigned long   _INTCALCS get_rate (instr *in_instr,
 
 			if (return_status != return_success) {
 
-		goto get_rate_end;
+		return return_status;
 			}     */
 			break;
 	  }
@@ -2053,7 +2053,7 @@ unsigned long   _INTCALCS get_rate (instr *in_instr,
 
 			}
 
-			goto get_rate_end;
+			return return_status;
 
 			/* IO not yet supported.*/
 
@@ -2137,7 +2137,7 @@ unsigned long   _INTCALCS get_rate (instr *in_instr,
 
 			 //errproc(return_status,module_name,"","","");
 
-			 goto get_rate_end;
+			 return return_status;
 
 			 break;
 				  }
@@ -2313,7 +2313,7 @@ unsigned long	_INTCALCS excoup(instr in_instr
 	if (return_status != return_success)
 	{
 
-	  goto ex_coup_end;
+	  return return_status;
 	}
 
 	cmp_first_per = datecmp(nxt_pay.date_string,
@@ -2332,7 +2332,7 @@ unsigned long	_INTCALCS excoup(instr in_instr
 	  if (return_status != return_success)
 	  {
 
-		 goto ex_coup_end;
+		 return return_status;
 
 	  }
 
@@ -2445,7 +2445,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 	  {
 
 		 return_status = return_err_inv_futstr_day;
-		 goto n_p_pay_end;
+		 return return_status;
 
 	  }
 
@@ -2453,7 +2453,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 	  {
 
 		 return_status = return_err_inv_futstr_period;
-	    goto n_p_pay_end;
+	    return return_status;
 
 	  }
 
@@ -2461,7 +2461,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 	  {
 
 	    return_status = return_err_invalid_pay_freq;
-	    goto n_p_pay_end;
+	    return return_status;
 
 	  }
 
@@ -2472,7 +2472,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 	  {
 
 	    return_status = return_err_invalid_month;
-	    goto n_p_pay_end;
+	    return return_status;
 
 	  }
 
@@ -2492,7 +2492,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 	  if (return_status != return_success)
 	  {
 
-		goto n_p_pay_end;
+		return return_status;
 
 	  }
 
@@ -2507,7 +2507,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 	  if (return_status != return_success)
 	  {
 
-		goto n_p_pay_end;
+		return return_status;
 
 	  }
 
@@ -2524,7 +2524,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 		 if (return_status != return_success)
 		 {
 
-			goto n_p_pay_end;
+			return return_status;
 
 		 }
 
@@ -2535,7 +2535,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 		 if (return_status != return_success)
 		 {
 
-			goto n_p_pay_end;
+			return return_status;
 
 		 }
 
@@ -2555,7 +2555,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 
 	  datecpy(nxt_pay->date_string,date_hold2.date_string);
 
-	  goto n_p_pay_end;
+	  return return_status;
 
 	}
 
@@ -2568,7 +2568,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 
 		return_status = return_err_bad_base_date;
 
-		goto n_p_pay_end;
+		return return_status;
 
 	}
 
@@ -2579,7 +2579,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 
 		return_status = return_err_bad_base_date;
 
-		goto n_p_pay_end;
+		return return_status;
 
 	}
 
@@ -2589,7 +2589,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 		datecpy(prv_pay->date_string,in_instr.mat_date.date_string);
 		datecpy(nxt_pay->date_string,in_instr.mat_date.date_string);
 
-		goto n_p_pay_end;
+		return return_status;
 
 	}
 
@@ -2629,7 +2629,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 
 				datecpy(prv_pay->date_string,in_instr.pre_last_pay.date_string);
 
-				goto n_p_pay_end;
+				return return_status;
 
 			}
 
@@ -2653,7 +2653,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 
 				{ 
 					return_status = return_err_invalid_period;
-					goto n_p_pay_end;
+					return return_status;
 				}
 			}
 
@@ -2700,7 +2700,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 					if (return_status != return_success)
 					{
 
-						goto n_p_pay_end;
+						return return_status;
 
 					}
 
@@ -2732,7 +2732,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 						else
 						{
 							return_status = return_err_np_uncalc;
-							goto n_p_pay_end;
+							return return_status;
 
 						}
 
@@ -2750,7 +2750,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 						if (return_status != return_success)
 						{
 
-							goto n_p_pay_end;
+							return return_status;
 
 						}
 
@@ -2779,7 +2779,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 					if (return_status != return_success)
 					{
 
-						goto n_p_pay_end;
+						return return_status;
 
 					}
 
@@ -2854,7 +2854,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 
 						{ 
 							return_status = return_err_invalid_period;
-							goto n_p_pay_end;
+							return return_status;
 						}
 					}
 
@@ -2898,7 +2898,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 					if (return_status != return_success)
 					{
 
-						goto n_p_pay_end;
+						return return_status;
 
 					}
 
@@ -2924,7 +2924,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 							if (return_status != return_success)
 							{
 
-								goto n_p_pay_end;
+								return return_status;
 
 							}
 
@@ -2957,7 +2957,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 							if (return_status != return_success)
 							{
 
-								goto n_p_pay_end;
+								return return_status;
 
 							}
 						}
@@ -2977,7 +2977,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 				{
 
 					return_status = return_err_np_uncalc;
-					goto n_p_pay_end;
+					return return_status;
 				}
 
 				/*{ repeatedly adjust previous and next dates until they bracket the base date.}*/
@@ -2996,7 +2996,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 					if (return_status != return_success)
 					{
 
-						goto n_p_pay_end;
+						return return_status;
 
 					}
 
@@ -3029,7 +3029,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 					if (return_status != return_success)
 					{
 
-						goto n_p_pay_end;
+						return return_status;
 
 					}
 
@@ -3047,7 +3047,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 				{
 
 					return_status = return_err_loop;
-					goto n_p_pay_end;
+					return return_status;
 				}
 
 				/*{ If prv_nxt_cmp >= 0, then previous date has surpassed next.}+*/
@@ -3056,7 +3056,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 				{
 
 					return_status = return_err_np_uncalc;
-					goto n_p_pay_end;
+					return return_status;
 				}
 
 				/*{ The base date has been surpassed, so set next date to the latest calculated date, and previous date to the date before that. }*/
@@ -3102,7 +3102,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 
 						{
 							return_status = return_err_invalid_period;
-							goto n_p_pay_end;
+							return return_status;
 						}
 					}
 
@@ -3143,7 +3143,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 							 if (return_status != return_success)
 							 {
 
-							  goto n_p_pay_end;
+							  return return_status;
 
 							 }
 
@@ -3183,7 +3183,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 							 if (return_status != return_success)
 							 {
 
-							  goto n_p_pay_end;
+							  return return_status;
 
 							 }
 
@@ -3206,7 +3206,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 							if (return_status != return_success)
 							{
 
-								goto n_p_pay_end;
+								return return_status;
 
 							}
 
@@ -3231,7 +3231,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 								if (return_status != return_success)
 								{
 
-									goto n_p_pay_end;
+									return return_status;
 
 								}
 
@@ -3256,7 +3256,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 								if (return_status != return_success)
 								{
 
-									goto n_p_pay_end;
+									return return_status;
 
 								}
 							}
@@ -3277,7 +3277,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 
 								//errproc(return_err_rr_pay_mis,module_name,"","","");
 								return_status = return_err_rr_pay_mis;
-								goto n_p_pay_end;
+								return return_status;
 
 							}
 
@@ -3324,7 +3324,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 						if (return_status != return_success)
 						{
 
-							goto n_p_pay_end;
+							return return_status;
 
 						}
 
@@ -3344,7 +3344,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 						if (return_status != return_success)
 						{
 
-							goto n_p_pay_end;
+							return return_status;
 
 						}
 
@@ -3369,7 +3369,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 							if (return_status != return_success)
 							{
 
-								goto n_p_pay_end;
+								return return_status;
 
 							}
 
@@ -3394,7 +3394,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 							if (return_status != return_success)
 							{
 
-								goto n_p_pay_end;
+								return return_status;
 
 							}
 						}
@@ -3417,7 +3417,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 
 	  {
 		 return_status = return_err_invalid_pay_sched;
-		 goto n_p_pay_end;
+		 return return_status;
 	  }
 	}
 
@@ -3471,7 +3471,7 @@ unsigned long	_INTCALCS findfut(instr in_instr
 	  if (return_status != return_success)
 	  {
 
-		goto func_end;
+		return return_status;
 
 	  }
 
@@ -3490,7 +3490,7 @@ unsigned long	_INTCALCS findfut(instr in_instr
 		 if (return_status != return_success)
 		 {
 
-			goto func_end;
+			return return_status;
 
 		 }
 
@@ -3511,7 +3511,7 @@ unsigned long	_INTCALCS findfut(instr in_instr
 		 if (return_status != return_success)
 		 {
 
-			goto func_end;
+			return return_status;
 
 		 }
 
@@ -3526,7 +3526,7 @@ unsigned long	_INTCALCS findfut(instr in_instr
 		 if (return_status != return_success)
 		 {
 
-			goto func_end;
+			return return_status;
 
 		 }
 
@@ -3742,7 +3742,7 @@ unsigned long   _INTCALCS redemp_adj (instr in_instr,
 
 						if (return_status)
 						{
-							goto func_end;
+							return return_status;
 						}
 
 						cmp_last = datecmp(
@@ -3797,7 +3797,7 @@ unsigned long   _INTCALCS redemp_adj (instr in_instr,
 					{
 
 
-						goto func_end;
+						return return_status;
 					}
 
 					weighted_days = weighted_days +
@@ -3815,7 +3815,7 @@ unsigned long   _INTCALCS redemp_adj (instr in_instr,
 
 					if (return_status)
 					{
-						goto func_end;
+						return return_status;
 					}
 
 					cmp_last =
@@ -3840,7 +3840,7 @@ unsigned long   _INTCALCS redemp_adj (instr in_instr,
 			 if (return_status != return_success)
 			 {
 
-				goto func_end;
+				return return_status;
 
 			 }
 
@@ -3941,14 +3941,14 @@ unsigned long _INTCALCS schedgen(event_sched event_parm
 	{
 
 	  return_status = return_err_event_date_bad;
-			 goto func_end;
+			 return return_status;
 
 	}
 
 	if (return_status)
 	{
 
-          goto func_end;
+          return return_status;
 
 	}
 
@@ -3961,7 +3961,7 @@ unsigned long _INTCALCS schedgen(event_sched event_parm
 	{
 
 	  return_status = return_err_start_less_first;
-			 goto func_end;
+			 return return_status;
 
 	}
 
@@ -3971,7 +3971,7 @@ unsigned long _INTCALCS schedgen(event_sched event_parm
 	{
 
 	  return_status = return_inv_array_size;
-			 goto func_end;
+			 return return_status;
 
 	}
 
@@ -3985,7 +3985,7 @@ unsigned long _INTCALCS schedgen(event_sched event_parm
 	{
 
 
-		goto func_end;
+		return return_status;
 
 	}
 
@@ -4015,7 +4015,7 @@ unsigned long _INTCALCS schedgen(event_sched event_parm
 	 {
 
 
-		 goto func_end;
+		 return return_status;
 
 	 }
 	}
@@ -4029,7 +4029,7 @@ unsigned long _INTCALCS schedgen(event_sched event_parm
 	{
 
 
-	  goto func_end;
+	  return return_status;
 
 	}
 
@@ -4043,7 +4043,7 @@ unsigned long _INTCALCS schedgen(event_sched event_parm
 	{
 
 
-	  goto func_end;
+	  return return_status;
 
 	}
 
@@ -4071,7 +4071,7 @@ unsigned long _INTCALCS schedgen(event_sched event_parm
 	  {
 
 
-		 goto func_end;
+		 return return_status;
 	  }
 
 	  datecpy(sched_dates[date_count].event_date.date_string,calc_date.date_string);
@@ -4106,7 +4106,7 @@ unsigned long _INTCALCS eventchk (event_sched event_parm)
 	{
 
 	  return_status = return_err_date_bad;
-			 goto func_end;
+			 return return_status;
 
 	}
 
@@ -4115,7 +4115,7 @@ unsigned long _INTCALCS eventchk (event_sched event_parm)
 	{
 
 	  return_status = return_err_date_bad;
-			 goto func_end;
+			 return return_status;
 
 	}
 
@@ -4123,7 +4123,7 @@ unsigned long _INTCALCS eventchk (event_sched event_parm)
 	{
 
 	  return_status = return_err_date_bad;
-	  goto func_end;
+	  return return_status;
 
 	}
 
@@ -4135,7 +4135,7 @@ unsigned long _INTCALCS eventchk (event_sched event_parm)
 	{
 
 	  return_status = return_err_date_bad;
-	  goto func_end;
+	  return return_status;
 
 	}
 
@@ -4143,7 +4143,7 @@ unsigned long _INTCALCS eventchk (event_sched event_parm)
 	{
 
 	  return_status = return_err_date_bad;
-	  goto func_end;
+	  return return_status;
 
 	}
 
@@ -4154,7 +4154,7 @@ unsigned long _INTCALCS eventchk (event_sched event_parm)
 	{
 
 	  return_status = return_err_invalid_period;
-	  goto func_end;
+	  return return_status;
 
 	}
 
