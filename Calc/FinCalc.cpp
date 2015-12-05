@@ -157,10 +157,10 @@ string FinCalc::getDAYCOUNT_Text(FinCalc::_DAYCOUNT daycount)
 		_DAYCOUNT_Text.assign("30E+/360");
 		break;
 	case FinCalc::_30_360:
-		_DAYCOUNT_Text.assign("30/360");
+		_DAYCOUNT_Text.assign("30/360 US");
 		break;
 	case FinCalc::_30_360GERMAN:
-		_DAYCOUNT_Text.assign("30/360GERMAN");
+		_DAYCOUNT_Text.assign("30/360 GERMAN");
 		break;
 	case FinCalc::_ACT_360:
 		_DAYCOUNT_Text.assign("ACT/360");

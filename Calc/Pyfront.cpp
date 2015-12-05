@@ -1,18 +1,12 @@
-//#include <envir.h>
-//#include datehead
-//#include genhead
 #include "stdafx.h"
 #include "datedec.h"
-//#include <pydecs.h>
 #include "insclass.h"
-//#include <intdecs.h>
 #include "gendec.h"
-//#include "iodec.h"
 #include "scrdec.h"
 #include <math.h>
 #include "pyfront.h"
-//#include iokeys
-//#include holidays
+#include <strsafe.h>
+
 /*
 const char change_new = 0;
 const char change_step = 1;
@@ -36,6 +30,56 @@ char** getdaycounts(int& size)
 	size = date_last_day_count;
 	return (char**)day_count_names;
 }
+int  getStatusText(int status, char* text, int&textSize)
+{
+	Py_Front pyfront;
+	int result = return_success;
+	pyfront.errtext(status, text);
+	textSize = error_text_len;
+	return result;
+}
+int getDefaultInstrument(InstrumentStruct &instrument)
+{
+	int result = return_success;
+	instrument.instrumentClass = 3;
+	instrument.intDayCount = 4;
+	instrument.maturityDate->day = 1;
+	instrument.maturityDate->month = 1;
+	instrument.maturityDate->year = 2001;
+	return result;
+}
+
+/*
+int getInstrumentDefaults(CALCULATION *calculation)
+{
+	calculation->instrument->name = "newname";
+	return 0;
+}
+*/
+
+//INSTRUMENT*  getInstrumentDefaults(INSTRUMENT &instrument)
+/*
+void  getInstrumentDefaults(INSTRUMENT &instrument)
+{
+		//INSTRUMENT pInstrument = instrument;
+		//pInstrument.name = "TestName";
+		//return &pInstrument;
+}
+*/
+
+void  getInstrumentDefaults(CALCULATIONS &calculations)
+{
+	char  buffer[1024];
+	for (int ix = 0; calculations.instruments[ix] != NULL; ix++)
+	{
+		INSTRUMENT * pInstrument = calculations.instruments[ix];
+		pInstrument->name = "TestName";
+		calculations.instruments[ix] = pInstrument;
+		//StringCbPrintf(buffer, sizeof(buffer), "%d:\n%f\n%s\n%u\n%u\n%u\n", ix, pCell->amount, pCell->name, pCell->precision, pCell->flags, pCell->rank);
+		//MessageBox(NULL, buffer, "Test", MB_OK);
+	}
+}
+
 
 Py_Front::Py_Front()
 {

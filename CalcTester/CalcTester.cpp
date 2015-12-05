@@ -1144,5 +1144,17 @@ NL/365	484/365	1.32602739726027
 30/360 German	479/360	1.33055555555556
 30/360 US	480/360	1.33333333333333
 
+
+/////
+
+LINK:
+
+http://knowpapa.com/dcc/
+http://www.iso15022.org/uhb/uhb/mt569-48-field-22f.htm
+http://www.deltaquants.com/day-count-conventions
+http://www.isda.org/c_and_a/pdf/ACT-ACT-ISDA-1999.pdf
+http://docs.fincad.com/support/developerfunc/mathref/Daycount.htm
+http://educ.jmu.edu/~drakepp/FIN250/readings/duration.pdf
+http://www.mathworks.com/help/finance/computing-treasury-bill-price-and-yield.html#bt2fpqg-5
 */
 

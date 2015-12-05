@@ -40,6 +40,7 @@
                            SelectedItem="{Binding SelectedInstrumentClass}"
                           IsSynchronizedWithCurrentItem="True"
                            SelectedValuePath="Name"
+                  
                 />
         <TextBlock Text="Value Date: " Name="lblValueDate" Margin="10 15" Grid.Row="1"/>
         <DatePicker Name="dpValueDate" Margin="10 15" Grid.Column="1" Grid.Row="1" 

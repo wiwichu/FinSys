@@ -30,16 +30,21 @@ namespace FinSys.Wpf.ViewModel
 
         private void Initializer()
         {
-            InstrumentClasses = new ObservableCollection<InstrumentClass>(RepositoryFactory.Calculator.GetInstrumentClassesAsync().Result);
-            if (instrumentClasses.Count>0)
-            {
-                SelectedInstrumentClass = instrumentClasses[0];
-            }
             DayCounts = new ObservableCollection<string>(RepositoryFactory.Calculator.GetDayCountsAsync().Result);
             if (DayCounts.Count > 0)
             {
                 SelectedDayCount = dayCounts[0];
             }
+            InstrumentClasses = new ObservableCollection<InstrumentClass>(RepositoryFactory.Calculator.GetInstrumentClassesAsync().Result);
+            if (instrumentClasses.Count>0)
+            {
+                SelectedInstrumentClass = instrumentClasses[0];
+            }
+        }
+        public ICommand ChangeClassCommand
+        {
+            get;
+            set;
         }
 
         public ICommand OpenWindowCommand
@@ -52,6 +57,37 @@ namespace FinSys.Wpf.ViewModel
         private void LoadCommands()
         {
             OpenWindowCommand = new RelayCommand(OpenWindow, CanOpenWindow);
+            ChangeClassCommand = new RelayCommand(ChangeClass, CanChangeClass);
+        }
+
+        private bool CanChangeClass(object obj)
+        {
+            return true;
+        }
+
+        private async void ChangeClass(object obj)
+        {
+            InstrumentClass instrumentClass = obj as InstrumentClass;
+            if (instrumentClass == null)
+            {
+                return;
+            }
+            List<Instrument> instruments = new List<Instrument>();
+            Instrument instrument = new Instrument
+            {
+                Name = "Instrument1",
+                Class = instrumentClass,
+                IntDayCount = (string)SelectedDayCount
+
+            };
+            instruments.Add(instrument);
+            instruments = await RepositoryFactory.Calculator.GetInstrumentDefaultsAsync(instruments);
+
+            if (instruments != null && instruments.Count >0)
+            {
+                Instrument instr = instruments[0];
+                SelectedDayCount = instr.IntDayCount;
+            }
         }
 
         private bool CanOpenWindow(object obj)
@@ -88,6 +124,7 @@ namespace FinSys.Wpf.ViewModel
                 if (selectedInstrumentClass != value)
                 {
                     selectedInstrumentClass = value;
+                    ChangeClass(selectedInstrumentClass);
                     OnPropertyChanged();
                 }
             }

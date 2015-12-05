@@ -27,8 +27,55 @@
 #include "errdecs.h"
 #include "holicodeproc.h"
 
+#define HASHSIZE            151
+
+typedef struct INSTRUMENT
+{
+	char                *name;
+	char                *instrumentClass;
+	char                *intDayCount;
+} INSTRUMENT;
+
+typedef struct DateStruct
+{
+	int year;
+	int month;
+	int day;
+} DateStruct;
+
+typedef struct InstrumentStruct
+{
+	int					instrumentClass;
+	int					intDayCount;
+	DateStruct			*maturityDate;
+} InstrumnentStruct;
+
+
+typedef struct CALCULATION
+{
+	INSTRUMENT              *instrument;
+	void              *userData;                // reserved for future use
+
+} CALCULATION;
+
+
+typedef struct CALCULATIONS
+{
+	INSTRUMENT              *instruments[HASHSIZE];
+	void              *userData;                // reserved for future use
+
+} CALCULATIONS;
+
 extern "C" __declspec(dllexport) char**  getclassdescriptions(int& size);
 extern "C" __declspec(dllexport) char**  getdaycounts(int& size);
+extern "C" __declspec(dllexport) void  getInstrumentDefaults(CALCULATIONS &calculations);
+//extern "C" __declspec(dllexport) INSTRUMENT*  getInstrumentDefaults(INSTRUMENT &instrument);
+//extern "C" __declspec(dllexport) void getInstrumentDefaults(INSTRUMENT &instrument);
+//extern "C" __declspec(dllexport) int getInstrumentDefaults(CALCULATION *calculation);
+extern "C" __declspec(dllexport) int  getDefaultInstrument(InstrumentStruct &instrument);
+extern "C" __declspec(dllexport) int  getStatusText(int status, char* text, int&textSize);
+
+static _errtext errorText;
 
 
 const char change_new = 0;
