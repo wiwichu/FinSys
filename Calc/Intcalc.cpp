@@ -439,6 +439,42 @@ accrued interest and number of days of interest for that date.
 	  }
     }
 	}
+	if (in_instr.cal_den == date_365A_cal)
+	{
+		instr *inst = new instr(in_instr);
+		if (isLeapDayInRange(prv_pay,nxt_pay))
+		{
+			inst->cal_den = date_366_cal;
+		}
+		else
+		{
+			inst->cal_den = date_365_cal;
+		}
+		return_status = intcalc(*inst
+			, in_date
+			, interest
+			, int_days
+			, holi_chan
+			, ex_coup_ind
+			, total_per
+			, nom_adj
+			, sett_to_first_fact_parm
+			, redeem_adj
+			, event_chan
+			, holiSet
+			, rate_array
+			, whole_period_factor
+			);
+		if (return_status != return_success)
+		{
+			return return_status;
+		}
+
+
+		delete inst;
+		return return_success;
+	}
+
 
 	/*{ Calculate days from settlement to next coupon.}*/
 
@@ -678,6 +714,7 @@ accrued interest and number of days of interest for that date.
 	{
 		case date_actISDA_cal:
 		case date_365L_cal:
+		case date_365A_cal:
 		case date_act_cal: 	/*{ If calendar denominator is ACT, then
 				determine number of quasi periods (ACT is
 				not permitted when payment period is in days).}*/
