@@ -2637,6 +2637,7 @@ unsigned long Date_Funcs::forecast	(date_union base_date,
 				break;
 
 			} /* Actual days */
+			case date_30US_cal:
 			case date_30eplus_cal:
 			case date_30_cal:
 			case date_30german_cal:
@@ -3205,6 +3206,7 @@ unsigned long Date_Funcs::tenor	(date_union start_date,
 			break;
 		}
 
+	case date_30US_cal:
 	case date_30eplus_cal:
 	case date_30german_cal:
 	case date_30_cal:
@@ -3221,7 +3223,7 @@ unsigned long Date_Funcs::tenor	(date_union start_date,
 			days_month = (end_date.date.months - start_date.date.months)*30;
 
 			/* { Adjust days according to convention.} */
-
+			char orig_start_days = start_date.date.days;
 			if (start_date.date.days == 31)
 			{
 				start_date.date.days = 30;
@@ -3243,11 +3245,28 @@ unsigned long Date_Funcs::tenor	(date_union start_date,
 						forecast(end_date, 0, 1, date_act_cal, &end_date);
 						days_month += 30;
 					}
+					else if (cal_type == date_30US_cal && orig_start_days == 31)
+					{
+						end_date.date.days = 30;
+					}
 					else if (start_date.date.days == 30)
 					{
 						end_date.date.days = 30;
 					}
 				}
+			}
+			if (cal_type == date_30US_cal)
+			{
+				if (start_date.date.months==2 & (month_end(start_date) == start_date.date.days))
+				{
+					start_date.date.days = 30;
+					if (end_date.date.months == 2 & (month_end(end_date) == end_date.date.days))
+					{
+						end_date.date.days = 30;
+					}
+
+				}
+
 			}
 			if (cal_type == date_30german_cal)
 			{
