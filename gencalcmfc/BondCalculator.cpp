@@ -95,7 +95,7 @@ BOOL CBondCalculator::Create( CWnd* pParentWnd)
 		return FALSE;
 
 	}
-
+	
 	return_status =  init_screen();
 
 	InitInstrClass();

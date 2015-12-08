@@ -27,7 +27,7 @@ int  getStatusText(int status, char* text, int&textSize)
 	textSize = error_text_len;
 	return result;
 }
-int getDefaultInstrument(InstrumentStruct &instrument)
+int getInstrumentDefaults(InstrumentStruct &instrument)
 {
 	int result = return_success;
 	instrument.instrumentClass = 3;

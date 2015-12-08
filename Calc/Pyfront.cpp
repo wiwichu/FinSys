@@ -9,7 +9,7 @@
 
 Py_Front::Py_Front()
 {
-	scr_meth = scr_meth_general;
+	//scr_meth = scr_meth_general;
 }
 /*
 Py_Front::Py_Front(CDB * DB_parm) 
@@ -29,6 +29,247 @@ cholicodeproc (DB_parm)
 	
 }
 */
+char  FAR _export	Py_Front::action_init_cf(Instrument::instr &in_instr)
+{
+	char current_class = instr_cashflow_class;
+	in_instr.instr_class = instr_cashflow_class;
+	return current_class;
+}
+char  FAR _export	Py_Front::action_init_mbs(Instrument::instr &in_instr)
+{
+	char current_class = instr_mbs_class;
+	in_instr.instr_class = instr_mbs_class;
+	return current_class;
+}
+char  FAR _export	Py_Front::init_fra_holiday()
+{
+	return 0;
+}
+void FAR _export Py_Front::action_init_part_pay(Instrument::pay_struc &in_pay_struct)
+{
+	in_pay_struct.last_element = 0;
+}
+unsigned long  FAR _export Py_Front::action_proc_part_pay(Instrument::pay_struc part_pays_sched[],
+	Instrument::instr &in_instr, Date_Funcs::date_union mat_date, Date_Funcs::date_union issue_date)
+{
+	unsigned long return_state = return_success;
+	if ((part_pays_sched[0].last_element < 0) ||
+		(part_pays_sched[0].last_element > max_part_pays))
+	{
+
+		unsigned long return_state = return_err_partpay_out_bounds;
+
+		////errproc(return_state,module_name,"","","");
+
+		return return_state;
+
+	}
+
+	long double work_long_double = 0;
+	int element_count = 0;
+	for (int element_count = 0;
+	return_state == return_success,
+		(element_count < part_pays_sched[0].last_element) &&
+		(element_count < max_part_pays);
+		element_count++)
+	{
+
+		return_state =
+			 Date_Funcs::datechck(part_pays_sched[element_count].pay_date);
+
+		if (return_state != return_success)
+		{
+
+			return_state = return_err_partpay_bad_date;
+			////errproc(return_state,module_name,"","","");
+			return return_state;
+
+		}
+
+		int str_cmp = Date_Funcs::datecmp(&issue_date.date_string,
+			&part_pays_sched[element_count].pay_date.date_string);
+
+		if (str_cmp > 0)
+		{
+
+			return_state = return_err_partpay_date_out_bounds;
+			////errproc(return_state,module_name,"","","");
+			return return_state;
+
+		}
+
+		str_cmp = Date_Funcs::datecmp(&mat_date.date_string,
+			&part_pays_sched[element_count].pay_date.date_string);
+
+		if (str_cmp < 0)
+		{
+
+			return_state = return_err_partpay_date_out_bounds;
+			////errproc(return_state,module_name,"","","");
+			return return_state;
+
+		}
+
+		if (element_count > 0)
+		{
+
+			str_cmp = Date_Funcs::datecmp(
+				&in_instr.part_pays_sched[element_count - 1].pay_date.date_string,
+				&part_pays_sched[element_count].pay_date.date_string);
+
+			if (str_cmp >= 0)
+			{
+
+				return_state = return_err_partpay_date_nonasc;
+				////errproc(return_state,module_name,"","","");
+				return return_state;
+
+			}
+
+		}
+
+		in_instr.part_pays_sched[element_count].payment =
+			part_pays_sched[element_count].payment;
+
+		Date_Funcs::datecpy(in_instr.part_pays_sched[element_count].pay_date.date_string,
+			part_pays_sched[element_count].pay_date.date_string);
+
+		work_long_double = work_long_double +
+			part_pays_sched[element_count].payment;
+
+	}
+
+	if ((work_long_double != in_instr.redemp_price) &&
+		(part_pays_sched[0].last_element != 0))
+	{
+
+		return_state = return_err_partpay_total_pay_bad;
+		////errproc(return_state,module_name,"","","");
+		return return_state;
+
+	}
+
+	in_instr.part_pays = element_count;
+
+	in_instr.part_pay_price_base = in_instr.redemp_price;
+
+
+	return return_success;
+}
+void  FAR _export Py_Front::action_init_excoup(char excoup_choice[excoup_count][excoup_names_len])
+{
+	for (int element_count = 0; element_count <
+		excoup_count; ++element_count)
+	{
+
+		strcpy(excoup_choice[element_count],
+			excoup_names[element_count]);
+	}
+
+
+}
+char FAR _export	 Py_Front::action_proc_monthend(char* monthend_name)
+{
+	char result;
+	if ( strcmp(current_monthend_name,
+		monthend_names[monthend_yes]) == 0 )
+	{
+
+		result = monthend_yes;
+
+	}
+	else
+	{
+
+		result = monthend_no;
+
+	}
+	return result;
+}
+
+void  FAR _export	Py_Front::action_sink_fund_mat(char sink_fund_mat_choice[py_last_redemp_sched][redemp_sched_names_len])
+{
+
+	for (int element_count = 0; element_count <
+		py_last_redemp_sched; ++element_count)
+	{
+
+		strcpy(sink_fund_mat_choice[element_count],
+			redemp_sched_names[element_count]);
+	}
+
+
+}
+unsigned long FAR _export	 Py_Front::proc_sink_fund_mat(char* sink_fund_mat_name)
+{
+	unsigned long result = return_success;
+	if (strcmp(sink_fund_mat_name,
+		redemp_sched_names[py_equivalent_redemp_sched]) == 0)
+	{
+
+		//				current_sink_fund_mat = py_equivalent_redemp_sched;
+
+	}
+	else
+	{
+
+		if (strcmp(sink_fund_mat_name,
+			redemp_sched_names[py_average_redemp_sched]) == 0)
+		{
+
+			//					current_sink_fund_mat = py_average_redemp_sched;
+
+		}
+		else
+		{
+
+			result = return_err_invalid_redemp_sched;
+
+			////errproc(return_state,module_name,"","","");
+
+			return result;
+
+		}
+
+	}
+
+	return result;
+}
+char  FAR _export	Py_Front::action_proc_excoup(char*excoup_name)
+{
+	char result = ex_coup_no;
+	if (strcmp(excoup_name,
+		excoup_names[ex_coup_yes]) == 0)
+	{
+
+		current_excoup = ex_coup_yes;
+
+	}
+	return result;
+}
+void FAR _export	 Py_Front::action_init_frn(Instrument::instr &in_instr)
+{
+	in_instr.instr_class = instr_float_class;
+}
+void  FAR _export	Py_Front::set_rerate(Instrument::instr &in_instr, py_rate_parm &rerate_sched)
+{
+	rerate_sched.current_holiday_adj =
+		in_instr.pay_freq.holiday_adj;
+	strcpy(rerate_sched.current_holiday_adj_name,
+		rerate_sched.holiday_adj_choice[rerate_sched.current_holiday_adj]);
+
+	rerate_sched.rerate_sched = in_instr.pay_freq;
+
+	rerate_sched.rerate_sched.holiday_adj =
+		event_sched_same_holiday_adj;
+	rerate_sched.current_simp_comp = simp_comp_simple;
+
+}
+void FAR _export	 Py_Front::instr_class_init(Instrument::instr &in_instr)
+{
+	in_instr.instr_class = 0;
+}
+
 unsigned long FAR _export	Py_Front::pyproc45	(
 //	char action,
 //	char instr_class_desc_choice [instr_last_class] [instr_class_desc_len],
@@ -335,28 +576,28 @@ size_t num_bytes = 0;
 			actions_proc(change_step, actions_index,
 				actions_array, 0 );
 
-			switch (scr_meth)
-			{
-				case 	scr_meth_general:
-				case	scr_meth_borwin:
-					/*{For Borland Windows.}*/
-				{
-
-					break;
-				}
-				default:
-				{
-
-					return_state = return_err_inv_scr_meth;
-
-//					//errproc(return_state,module_name,"","","");
-
-					return return_state;
-
-					break;
-
-				}
-			}
+//			switch (scr_meth)
+//			{
+//				case 	scr_meth_general:
+//				case	scr_meth_borwin:
+//					/*{For Borland Windows.}*/
+//				{
+//
+//					break;
+//				}
+//				default:
+//				{
+//
+//					return_state = return_err_inv_scr_meth;
+//
+////					//errproc(return_state,module_name,"","","");
+//
+//					return return_state;
+//
+//					break;
+//
+//				}
+//			}
 			break;
 		 }
 		 case py_action_init_cf:
@@ -368,9 +609,9 @@ size_t num_bytes = 0;
 			if (actions_array[actions_index].prev_action
 			== py_action_start)
 			{
-
-				current_class = instr_cashflow_class;
-				in_instr.instr_class = instr_cashflow_class;
+				current_class = action_init_cf(in_instr);
+				//current_class = instr_cashflow_class;
+				//in_instr.instr_class = instr_cashflow_class;
 
 				actions_index ++;
 
@@ -425,28 +666,28 @@ size_t num_bytes = 0;
 			actions_proc(change_step, actions_index,
 				actions_array, 0 );
 
-			switch (scr_meth)
-			{
-				case 	scr_meth_general:
-				case	scr_meth_borwin:
-					/*{For Borland Windows.}*/
-				{
-
-					break;
-				}
-				default:
-				{
-
-					return_state = return_err_inv_scr_meth;
-
-//					//errproc(return_state,module_name,"","","");
-
-					return return_state;
-
-					break;
-
-				}
-			}
+//			switch (scr_meth)
+//			{
+//				case 	scr_meth_general:
+//				case	scr_meth_borwin:
+//					/*{For Borland Windows.}*/
+//				{
+//
+//					break;
+//				}
+//				default:
+//				{
+//
+//					return_state = return_err_inv_scr_meth;
+//
+////					//errproc(return_state,module_name,"","","");
+//
+//					return return_state;
+//
+//					break;
+//
+//				}
+//			}
 			break;
 		 }
 		 case py_action_init_mbs:
@@ -460,9 +701,9 @@ size_t num_bytes = 0;
 			{
 
 				actions_index ++;
-
-				current_class = instr_mbs_class;
-				in_instr.instr_class = instr_mbs_class;
+				current_class = action_init_mbs(in_instr);
+				//current_class = instr_mbs_class;
+				//in_instr.instr_class = instr_mbs_class;
 
 				actions_proc(change_new, actions_index,
 				actions_array, py_day_count_init );
@@ -562,28 +803,28 @@ size_t num_bytes = 0;
 			actions_proc(change_step, actions_index,
 				actions_array, 0 );
 
-			switch (scr_meth)
-			{
-				case 	scr_meth_general:
-				case	scr_meth_borwin:
-					/*{For Borland Windows.}*/
-				{
+			//switch (scr_meth)
+			//{
+			//	case 	scr_meth_general:
+			//	case	scr_meth_borwin:
+			//		/*{For Borland Windows.}*/
+			//	{
 
-					break;
-				}
-				default:
-				{
+			//		break;
+			//	}
+			//	default:
+			//	{
 
-					return_state = return_err_inv_scr_meth;
+			//		return_state = return_err_inv_scr_meth;
 
-					////errproc(return_state,module_name,"","","");
+			//		////errproc(return_state,module_name,"","","");
 
-					return return_state;
+			//		return return_state;
 
-					break;
+			//		break;
 
-				}
-			}
+			//	}
+			//}
 			break;
 		 }
 		 case py_action_proc_mbs:
@@ -668,7 +909,10 @@ size_t num_bytes = 0;
 
 //			strcpy(extra_parms->current_holiday_name,"USD");
 //			strcpy(current_holiday_name,fra_holiday_names[0]);
-			current_holiday = 0;
+
+
+			current_holiday = init_fra_holiday();
+			//current_holiday = 0;
 
 
 			actions_proc(change_step, actions_index,
@@ -680,7 +924,7 @@ size_t num_bytes = 0;
 		 case py_action_init_monthend:
 		 /*{Initialize the monthend choice.}*/
 		 {
-
+/*
 			for (element_count = 0; element_count <
 			monthend_count; ++element_count)
 			{
@@ -688,7 +932,7 @@ size_t num_bytes = 0;
 			  strcpy(monthend_choice[element_count],
 				 monthend_names[element_count]);
 			}
-
+			*/
 
 			actions_proc(change_step, actions_index,
 				actions_array, 0 );
@@ -699,8 +943,9 @@ size_t num_bytes = 0;
 		 case py_action_init_part_pay:
 		 /*{Initialize partial payments.}*/
 		 {
+			action_init_part_pay(part_pays_sched[0]);
 
-			part_pays_sched[0].last_element = 0;
+			//part_pays_sched[0].last_element = 0;
 
 			actions_proc(change_step, actions_index,
 				actions_array, 0 );
@@ -711,110 +956,13 @@ size_t num_bytes = 0;
 		 case py_action_proc_part_pay:
 		 /*{Process partial payments.}*/
 		 {
-
-			if ((part_pays_sched[0].last_element < 0) ||
-				(part_pays_sched[0].last_element > max_part_pays))
-			{
-
-					return_state = return_err_partpay_out_bounds;
-
-					////errproc(return_state,module_name,"","","");
-
-					return return_state;
-
-					break;
-
-			}
-
-			work_long_double = 0;
-
-			for (element_count = 0;
-				return_state == return_success,
-					(element_count < part_pays_sched[0].last_element) &&
-					(element_count < max_part_pays);
-				element_count++)
-			{
-
-				return_state =
-					 datechck(part_pays_sched[element_count].pay_date);
-
-				if (return_state != return_success)
-				{
-
-				  return_state = return_err_partpay_bad_date;
-				  ////errproc(return_state,module_name,"","","");
-				  return return_state;
-
-				}
-
-				str_cmp =  datecmp(&issue_date.date_string,
-				&part_pays_sched[element_count].pay_date.date_string);
-
-				if (str_cmp > 0)
-				{
-
-				  return_state = return_err_partpay_date_out_bounds;
-				  ////errproc(return_state,module_name,"","","");
-				  return return_state;
-
-				}
-
-				str_cmp =  datecmp(&mat_date.date_string,
-				&part_pays_sched[element_count].pay_date.date_string);
-
-				if (str_cmp < 0)
-				{
-
-				  return_state = return_err_partpay_date_out_bounds;
-				  ////errproc(return_state,module_name,"","","");
-				  return return_state;
-
-				}
-
-				if (element_count > 0)
-				{
-
-					str_cmp =  datecmp(
-					&in_instr.part_pays_sched[element_count - 1].pay_date.date_string,
-					&part_pays_sched[element_count].pay_date.date_string);
-
-					if (str_cmp >= 0)
-					{
-
-					  return_state = return_err_partpay_date_nonasc;
-					  ////errproc(return_state,module_name,"","","");
-					  return return_state;
-
-					}
-
-				}
-
-				in_instr.part_pays_sched[element_count].payment =
-				  part_pays_sched[element_count].payment;
-
-				 datecpy(in_instr.part_pays_sched[element_count].pay_date.date_string,
-				  part_pays_sched[element_count].pay_date.date_string);
-
-				work_long_double = work_long_double +
-					part_pays_sched[element_count].payment;
-
-			}
-
-			if ((work_long_double != in_instr.redemp_price) &&
-             (part_pays_sched[0].last_element != 0))
-			{
-
-				  return_state = return_err_partpay_total_pay_bad;
-				  ////errproc(return_state,module_name,"","","");
-				  return return_state;
-
-			}
-
-			in_instr.part_pays = element_count;
-
-			in_instr.part_pay_price_base = in_instr.redemp_price;
-
-			actions_proc(change_step, actions_index,
+			 unsigned long return_status = action_proc_part_pay(part_pays_sched, in_instr, mat_date, issue_date);
+			 if (return_status != return_success)
+			 {
+				 return return_status;
+			 }
+			 
+			 actions_proc(change_step, actions_index,
 				actions_array, 0 );
 
 			break;
@@ -823,15 +971,7 @@ size_t num_bytes = 0;
 		 case py_action_init_excoup:
 		 /*{Initialize the excoup choice.}*/
 		 {
-
-			for (element_count = 0; element_count <
-			excoup_count; ++element_count)
-			{
-
-			  strcpy(excoup_choice[element_count],
-				 excoup_names[element_count]);
-			}
-
+			 action_init_excoup(excoup_choice);
 
 			actions_proc(change_step, actions_index,
 				actions_array, 0 );
@@ -842,15 +982,7 @@ size_t num_bytes = 0;
 		 case py_action_init_sink_fund_mat:
 		 /*{Initialize the sinking fund maturity choice.}*/
 		 {
-
-			for (element_count = 0; element_count <
-			py_last_redemp_sched; ++element_count)
-			{
-
-			  strcpy(sink_fund_mat_choice[element_count],
-				 redemp_sched_names[element_count]);
-			}
-
+			action_sink_fund_mat(sink_fund_mat_choice);
 
 			actions_proc(change_step, actions_index,
 				actions_array, 0 );
@@ -881,7 +1013,12 @@ size_t num_bytes = 0;
 		 }
 		 case py_action_proc_sink_fund_mat:
 		 {
-
+			 unsigned long result = proc_sink_fund_mat(current_sink_fund_mat_name);
+			 if (result != return_success)
+			 {
+				 return result;
+			 }
+/*
 			if ( strcmp(current_sink_fund_mat_name,
 				redemp_sched_names[py_equivalent_redemp_sched]) == 0 )
 			{
@@ -913,7 +1050,7 @@ size_t num_bytes = 0;
 			}
 
 //			pyparm.redemp_sched = current_sink_fund_mat;
-
+*/
 			actions_proc(change_step, actions_index,
 				actions_array, 0 );
 
@@ -922,20 +1059,20 @@ size_t num_bytes = 0;
 		 }
 		 case py_action_proc_monthend:
 		 {
+			 current_monthend = action_proc_monthend(current_monthend_name);
+			//if ( strcmp(current_monthend_name,
+			//	monthend_names[monthend_yes]) == 0 )
+			//{
 
-			if ( strcmp(current_monthend_name,
-				monthend_names[monthend_yes]) == 0 )
-			{
+			//	current_monthend = monthend_yes;
 
-				current_monthend = monthend_yes;
+			//}
+			//else
+			//{
 
-			}
-			else
-			{
+			//	current_monthend = monthend_no;
 
-				current_monthend = monthend_no;
-
-			}
+			//}
 
 			actions_proc(change_step, actions_index,
 				actions_array, 0 );
@@ -945,7 +1082,8 @@ size_t num_bytes = 0;
 		 }
 		 case py_action_proc_excoup:
 		 {
-
+			current_excoup = action_proc_excoup(current_excoup_name);
+			/*
 			if ( strcmp(current_excoup_name,
 				excoup_names[ex_coup_yes]) == 0 )
 			{
@@ -959,7 +1097,7 @@ size_t num_bytes = 0;
 				current_excoup = ex_coup_no;
 
 			}
-
+			*/
 			actions_proc(change_step, actions_index,
 				actions_array, 0 );
 
@@ -977,7 +1115,8 @@ size_t num_bytes = 0;
 			== py_action_start)
 		  {
 
-			in_instr.instr_class = instr_float_class;
+			  action_init_frn(in_instr);
+			  //in_instr.instr_class = instr_float_class;
 
 			actions_index ++;
 
@@ -1060,7 +1199,9 @@ size_t num_bytes = 0;
 //
 
 //
-			rerate_sched.current_holiday_adj =
+			  set_rerate(in_instr, rerate_sched);
+			  /*
+			  rerate_sched.current_holiday_adj =
 				in_instr.pay_freq.holiday_adj;
 			strcpy(rerate_sched.current_holiday_adj_name,
 				rerate_sched.holiday_adj_choice[rerate_sched.current_holiday_adj]);
@@ -1070,7 +1211,8 @@ size_t num_bytes = 0;
 			rerate_sched.rerate_sched.holiday_adj =
 				event_sched_same_holiday_adj;
 			rerate_sched.current_simp_comp = simp_comp_simple;
-//
+			*/
+			//
 
 
 			actions_proc(change_new, actions_index,
@@ -1146,20 +1288,21 @@ size_t num_bytes = 0;
 		 /*{Initialize the instrument class choice.}*/
 		 {
 
-
+/*
 			for (element_count = 0; element_count <
 			instr_last_class; ++element_count)
 			{
-/*
-		  memcpy(instr_class_desc_choice[element_count],
-		  instr_class_descs[element_count],
-		  instr_class_desc_len);
-*/
+
+		  //memcpy(instr_class_desc_choice[element_count],
+		  //instr_class_descs[element_count],
+		  //instr_class_desc_len);
+
 				strcpy(instr_class_desc_choice[element_count],
 				instr_class_descs[element_count]);
 			}
-
-			in_instr.instr_class = 0;
+			*/
+			instr_class_init(in_instr);
+			//in_instr.instr_class = 0;
 
 
 			actions_proc(change_step, actions_index,
@@ -1171,20 +1314,20 @@ size_t num_bytes = 0;
 		 case py_day_count_init:
 		 /*{Initialize the day_count choice.}*/
 		 {
-
+			 /*
 			for (element_count = 0; element_count <
 			date_last_day_count; ++element_count)
 			{
-/*
-		memcpy(day_count_choice[element_count],
-			  day_count_names[element_count],
-			  day_count_names_len);
-*/
+
+		//memcpy(day_count_choice[element_count],
+		//	  day_count_names[element_count],
+		//	  day_count_names_len);
+
 				strcpy(day_count_choice[element_count],
 				day_count_names[element_count]);
 			}
 
-
+			*/
 			actions_proc(change_step, actions_index,
 				actions_array, 0);
 

@@ -589,6 +589,41 @@ static Py_Front& getInstance()
 	return instance;
 }
 
+
+typedef struct py_rate_parm
+{
+	event_sched rerate_sched;
+	char pay_type;
+	char current_pay_freq;
+	char pay_freq_choice[freq_count][freq_names_len];
+	char current_pay_freq_name[freq_names_len];
+	char holiday_adj_choice[holiday_adj_count][holiday_adj_names_len];
+	char current_holiday_adj;
+	char current_holiday_adj_name[holiday_adj_names_len];
+	char simp_comp_choice[simp_comp_count][simp_comp_names_len];
+	char current_simp_comp;
+	char current_simp_comp_name[simp_comp_names_len];
+	unsigned int holi_chan;
+}
+py_rate_parm;
+
+
+
+char action_init_cf(Instrument::instr &in_instr);
+char action_init_mbs(Instrument::instr &in_instr);
+char init_fra_holiday();
+void action_init_part_pay(Instrument::pay_struc &in_pay_struct);
+unsigned long action_proc_part_pay(Instrument::pay_struc in_pay_struct[], 
+	Instrument::instr &in_instr, date_union mat_date, date_union issue_date);
+
+void action_init_excoup(char excoup_choice[excoup_count][excoup_names_len]);
+void action_sink_fund_mat(char sink_fund_mat_choice[py_last_redemp_sched][redemp_sched_names_len]);
+char action_proc_monthend(char* monthend_name);
+unsigned long proc_sink_fund_mat(char* sink_fund_mat_name);
+char action_proc_excoup(char* excoup_name);
+void action_init_frn(Instrument::instr &in_instr);
+void set_rerate(Instrument::instr &in_instr, py_rate_parm &rerate_sched);
+void instr_class_init(Instrument::instr &in_instr);
 //extern unsigned long  _FAR_FUNC _EX_IN_FUNC    _FAR_FUNC _EX_IN_FUNC	pyproc	(
 unsigned long pyproc45	(
 //	char action,
@@ -692,25 +727,8 @@ private:
 //CDB * DB_local;
 //CDB::DB_Handles localhandles;
 
-char	scr_meth;
+//char	scr_meth;
 set<string> holiSet;
-
-
-typedef struct py_rate_parm
-	{ event_sched rerate_sched;
-	char pay_type;
-	char current_pay_freq;
-	char pay_freq_choice [freq_count] [freq_names_len];
-	char current_pay_freq_name [freq_names_len];
-	char holiday_adj_choice [holiday_adj_count] [holiday_adj_names_len];
-	char current_holiday_adj;
-	char current_holiday_adj_name [holiday_adj_names_len];
-	char simp_comp_choice [simp_comp_count] [simp_comp_names_len];
-	char current_simp_comp;
-	char current_simp_comp_name [simp_comp_names_len];
-	unsigned int holi_chan;
-	}
-			 py_rate_parm;
 
 
 //   Date_Funcs Dates;
@@ -751,11 +769,11 @@ typedef struct py_rate_parm
  long double  current_factor;
  long double  service_fee;
  long double  lag;
- char instr_class_desc_choice [instr_last_class] [instr_class_desc_len];
+ //char instr_class_desc_choice [instr_last_class] [instr_class_desc_len];
  char current_class;
- char day_count_choice [date_last_day_count] [day_count_names_len];
+ //char day_count_choice [date_last_day_count] [day_count_names_len];
  char pay_freq_choice [freq_count] [freq_names_len];
- char monthend_choice [monthend_count] [monthend_names_len];
+ //char monthend_choice [monthend_count] [monthend_names_len];
  char yield_meth_choice [py_last_yield_meth] [yield_names_len];
  char yield_days_choice [date_last_day_count] [day_count_names_len];
  char yield_freq_choice [freq_count] [freq_names_len];

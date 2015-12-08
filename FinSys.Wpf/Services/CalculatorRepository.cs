@@ -20,7 +20,7 @@ namespace FinSys.Wpf.Services
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int getStatusText(int status, StringBuilder text, out int textSize);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
-        private static extern int getDefaultInstrument(InstrumentDescr instrument);
+        private static extern int getInstrumentDefaults(InstrumentDescr instrument);
 
         public async Task<List<string>> GetDayCountsAsync()
         {
@@ -93,7 +93,7 @@ namespace FinSys.Wpf.Services
                     Marshal.StructureToPtr(maturityDate, instr.maturityDate, false);
                     StringBuilder statusText = new StringBuilder(200);
                     int textSize;
-                    int status = getDefaultInstrument(instr);
+                    int status = getInstrumentDefaults(instr);
                     status = getStatusText(status, statusText, out textSize);
                     IntPtr matPtr = Marshal.ReadIntPtr(instr.maturityDate);
                     DateDescr matDate = new DateDescr();

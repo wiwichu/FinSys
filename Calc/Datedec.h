@@ -208,7 +208,7 @@ char const  day_count_dens[date_last_day_count] =
 	date_366_cal
 	};
 
-const	int	day_count_names_len = 10;
+const	int	day_count_names_len = 20;
 const	int	date_len = 5;
 
 char const zero_date[5] = {0,0,0,0,0};
