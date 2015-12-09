@@ -29,28 +29,25 @@ cholicodeproc (DB_parm)
 	
 }
 */
-char  FAR _export	Py_Front::action_init_cf(Instrument::instr &in_instr)
+void  FAR _export	Py_Front::action_init_cf()
 {
-	char current_class = instr_cashflow_class;
+	current_class = instr_cashflow_class;
 	in_instr.instr_class = instr_cashflow_class;
-	return current_class;
 }
-char  FAR _export	Py_Front::action_init_mbs(Instrument::instr &in_instr)
+void  FAR _export	Py_Front::action_init_mbs()
 {
-	char current_class = instr_mbs_class;
+	current_class = instr_mbs_class;
 	in_instr.instr_class = instr_mbs_class;
-	return current_class;
 }
-char  FAR _export	Py_Front::init_fra_holiday()
+void  FAR _export	Py_Front::init_fra_holiday()
 {
-	return 0;
+	current_holiday = 0;
 }
-void FAR _export Py_Front::action_init_part_pay(Instrument::pay_struc &in_pay_struct)
+void FAR _export Py_Front::action_init_part_pay()
 {
-	in_pay_struct.last_element = 0;
+	part_pays_sched[0].last_element = 0;
 }
-unsigned long  FAR _export Py_Front::action_proc_part_pay(Instrument::pay_struc part_pays_sched[],
-	Instrument::instr &in_instr, Date_Funcs::date_union mat_date, Date_Funcs::date_union issue_date)
+unsigned long  FAR _export Py_Front::action_proc_part_pay()
 {
 	unsigned long return_state = return_success;
 	if ((part_pays_sched[0].last_element < 0) ||
@@ -156,7 +153,7 @@ unsigned long  FAR _export Py_Front::action_proc_part_pay(Instrument::pay_struc 
 
 	return return_success;
 }
-void  FAR _export Py_Front::action_init_excoup(char excoup_choice[excoup_count][excoup_names_len])
+void  FAR _export Py_Front::action_init_excoup()
 {
 	for (int element_count = 0; element_count <
 		excoup_count; ++element_count)
@@ -168,26 +165,25 @@ void  FAR _export Py_Front::action_init_excoup(char excoup_choice[excoup_count][
 
 
 }
-char FAR _export	 Py_Front::action_proc_monthend(char* monthend_name)
+void FAR _export	 Py_Front::action_proc_monthend()
 {
-	char result;
+	
 	if ( strcmp(current_monthend_name,
 		monthend_names[monthend_yes]) == 0 )
 	{
 
-		result = monthend_yes;
+		current_monthend = monthend_yes;
 
 	}
 	else
 	{
 
-		result = monthend_no;
+		current_monthend = monthend_no;
 
 	}
-	return result;
 }
 
-void  FAR _export	Py_Front::action_sink_fund_mat(char sink_fund_mat_choice[py_last_redemp_sched][redemp_sched_names_len])
+void  FAR _export	Py_Front::action_sink_fund_mat()
 {
 
 	for (int element_count = 0; element_count <
@@ -200,10 +196,10 @@ void  FAR _export	Py_Front::action_sink_fund_mat(char sink_fund_mat_choice[py_la
 
 
 }
-unsigned long FAR _export	 Py_Front::proc_sink_fund_mat(char* sink_fund_mat_name)
+unsigned long FAR _export	 Py_Front::proc_sink_fund_mat()
 {
 	unsigned long result = return_success;
-	if (strcmp(sink_fund_mat_name,
+	if (strcmp(current_sink_fund_mat_name,
 		redemp_sched_names[py_equivalent_redemp_sched]) == 0)
 	{
 
@@ -213,7 +209,7 @@ unsigned long FAR _export	 Py_Front::proc_sink_fund_mat(char* sink_fund_mat_name
 	else
 	{
 
-		if (strcmp(sink_fund_mat_name,
+		if (strcmp(current_sink_fund_mat_name,
 			redemp_sched_names[py_average_redemp_sched]) == 0)
 		{
 
@@ -235,23 +231,22 @@ unsigned long FAR _export	 Py_Front::proc_sink_fund_mat(char* sink_fund_mat_name
 
 	return result;
 }
-char  FAR _export	Py_Front::action_proc_excoup(char*excoup_name)
+void  FAR _export	Py_Front::action_proc_excoup()
 {
-	char result = ex_coup_no;
-	if (strcmp(excoup_name,
+	current_excoup = ex_coup_no;
+	if (strcmp(current_excoup_name,
 		excoup_names[ex_coup_yes]) == 0)
 	{
 
 		current_excoup = ex_coup_yes;
 
 	}
-	return result;
 }
-void FAR _export	 Py_Front::action_init_frn(Instrument::instr &in_instr)
+void FAR _export	 Py_Front::action_init_frn()
 {
 	in_instr.instr_class = instr_float_class;
 }
-void  FAR _export	Py_Front::set_rerate(Instrument::instr &in_instr, py_rate_parm &rerate_sched)
+void  FAR _export	Py_Front::set_rerate()
 {
 	rerate_sched.current_holiday_adj =
 		in_instr.pay_freq.holiday_adj;
@@ -265,11 +260,208 @@ void  FAR _export	Py_Front::set_rerate(Instrument::instr &in_instr, py_rate_parm
 	rerate_sched.current_simp_comp = simp_comp_simple;
 
 }
-void FAR _export	 Py_Front::instr_class_init(Instrument::instr &in_instr)
+void  FAR _export Py_Front::freq_count_init_frn()
+{
+	for (int element_count = 0; element_count <
+		freq_count; ++element_count)
+	{
+
+		//		memcpy(rerate_sched.pay_freq_choice[element_count],
+		//			  freq_names[element_count],
+		//			  freq_names_len);
+
+		strcpy(rerate_sched.pay_freq_choice[element_count],
+			freq_names[element_count]);
+	}
+
+}
+
+void FAR _export	 Py_Front::instr_class_init()
 {
 	in_instr.instr_class = 0;
 }
+void  FAR _export Py_Front::simp_comp_init_frn()
+{
+	for (int element_count = 0; element_count <
+		simp_comp_count; ++element_count)
+	{
 
+		//		memcpy(rerate_sched.simp_comp_choice[element_count],
+		//			  simp_comp_names[element_count],
+		//			  simp_comp_names_len);
+
+		strcpy(rerate_sched.simp_comp_choice[element_count],
+			simp_comp_names[element_count]);
+	}
+}
+//void  FAR _export Py_Front::yield_meth_init(Instrument::instr &in_instr, char  yield_meth_choice[py_last_yield_meth][yield_names_len])
+void  FAR _export Py_Front::yield_meth_init()
+{
+	for (int element_count = 0; element_count <
+		py_last_yield_meth; ++element_count)
+	{
+
+		//		memcpy(yield_meth_choice[element_count],
+		//			  yield_meth_names[element_count],
+		//			  yield_names_len);
+
+		if (in_instr.instr_class == instr_mbs_class)
+		{
+
+			strcpy(yield_meth_choice[element_count],
+				instr_mbs_class_name);
+
+		}
+		else
+		{
+
+			strcpy(yield_meth_choice[element_count],
+				yield_meth_names[element_count]);
+
+		}
+	}
+}
+unsigned long FAR _export Py_Front::set_current()
+{
+
+	unsigned long return_state = classdef(&in_instr);
+
+	if (return_state != return_success) {
+
+		return return_state;
+
+	}
+
+	datecpy(prev_date.date_string, zero_date);
+	datecpy(next_date.date_string, zero_date);
+
+	current_class = in_instr.instr_class;
+	current_day_count = in_instr.day_count;
+	strcpy(current_day_count_name, day_count_names[current_day_count]);
+
+	if (in_instr.pay_freq.freq == 12)
+	{
+
+		current_pay_freq = (0);
+
+	}
+	else
+	{
+		if (in_instr.pay_freq.freq == 1)
+		{
+
+			current_pay_freq = (1);
+		}
+		else
+		{
+			if (in_instr.pay_freq.freq == 3)
+			{
+
+				current_pay_freq = (2);
+
+			}
+			else
+			{
+				if (in_instr.pay_freq.freq == 6)
+				{
+
+					current_pay_freq = (3);
+
+				}
+				else
+				{
+					current_pay_freq = (0);
+
+				}
+			}
+		}
+	}
+	strcpy(current_pay_freq_name, freq_names[current_pay_freq]);
+	current_yield_meth = in_instr.yield_meth;
+
+	if (in_instr.instr_class == instr_mbs_class)
+	{
+
+		strcpy(current_yield_meth_name,
+			yield_MBS_meth_name);
+
+	}
+	else
+	{
+
+		strcpy(current_yield_meth_name,
+			yield_meth_choice[current_yield_meth]);
+
+	}
+
+	current_yield_days = current_day_count;
+	strcpy(current_yield_days_name, day_count_names[current_day_count]);
+
+	current_monthend = monthend_yes;
+
+	current_excoup = ex_coup_no;
+
+	strcpy(current_excoup_name,
+		excoup_names[current_excoup]);
+
+	strcpy(current_sink_fund_mat_name,
+		sink_fund_mat_choice[py_equivalent_redemp_sched]);
+
+	current_yield_freq = current_pay_freq;
+
+	rerate_sched.current_pay_freq = current_pay_freq;
+	strcpy(rerate_sched.current_pay_freq_name, current_pay_freq_name
+		);
+
+	current_ex_coup_days = in_instr.ex_coup_days;
+
+	int_rate = in_instr.rate_offset;
+
+	in_price = 0;
+	in_yield = 0;
+	out_price = 0;
+	out_yield = 0;
+	calc_what = py_yield_from_price_calc_what;
+	prepay_type = py_cpr_prepay_type;
+	cpr_rate = 0;
+	current_factor = 1;
+	service_fee = 0;
+	lag = 0;
+
+	pyparm.prepay_type = prepay_type;
+	pyparm.cpr_rate = cpr_rate;
+	pyparm.current_factor = current_factor;
+	in_instr.service_fee = service_fee;
+	in_instr.lag = (char)lag;
+
+	pyparm.parm_use = py_no_parm_use;
+	pyparm.price_var = 0;
+	pyparm.frac_per = py_no_frac_per;
+	pyparm.pay_adj = event_sched_no_holiday_adj;
+	pyparm.comp_freq = 0;
+	pyparm.per_len = 0;
+	pyparm.date_cal_num = date_no_cal;
+	pyparm.date_cal_den = date_no_cal;
+	pyparm.yield_meth = in_instr.yield_meth;
+	pyparm.calc_first = py_yes_calc_first;
+
+	if (in_instr.instr_class == instr_ssd_class)
+	{
+
+		pyparm.parm_use = py_yes_parm_use;
+		pyparm.calc_first = py_no_calc_first;
+
+	}
+
+	if (current_class == instr_cashflow_class)
+	{
+
+		pyparm.parm_use = py_yes_parm_use;
+		pyparm.date_cal_num = in_instr.cal_num;
+		pyparm.date_cal_den = in_instr.cal_den;
+
+	}
+}
 unsigned long FAR _export	Py_Front::pyproc45	(
 //	char action,
 //	char instr_class_desc_choice [instr_last_class] [instr_class_desc_len],
@@ -609,7 +801,7 @@ size_t num_bytes = 0;
 			if (actions_array[actions_index].prev_action
 			== py_action_start)
 			{
-				current_class = action_init_cf(in_instr);
+				action_init_cf();
 				//current_class = instr_cashflow_class;
 				//in_instr.instr_class = instr_cashflow_class;
 
@@ -701,7 +893,7 @@ size_t num_bytes = 0;
 			{
 
 				actions_index ++;
-				current_class = action_init_mbs(in_instr);
+				action_init_mbs();
 				//current_class = instr_mbs_class;
 				//in_instr.instr_class = instr_mbs_class;
 
@@ -911,7 +1103,7 @@ size_t num_bytes = 0;
 //			strcpy(current_holiday_name,fra_holiday_names[0]);
 
 
-			current_holiday = init_fra_holiday();
+			init_fra_holiday();
 			//current_holiday = 0;
 
 
@@ -943,7 +1135,7 @@ size_t num_bytes = 0;
 		 case py_action_init_part_pay:
 		 /*{Initialize partial payments.}*/
 		 {
-			action_init_part_pay(part_pays_sched[0]);
+			action_init_part_pay();
 
 			//part_pays_sched[0].last_element = 0;
 
@@ -956,7 +1148,7 @@ size_t num_bytes = 0;
 		 case py_action_proc_part_pay:
 		 /*{Process partial payments.}*/
 		 {
-			 unsigned long return_status = action_proc_part_pay(part_pays_sched, in_instr, mat_date, issue_date);
+			 unsigned long return_status = action_proc_part_pay();
 			 if (return_status != return_success)
 			 {
 				 return return_status;
@@ -971,7 +1163,7 @@ size_t num_bytes = 0;
 		 case py_action_init_excoup:
 		 /*{Initialize the excoup choice.}*/
 		 {
-			 action_init_excoup(excoup_choice);
+			 action_init_excoup();
 
 			actions_proc(change_step, actions_index,
 				actions_array, 0 );
@@ -982,7 +1174,7 @@ size_t num_bytes = 0;
 		 case py_action_init_sink_fund_mat:
 		 /*{Initialize the sinking fund maturity choice.}*/
 		 {
-			action_sink_fund_mat(sink_fund_mat_choice);
+			action_sink_fund_mat();
 
 			actions_proc(change_step, actions_index,
 				actions_array, 0 );
@@ -1013,7 +1205,7 @@ size_t num_bytes = 0;
 		 }
 		 case py_action_proc_sink_fund_mat:
 		 {
-			 unsigned long result = proc_sink_fund_mat(current_sink_fund_mat_name);
+			 unsigned long result = proc_sink_fund_mat();
 			 if (result != return_success)
 			 {
 				 return result;
@@ -1059,7 +1251,7 @@ size_t num_bytes = 0;
 		 }
 		 case py_action_proc_monthend:
 		 {
-			 current_monthend = action_proc_monthend(current_monthend_name);
+			 action_proc_monthend();
 			//if ( strcmp(current_monthend_name,
 			//	monthend_names[monthend_yes]) == 0 )
 			//{
@@ -1082,7 +1274,7 @@ size_t num_bytes = 0;
 		 }
 		 case py_action_proc_excoup:
 		 {
-			current_excoup = action_proc_excoup(current_excoup_name);
+			action_proc_excoup();
 			/*
 			if ( strcmp(current_excoup_name,
 				excoup_names[ex_coup_yes]) == 0 )
@@ -1115,7 +1307,7 @@ size_t num_bytes = 0;
 			== py_action_start)
 		  {
 
-			  action_init_frn(in_instr);
+			  action_init_frn();
 			  //in_instr.instr_class = instr_float_class;
 
 			actions_index ++;
@@ -1199,7 +1391,7 @@ size_t num_bytes = 0;
 //
 
 //
-			  set_rerate(in_instr, rerate_sched);
+			  set_rerate();
 			  /*
 			  rerate_sched.current_holiday_adj =
 				in_instr.pay_freq.holiday_adj;
@@ -1301,7 +1493,7 @@ size_t num_bytes = 0;
 				instr_class_descs[element_count]);
 			}
 			*/
-			instr_class_init(in_instr);
+			instr_class_init();
 			//in_instr.instr_class = 0;
 
 
@@ -1384,19 +1576,20 @@ size_t num_bytes = 0;
 		 /*{Initialize the frn frequency count choice.}*/
 		 {
 
-
+			 freq_count_init_frn();
+/*
 			for (element_count = 0; element_count <
 			freq_count; ++element_count)
 			{
-/*
-		memcpy(rerate_sched.pay_freq_choice[element_count],
-			  freq_names[element_count],
-			  freq_names_len);
-*/
+
+//		memcpy(rerate_sched.pay_freq_choice[element_count],
+//			  freq_names[element_count],
+//			  freq_names_len);
+
 				strcpy(rerate_sched.pay_freq_choice[element_count],
 				freq_names[element_count]);
 			}
-
+*/
 			actions_proc(change_step, actions_index,
 				actions_array, 0);
 
@@ -1407,19 +1600,20 @@ size_t num_bytes = 0;
 		 /*{Initialize the frn Simple/Compound choice.}*/
 		 {
 
-
+			 simp_comp_init_frn();
+			 /*
 			for (element_count = 0; element_count <
 			simp_comp_count; ++element_count)
 			{
-/*
-		memcpy(rerate_sched.simp_comp_choice[element_count],
-			  simp_comp_names[element_count],
-			  simp_comp_names_len);
-*/
+
+//		memcpy(rerate_sched.simp_comp_choice[element_count],
+//			  simp_comp_names[element_count],
+//			  simp_comp_names_len);
+
 				strcpy(rerate_sched.simp_comp_choice[element_count],
 				simp_comp_names[element_count]);
 			}
-
+			*/
 			actions_proc(change_step, actions_index,
 				actions_array, 0);
 
@@ -1429,15 +1623,17 @@ size_t num_bytes = 0;
 		 case py_yield_meth_init:
 		 /*{Initialize the yield method choice.}*/
 		 {
-
+			 yield_meth_init();
+			 //yield_meth_init(in_instr, yield_meth_choice);
+			 /*
 			for (element_count = 0; element_count <
 			py_last_yield_meth; ++element_count)
 			{
-/*
-		memcpy(yield_meth_choice[element_count],
-			  yield_meth_names[element_count],
-			  yield_names_len);
-*/
+
+//		memcpy(yield_meth_choice[element_count],
+//			  yield_meth_names[element_count],
+//			  yield_names_len);
+
 				if (in_instr.instr_class == instr_mbs_class)
 				{
 
@@ -1453,7 +1649,7 @@ size_t num_bytes = 0;
 
 				}
 			}
-
+			*/
 			actions_proc(change_step, actions_index,
 				actions_array, 0);
 
@@ -1463,19 +1659,19 @@ size_t num_bytes = 0;
 		 case py_yield_days_init:
 		 /*{Initialize the yield days choice.}*/
 		 {
-
+			 /*
 			for (element_count = 0; element_count <
 			date_last_day_count; ++element_count)
 			{
-/*
-		  memcpy(yield_days_choice[element_count],
-		  day_count_names[element_count],
-		  day_count_names_len);
-*/
+
+//		  memcpy(yield_days_choice[element_count],
+//		  day_count_names[element_count],
+//		  day_count_names_len);
+
 				strcpy(yield_days_choice[element_count],
 				day_count_names[element_count]);
 			}
-
+		 */
 			actions_proc(change_step, actions_index,
 				actions_array, 0);
 
@@ -1485,19 +1681,7 @@ size_t num_bytes = 0;
 		 case py_yield_freq_init:
 		 /*{Initialize the yield frequency choice.}*/
 		 {
-
-
-			for (element_count = 0; element_count <
-			freq_count; ++element_count)
-			{
-/*
-		memcpy(yield_freq_choice[element_count],
-			  freq_names[element_count],
-			  freq_names_len);
-*/
-				strcpy(yield_freq_choice[element_count],
-				freq_names[element_count]);
-			}
+			 
 
 			actions_proc(change_step, actions_index,
 				actions_array, 0);
@@ -1508,12 +1692,12 @@ size_t num_bytes = 0;
 		 case py_set_current:
 		 /*{Set the current fields based on the instrument class.}*/
 		 {
-
+			
+			set_current();
+			/*
 			return_state =	classdef(&in_instr);
 
 			if (return_state != return_success) {
-
-			  ////errproc(return_state,module_name,"","","");
 
 			  return return_state;
 
@@ -1565,11 +1749,7 @@ size_t num_bytes = 0;
 			}
 			strcpy(current_pay_freq_name, freq_names[current_pay_freq]);
 			current_yield_meth = in_instr.yield_meth;
-/*
-			memcpy(current_yield_meth_name,
-		yield_meth_choice[*current_yield_meth],
-		yield_names_len);
-*/
+
 			if (in_instr.instr_class == instr_mbs_class)
 			{
 
@@ -1595,7 +1775,6 @@ size_t num_bytes = 0;
 			strcpy(current_excoup_name,
 					excoup_names[current_excoup]);
 
-//			current_sink_fund_mat = py_equivalent_redemp_sched;
 			strcpy(current_sink_fund_mat_name,
 			  sink_fund_mat_choice[py_equivalent_redemp_sched]);
 
@@ -1608,8 +1787,6 @@ size_t num_bytes = 0;
 			current_ex_coup_days = in_instr.ex_coup_days;
 
 			int_rate = in_instr.rate_offset;
-
-//			*instr_parm = in_instr;
 
 			in_price = 0;
 			in_yield = 0;
@@ -1655,7 +1832,7 @@ size_t num_bytes = 0;
 			  pyparm.date_cal_den = in_instr.cal_den;
 
 			}
-
+			*/
 			actions_proc(change_step, actions_index,
 				actions_array, 0);
 
@@ -1665,39 +1842,13 @@ size_t num_bytes = 0;
 		 case py_set_current_frn:
 		 /*{Set the current frn fields based on the instrument class.}*/
 		 {
-/*
-			if (actions_array[actions_index].prev_action ==
-					py_proc_pay_freq_frn)
-			{
-
-					 actions_index --;
-*/
 
 			actions_proc(change_step, actions_index,
 				actions_array, 0);
-/*
-			rerate_sched.current_holiday_adj =
-				in_instr.pay_freq.holiday_adj;
-
-			rerate_sched.rerate_sched = in_instr.pay_freq;
-*/
 			 datecpy(rerate_sched.rerate_sched.first_date.date_string,
 				in_instr.issue_date.date_string);
 			rerate_sched.rerate_sched.month_day =
 				in_instr.issue_date.date.days;
-/*
-			rerate_sched.rerate_sched.month_day =
-				in_instr.pay_freq.first_date.date.days;
-*/
-/*
-			rerate_sched.current_holiday_adj = event_sched_same_holiday_adj; 
-			strcpy(rerate_sched.current_holiday_adj_name,
-				rerate_sched.holiday_adj_choice[rerate_sched.current_holiday_adj]);
-*/
-/*
-			rerate_sched.rerate_sched.holiday_adj =
-				event_sched_same_holiday_adj;
-*/
 //
 			rerate_sched.current_simp_comp = simp_comp_simple;
 			if (in_instr.comp_freq.period == event_sched_free_period)
@@ -1718,21 +1869,7 @@ size_t num_bytes = 0;
 
 //
 			break;
-/*
-			}
-
-				  actions_index ++;
-
-			actions_array[actions_index].prev_action =
-			actions_array[actions_index - 1].curr_action;
-			actions_array[actions_index].next_action =
-			actions_array[actions_index - 1].curr_action;
-			actions_array[actions_index].curr_action =
-			py_proc_pay_freq_frn;
-
-			break;
-*/
-		 }
+	 }
 		 case py_proc_pay_freq_frn:
 		 {
 

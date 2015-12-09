@@ -609,22 +609,23 @@ py_rate_parm;
 
 
 
-char action_init_cf(Instrument::instr &in_instr);
-char action_init_mbs(Instrument::instr &in_instr);
-char init_fra_holiday();
-void action_init_part_pay(Instrument::pay_struc &in_pay_struct);
-unsigned long action_proc_part_pay(Instrument::pay_struc in_pay_struct[], 
-	Instrument::instr &in_instr, date_union mat_date, date_union issue_date);
-
-void action_init_excoup(char excoup_choice[excoup_count][excoup_names_len]);
-void action_sink_fund_mat(char sink_fund_mat_choice[py_last_redemp_sched][redemp_sched_names_len]);
-char action_proc_monthend(char* monthend_name);
-unsigned long proc_sink_fund_mat(char* sink_fund_mat_name);
-char action_proc_excoup(char* excoup_name);
-void action_init_frn(Instrument::instr &in_instr);
-void set_rerate(Instrument::instr &in_instr, py_rate_parm &rerate_sched);
-void instr_class_init(Instrument::instr &in_instr);
-//extern unsigned long  _FAR_FUNC _EX_IN_FUNC    _FAR_FUNC _EX_IN_FUNC	pyproc	(
+void action_init_cf();
+void action_init_mbs();
+void init_fra_holiday();
+void action_init_part_pay();
+unsigned long action_proc_part_pay();
+void action_init_excoup();
+void action_sink_fund_mat();
+void action_proc_monthend();
+unsigned long proc_sink_fund_mat();
+void action_proc_excoup();
+void action_init_frn();
+void set_rerate();
+void instr_class_init();
+void freq_count_init_frn();
+void simp_comp_init_frn();
+void yield_meth_init();
+unsigned long set_current();
 unsigned long pyproc45	(
 //	char action,
 //	instr *instr_parm,
@@ -775,8 +776,8 @@ set<string> holiSet;
  char pay_freq_choice [freq_count] [freq_names_len];
  //char monthend_choice [monthend_count] [monthend_names_len];
  char yield_meth_choice [py_last_yield_meth] [yield_names_len];
- char yield_days_choice [date_last_day_count] [day_count_names_len];
- char yield_freq_choice [freq_count] [freq_names_len];
+ //char yield_days_choice [date_last_day_count] [day_count_names_len];
+ //char yield_freq_choice [freq_count] [freq_names_len];
  char current_day_count;
  char current_day_count_name [day_count_names_len];
  char current_pay_freq;
