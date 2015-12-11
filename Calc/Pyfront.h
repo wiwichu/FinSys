@@ -626,7 +626,28 @@ void freq_count_init_frn();
 void simp_comp_init_frn();
 void yield_meth_init();
 unsigned long set_current();
-unsigned long pyproc45	(
+void set_current_frn();
+unsigned long proc_pay_freq_frn_py();
+unsigned long proc_simp_comp_frn_py();
+unsigned long proc_holi_py();
+unsigned long proc_pay_freq_py();
+unsigned long proc_yield_freq_py();
+void proc_day_count_py();
+unsigned long proc_yield_meth_py();
+unsigned long proc_yield_days_py();
+unsigned long proc_class_desc_py();
+unsigned long proc_mat_date_py();
+unsigned long proc_iss_date_py();
+unsigned long proc_val_date_py();
+unsigned long check_val_vs_mat_py();
+unsigned long check_val_vs_first_date_frn();
+unsigned long check_iss_vs_mat();
+unsigned long check_iss_vs_first();
+unsigned long check_first_vs_mat();
+unsigned long check_first_vs_penult();
+unsigned long check_iss_vs_val();
+unsigned long check_penult_vs_mat();
+unsigned long pyproc45(
 //	char action,
 //	instr *instr_parm,
 //	py_parms *py_parm,

@@ -462,6 +462,1035 @@ unsigned long FAR _export Py_Front::set_current()
 
 	}
 }
+
+void FAR _export Py_Front::set_current_frn()
+{
+	datecpy(rerate_sched.rerate_sched.first_date.date_string,
+		in_instr.issue_date.date_string);
+	rerate_sched.rerate_sched.month_day =
+		in_instr.issue_date.date.days;
+	//
+	rerate_sched.current_simp_comp = simp_comp_simple;
+	if (in_instr.comp_freq.period == event_sched_free_period)
+	{
+
+		rerate_sched.current_simp_comp = simp_comp_simple;
+
+	}
+	else
+	{
+
+		rerate_sched.current_simp_comp = simp_comp_compound;
+
+	}
+
+	strcpy(rerate_sched.current_simp_comp_name,
+		rerate_sched.simp_comp_choice[rerate_sched.current_simp_comp]);
+
+}
+
+unsigned long FAR _export Py_Front::proc_pay_freq_frn_py()
+{
+	if (strcmp(rerate_sched.current_pay_freq_name, freq_names[0]) == 0)
+	{
+
+		rerate_sched.rerate_sched.freq = 12;
+
+		rerate_sched.current_pay_freq = (0);
+
+	}
+
+	else
+	{
+
+		if (strcmp(rerate_sched.current_pay_freq_name, freq_names[1]) == 0)
+		{
+
+			rerate_sched.rerate_sched.freq = 1;
+
+			rerate_sched.current_pay_freq = (1);
+
+		}
+		else
+		{
+			if (strcmp(rerate_sched.current_pay_freq_name,
+				freq_names[2]) == 0)
+			{
+
+				rerate_sched.rerate_sched.freq = 3;
+
+				rerate_sched.current_pay_freq = (2);
+
+			}
+
+			else
+			{
+
+				if (strcmp(rerate_sched.current_pay_freq_name,
+					freq_names[3]) == 0)
+				{
+
+					rerate_sched.rerate_sched.freq = 6;
+
+					rerate_sched.current_pay_freq = (3);
+
+				}
+				else
+				{
+
+					rerate_sched.current_pay_freq = (0);
+
+					return return_err_invalid_pay_freq;
+
+				}
+			}
+		}
+	}
+	return return_success;
+}
+
+unsigned long FAR _export	Py_Front::proc_simp_comp_frn_py()
+{
+
+	if (strcmp(rerate_sched.current_simp_comp_name,
+		simp_comp_names[simp_comp_simple]) == 0)
+	{
+
+
+
+		rerate_sched.current_simp_comp = simp_comp_simple;
+
+		in_instr.comp_freq.period = event_sched_free_period;
+
+	}
+	else
+	{
+		if (strcmp(rerate_sched.current_simp_comp_name,
+			simp_comp_names[simp_comp_compound]) == 0)
+		{
+
+			rerate_sched.current_simp_comp = simp_comp_compound;
+
+			in_instr.comp_freq.period = event_sched_end_period;
+
+		}
+		else
+		{
+
+			rerate_sched.current_simp_comp = simp_comp_simple;
+
+			return return_err_invalid_simp_comp;
+
+		}
+	}
+	return return_success;
+}
+unsigned long FAR _export	Py_Front::proc_holi_py()
+{
+	if (return_state != return_success)
+	{
+		return return_state;
+	}
+
+
+	if (strcmp(rerate_sched.current_holiday_adj_name,
+		holiday_adj_names[0]) == 0)
+	{
+
+		rerate_sched.rerate_sched.holiday_adj =
+			event_sched_march_holiday_adj;
+
+	}
+
+	else
+	{
+
+		if (strcmp(rerate_sched.current_holiday_adj_name,
+			holiday_adj_names[1]) == 0)
+		{
+
+			rerate_sched.rerate_sched.holiday_adj =
+				event_sched_next_holiday_adj;
+
+		}
+		else
+		{
+			if (strcmp(rerate_sched.current_holiday_adj_name,
+				holiday_adj_names[2]) == 0)
+			{
+
+				rerate_sched.rerate_sched.holiday_adj =
+					event_sched_np_holiday_adj;
+
+			}
+
+			else
+			{
+
+				if (strcmp(rerate_sched.current_holiday_adj_name,
+					holiday_adj_names[3]) == 0)
+				{
+
+					rerate_sched.rerate_sched.holiday_adj =
+						event_sched_prev_holiday_adj;
+
+				}
+				else
+				{
+
+					if (strcmp(rerate_sched.current_holiday_adj_name,
+						holiday_adj_names[4]) == 0)
+					{
+
+						rerate_sched.rerate_sched.holiday_adj =
+							event_sched_pn_holiday_adj;
+
+					}
+					else
+					{
+
+						if (strcmp(rerate_sched.current_holiday_adj_name,
+							holiday_adj_names[5]) == 0)
+						{
+
+							rerate_sched.rerate_sched.holiday_adj =
+								event_sched_same_holiday_adj;
+
+						}
+						else
+						{
+
+							rerate_sched.rerate_sched.holiday_adj =
+								event_sched_same_holiday_adj;
+
+							return_state = return_err_invalid_holiday;
+
+							////errproc(return_state,module_name,"","","");
+
+							return return_state;
+
+						}
+					}
+				}
+			}
+		}
+	}
+
+	in_instr.pay_freq.holiday_adj =
+		rerate_sched.rerate_sched.holiday_adj;
+
+	return return_success;
+
+}
+unsigned long FAR _export	Py_Front::proc_pay_freq_py()
+{
+
+	if (strcmp(current_pay_freq_name, freq_names[0]) == 0)
+	{
+
+		in_instr.pay_freq.freq = 12;
+
+		current_pay_freq = (0);
+
+	}
+
+	else
+	{
+
+		if (strcmp(current_pay_freq_name, freq_names[1]) == 0)
+		{
+
+			in_instr.pay_freq.freq = 1;
+
+			current_pay_freq = (1);
+
+		}
+		else
+		{
+			if (strcmp(current_pay_freq_name, freq_names[2]) == 0)
+			{
+
+				in_instr.pay_freq.freq = 3;
+
+				current_pay_freq = (2);
+
+			}
+
+			else
+			{
+
+				if (strcmp(current_pay_freq_name, freq_names[3]) == 0)
+				{
+
+					in_instr.pay_freq.freq = 6;
+
+					current_pay_freq = (3);
+
+				}
+				else
+				{
+
+					current_pay_freq = (0);
+
+					return_state = return_err_invalid_pay_freq;
+
+					////errproc(return_state,module_name,"","","");
+
+					return return_state;
+
+				}
+			}
+		}
+	}
+	//			instr_parm->pay_freq.freq = in_instr.pay_freq.freq;
+	current_yield_freq = current_pay_freq;
+	rerate_sched.current_pay_freq = current_pay_freq;
+	pyparm.comp_freq = in_instr.pay_freq.freq;
+	return return_success;
+}
+unsigned long FAR _export	Py_Front::proc_yield_freq_py()
+{
+
+	if (strcmp(current_yield_freq_name, freq_names[0]) == 0)
+	{
+
+		pyparm.comp_freq = 12;
+
+	}
+
+	else
+	{
+
+		if (strcmp(current_yield_freq_name, freq_names[1]) == 0)
+		{
+
+			pyparm.comp_freq = 1;
+
+		}
+		else
+		{
+			if (strcmp(current_yield_freq_name, freq_names[2]) == 0)
+			{
+
+				pyparm.comp_freq = 3;
+
+			}
+
+			else
+			{
+
+				if (strcmp(current_yield_freq_name, freq_names[3]) == 0)
+				{
+
+					pyparm.comp_freq = 6;
+
+				}
+				else
+				{
+
+					return_state = return_err_invalid_pay_freq;
+
+					////errproc(return_state,module_name,"","","");
+
+					return return_state;
+
+				}
+			}
+		}
+	}
+
+
+	pyparm.parm_use = py_yes_parm_use;
+	current_yield_freq = pyparm.comp_freq;
+	return return_success;
+}
+void FAR _export	 	Py_Front::proc_day_count_py()
+
+{
+	if (strcmp(current_day_count_name,
+		day_count_names[date_30e_360_day_count]) == 0)
+	{
+
+		in_instr.day_count = date_30e_360_day_count;
+		in_instr.cal_num = day_count_nums[date_30e_360_day_count];
+		in_instr.cal_den = day_count_dens[date_30e_360_day_count];
+
+	}
+	else if (strcmp(current_day_count_name,
+		day_count_names[date_30_360US_day_count]) == 0)
+	{
+
+		in_instr.day_count = date_30_360US_day_count;
+		in_instr.cal_num = day_count_nums[date_30_360US_day_count];
+		in_instr.cal_den = day_count_dens[date_30_360US_day_count];
+
+	}
+	else if (strcmp(current_day_count_name,
+		day_count_names[date_30eplus_360_day_count]) == 0)
+	{
+
+		in_instr.day_count = date_30eplus_360_day_count;
+		in_instr.cal_num = day_count_nums[date_30eplus_360_day_count];
+		in_instr.cal_den = day_count_dens[date_30eplus_360_day_count];
+
+	}
+	else
+	{
+		if (strcmp(current_day_count_name,
+			day_count_names[date_30_360_day_count]) == 0)
+		{
+
+			in_instr.day_count = date_30_360_day_count;
+			in_instr.cal_num = day_count_nums[date_30_360_day_count];
+			in_instr.cal_den = day_count_dens[date_30_360_day_count];
+
+		}
+		else
+		{
+			if (strcmp(current_day_count_name,
+				day_count_names[date_act_360_day_count]) == 0)
+			{
+
+				in_instr.day_count = date_act_360_day_count;
+				in_instr.cal_num = day_count_nums[date_act_360_day_count];
+				in_instr.cal_den = day_count_dens[date_act_360_day_count];
+
+			}
+			else
+			{
+				if (strcmp(current_day_count_name,
+					day_count_names[date_act_365_day_count]) == 0)
+				{
+
+					in_instr.day_count = date_act_365_day_count;
+					in_instr.cal_num = day_count_nums[date_act_365_day_count];
+					in_instr.cal_den = day_count_dens[date_act_365_day_count];
+
+				}
+				else if (strcmp(current_day_count_name,
+					day_count_names[date_NL_365_day_count]) == 0)
+				{
+
+					in_instr.day_count = date_NL_365_day_count;
+					in_instr.cal_num = day_count_nums[date_NL_365_day_count];
+					in_instr.cal_den = day_count_dens[date_NL_365_day_count];
+
+				}
+
+				else
+				{
+					if (strcmp(current_day_count_name,
+						day_count_names[date_act_act_day_count]) == 0)
+					{
+
+						in_instr.day_count = date_act_act_day_count;
+						in_instr.cal_num = day_count_nums[date_act_act_day_count];
+						in_instr.cal_den = day_count_dens[date_act_act_day_count];
+
+					}
+					else
+					{
+						if (strcmp(current_day_count_name,
+							day_count_names[date_act_365cd_day_count]) == 0)
+						{
+
+							in_instr.day_count = date_act_365cd_day_count;
+							in_instr.cal_num = day_count_nums[date_act_act_day_count];
+							in_instr.cal_den = day_count_dens[date_act_365_day_count];
+
+						}
+						else
+							if (strcmp(current_day_count_name,
+								day_count_names[date_act_365L_day_count]) == 0)
+							{
+
+								in_instr.day_count = date_act_365L_day_count;
+								in_instr.cal_num = day_count_nums[date_act_act_day_count];
+								in_instr.cal_den = day_count_dens[date_act_365L_day_count];
+
+							}
+							else
+								if (strcmp(current_day_count_name,
+									day_count_names[date_act_365A_day_count]) == 0)
+								{
+
+									in_instr.day_count = date_act_365A_day_count;
+									in_instr.cal_num = day_count_nums[date_act_act_day_count];
+									in_instr.cal_den = day_count_dens[date_act_365A_day_count];
+
+								}
+								else
+									if (strcmp(current_day_count_name,
+										day_count_names[date_act_366_day_count]) == 0)
+									{
+
+										in_instr.day_count = date_act_366_day_count;
+										in_instr.cal_num = day_count_nums[date_act_act_day_count];
+										in_instr.cal_den = day_count_dens[date_act_366_day_count];
+
+									}
+									else
+										if (strcmp(current_day_count_name,
+											day_count_names[date_act_actISDA_day_count]) == 0)
+										{
+
+											in_instr.day_count = date_act_actISDA_day_count;
+											in_instr.cal_num = day_count_nums[date_act_act_day_count];
+											in_instr.cal_den = day_count_dens[date_act_actISDA_day_count];
+
+										}
+										else
+											if (strcmp(current_day_count_name,
+												day_count_names[date_30_360german_day_count]) == 0)
+											{
+
+												in_instr.day_count = date_30_360german_day_count;
+												in_instr.cal_num = day_count_nums[date_30_360german_day_count];
+												in_instr.cal_den = day_count_dens[date_30_360_day_count];
+
+											}
+					}
+				}
+			}
+		}
+	}
+
+//			instr_parm->day_count = in_instr.day_count;
+
+current_day_count = in_instr.day_count;
+current_yield_days = in_instr.day_count;
+strcpy(current_day_count_name, day_count_names[current_day_count]);
+strcpy(current_yield_days_name, day_count_names[current_day_count]);
+/*
+if (actions_array[actions_index].prev_action
+== py_proc_yield_days)
+{
+
+actions_index --;
+*/
+}
+
+unsigned long FAR _export	Py_Front::check_val_vs_mat_py()
+{
+	int str_cmp = datecmp(&mat_date.date_string,
+		&val_date.date_string);
+
+	if (str_cmp <= 0)
+	{
+
+
+		return_state = return_err_val_gt_mat;
+
+		////errproc(return_state,module_name,"","","");
+
+		return return_state;
+
+	}
+	return return_success;
+}
+unsigned long FAR _export	Py_Front::proc_yield_meth_py()
+{
+	if (strcmp(current_yield_meth_name,
+		yield_meth_names[py_aibd_yield_meth]) == 0)
+	{
+
+		pyparm.yield_meth = py_aibd_yield_meth;
+
+	}
+	else
+	{
+		if (strcmp(current_yield_meth_name,
+			yield_meth_names[py_mmdisc_yield_meth]) == 0)
+		{
+
+			pyparm.yield_meth = py_mmdisc_yield_meth;
+
+		}
+		else
+		{
+			if (strcmp(current_yield_meth_name,
+				yield_meth_names[py_mm_yield_meth]) == 0)
+			{
+
+				pyparm.yield_meth = py_mm_yield_meth;
+
+			}
+			else
+			{
+				if (strcmp(current_yield_meth_name,
+					yield_meth_names[py_ytm_simp_yield_meth]) == 0)
+				{
+
+					pyparm.yield_meth = py_ytm_simp_yield_meth;
+
+				}
+				else
+				{
+					if (strcmp(current_yield_meth_name,
+						yield_meth_names[py_ytm_comp_yield_meth]) == 0)
+					{
+
+						pyparm.yield_meth = py_ytm_comp_yield_meth;
+
+					}
+					else
+					{
+						if (strcmp(current_yield_meth_name,
+							yield_meth_names[py_simp_yield_meth]) == 0)
+						{
+
+							pyparm.yield_meth = py_simp_yield_meth;
+
+						}
+						else
+						{
+							if (strcmp(current_yield_meth_name,
+								yield_meth_names[py_curr_yield_meth]) == 0)
+							{
+
+								pyparm.yield_meth = py_curr_yield_meth;
+
+							}
+							else
+							{
+								if (strcmp(current_yield_meth_name,
+									yield_meth_names[py_gm_yield_meth]) == 0)
+								{
+
+									pyparm.yield_meth = py_gm_yield_meth;
+
+								}
+								else
+								{
+									if (strcmp(current_yield_meth_name,
+										yield_meth_names[py_muni_yield_meth]) == 0)
+									{
+
+										pyparm.yield_meth = py_muni_yield_meth;
+
+									}
+									else
+									{
+										if (strcmp(current_yield_meth_name,
+											yield_meth_names[py_corp_yield_meth]) == 0)
+										{
+
+											pyparm.yield_meth = py_corp_yield_meth;
+
+										}
+										else
+										{
+											if (strcmp(current_yield_meth_name,
+												yield_meth_names[py_ustr_yield_meth]) == 0)
+											{
+
+												pyparm.yield_meth = py_ustr_yield_meth;
+
+											}
+											else
+											{
+												if (strcmp(current_yield_meth_name,
+													yield_meth_names[py_moos_yield_meth]) == 0)
+												{
+
+													pyparm.yield_meth = py_moos_yield_meth;
+
+												}
+												else
+												{
+													if (strcmp(current_yield_meth_name,
+														yield_meth_names[py_bf_yield_meth]) == 0)
+													{
+
+														pyparm.yield_meth = py_bf_yield_meth;
+
+													}
+													else
+													{
+														/*					if ( strcmp(current_yield_meth_name,
+														yield_meth_names[py_cpr_yield_meth]) == 0 )
+														{
+
+														pyparm.yield_meth = py_cpr_yield_meth;
+
+														}
+														else
+														*/
+														if (strcmp(current_yield_meth_name,
+															yield_meth_names[py_ty_yield_meth]) == 0)
+														{
+
+															pyparm.yield_meth = py_ty_yield_meth;
+
+														}
+														else
+														{
+															if (strcmp(current_yield_meth_name,
+																yield_MBS_meth_name) == 0)
+															{
+
+																pyparm.yield_meth = py_MBS_yield_meth;
+
+															}
+															else
+															{
+
+																return_state = return_err_yield_meth_inv;
+
+																////errproc(return_state,module_name,"","","");
+
+																return return_state;
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	return return_success;
+}
+unsigned long FAR _export	Py_Front::proc_yield_days_py()
+{
+
+	if (strcmp(current_yield_days_name,
+		day_count_names[date_30e_360_day_count]) == 0)
+	{
+
+		pyparm.day_count = date_30e_360_day_count;
+		pyparm.date_cal_num = day_count_nums[date_30e_360_day_count];
+		pyparm.date_cal_den = day_count_dens[date_30e_360_day_count];
+
+	}
+	if (strcmp(current_yield_days_name,
+		day_count_names[date_30_360US_day_count]) == 0)
+	{
+
+		pyparm.day_count = date_30_360US_day_count;
+		pyparm.date_cal_num = day_count_nums[date_30_360US_day_count];
+		pyparm.date_cal_den = day_count_dens[date_30_360US_day_count];
+
+	}
+	else if (strcmp(current_yield_days_name,
+		day_count_names[date_30eplus_360_day_count]) == 0)
+	{
+
+		pyparm.day_count = date_30eplus_360_day_count;
+		pyparm.date_cal_num = day_count_nums[date_30eplus_360_day_count];
+		pyparm.date_cal_den = day_count_dens[date_30eplus_360_day_count];
+
+	}
+	else if (strcmp(current_yield_days_name,
+		day_count_names[date_30_360german_day_count]) == 0)
+	{
+
+		pyparm.day_count = date_30_360german_day_count;
+		pyparm.date_cal_num = day_count_nums[date_30_360german_day_count];
+		pyparm.date_cal_den = day_count_dens[date_30_360_day_count];
+
+	}
+	else
+	{
+		if (strcmp(current_yield_days_name,
+			day_count_names[date_30_360_day_count]) == 0)
+		{
+
+			pyparm.day_count = date_30_360_day_count;
+			pyparm.date_cal_num = day_count_nums[date_30_360_day_count];
+			pyparm.date_cal_den = day_count_dens[date_30_360_day_count];
+
+		}
+		else
+		{
+			if (strcmp(current_yield_days_name,
+				day_count_names[date_act_360_day_count]) == 0)
+			{
+
+				pyparm.day_count = date_act_360_day_count;
+				pyparm.date_cal_num = day_count_nums[date_act_360_day_count];
+				pyparm.date_cal_den = day_count_dens[date_act_360_day_count];
+
+			}
+			else
+			{
+				if (strcmp(current_yield_days_name,
+					day_count_names[date_act_365_day_count]) == 0)
+				{
+
+					pyparm.day_count = date_act_365_day_count;
+					pyparm.date_cal_num = day_count_nums[date_act_365_day_count];
+					pyparm.date_cal_den = day_count_dens[date_act_365_day_count];
+
+				}
+				else if (strcmp(current_yield_days_name,
+					day_count_names[date_NL_365_day_count]) == 0)
+				{
+
+					pyparm.day_count = date_NL_365_day_count;
+					pyparm.date_cal_num = day_count_nums[date_NL_365_day_count];
+					pyparm.date_cal_den = day_count_dens[date_NL_365_day_count];
+
+				}
+				else
+				{
+					if (strcmp(current_yield_days_name,
+						day_count_names[date_act_act_day_count]) == 0)
+					{
+
+						pyparm.day_count = date_act_act_day_count;
+						pyparm.date_cal_num = day_count_nums[date_act_act_day_count];
+						pyparm.date_cal_den = day_count_dens[date_act_act_day_count];
+
+					}
+					else
+					{
+						if (strcmp(current_yield_days_name,
+							day_count_names[date_act_365cd_day_count]) == 0)
+						{
+
+							pyparm.day_count = date_act_365cd_day_count;
+							pyparm.date_cal_num = day_count_nums[date_act_act_day_count];
+							pyparm.date_cal_den = day_count_dens[date_act_365_day_count];
+
+						}
+						else
+							if (strcmp(current_yield_days_name,
+								day_count_names[date_act_365L_day_count]) == 0)
+							{
+
+								pyparm.day_count = date_act_365L_day_count;
+								pyparm.date_cal_num = day_count_nums[date_act_act_day_count];
+								pyparm.date_cal_den = day_count_dens[date_act_365L_day_count];
+
+							}
+							else
+								if (strcmp(current_yield_days_name,
+									day_count_names[date_act_366_day_count]) == 0)
+								{
+
+									pyparm.day_count = date_act_366_day_count;
+									pyparm.date_cal_num = day_count_nums[date_act_act_day_count];
+									pyparm.date_cal_den = day_count_dens[date_act_366_day_count];
+
+								}
+								else
+									if (strcmp(current_yield_days_name,
+										day_count_names[date_act_actISDA_day_count]) == 0)
+									{
+
+										pyparm.day_count = date_act_actISDA_day_count;
+										pyparm.date_cal_num = day_count_nums[date_act_act_day_count];
+										pyparm.date_cal_den = day_count_dens[date_act_actISDA_day_count];
+
+									}
+					}
+				}
+			}
+		}
+	}
+
+	pyparm.parm_use = py_yes_parm_use;
+	/*
+	py_parm->parm_use = pyparm.parm_use;
+	py_parm->day_count = pyparm.day_count;
+	py_parm->date_cal_num = pyparm.date_cal_num;
+	py_parm->date_cal_den = pyparm.date_cal_den;
+	*/
+	current_yield_days = pyparm.day_count;
+	strcpy(current_yield_days_name, day_count_names[pyparm.day_count]);
+
+	return return_success;
+}
+unsigned long FAR _export	Py_Front::proc_mat_date_py()
+{
+	unsigned long return_state = datechck(mat_date);
+	if (return_state != return_success)
+	{
+		return return_err_mat_date_bad;
+	}
+	return return_success;
+}
+unsigned long FAR _export	Py_Front::proc_iss_date_py()
+{
+	unsigned long return_state = datechck(issue_date);
+	if (return_state != return_success)
+	{
+		return return_err_iss_date_bad;
+	}
+	return return_success;
+}
+unsigned long FAR _export	Py_Front::proc_val_date_py()
+{
+	unsigned long return_state = datechck(val_date);
+	if (return_state != return_success)
+	{
+		return return_err_val_date_bad;
+	}
+	return return_success;
+}
+unsigned long FAR _export	Py_Front::proc_class_desc_py()
+{
+	/*{Validate class.}*/
+	int str_cmp = 1;
+	for (int element_count = 0;
+	(element_count < instr_last_class) && (str_cmp != 0);
+		element_count++)
+	{
+
+		str_cmp = strcmp(current_class_desc,
+			instr_class_descs[element_count]);
+
+		in_instr.instr_class = element_count;
+	}
+
+	if (str_cmp != 0)
+	{
+
+		return_state = return_err_invalid_class_desc;
+
+		////errproc(return_state,module_name,"","","");
+
+		return return_state;
+
+	}
+	return return_success;
+}
+unsigned long FAR _export	Py_Front::check_val_vs_first_date_frn()
+{
+
+	int str_cmp = datecmp(&val_date.date_string,
+		rerate_sched.rerate_sched.first_date.date_string);
+
+	if (str_cmp < 0)
+	{
+
+
+		return_state = return_err_iss_gt_val;
+
+		////errproc(return_state,module_name,"","","");
+
+		return return_state;
+
+	}
+
+	return return_success;
+}			
+unsigned long FAR _export	Py_Front::check_iss_vs_mat()
+{
+
+	int str_cmp = datecmp(&mat_date.date_string,
+		&issue_date.date_string);
+
+	if (str_cmp <= 0)
+	{
+
+
+		return_state = return_err_iss_gt_mat;
+
+		////errproc(return_state,module_name,"","","");
+
+		return return_state;
+
+	}
+	return return_success;
+}
+unsigned long FAR _export	Py_Front::check_iss_vs_first()
+{
+
+	int str_cmp = datecmp(&first_date.date_string,
+		&issue_date.date_string);
+
+	if (str_cmp <= 0)
+	{
+		return_state = return_err_iss_ge_first;
+
+		////errproc(return_state,module_name,"","","");
+
+		return return_state;
+
+	}
+	return return_success;
+}
+unsigned long FAR _export	Py_Front::check_first_vs_mat()
+{
+int str_cmp = datecmp(&first_date.date_string,
+	&mat_date.date_string);
+
+if (str_cmp > 0)
+{
+	return_state = return_err_first_gt_mat;
+
+	////errproc(return_state,module_name,"","","");
+
+	return return_state;
+
+}
+
+return return_success;
+}
+
+unsigned long FAR _export	Py_Front::check_first_vs_penult()
+{
+	int str_cmp = datecmp(&penult_date.date_string,
+		&issue_date.date_string);
+
+	if (str_cmp < 0)
+	{
+		return_state = return_err_iss_gt_penult;
+
+		////errproc(return_state,module_name,"","","");
+
+		return return_state;
+
+	}
+
+	return return_success;
+}
+unsigned long FAR _export	Py_Front::check_iss_vs_val()
+{
+
+int str_cmp = datecmp(&val_date.date_string,
+	&issue_date.date_string);
+
+if (str_cmp < 0)
+{
+	return_state = return_err_iss_gt_val;
+
+	////errproc(return_state,module_name,"","","");
+
+	return return_state;
+
+}
+return return_success;
+}
+
+unsigned long FAR _export	Py_Front::check_penult_vs_mat()
+{
+int str_cmp = datecmp(&penult_date.date_string,
+	&mat_date.date_string);
+
+if (str_cmp >= 0)
+{
+
+
+	return_state = return_err_penult_ge_mat;
+
+	////errproc(return_state,module_name,"","","");
+
+	return return_state;
+
+}
+
+return return_success;
+}
+
 unsigned long FAR _export	Py_Front::pyproc45	(
 //	char action,
 //	char instr_class_desc_choice [instr_last_class] [instr_class_desc_len],
@@ -1693,146 +2722,12 @@ size_t num_bytes = 0;
 		 /*{Set the current fields based on the instrument class.}*/
 		 {
 			
-			set_current();
-			/*
-			return_state =	classdef(&in_instr);
+			 return_state = set_current();
+			 if (return_state != return_success) {
 
-			if (return_state != return_success) {
+				 return return_state;
 
-			  return return_state;
-
-			}
-
-			 datecpy(prev_date.date_string,zero_date);
-			 datecpy(next_date.date_string,zero_date);
-
-			current_class = in_instr.instr_class;
-			current_day_count = in_instr.day_count;
-			strcpy(current_day_count_name, day_count_names[current_day_count]);
-
-			if (in_instr.pay_freq.freq == 12)
-			{
-
-			  current_pay_freq = (0);
-
-			}
-			else
-			{
-			  if (in_instr.pay_freq.freq == 1)
-			  {
-
-				 current_pay_freq = (1);
-			  }
-			  else
-			  {
-				 if (in_instr.pay_freq.freq == 3)
-				 {
-
-					current_pay_freq = (2);
-
-				 }
-				 else
-				 {
-					if (in_instr.pay_freq.freq == 6)
-					{
-
-					  current_pay_freq = (3);
-
-					}
-					else
-					{
-							 current_pay_freq = (0);
-
-					}
-				 }
-			  }
-			}
-			strcpy(current_pay_freq_name, freq_names[current_pay_freq]);
-			current_yield_meth = in_instr.yield_meth;
-
-			if (in_instr.instr_class == instr_mbs_class)
-			{
-
-			  strcpy(current_yield_meth_name,
-			  yield_MBS_meth_name);
-
-			}
-			else
-			{
-
-			  strcpy(current_yield_meth_name,
-			  yield_meth_choice[current_yield_meth]);
-
-			}
-
-			current_yield_days = current_day_count;
-			strcpy(current_yield_days_name,	day_count_names[current_day_count]);
-
-			current_monthend = monthend_yes;
-
-			current_excoup = ex_coup_no;
-
-			strcpy(current_excoup_name,
-					excoup_names[current_excoup]);
-
-			strcpy(current_sink_fund_mat_name,
-			  sink_fund_mat_choice[py_equivalent_redemp_sched]);
-
-			current_yield_freq = current_pay_freq;
-
-			rerate_sched.current_pay_freq = current_pay_freq;
-			strcpy(rerate_sched.current_pay_freq_name,current_pay_freq_name
-				);
-
-			current_ex_coup_days = in_instr.ex_coup_days;
-
-			int_rate = in_instr.rate_offset;
-
-			in_price = 0;
-			in_yield = 0;
-			out_price = 0;
-			out_yield = 0;
-			calc_what = py_yield_from_price_calc_what;
-			prepay_type = py_cpr_prepay_type;
-			cpr_rate = 0;
-			current_factor = 1;
-			service_fee = 0;
-			lag = 0;
-
-			pyparm.prepay_type = prepay_type;
-			pyparm.cpr_rate = cpr_rate;
-			pyparm.current_factor = current_factor;
-			in_instr.service_fee = service_fee;
-			in_instr.lag = (char)lag;
-
-			pyparm.parm_use = py_no_parm_use;
-			pyparm.price_var = 0;
-			pyparm.frac_per = py_no_frac_per;
-			pyparm.pay_adj = event_sched_no_holiday_adj;
-			pyparm.comp_freq = 0;
-			pyparm.per_len = 0;
-			pyparm.date_cal_num = date_no_cal;
-			pyparm.date_cal_den = date_no_cal;
-			pyparm.yield_meth = in_instr.yield_meth;
-			pyparm.calc_first = py_yes_calc_first;
-
-			if (in_instr.instr_class == instr_ssd_class)
-			{
-
-			  pyparm.parm_use = py_yes_parm_use;
-			  pyparm.calc_first = py_no_calc_first;
-
-			}
-
-			if (current_class == instr_cashflow_class)
-			{
-
-			  pyparm.parm_use = py_yes_parm_use;
-			  pyparm.date_cal_num = in_instr.cal_num;
-			  pyparm.date_cal_den = in_instr.cal_den;
-
-			}
-			*/
+			 }
 			actions_proc(change_step, actions_index,
 				actions_array, 0);
 
@@ -1842,98 +2737,20 @@ size_t num_bytes = 0;
 		 case py_set_current_frn:
 		 /*{Set the current frn fields based on the instrument class.}*/
 		 {
-
-			actions_proc(change_step, actions_index,
-				actions_array, 0);
-			 datecpy(rerate_sched.rerate_sched.first_date.date_string,
-				in_instr.issue_date.date_string);
-			rerate_sched.rerate_sched.month_day =
-				in_instr.issue_date.date.days;
-//
-			rerate_sched.current_simp_comp = simp_comp_simple;
-			if (in_instr.comp_freq.period == event_sched_free_period)
-			{
-
-				rerate_sched.current_simp_comp = simp_comp_simple;
-
-			}
-			else
-			{
-
-				rerate_sched.current_simp_comp = simp_comp_compound;
-
-			}
-
-			strcpy(rerate_sched.current_simp_comp_name, 
-				rerate_sched.simp_comp_choice[rerate_sched.current_simp_comp]);
+			 set_current_frn();
+			 actions_proc(change_step, actions_index,
+				 actions_array, 0);
 
 //
 			break;
 	 }
 		 case py_proc_pay_freq_frn:
 		 {
-
-			if ( strcmp(rerate_sched.current_pay_freq_name, freq_names[0]) == 0 )
-			{
-
-				rerate_sched.rerate_sched.freq = 12;
-
-				rerate_sched.current_pay_freq = (0);
-
-			}
-
-			else
-			{
-
-				if ( strcmp(rerate_sched.current_pay_freq_name, freq_names[1]) == 0 )
-				{
-
-					rerate_sched.rerate_sched.freq = 1;
-
-					rerate_sched.current_pay_freq = (1);
-
-				}
-				else
-				{
-					if ( strcmp(rerate_sched.current_pay_freq_name,
-						freq_names[2]) == 0 )
-					{
-
-						rerate_sched.rerate_sched.freq = 3;
-
-						rerate_sched.current_pay_freq = (2);
-
-					}
-
-					else
-					{
-
-						if ( strcmp(rerate_sched.current_pay_freq_name,
-							freq_names[3]) == 0 )
-						{
-
-							rerate_sched.rerate_sched.freq = 6;
-
-							rerate_sched.current_pay_freq = (3);
-
-						}
-						else
-						{
-
-							rerate_sched.current_pay_freq = (0);
-
-							return_state = return_err_invalid_pay_freq;
-
-							////errproc(return_state,module_name,"","","");
-
-							return return_state;
-
-						}
-					}
-				}
-			}
-
-
+			 return_state = proc_pay_freq_frn_py();
+			 if (return_state != return_success)
+			 {
+				 return return_state;
+			 }
 			actions_proc(change_step, actions_index,
 				actions_array, 0);
 
@@ -1943,41 +2760,10 @@ size_t num_bytes = 0;
 		 case py_proc_simp_comp_frn:
 		 {
 
-
-			if ( strcmp(rerate_sched.current_simp_comp_name,
-			simp_comp_names[simp_comp_simple]) == 0 )
+			return_state = proc_simp_comp_frn_py();
+			if (return_state != return_success)
 			{
-
-
-
-				rerate_sched.current_simp_comp = simp_comp_simple;
-
-				in_instr.comp_freq.period = event_sched_free_period;
-
-			}
-			else
-			{
-			  if ( strcmp(rerate_sched.current_simp_comp_name,
-			  simp_comp_names[simp_comp_compound]) == 0 )
-			  {
-
-				 rerate_sched.current_simp_comp = simp_comp_compound;
-
-				 in_instr.comp_freq.period = event_sched_end_period;
-
-			  }
-			  else
-			  {
-
-				rerate_sched.current_simp_comp = simp_comp_simple;
-
-				return_state = return_err_invalid_simp_comp;
-
-				////errproc(return_state,module_name,"","","");
-
 				return return_state;
-
-			  }
 			}
 
 
@@ -1989,92 +2775,12 @@ size_t num_bytes = 0;
 		 }
 		 case py_proc_holi:
 		 {
-
-			if ( strcmp(rerate_sched.current_holiday_adj_name,
-				holiday_adj_names[0]) == 0 )
+			return_state = proc_holi_py();
+			if (return_state != return_success)
 			{
-
-				rerate_sched.rerate_sched.holiday_adj =
-				event_sched_march_holiday_adj;
-
+				return return_state;
 			}
 
-			else
-			{
-
-				if ( strcmp(rerate_sched.current_holiday_adj_name,
-					holiday_adj_names[1]) == 0 )
-				{
-
-					rerate_sched.rerate_sched.holiday_adj =
-					event_sched_next_holiday_adj;
-
-				}
-				else
-				{
-					if ( strcmp(rerate_sched.current_holiday_adj_name,
-					holiday_adj_names[2]) == 0 )
-					{
-
-						rerate_sched.rerate_sched.holiday_adj =
-						event_sched_np_holiday_adj;
-
-					}
-
-					else
-					{
-
-					  if ( strcmp(rerate_sched.current_holiday_adj_name,
-						holiday_adj_names[3]) == 0 )
-					  {
-
-							rerate_sched.rerate_sched.holiday_adj =
-							event_sched_prev_holiday_adj;
-
-						}
-						else
-						{
-
-							if ( strcmp(rerate_sched.current_holiday_adj_name,
-								holiday_adj_names[4]) == 0 )
-							{
-
-								rerate_sched.rerate_sched.holiday_adj =
-									event_sched_pn_holiday_adj;
-
-							}
-							else
-							{
-
-								if ( strcmp(rerate_sched.current_holiday_adj_name,
-									holiday_adj_names[5]) == 0 )
-								{
-
-									rerate_sched.rerate_sched.holiday_adj =
-										event_sched_same_holiday_adj;
-
-								}
-								else
-								{
-
-									rerate_sched.rerate_sched.holiday_adj =
-										event_sched_same_holiday_adj;
-
-									return_state = return_err_invalid_holiday;
-
-									////errproc(return_state,module_name,"","","");
-
-									return return_state;
-
-								}
-							}
-						}
-					}
-				}
-			}
-
-			in_instr.pay_freq.holiday_adj =
-				rerate_sched.rerate_sched.holiday_adj;
 
 
 			actions_proc(change_step, actions_index,
@@ -2085,69 +2791,11 @@ size_t num_bytes = 0;
 		 }
 		 case py_proc_pay_freq:
 		 {
-
-			if ( strcmp(current_pay_freq_name, freq_names[0]) == 0 )
-			{
-
-			  in_instr.pay_freq.freq = 12;
-
-			  current_pay_freq = (0);
-
-			}
-
-			else
-			{
-
-			  if ( strcmp(current_pay_freq_name, freq_names[1]) == 0 )
-			  {
-
-				 in_instr.pay_freq.freq = 1;
-
-				 current_pay_freq = (1);
-
-			  }
-			  else
-			  {
-				  if ( strcmp(current_pay_freq_name, freq_names[2]) == 0 )
-				  {
-
-					in_instr.pay_freq.freq = 3;
-
-					current_pay_freq = (2);
-
-				  }
-
-				  else
-				  {
-
-					if ( strcmp(current_pay_freq_name, freq_names[3]) == 0 )
-					 {
-
-					  in_instr.pay_freq.freq = 6;
-
-					  current_pay_freq = (3);
-
-					}
-					else
-					{
-
-					  current_pay_freq = (0);
-
-					  return_state = return_err_invalid_pay_freq;
-
-					  ////errproc(return_state,module_name,"","","");
-
-					  return return_state;
-
-					}
-				  }
-				}
-			}
-
-//			instr_parm->pay_freq.freq = in_instr.pay_freq.freq;
-			current_yield_freq = current_pay_freq;
-			rerate_sched.current_pay_freq = current_pay_freq;
-			pyparm.comp_freq = in_instr.pay_freq.freq;
+			 return_state =  proc_pay_freq_py();
+			 if (return_state != return_success)
+			 {
+				 return return_state;
+			 }
 
 
 			actions_proc(change_step, actions_index,
@@ -2158,59 +2806,11 @@ size_t num_bytes = 0;
 		 }
 		 case py_proc_yield_freq:
 		 {
-
-			if ( strcmp(current_yield_freq_name, freq_names[0]) == 0 )
-			{
-
-				pyparm.comp_freq = 12;
-
-			}
-
-			else
-			{
-
-			  if ( strcmp(current_yield_freq_name, freq_names[1]) == 0 )
-			  {
-
-					pyparm.comp_freq = 1;
-
-			  }
-			  else
-			  {
-				  if ( strcmp(current_yield_freq_name, freq_names[2]) == 0 )
-				  {
-
-						pyparm.comp_freq = 3;
-
-				  }
-
-				  else
-				  {
-
-					if (strcmp(current_yield_freq_name, freq_names[3]) == 0 )
-					{
-
-						pyparm.comp_freq = 6;
-
-					}
-					else
-					{
-
-						return_state = return_err_invalid_pay_freq;
-
-						////errproc(return_state,module_name,"","","");
-
-						return return_state;
-
-					}
-				  }
-			  }
-			}
-
-
-			pyparm.parm_use = py_yes_parm_use;
-			current_yield_freq = pyparm.comp_freq;
-
+			 return_state = proc_yield_freq_py();
+			 if (return_state != return_success)
+			 {
+				 return return_state;
+			 }
 
 			actions_proc(change_step, actions_index,
 				actions_array, 0);
@@ -2220,168 +2820,7 @@ size_t num_bytes = 0;
 		 }
 		 case py_proc_day_count:
 		 {
-
-			if ( strcmp(current_day_count_name,
-				day_count_names[date_30e_360_day_count]) == 0 )
-				{
-
-					in_instr.day_count = date_30e_360_day_count;
-					in_instr.cal_num = day_count_nums[date_30e_360_day_count];
-					in_instr.cal_den = day_count_dens[date_30e_360_day_count];
-
-			}
-			else if (strcmp(current_day_count_name,
-				day_count_names[date_30_360US_day_count]) == 0)
-			{
-
-				in_instr.day_count = date_30_360US_day_count;
-				in_instr.cal_num = day_count_nums[date_30_360US_day_count];
-				in_instr.cal_den = day_count_dens[date_30_360US_day_count];
-
-			}
-			else if (strcmp(current_day_count_name,
-				day_count_names[date_30eplus_360_day_count]) == 0)
-			{
-
-				in_instr.day_count = date_30eplus_360_day_count;
-				in_instr.cal_num = day_count_nums[date_30eplus_360_day_count];
-				in_instr.cal_den = day_count_dens[date_30eplus_360_day_count];
-
-			}
-			else
-			{
-				if ( strcmp(current_day_count_name,
-					day_count_names[date_30_360_day_count]) == 0 )
-				{
-
-					in_instr.day_count = date_30_360_day_count;
-					in_instr.cal_num = day_count_nums[date_30_360_day_count];
-					in_instr.cal_den = day_count_dens[date_30_360_day_count];
-
-				}
-				else
-				{
-					if (strcmp(current_day_count_name,
-						day_count_names[date_act_360_day_count]) == 0 )
-					{
-
-					 in_instr.day_count = date_act_360_day_count;
-					 in_instr.cal_num = day_count_nums[date_act_360_day_count];
-					 in_instr.cal_den = day_count_dens[date_act_360_day_count];
-
-					}
-					else
-					{
-						if ( strcmp(current_day_count_name,
-							day_count_names[date_act_365_day_count]) == 0 )
-						{
-
-							in_instr.day_count = date_act_365_day_count;
-							in_instr.cal_num	= day_count_nums[date_act_365_day_count];
-							in_instr.cal_den	= day_count_dens[date_act_365_day_count];
-
-						}
-						else if (strcmp(current_day_count_name,
-							day_count_names[date_NL_365_day_count]) == 0)
-						{
-
-							in_instr.day_count = date_NL_365_day_count;
-							in_instr.cal_num = day_count_nums[date_NL_365_day_count];
-							in_instr.cal_den = day_count_dens[date_NL_365_day_count];
-
-						}
-
-						else
-						{
-							if ( strcmp(current_day_count_name,
-								day_count_names[date_act_act_day_count]) == 0 )
-							{
-
-								in_instr.day_count = date_act_act_day_count;
-								in_instr.cal_num = day_count_nums[date_act_act_day_count];
-								in_instr.cal_den = day_count_dens[date_act_act_day_count];
-
-							}
-							else
-							{
-								if ( strcmp(current_day_count_name,
-								day_count_names[date_act_365cd_day_count]) == 0 )
-								{
-
-									in_instr.day_count = date_act_365cd_day_count;
-									in_instr.cal_num = day_count_nums[date_act_act_day_count];
-									in_instr.cal_den = day_count_dens[date_act_365_day_count];
-
-								}
-								else
-									if (strcmp(current_day_count_name,
-										day_count_names[date_act_365L_day_count]) == 0)
-									{
-
-										in_instr.day_count = date_act_365L_day_count;
-										in_instr.cal_num = day_count_nums[date_act_act_day_count];
-										in_instr.cal_den = day_count_dens[date_act_365L_day_count];
-
-									}
-									else
-										if (strcmp(current_day_count_name,
-											day_count_names[date_act_365A_day_count]) == 0)
-										{
-
-											in_instr.day_count = date_act_365A_day_count;
-											in_instr.cal_num = day_count_nums[date_act_act_day_count];
-											in_instr.cal_den = day_count_dens[date_act_365A_day_count];
-
-										}
-										else
-										if (strcmp(current_day_count_name,
-											day_count_names[date_act_366_day_count]) == 0)
-										{
-
-											in_instr.day_count = date_act_366_day_count;
-											in_instr.cal_num = day_count_nums[date_act_act_day_count];
-											in_instr.cal_den = day_count_dens[date_act_366_day_count];
-
-										}
-										else
-									if (strcmp(current_day_count_name,
-										day_count_names[date_act_actISDA_day_count]) == 0)
-									{
-
-										in_instr.day_count = date_act_actISDA_day_count;
-										in_instr.cal_num = day_count_nums[date_act_act_day_count];
-										in_instr.cal_den = day_count_dens[date_act_actISDA_day_count];
-
-									}
-										else
-											if (strcmp(current_day_count_name,
-												day_count_names[date_30_360german_day_count]) == 0)
-											{
-
-												in_instr.day_count = date_30_360german_day_count;
-												in_instr.cal_num = day_count_nums[date_30_360german_day_count];
-												in_instr.cal_den = day_count_dens[date_30_360_day_count];
-
-											}
-							}
-						}
-					}
-				}
-			}
-
-//			instr_parm->day_count = in_instr.day_count;
-
-			current_day_count = in_instr.day_count;
-			current_yield_days = in_instr.day_count;
-			strcpy(current_day_count_name,	day_count_names[current_day_count]);
-			strcpy(current_yield_days_name,	day_count_names[current_day_count]);
-/*
-			if (actions_array[actions_index].prev_action
-			== py_proc_yield_days)
-			{
-
-					 actions_index --;
-*/
+			 void proc_day_count_py();
 
 			actions_proc(change_step, actions_index,
 				actions_array, 0);
@@ -2406,173 +2845,11 @@ size_t num_bytes = 0;
 		 }
 		 case py_proc_yield_meth:
 		 {
-
-			if ( strcmp(current_yield_meth_name,
-				yield_meth_names[py_aibd_yield_meth]) == 0 )
+			return_state = proc_yield_meth_py();
+			if (return_state != return_success)
 			{
-
-				pyparm.yield_meth = py_aibd_yield_meth;
-
+				return return_state;
 			}
-			else
-			{
-				if ( strcmp(current_yield_meth_name,
-					yield_meth_names[py_mmdisc_yield_meth]) == 0 )
-				{
-
-					pyparm.yield_meth = py_mmdisc_yield_meth;
-
-				}
-				else
-				{
-					if ( strcmp(current_yield_meth_name,
-						yield_meth_names[py_mm_yield_meth]) == 0 )
-					{
-
-						pyparm.yield_meth = py_mm_yield_meth;
-
-					}
-					else
-					{
-						if ( strcmp(current_yield_meth_name,
-							yield_meth_names[py_ytm_simp_yield_meth]) == 0 )
-						{
-
-							pyparm.yield_meth = py_ytm_simp_yield_meth;
-
-						}
-						else
-						{
-							if ( strcmp(current_yield_meth_name,
-								yield_meth_names[py_ytm_comp_yield_meth]) == 0 )
-							{
-
-								pyparm.yield_meth = py_ytm_comp_yield_meth;
-
-							}
-							else
-							{
-								if ( strcmp(current_yield_meth_name,
-								yield_meth_names[py_simp_yield_meth]) == 0 )
-								{
-
-									pyparm.yield_meth = py_simp_yield_meth;
-
-								}
-								else
-								{
-									if ( strcmp(current_yield_meth_name,
-										yield_meth_names[py_curr_yield_meth]) == 0 )
-										{
-
-											pyparm.yield_meth = py_curr_yield_meth;
-
-										}
-										else
-										{
-											if ( strcmp(current_yield_meth_name,
-												yield_meth_names[py_gm_yield_meth]) == 0 )
-											{
-
-												pyparm.yield_meth = py_gm_yield_meth;
-
-											}
-											else
-											{
-												if ( strcmp(current_yield_meth_name,
-												yield_meth_names[py_muni_yield_meth]) == 0 )
-												{
-
-													pyparm.yield_meth = py_muni_yield_meth;
-
-												}
-												else
-												{
-													if ( strcmp(current_yield_meth_name,
-													yield_meth_names[py_corp_yield_meth]) == 0 )
-												{
-
-													pyparm.yield_meth = py_corp_yield_meth;
-
-												}
-												else
-												{
-													if ( strcmp(current_yield_meth_name,
-													yield_meth_names[py_ustr_yield_meth]) == 0 )
-													{
-
-														pyparm.yield_meth = py_ustr_yield_meth;
-
-													}
-													else
-													{
-														if ( strcmp(current_yield_meth_name,
-														yield_meth_names[py_moos_yield_meth]) == 0 )
-														{
-
-															pyparm.yield_meth = py_moos_yield_meth;
-
-														}
-														else
-														{
-															if ( strcmp(current_yield_meth_name,
-															yield_meth_names[py_bf_yield_meth]) == 0 )
-															{
-
-																pyparm.yield_meth = py_bf_yield_meth;
-
-															}
-															else
-															{
-/*					if ( strcmp(current_yield_meth_name,
-					  yield_meth_names[py_cpr_yield_meth]) == 0 )
-								 {
-
-					  pyparm.yield_meth = py_cpr_yield_meth;
-
-								 }
-								 else
-*/
-																if ( strcmp(current_yield_meth_name,
-																yield_meth_names[py_ty_yield_meth]) == 0 )
-																{
-
-																	pyparm.yield_meth = py_ty_yield_meth;
-
-																}
-																else
-																{
-																  if ( strcmp(current_yield_meth_name,
-																  yield_MBS_meth_name) == 0 )
-																  {
-
-																	 pyparm.yield_meth = py_MBS_yield_meth;
-
-																  }
-																  else
-																  {
-
-																	 return_state = return_err_yield_meth_inv;
-
-																	 ////errproc(return_state,module_name,"","","");
-
-																	 return return_state;
-																  }
-																}
-															}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-
 
 			actions_proc(change_step, actions_index,
 				actions_array, 0);
@@ -2581,152 +2858,11 @@ size_t num_bytes = 0;
 		 }
 		 case py_proc_yield_days:
 		 {
-
-			if ( strcmp(current_yield_days_name,
-			day_count_names[date_30e_360_day_count]) == 0 )
-			{
-
-				pyparm.day_count = date_30e_360_day_count;
-				pyparm.date_cal_num = day_count_nums[date_30e_360_day_count];
-				pyparm.date_cal_den = day_count_dens[date_30e_360_day_count];
-
-			}
-			if (strcmp(current_yield_days_name,
-				day_count_names[date_30_360US_day_count]) == 0)
-			{
-
-				pyparm.day_count = date_30_360US_day_count;
-				pyparm.date_cal_num = day_count_nums[date_30_360US_day_count];
-				pyparm.date_cal_den = day_count_dens[date_30_360US_day_count];
-
-			}
-			else if (strcmp(current_yield_days_name,
-				day_count_names[date_30eplus_360_day_count]) == 0)
-			{
-
-				pyparm.day_count = date_30eplus_360_day_count;
-				pyparm.date_cal_num = day_count_nums[date_30eplus_360_day_count];
-				pyparm.date_cal_den = day_count_dens[date_30eplus_360_day_count];
-
-			}
-			else if (strcmp(current_yield_days_name,
-				day_count_names[date_30_360german_day_count]) == 0)
-			{
-
-				pyparm.day_count = date_30_360german_day_count;
-				pyparm.date_cal_num = day_count_nums[date_30_360german_day_count];
-				pyparm.date_cal_den = day_count_dens[date_30_360_day_count];
-
-			}
-			else
-			{
-				if ( strcmp(current_yield_days_name,
-					day_count_names[date_30_360_day_count]) == 0 )
-				{
-
-					pyparm.day_count = date_30_360_day_count;
-					pyparm.date_cal_num = day_count_nums[date_30_360_day_count];
-					pyparm.date_cal_den = day_count_dens[date_30_360_day_count];
-
-				}
-				else
-				{
-				  if ( strcmp(current_yield_days_name,
-					day_count_names[date_act_360_day_count]) == 0 )
-				  {
-
-					pyparm.day_count = date_act_360_day_count;
-					pyparm.date_cal_num = day_count_nums[date_act_360_day_count];
-					pyparm.date_cal_den = day_count_dens[date_act_360_day_count];
-
-				  }
-				  else
-				  {
-						if ( strcmp(current_yield_days_name,
-						day_count_names[date_act_365_day_count]) == 0 )
-						{
-
-							pyparm.day_count = date_act_365_day_count;
-							pyparm.date_cal_num	= day_count_nums[date_act_365_day_count];
-							pyparm.date_cal_den	= day_count_dens[date_act_365_day_count];
-
-						}
-						else if (strcmp(current_yield_days_name,
-							day_count_names[date_NL_365_day_count]) == 0)
-						{
-
-							pyparm.day_count = date_NL_365_day_count;
-							pyparm.date_cal_num = day_count_nums[date_NL_365_day_count];
-							pyparm.date_cal_den = day_count_dens[date_NL_365_day_count];
-
-						}
-						else
-						{
-							if ( strcmp(current_yield_days_name,
-							day_count_names[date_act_act_day_count]) == 0 )
-							{
-
-								pyparm.day_count = date_act_act_day_count;
-								pyparm.date_cal_num = day_count_nums[date_act_act_day_count];
-								pyparm.date_cal_den = day_count_dens[date_act_act_day_count];
-
-							}
-							else
-							{
-								if ( strcmp(current_yield_days_name,
-								day_count_names[date_act_365cd_day_count]) == 0 )
-								{
-
-									pyparm.day_count = date_act_365cd_day_count;
-									pyparm.date_cal_num = day_count_nums[date_act_act_day_count];
-									pyparm.date_cal_den = day_count_dens[date_act_365_day_count];
-
-								}
-								else
-									if (strcmp(current_yield_days_name,
-										day_count_names[date_act_365L_day_count]) == 0)
-									{
-
-										pyparm.day_count = date_act_365L_day_count;
-										pyparm.date_cal_num = day_count_nums[date_act_act_day_count];
-										pyparm.date_cal_den = day_count_dens[date_act_365L_day_count];
-
-									}
-									else
-										if (strcmp(current_yield_days_name,
-											day_count_names[date_act_366_day_count]) == 0)
-										{
-
-											pyparm.day_count = date_act_366_day_count;
-											pyparm.date_cal_num = day_count_nums[date_act_act_day_count];
-											pyparm.date_cal_den = day_count_dens[date_act_366_day_count];
-
-										}
-										else
-								if (strcmp(current_yield_days_name,
-									day_count_names[date_act_actISDA_day_count]) == 0)
-								{
-
-									pyparm.day_count = date_act_actISDA_day_count;
-									pyparm.date_cal_num = day_count_nums[date_act_act_day_count];
-									pyparm.date_cal_den = day_count_dens[date_act_actISDA_day_count];
-
-								}
-							}
-						}
-					}
-				}
-			}
-
-			pyparm.parm_use = py_yes_parm_use;
-/*
-			py_parm->parm_use = pyparm.parm_use;
-			py_parm->day_count = pyparm.day_count;
-			py_parm->date_cal_num = pyparm.date_cal_num;
-			py_parm->date_cal_den = pyparm.date_cal_den;
-*/
-			current_yield_days = pyparm.day_count;
-			strcpy(current_yield_days_name,	day_count_names[pyparm.day_count]);
+			 return_state = proc_yield_days_py();
+			 if (return_state != return_success)
+			 {
+				 return return_state;
+			 }
 
 
 			actions_proc(change_step, actions_index,
@@ -2751,48 +2887,33 @@ size_t num_bytes = 0;
 					 break;
 
 			}
-
-			/*{Validate class.}*/
-
-			for (element_count = 0, str_cmp = 1;
-				(element_count < instr_last_class) && (str_cmp != 0);
-				element_count++)
+			return_state = proc_class_desc_py();
+			if (return_state != return_success)
 			{
-
-				str_cmp = strcmp(current_class_desc,
-				instr_class_descs[element_count]);
-
-				in_instr.instr_class = element_count;
-
-			}
-
-			if (str_cmp == 0)
-			{
-
-					 actions_index ++;
-
-
-			  actions_proc(change_new, actions_index,
-				actions_array, py_set_current);
-
-			}
-			else
-			{
-
-				return_state = return_err_invalid_class_desc;
-
-				////errproc(return_state,module_name,"","","");
-
 				return return_state;
-
 			}
+
+			actions_index++;
+
+
+			actions_proc(change_new, actions_index,
+				actions_array, py_set_current);
 
 			break;
 
 		 }
 		 case py_proc_mat_date:
 		 {
+			 return_state = proc_mat_date_py();
+			 if (return_state != return_success)
+			 {
+				 return return_state;
+			 }
+			 actions_proc(change_step, actions_index,
+				 actions_array, 0);
 
+			 break;
+/*
 			if (actions_array[actions_index].prev_action ==
 				py_check_date)
 			{
@@ -2826,11 +2947,20 @@ size_t num_bytes = 0;
 				actions_array, py_check_date);
 
 			break;
-
+			*/
 		 }
 		 case py_proc_iss_date:
 		 {
+			 return_state = proc_iss_date_py();
+			 if (return_state != return_success)
+			 {
+				 return return_state;
+			 }
+			 actions_proc(change_step, actions_index,
+				 actions_array, 0);
 
+			 break;
+			 /*
 			if (actions_array[actions_index].prev_action ==
 				py_set_accrue_date)
 			{
@@ -2877,11 +3007,20 @@ size_t num_bytes = 0;
 				actions_array, py_check_date);
 
 			break;
-
+			*/
 		 }
 		 case py_proc_val_date:
 		 {
+			 return_state = proc_val_date_py();
+			 if (return_state != return_success)
+			 {
+				 return return_state;
+			 }
+			 actions_proc(change_step, actions_index,
+				 actions_array, 0);
 
+			 break;
+			 /*
 			if (actions_array[actions_index].prev_action ==
 				py_check_date)
 			{
@@ -2913,7 +3052,7 @@ size_t num_bytes = 0;
 				actions_array, py_check_date);
 
 			break;
-
+			*/
 		 }
 		 case py_check_date:
 		 {
@@ -2921,6 +3060,10 @@ size_t num_bytes = 0;
 			/*{Make sure the date is valid.}*/
 
 			return_state =  datechck(check_date1);
+			if (return_state != return_success)
+			{
+				return return_state;
+			}
 
 			actions_proc(change_step, actions_index,
 				actions_array, 0);
@@ -3631,20 +3774,12 @@ size_t num_bytes = 0;
 			  break;
 
 			}
-
-			str_cmp =  datecmp(&mat_date.date_string,
-			&val_date.date_string);
-
-			if (str_cmp <= 0)
+			
+				
+			return_state = check_val_vs_mat_py();
+			if (return_state != return_success)
 			{
-
-
-			  return_state = return_err_val_gt_mat;
-
-			  ////errproc(return_state,module_name,"","","");
-
-			  return return_state;
-
+				return return_state;
 			}
 			actions_index ++;
 
@@ -3658,22 +3793,11 @@ size_t num_bytes = 0;
 
 		 case py_check_val_vs_first_date_frn:
 		 {
-
-			str_cmp =  datecmp(&val_date.date_string,
-			rerate_sched.rerate_sched.first_date.date_string);
-
-			if (str_cmp < 0)
-			{
-
-
-			  return_state = return_err_iss_gt_val;
-
-			  ////errproc(return_state,module_name,"","","");
-
-			  return return_state;
-
-			}
-
+			 return_state = check_val_vs_first_date_frn();
+			 if (return_state != return_success)
+			 {
+				 return return_state;
+			 }
 
 			actions_proc(change_step, actions_index,	actions_array,
 			  0);
@@ -3697,20 +3821,10 @@ size_t num_bytes = 0;
 				break;
 
 			}
-
-			str_cmp =  datecmp(&mat_date.date_string,
-			&issue_date.date_string);
-
-			if (str_cmp <= 0)
+			return_state = check_iss_vs_mat();
+			if (return_state != return_success)
 			{
-
-
-			  return_state = return_err_iss_gt_mat;
-
-			  ////errproc(return_state,module_name,"","","");
-
-			  return return_state;
-
+				return return_state;
 			}
 			actions_index ++;
 
@@ -3722,21 +3836,11 @@ size_t num_bytes = 0;
 		 }
 		 case py_check_iss_vs_first:
 		 {
-
-			str_cmp =  datecmp(&first_date.date_string,
-			&issue_date.date_string);
-
-			if (str_cmp <= 0)
-			{
-
-
-			  return_state = return_err_iss_ge_first;
-
-			  ////errproc(return_state,module_name,"","","");
-
-			  return return_state;
-
-			}
+			 return_state = check_iss_vs_first();
+			 if (return_state != return_success)
+			 {
+				 return return_state;
+			 }
 
 
 			actions_proc(change_step, actions_index,	actions_array,
@@ -3747,22 +3851,11 @@ size_t num_bytes = 0;
 		 }
 		 case py_check_first_vs_mat:
 		 {
-
-			str_cmp =  datecmp(&first_date.date_string,
-			&mat_date.date_string);
-
-			if (str_cmp > 0)
-			{
-
-
-			  return_state = return_err_first_gt_mat;
-
-			  ////errproc(return_state,module_name,"","","");
-
-			  return return_state;
-
-			}
-
+			 return_state = check_first_vs_mat();
+			 if (return_state != return_success)
+			 {
+				 return return_state;
+			 }
 
 			actions_proc(change_step, actions_index,	actions_array,
 				 0);
@@ -3773,21 +3866,11 @@ size_t num_bytes = 0;
 		 case py_check_iss_vs_penult:
 		 {
 
-			str_cmp =  datecmp(&penult_date.date_string,
-			&issue_date.date_string);
-
-			if (str_cmp < 0)
-			{
-
-
-			  return_state = return_err_iss_gt_penult;
-
-			  ////errproc(return_state,module_name,"","","");
-
-			  return return_state;
-
-			}
-
+			 return_state = check_first_vs_penult();
+			 if (return_state != return_success)
+			 {
+				 return return_state;
+			 }
 
 			actions_proc(change_step, actions_index,	actions_array,
 				 0);
@@ -3797,22 +3880,11 @@ size_t num_bytes = 0;
 		 }
 		 case py_check_iss_vs_val:
 		 {
-
-			str_cmp =  datecmp(&val_date.date_string,
-			&issue_date.date_string);
-
-			if (str_cmp < 0)
-			{
-
-
-				return_state = return_err_iss_gt_val;
-
-				////errproc(return_state,module_name,"","","");
-
-				return return_state;
-
-			}
-
+			 return_state = check_iss_vs_val();
+			 if (return_state != return_success)
+			 {
+				 return return_state;
+			 }
 
 			actions_proc(change_step, actions_index,	actions_array,
 				 0);
@@ -3823,21 +3895,11 @@ size_t num_bytes = 0;
 		 case py_check_penult_vs_mat:
 		 {
 
-			str_cmp =  datecmp(&penult_date.date_string,
-			&mat_date.date_string);
-
-			if (str_cmp >= 0)
-			{
-
-
-			  return_state = return_err_penult_ge_mat;
-
-			  ////errproc(return_state,module_name,"","","");
-
-			  return return_state;
-
-			}
-
+			 return_state = check_penult_vs_mat();
+			 if (return_state != return_success)
+			 {
+				 return return_state;
+			 }
 
 			actions_proc(change_step, actions_index,	actions_array,
 				 0);
