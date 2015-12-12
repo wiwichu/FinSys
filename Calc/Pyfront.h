@@ -644,7 +644,7 @@ unsigned long check_val_vs_first_date_frn();
 unsigned long check_iss_vs_mat();
 unsigned long check_iss_vs_first();
 unsigned long check_first_vs_mat();
-unsigned long check_first_vs_penult();
+unsigned long check_iss_vs_penult();
 unsigned long check_iss_vs_val();
 unsigned long check_penult_vs_mat();
 unsigned long set_accrue_date_py();
@@ -652,6 +652,11 @@ unsigned long check_tenor_py();
 unsigned long proc_def_dates_py();
 unsigned long calc_np_py();
 unsigned long proc_gen_dates_frn_py();
+unsigned long check_date_synch_py();
+unsigned long proc_penult_date_py();
+unsigned long proc_first_date_py(); 
+unsigned long proc_first_date_frn_py();
+unsigned long proc_all_dates_py();
 unsigned long pyproc45(
 //	char action,
 //	instr *instr_parm,

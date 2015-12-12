@@ -972,6 +972,13 @@ actions_index --;
 
 unsigned long FAR _export	Py_Front::check_val_vs_mat_py()
 {
+	return_state = check_tenor_py();
+
+	if (return_state)
+	{
+		return return_state;
+	}
+
 	int str_cmp = datecmp(&mat_date.date_string,
 		&val_date.date_string);
 
@@ -1384,6 +1391,12 @@ unsigned long FAR _export	Py_Front::check_val_vs_first_date_frn()
 }			
 unsigned long FAR _export	Py_Front::check_iss_vs_mat()
 {
+	return_state = check_tenor_py();
+
+	if (return_state)
+	{
+		return return_state;
+	}
 
 	int str_cmp = datecmp(&mat_date.date_string,
 		&issue_date.date_string);
@@ -1436,7 +1449,7 @@ if (str_cmp > 0)
 return return_success;
 }
 
-unsigned long FAR _export	Py_Front::check_first_vs_penult()
+unsigned long FAR _export	Py_Front::check_iss_vs_penult()
 {
 	int str_cmp = datecmp(&penult_date.date_string,
 		&issue_date.date_string);
@@ -2082,6 +2095,299 @@ unsigned long FAR _export	Py_Front::proc_gen_dates_frn_py()
 		return return_state;
 
 	}
+	return return_success;
+}
+unsigned long FAR _export	Py_Front::check_date_synch_py()
+{
+	proc_day_count_py();
+
+	/*{ Check that the dates are synchronized.}*/
+
+
+	/*{ If set to issue and maturity dates, skip check. }*/
+
+	int str_cmp = datecmp(&in_instr.pre_last_pay.date_string,
+		&in_instr.issue_date.date_string);
+
+	int str_cmp2 = datecmp(&in_instr.pay_freq.first_date.date_string,
+		&in_instr.mat_date.date_string);
+
+	if ((str_cmp != 0) || (str_cmp2 != 0))
+	{
+
+		/*{ Start with the next to last and maturity four years later. }*/
+
+		datecpy(date_union_hold.date_string,
+			in_instr.pre_last_pay.date_string);
+
+		str_cmp = month_end(date_union_hold);
+
+		return_state = forecast(in_instr.mat_date,
+			48,
+			0,
+			in_instr.cal_den,
+			&in_instr.mat_date);
+
+		if (return_state)
+		{
+
+			////errproc(return_state,module_name,"","","");
+
+			return return_state;
+
+		}
+
+		return_state = forecast(in_instr.pre_last_pay,
+			48,
+			0,
+			in_instr.cal_den,
+			&in_instr.pre_last_pay);
+
+		if (return_state)
+		{
+
+			////errproc(return_state,module_name,"","","");
+
+			return return_state;
+
+		}
+
+		if (str_cmp == (int)in_instr.pre_last_pay.date.days)
+		{
+
+			in_instr.pay_freq.month_day = date_last_day_in_month;
+
+		}
+		else
+		{
+
+			in_instr.pay_freq.month_day = in_instr.pre_last_pay.date.days;
+
+		}
+
+		/*{ If previous date on the next to last date does not equal the next
+		to last date, dates are not in synch.}*/
+		unsigned int dummy_ui = 0;
+		return_state = n_p_pay(in_instr
+			, date_union_hold
+			, &prev_date
+			, &next_date
+			, dummy_ui
+			//						, holi_parm
+			, holiSet
+			);
+
+
+		if (return_state)
+		{
+
+			/*{ Dates are not in synch. }*/
+
+			/*{ reload original   }*/
+
+			return_state = forecast(in_instr.mat_date,
+				-48,
+				0,
+				in_instr.cal_den,
+				&in_instr.mat_date);
+
+			if (return_state)
+			{
+
+				////errproc(return_state,module_name,"","","");
+
+				return return_state;
+
+			}
+
+			return_state = forecast(in_instr.pre_last_pay,
+				-48,
+				0,
+				in_instr.cal_den,
+				&in_instr.pre_last_pay);
+
+			if (return_state)
+			{
+
+				////errproc(return_state,module_name,"","","");
+
+				return return_state;
+
+			}
+
+			return_state = return_err_dates_out_synch;
+
+			return return_state;
+
+		}
+
+
+		/*{ reload original   }*/
+
+		return_state = forecast(in_instr.mat_date,
+			-48,
+			0,
+			in_instr.cal_den,
+			&in_instr.mat_date);
+
+		if (return_state)
+		{
+
+			////errproc(return_state,module_name,"","","");
+
+			return return_state;
+
+		}
+
+		return_state = forecast(in_instr.pre_last_pay,
+			-48,
+			0,
+			in_instr.cal_den,
+			&in_instr.pre_last_pay);
+
+		if (return_state)
+		{
+
+			////errproc(return_state,module_name,"","","");
+
+			return return_state;
+
+		}
+
+		str_cmp = datecmp(date_union_hold.date_string,
+			prev_date.date_string);
+
+		if (str_cmp != 0)
+		{
+			/*{ Dates are not in synch. }*/
+
+			return_state = return_err_dates_out_synch;
+
+			return return_state;
+
+		}
+	}
+	return return_success;
+}					
+unsigned long FAR _export	Py_Front::proc_penult_date_py()
+{
+	return_state = datechck(penult_date);
+	if (return_state != return_success)
+	{
+		return return_err_penult_date_bad;
+	}
+
+	datecpy(in_instr.pre_last_pay.date_string,
+		penult_date.date_string);
+	return return_success;
+}
+
+unsigned long FAR _export	Py_Front::proc_first_date_py()
+{
+	return_state = datechck(first_date);
+	if (return_state != return_success)
+	{
+		return_state = return_err_first_date_bad;
+
+	}
+
+	datecpy(in_instr.pay_freq.first_date.date_string,
+		first_date.date_string);
+	return return_success;
+}
+
+unsigned long FAR _export	Py_Front::proc_first_date_frn_py()
+{
+	return_state = datechck(rerate_sched.rerate_sched.first_date);
+	if (return_state != return_success)
+	{
+		return_state = return_err_first_date_bad;
+
+	}
+
+	datecpy(in_instr.rerate_freq.first_date.date_string,
+		rerate_sched.rerate_sched.first_date.date_string);
+	return return_success;
+
+}
+unsigned long FAR _export	Py_Front::proc_all_dates_py()
+{
+
+	return_state = proc_val_date_py();
+	if (return_state != return_success)
+	{
+		return return_state;
+	}
+	if (current_class == instr_cashflow_class)
+	{
+		return return_success;
+	}
+	return_state = proc_iss_date_py();
+	if (return_state != return_success)
+	{
+		return return_state;
+	}
+	return_state = proc_penult_date_py();
+	if (return_state != return_success)
+	{
+		return return_state;
+	}
+	return_state = proc_first_date_py();
+	if (return_state != return_success)
+	{
+		return return_state;
+	}
+	return_state = proc_mat_date_py();
+	if (return_state != return_success)
+	{
+		return return_state;
+	}
+	return_state = check_val_vs_mat_py();
+	if (return_state != return_success)
+	{
+		return return_state;
+	}
+	return_state = check_iss_vs_first();
+	if (return_state != return_success)
+	{
+		return return_state;
+	}
+	return_state = check_first_vs_mat();
+	if (return_state != return_success)
+	{
+		return return_state;
+	}
+	return_state = check_iss_vs_penult();
+	if (return_state != return_success)
+	{
+		return return_state;
+	}
+	return_state = check_penult_vs_mat();
+	if (return_state != return_success)
+	{
+		return return_state;
+	}
+	return_state = check_iss_vs_val();
+	if (return_state != return_success)
+	{
+		return return_state;
+	}
+	return_state = check_iss_vs_mat();
+	if (return_state != return_success)
+	{
+		return return_state;
+	}
+	if (in_instr.pay_type == instr_float_pay_type)
+	{
+
+		return return_success;
+	}
+	return_state = check_date_synch_py();
+	if (return_state != return_success)
+	{
+		return return_state;
+	}
+
 	return return_success;
 }
 unsigned long FAR _export	Py_Front::pyproc45	(
@@ -3693,34 +3999,16 @@ size_t num_bytes = 0;
 		 }
 		 case py_check_val_vs_mat:
 		 {
-
-			if (actions_array[actions_index].prev_action ==
-				py_check_tenor)
-			{
-
-					 actions_index --;
-
-
-			  actions_proc(change_step, actions_index,	actions_array,
-					  0);
-
-			  break;
-
-			}
-			
-				
 			return_state = check_val_vs_mat_py();
 			if (return_state != return_success)
 			{
 				return return_state;
 			}
-			actions_index ++;
 
+			actions_proc(change_step, actions_index, actions_array,
+				0);
 
-			actions_proc(change_new, actions_index,	actions_array,
-			  py_check_tenor);
-
-				  break;
+			break;
 
 		 }
 
@@ -3741,30 +4029,15 @@ size_t num_bytes = 0;
 		 case py_check_iss_vs_mat:
 		 {
 
-			if (actions_array[actions_index].prev_action ==
-				py_check_tenor)
-			{
 
-				actions_index --;
-
-
-				actions_proc(change_step, actions_index,	actions_array,
-				 0);
-
-				break;
-
-			}
 			return_state = check_iss_vs_mat();
 			if (return_state != return_success)
 			{
 				return return_state;
 			}
-			actions_index ++;
-
-			actions_proc(change_new, actions_index,	actions_array,
-				 py_check_tenor);
-
-				  break;
+			actions_proc(change_step, actions_index, actions_array,
+				0);
+			break;
 
 		 }
 		 case py_check_iss_vs_first:
@@ -3799,7 +4072,7 @@ size_t num_bytes = 0;
 		 case py_check_iss_vs_penult:
 		 {
 
-			 return_state = check_first_vs_penult();
+			 return_state = check_iss_vs_penult();
 			 if (return_state != return_success)
 			 {
 				 return return_state;
@@ -3842,193 +4115,14 @@ size_t num_bytes = 0;
 		 }
 		 case py_check_date_synch:
 		 {
-
-			if (actions_array[actions_index].prev_action ==
-			py_proc_day_count)
-			{
-
-				/*{ Check that the dates are synchronized.}*/
-
-
-				/*{ If set to issue and maturity dates, skip check. }*/
-
-				str_cmp =  datecmp(&in_instr.pre_last_pay.date_string,
-				&in_instr.issue_date.date_string);
-
-				str_cmp2 =  datecmp(&in_instr.pay_freq.first_date.date_string,
-				&in_instr.mat_date.date_string);
-
-				if ((str_cmp != 0) || (str_cmp2 != 0))
-				{
-
-				  /*{ Start with the next to last and maturity four years later. }*/
-
-					 datecpy(date_union_hold.date_string,
-					in_instr.pre_last_pay.date_string);
-
-					str_cmp =  month_end(date_union_hold);
-
-					return_state =  forecast(in_instr.mat_date,
-						48,
-						0,
-						in_instr.cal_den,
-						&in_instr.mat_date);
-
-					if (return_state)
-					{
-
-						////errproc(return_state,module_name,"","","");
-
-						return return_state;
-
-					}
-
-					return_state =  forecast(in_instr.pre_last_pay,
-						48,
-						0,
-						in_instr.cal_den,
-						&in_instr.pre_last_pay);
-
-					if (return_state)
-					{
-
-						////errproc(return_state,module_name,"","","");
-
-						return return_state;
-
-					}
-
-					if (str_cmp == (int) in_instr.pre_last_pay.date.days)
-					{
-
-						in_instr.pay_freq.month_day = date_last_day_in_month;
-
-					}
-					else
-					{
-
-						in_instr.pay_freq.month_day = in_instr.pre_last_pay.date.days;
-
-					}
-
-					/*{ If previous date on the next to last date does not equal the next
-					to last date, dates are not in synch.}*/
-
-					return_state = n_p_pay(in_instr
-						, date_union_hold
-						, &prev_date
-						,&next_date
-						, dummy_ui
-//						, holi_parm
-						,holiSet
-						);
-
-
-					if (return_state)
-					{
-
-						/*{ Dates are not in synch. }*/
-
-						/*{ reload original   }*/
-
-						return_state =  forecast(in_instr.mat_date,
-							-48,
-							0,
-							in_instr.cal_den,
-							&in_instr.mat_date);
-
-					  if (return_state)
-					  {
-
-						////errproc(return_state,module_name,"","","");
-
-						return return_state;
-
-					  }
-
-					  return_state =  forecast(in_instr.pre_last_pay,
-						-48,
-						0,
-						in_instr.cal_den,
-						&in_instr.pre_last_pay);
-
-					  if (return_state)
-					  {
-
-							////errproc(return_state,module_name,"","","");
-
-							return return_state;
-
-					  }
-
-						return_state = return_err_dates_out_synch ;
-
-						return return_state;
-
-					}
-
-
-					/*{ reload original   }*/
-
-					return_state =  forecast(in_instr.mat_date,
-						-48,
-						0,
-						in_instr.cal_den,
-						&in_instr.mat_date);
-
-					if (return_state)
-					{
-
-						////errproc(return_state,module_name,"","","");
-
-						return return_state;
-
-					}
-
-					return_state =  forecast(in_instr.pre_last_pay,
-						-48,
-						0,
-						in_instr.cal_den,
-						&in_instr.pre_last_pay);
-
-					if (return_state)
-					{
-
-						////errproc(return_state,module_name,"","","");
-
-						return return_state;
-
-					}
-
-					str_cmp =  datecmp(date_union_hold.date_string,
-					prev_date.date_string);
-
-					if (str_cmp != 0)
-					{
-						/*{ Dates are not in synch. }*/
-
-						return_state = return_err_dates_out_synch ;
-
-						return return_state;
-
-					}
-				}
-
-				actions_index --;
-
+			 return_state = check_date_synch_py();
+			 if (return_state != return_success)
+			 {
+				 return return_state;
+			 }
 
 				actions_proc(change_step, actions_index,	actions_array,
 				 0);
-
-				break;
-
-			}
-
-			actions_index ++;
-
-
-			actions_proc(change_new, actions_index,	actions_array,
-				 py_proc_day_count);
 
 			break;
 
@@ -4055,304 +4149,57 @@ size_t num_bytes = 0;
 		 }
 		 case py_proc_penult_date:
 		 {
+			 return_state = proc_penult_date_py();
+			 if (return_state != return_success)
+			 {
+				 return return_state;
+			 }
 
-			if (actions_array[actions_index].prev_action ==
-				py_check_date)
-			{
-
-			  actions_index --;
-
-
-			  actions_proc(change_step, actions_index,	actions_array,
+			 actions_proc(change_step, actions_index, actions_array,
 				 0);
 
-			  if (return_state != return_success) {
-
-				return_state = return_err_penult_date_bad;
-				////errproc(return_state,module_name,"","","");
-				return return_state;
-			  }
-
-			   datecpy(in_instr.pre_last_pay.date_string,
-					penult_date.date_string);
-
-			  break;
-
-			}
-
-			check_date1 = penult_date;
-
-			actions_index ++;
-
-
-			actions_proc(change_new, actions_index,	actions_array,
-				 py_check_date);
-
-			break;
+			 break;
 
 		 }
 		 case py_proc_first_date:
 		 {
+			 return_state = proc_first_date_py();
+			 if (return_state != return_success)
+			 {
+				 return return_state;
+			 }
 
-			if (actions_array[actions_index].prev_action ==
-				py_check_date)
-			{
-
-				actions_index --;
-
-
-				actions_proc(change_step, actions_index,	actions_array,
+			 actions_proc(change_step, actions_index, actions_array,
 				 0);
 
-				if (return_state != return_success) {
-
-					return_state = return_err_first_date_bad;
-					////errproc(return_state,module_name,"","","");
-					return return_state;
-				}
-
-				 datecpy(in_instr.pay_freq.first_date.date_string,
-				first_date.date_string);
-
-				break;
-
-			}
-
-			check_date1 = first_date;
-
-			actions_index ++;
-
-			actions_proc(change_new, actions_index,	actions_array,
-				 py_check_date);
-
-			break;
-
+			 break;
 		 }
 		 case py_proc_first_date_frn:
 		 {
+			 return_state = proc_first_date_py();
+			 if (return_state != return_success)
+			 {
+				 return return_state;
+			 }
 
-			if (actions_array[actions_index].prev_action ==
-				py_check_date)
-			{
-
-			  actions_index --;
-
-			  actions_proc(change_step, actions_index,	actions_array,
+			 actions_proc(change_step, actions_index, actions_array,
 				 0);
 
-			  if (return_state != return_success) {
-
-				return_state = return_err_first_date_bad;
-				////errproc(return_state,module_name,"","","");
-				return return_state;
-			  }
-
-			   datecpy(in_instr.rerate_freq.first_date.date_string,
-			  rerate_sched.rerate_sched.first_date.date_string);
-
-			  break;
-
-			}
-
-			 datecpy(check_date1.date_string,
-			rerate_sched.rerate_sched.first_date.date_string);
-
-			actions_index ++;
-
-			actions_proc(change_new, actions_index,	actions_array,
-				 py_check_date);
-
-			break;
+			 break;
 
 		 }
 		 case py_proc_all_dates:
 		 {
-
-			if (actions_array[actions_index].prev_action ==
-			py_proc_val_date)
-			{
-
-				if (current_class == instr_cashflow_class)
-
-				{
-
-					actions_index --;
-
-
-					actions_proc(change_step, actions_index,	actions_array,
-						 0);
-
-					break;
-
-				}
-				else
-				{
-
-
-					actions_proc(change_new, actions_index,	actions_array,
-						 py_proc_iss_date);
-
-					break;
-				}
-
-			}
-
-			if (actions_array[actions_index].prev_action ==
-				py_proc_iss_date)
-			{
-
-				actions_proc(change_new, actions_index,	actions_array,
-						py_proc_penult_date);
-
-				break;
-
-			}
-
-			if (actions_array[actions_index].prev_action ==
-				py_proc_penult_date)
-			{
-
-				actions_proc(change_new, actions_index,	actions_array,
-						 py_proc_first_date);
-
-					 break;
-
-			}
-
-			if (actions_array[actions_index].prev_action ==
-				py_proc_first_date)
-			{
-
-				actions_proc(change_new, actions_index,	actions_array,
-						py_proc_mat_date);
-
-				break;
-
-			}
-
-			if (actions_array[actions_index].prev_action ==
-				py_proc_mat_date)
-			{
-
-				actions_proc(change_new, actions_index,	actions_array,
-					  py_check_val_vs_mat);
-
-				break;
-
-			}
-
-			if (actions_array[actions_index].prev_action ==
-				py_check_val_vs_mat)
-			{
-
-				actions_proc(change_new, actions_index,	actions_array,
-							py_check_iss_vs_first);
-
-				break;
-
-			}
-
-			if (actions_array[actions_index].prev_action ==
-				py_check_iss_vs_first)
-			{
-
-				actions_proc(change_new, actions_index,	actions_array,
-										  py_check_first_vs_mat);
-
-				break;
-
-			}
-
-			if (actions_array[actions_index].prev_action ==
-				py_check_first_vs_mat)
-			{
-
-
-				actions_proc(change_new, actions_index,	actions_array,
-							py_check_iss_vs_penult);
-
-				break;
-
-			}
-
-			if (actions_array[actions_index].prev_action ==
-				py_check_iss_vs_penult)
-			{
-
-				actions_proc(change_new, actions_index,	actions_array,
-							py_check_penult_vs_mat);
-
-				break;
-
-			}
-
-			if (actions_array[actions_index].prev_action ==
-				py_check_penult_vs_mat)
-			{
-
-				actions_proc(change_new, actions_index,	actions_array,
-									py_check_iss_vs_val);
-
-				break;
-
-			}
-
-			if (actions_array[actions_index].prev_action ==
-				py_check_iss_vs_val)
-			{
-
-				actions_proc(change_new, actions_index,	actions_array,
-						  py_check_iss_vs_mat);
-
-				break;
-
-			}
-
-			if (actions_array[actions_index].prev_action ==
-				py_check_iss_vs_mat)
-			{
-
-				if (in_instr.pay_type != instr_float_pay_type)
-				{
-
-				  actions_proc(change_new, actions_index,	actions_array,
-									  py_check_date_synch);
-
-				}
-				else
-				{
-
-				  actions_index --;
-
-				  actions_proc(change_step, actions_index,	actions_array, 0);
-
-				}
-
-				break;
-
-			}
-
-			if (actions_array[actions_index].prev_action ==
-				py_check_date_synch)
-			{
-
-				actions_index --;
-
-
-				actions_proc(change_step, actions_index,	actions_array,
-									  0);
-
-				break;
-
-			}
-
-			actions_index ++;
-
-			actions_proc(change_new, actions_index,	actions_array,
-							py_proc_val_date);
-
-			break;
-
+			 return_state = proc_all_dates_py();
+			 if (return_state != return_success)
+			 {
+				 return return_state;
+			 }
+
+			 actions_proc(change_step, actions_index, actions_array,
+				 0);
+
+			 break;
 		 }
 		 case py_check_all_parms:
 		 {
