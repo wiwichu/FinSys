@@ -650,6 +650,7 @@ unsigned long check_penult_vs_mat();
 unsigned long set_accrue_date_py();
 unsigned long check_tenor_py();
 unsigned long proc_def_dates_py();
+unsigned long calc_np_py();
 unsigned long pyproc45(
 //	char action,
 //	instr *instr_parm,

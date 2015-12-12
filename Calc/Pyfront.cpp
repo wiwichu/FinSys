@@ -1821,6 +1821,34 @@ unsigned long FAR _export	Py_Front::proc_def_dates_py()
 
 	return return_state;
 }
+unsigned long FAR _export	Py_Front::calc_np_py()
+{
+	if (current_class != instr_cashflow_class)
+
+	{
+		unsigned int dummy_ui=0;
+		return_state = n_p_pay(in_instr
+			, val_date
+			, &prev_coup
+			, &next_coup
+			, dummy_ui
+			//					, holi_parm
+			, holiSet
+			);
+
+		if (return_state)
+		{
+
+			//errproc(return_state,module_name,"","","");
+			return return_state;
+
+		}
+
+	}
+
+
+return return_success;
+}
 unsigned long FAR _export	Py_Front::pyproc45	(
 //	char action,
 //	char instr_class_desc_choice [instr_last_class] [instr_class_desc_len],
@@ -4655,29 +4683,11 @@ size_t num_bytes = 0;
 		 }
 		 case py_calc_np:
 		 {
-
-			if (current_class != instr_cashflow_class)
-
-			{
-
-				return_state = n_p_pay(in_instr
-					, val_date
-					, &prev_coup
-					,&next_coup
-					, dummy_ui
-//					, holi_parm
-					,holiSet
-					);
-
-				if (return_state)
-				{
-
-					//errproc(return_state,module_name,"","","");
-					return return_state;
-
-				}
-
-			}
+			 return_state = calc_np_py();
+			 if (return_state != return_success)
+			 {
+				 return return_state;
+			 }
 
 
 			actions_proc(change_step, actions_index,	actions_array,
