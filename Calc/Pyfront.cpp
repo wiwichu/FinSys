@@ -1490,7 +1490,337 @@ if (str_cmp >= 0)
 
 return return_success;
 }
+unsigned long FAR _export	Py_Front::check_tenor_py()
+{
+	long tenor_days = 0;
+	return_state = tenor(val_date,
+		mat_date,
+		date_act_cal,
+		&tenor_days);
 
+	if (return_state)
+	{
+
+		////errproc(return_state,module_name,"","","");
+
+		return return_state;
+
+	}
+
+	if ((tenor_days / 365) > 50)
+	{
+
+		return_state = return_info_max_mat_exc;
+
+		////errproc(return_state,module_name,"","","");
+
+		return return_state;
+
+	}
+	return return_success;
+}
+unsigned long FAR _export	Py_Front::set_accrue_date_py()
+{
+	if (in_instr.instr_class == instr_goj_class)
+	{
+
+		return_state = forecast(in_instr.issue_date,
+			0,
+			-1,
+			in_instr.cal_num,
+			&in_instr.accrue_date);
+
+		if (return_state)
+		{
+
+			//errproc(return_state,module_name,"","","");
+			return return_state;
+
+		}
+	}
+	else
+	{
+		datecpy(in_instr.accrue_date.date_string,
+			in_instr.issue_date.date_string);
+	}
+
+	return return_success;
+}
+unsigned long FAR _export	Py_Front::proc_def_dates_py()
+{
+	return_state = proc_mat_date_py();
+	if (return_state != return_success)
+	{
+		return return_state;
+	}
+	return_state = proc_val_date_py();
+	if (return_state != return_success)
+	{
+		return return_state;
+	}
+	return_state = check_val_vs_mat_py();
+	if (return_state != return_success)
+	{
+		return return_state;
+	}
+
+	/*{ If this is a discount instrument, set the issue date to the
+	value date and set the first and next to last dates to maturity
+	and issue  }*/
+
+	if ((in_instr.instr_class == instr_usdsc_class) ||
+		(in_instr.instr_class == instr_ukdsc_class) ||
+		(in_instr.instr_class == instr_uschatz_buba_class) ||
+		(in_instr.instr_class == instr_cp_class))
+	{
+
+		datecpy(in_instr.issue_date.date_string,
+			val_date.date_string);
+		datecpy(in_instr.pre_last_pay.date_string,
+			val_date.date_string);
+		datecpy(in_instr.pay_freq.first_date.date_string,
+			mat_date.date_string);
+		datecpy(in_instr.mat_date.date_string,
+			mat_date.date_string);
+
+	}
+	else
+	{
+
+		/*{ Start with the next to last equal to maturity and maturity a
+		year later. Make the first the maturity date two years before value,
+		and issue date a year before that, then find the next and previous
+		coupons.}*/
+
+		datecpy(date_union_hold.date_string, mat_date.date_string);
+
+		int str_cmp = month_end(date_union_hold);
+
+		return_state = forecast(mat_date,
+			12,
+			0,
+			in_instr.cal_den,
+			&in_instr.mat_date);
+
+		if (return_state)
+		{
+
+			////errproc(return_state,module_name,"","","");
+
+			return return_state;
+
+		}
+
+		if (str_cmp == (int)mat_date.date.days)
+		{
+
+			if (current_monthend == monthend_no)
+			{
+
+				in_instr.pay_freq.month_day = mat_date.date.days;
+
+			}
+			else
+			{
+
+				in_instr.pay_freq.month_day = date_last_day_in_month;
+
+			}
+
+		}
+		else
+		{
+
+			in_instr.pay_freq.month_day = mat_date.date.days;
+
+		}
+
+		datecpy(in_instr.pre_last_pay.date_string,
+			mat_date.date_string);
+
+		return_state = forecast(val_date,
+			-24,
+			0,
+			in_instr.cal_den,
+			&in_instr.pay_freq.first_date);
+
+		if (return_state)
+		{
+
+			////errproc(return_state,module_name,"","","");
+
+			return return_state;
+
+		}
+
+		in_instr.pay_freq.first_date.date.months =
+			in_instr.pre_last_pay.date.months;
+
+		in_instr.pay_freq.first_date.date.days =
+			in_instr.pre_last_pay.date.days;
+
+		if (in_instr.pay_freq.month_day == date_last_day_in_month)
+		{
+			in_instr.pay_freq.first_date.date.days =
+				(char)month_end(in_instr.pay_freq.first_date);
+
+			if (return_state)
+			{
+
+				////errproc(return_state,module_name,"","","");
+
+				return return_state;
+
+			}
+		}
+
+		return_state = forecast(in_instr.pay_freq.first_date,
+			-12,
+			0,
+			in_instr.cal_den,
+			&in_instr.issue_date);
+
+		if (return_state)
+		{
+
+			////errproc(return_state,module_name,"","","");
+
+			return return_state;
+
+		}
+
+		if (in_instr.pay_freq.month_day == date_last_day_in_month)
+		{
+			in_instr.issue_date.date.days =
+				(char)month_end(in_instr.issue_date);
+
+			if (return_state)
+			{
+
+				////errproc(return_state,module_name,"","","");
+
+				return return_state;
+
+			}
+		}
+
+		return_state = forecast(in_instr.pre_last_pay,
+			0,
+			-1,
+			date_act_cal,
+			&date_union_hold);
+
+		if (return_state)
+		{
+
+			////errproc(return_state,module_name,"","","");
+
+			return return_state;
+
+		}
+		unsigned int dummy_ui = 0;
+		return_state = n_p_pay(in_instr,
+			date_union_hold,
+			&prev_date
+			, &next_date
+			, dummy_ui
+			//					, holi_parm
+			, holiSet
+			);
+
+		if (return_state)
+		{
+
+			////errproc(return_state,module_name,"","","");
+
+			return return_state;
+
+		}
+
+		datecpy(in_instr.pre_last_pay.date_string, prev_date.date_string);
+
+		/*{Reset maturity date.}*/
+
+		datecpy(in_instr.mat_date.date_string,
+			mat_date.date_string);
+
+
+	}
+
+	//		 datecpy(&in_instr.accrue_date.date_string, &in_instr.issue_date.date_string);
+
+	//	         datecpy(in_instr.mat_date.date_string, mat_date->date_string);
+	datecpy(issue_date.date_string,
+		in_instr.issue_date.date_string);
+	datecpy(penult_date.date_string,
+		in_instr.pre_last_pay.date_string);
+	datecpy(first_date.date_string,
+		in_instr.pay_freq.first_date.date_string);
+
+	return_state = set_accrue_date_py();
+	if (return_state != return_success)
+	{
+		return return_state;
+	}
+	/* Set default excoup indicator based on derived  */
+	//
+	return_state = excoup(in_instr,
+		val_date
+		, &ex_coup,
+		holi_chan
+		//				  , holi_parm
+		, holiSet
+		);
+
+	if (return_state)
+	{
+
+		////errproc(return_state,module_name,"","","");
+
+		return return_state;
+
+	}
+
+	if (ex_coup)
+	{
+
+		strcpy(current_excoup_name,
+			excoup_names[ex_coup_yes]);
+
+		//				 current_excoup = (char)ex_coup_yes;
+
+	}
+	else
+	{
+
+
+		strcpy(current_excoup_name,
+			excoup_names[ex_coup_no]);
+
+		//				 current_excoup = (char)ex_coup_no;
+
+	}
+
+
+	action_proc_excoup();
+	if (in_instr.instr_class == instr_cashflow_class)
+	{
+
+		int str_cmp = datecmp(&val_date.date_string,
+			pay_array_a[0].pay_date.date_string);
+
+		if (str_cmp >= 0)
+		{
+
+			return_state = return_err_val_ge_cf;
+			////errproc(return_state,module_name,"","","");
+			return return_state;
+
+		}
+	}
+
+	return return_state;
+}
 unsigned long FAR _export	Py_Front::pyproc45	(
 //	char action,
 //	char instr_class_desc_choice [instr_last_class] [instr_class_desc_len],
@@ -3074,323 +3404,14 @@ size_t num_bytes = 0;
 
 		 case py_proc_def_dates:
 		 {
-
-			if (actions_array[actions_index].prev_action ==
-				py_proc_mat_date)
-			{
-
-
-			  actions_proc(change_new, actions_index,	actions_array,
-				py_proc_val_date);
-
-					 break;
-
-			}
-
-			if (actions_array[actions_index].prev_action ==
-				py_proc_val_date)
-			{
-
-			  actions_proc(change_new, actions_index,	actions_array,
-				  py_check_val_vs_mat);
-
-					 break;
-
-			}
-
-			if (actions_array[actions_index].prev_action ==
-				py_check_val_vs_mat)
-			{
-
-			  /*{ If this is a discount instrument, set the issue date to the
-			  value date and set the first and next to last dates to maturity
-			  and issue  }*/
-
-			  if ((in_instr.instr_class == instr_usdsc_class) ||
-			  (in_instr.instr_class == instr_ukdsc_class) ||
-			  (in_instr.instr_class == instr_uschatz_buba_class) ||
-			  (in_instr.instr_class == instr_cp_class))
-			  {
-
-				 datecpy(in_instr.issue_date.date_string,
-					val_date.date_string);
-				 datecpy(in_instr.pre_last_pay.date_string,
-					val_date.date_string);
-				 datecpy(in_instr.pay_freq.first_date.date_string,
-					mat_date.date_string);
-				 datecpy(in_instr.mat_date.date_string,
-					mat_date.date_string);
-
-			  }
-			  else
-			  {
-
-				/*{ Start with the next to last equal to maturity and maturity a
-				year later. Make the first the maturity date two years before value,
-				and issue date a year before that, then find the next and previous
-				coupons.}*/
-
-				 datecpy(date_union_hold.date_string, mat_date.date_string);
-
-				str_cmp =  month_end(date_union_hold);
-
-				return_state =  forecast(mat_date,
-				  12,
-				  0,
-				  in_instr.cal_den,
-				  &in_instr.mat_date);
-
-				if (return_state)
-				{
-
-					////errproc(return_state,module_name,"","","");
-
-					return return_state;
-
-				}
-
-				if (str_cmp == (int) mat_date.date.days)
-				{
-
-					if (current_monthend == monthend_no)
-					{
-
-					  in_instr.pay_freq.month_day = mat_date.date.days;
-
-					}
-					else
-					{
-
-					  in_instr.pay_freq.month_day = date_last_day_in_month;
-
-					}
-
-				}
-				else
-				{
-
-					in_instr.pay_freq.month_day = mat_date.date.days;
-
-				}
-
-				 datecpy(in_instr.pre_last_pay.date_string,
-					mat_date.date_string);
-
-				return_state =  forecast(val_date,
-				  -24,
-				  0,
-				  in_instr.cal_den,
-				  &in_instr.pay_freq.first_date);
-
-				if (return_state)
-				{
-
-					////errproc(return_state,module_name,"","","");
-
-					return return_state;
-
-				}
-
-				in_instr.pay_freq.first_date.date.months =
-					in_instr.pre_last_pay.date.months;
-
-				in_instr.pay_freq.first_date.date.days =
-					in_instr.pre_last_pay.date.days;
-
-				if (in_instr.pay_freq.month_day == date_last_day_in_month)
-				{
-					in_instr.pay_freq.first_date.date.days =
-					(char)  month_end(in_instr.pay_freq.first_date);
-
-					if (return_state)
-					{
-
-						////errproc(return_state,module_name,"","","");
-
-						return return_state;
-
-					}
-				}
-
-				return_state =  forecast(in_instr.pay_freq.first_date,
-				  -12,
-				  0,
-				  in_instr.cal_den,
-				  &in_instr.issue_date);
-
-				if (return_state)
-				{
-
-					////errproc(return_state,module_name,"","","");
-
-					return return_state;
-
-				}
-
-				if (in_instr.pay_freq.month_day == date_last_day_in_month)
-				{
-					in_instr.issue_date.date.days =
-					(char)  month_end(in_instr.issue_date);
-
-					if (return_state)
-					{
-
-						////errproc(return_state,module_name,"","","");
-
-						return return_state;
-
-					}
-				}
-
-				return_state =  forecast(in_instr.pre_last_pay,
-				  0,
-				  -1,
-				  date_act_cal,
-				  &date_union_hold);
-
-				if (return_state)
-				{
-
-					////errproc(return_state,module_name,"","","");
-
-					return return_state;
-
-				}
-
-				return_state = n_p_pay(in_instr, 
-					date_union_hold,
-					&prev_date
-					, &next_date
-					, dummy_ui
-//					, holi_parm
-					,holiSet
-					);
-
-				if (return_state)
-				{
-
-					////errproc(return_state,module_name,"","","");
-
-					return return_state;
-
-				}
-
-				 datecpy(in_instr.pre_last_pay.date_string, prev_date.date_string);
-
-				/*{Reset maturity date.}*/
-
-				 datecpy(in_instr.mat_date.date_string,
-					mat_date.date_string);
-
-
-			  }
-
-//		 datecpy(&in_instr.accrue_date.date_string, &in_instr.issue_date.date_string);
-
-//	         datecpy(in_instr.mat_date.date_string, mat_date->date_string);
-			   datecpy(issue_date.date_string,
-				in_instr.issue_date.date_string);
-			   datecpy(penult_date.date_string,
-				in_instr.pre_last_pay.date_string);
-			   datecpy(first_date.date_string,
-				in_instr.pay_freq.first_date.date_string);
-
-			  actions_proc(change_new, actions_index,	actions_array,
-				  py_set_accrue_date);
-
-			  break;
-
-			}
-
-			if (actions_array[actions_index].prev_action ==
-				py_set_accrue_date)
-			{
-
-			/* Set default excoup indicator based on derived  */
-//
-			  return_state = excoup( in_instr, 
-				  val_date
-				  , &ex_coup,
-				  holi_chan
-//				  , holi_parm
-				,holiSet
-				  );
-
-			  if (return_state)
-			  {
-
-					////errproc(return_state,module_name,"","","");
-
-					return return_state;
-
-			  }
-
-			  if (ex_coup)
-			  {
-
-				 strcpy(current_excoup_name,
-					excoup_names[ex_coup_yes]);
-
-//				 current_excoup = (char)ex_coup_yes;
-
-			  }
-			  else
-			  {
-
-
-				 strcpy(current_excoup_name,
-					excoup_names[ex_coup_no]);
-
-//				 current_excoup = (char)ex_coup_no;
-
-			  }
-
-			  actions_proc(change_new, actions_index,	actions_array,
-				  py_action_proc_excoup);
-
-			  break;
-
-			}
-
-			if (actions_array[actions_index].prev_action ==
-				py_action_proc_excoup)
-			{
-
-					 actions_index --;
-
-
-			  actions_proc(change_step, actions_index,	actions_array,
-				  0);
-
-					 break;
-
-			}
-
-			if (in_instr.instr_class == instr_cashflow_class)
-			{
-
-				str_cmp =  datecmp(&val_date.date_string,
-				pay_array_a[0].pay_date.date_string);
-
-				if (str_cmp >= 0)
-				{
-
-					return_state = return_err_val_ge_cf;
-					////errproc(return_state,module_name,"","","");
-					return return_state;
-
-				}
-
-				actions_proc(change_step, actions_index,	actions_array,
-				  0);
-
-				break;
-			}
-
-			actions_index ++;
-
-			actions_proc(change_new, actions_index,	actions_array,
-				  py_proc_mat_date);
+			 return_state = proc_def_dates_py();
+			 if (return_state != return_success)
+			 {
+				 return return_state;
+			 }
+
+			actions_proc(change_step, actions_index, actions_array,
+				0);
 
 			break;
 
@@ -4103,31 +4124,16 @@ size_t num_bytes = 0;
 		 }
 		 case py_check_tenor:
 		 {
+			 return_state = check_tenor_py();
 
-			return_state =  tenor 	(val_date,
-						mat_date,
-				date_act_cal,
-				&tenor_days);
+			 if (return_state)
+			 {
 
-			if (return_state)
-			{
+				 ////errproc(return_state,module_name,"","","");
 
-			  ////errproc(return_state,module_name,"","","");
+				 return return_state;
 
-				return return_state;
-
-			}
-
-			if ((tenor_days/365) > 50)
-			{
-
-			  return_state = return_info_max_mat_exc;
-
-			  ////errproc(return_state,module_name,"","","");
-
-			  return return_state;
-
-			}
+			 }
 
 			actions_proc(change_step, actions_index,	actions_array,
 				 0);
@@ -4943,28 +4949,11 @@ size_t num_bytes = 0;
 		 }
 		 case py_set_accrue_date:
 		 {
-			if (in_instr.instr_class == instr_goj_class)
-			{
-
-			  return_state =  forecast(in_instr.issue_date,
-				0,
-				-1,
-				in_instr.cal_num,
-				&in_instr.accrue_date);
-
-			  if (return_state)
-			  {
-
-				//errproc(return_state,module_name,"","","");
-				return return_state;
-
-			  }
-			}
-			else
-			{
-				 datecpy(in_instr.accrue_date.date_string,
-					in_instr.issue_date.date_string);
-			}
+			 return_state = set_accrue_date_py();
+			 if (return_state != return_success)
+			 {
+				 return return_state;
+			 }
 
 
 			actions_proc(change_step, actions_index,	actions_array,
@@ -5241,9 +5230,9 @@ void Py_Front::actions_proc(char change, int actions_index,
 
 unsigned long  _FAR_FUNC _EX_IN_FUNC Py_Front::proc_def_dates()
 {
-
-action = py_proc_def_dates;
-return pyproc45();
+	return proc_def_dates_py();
+//action = py_proc_def_dates;
+//return pyproc45();
 
 }
 

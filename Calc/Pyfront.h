@@ -647,6 +647,9 @@ unsigned long check_first_vs_mat();
 unsigned long check_first_vs_penult();
 unsigned long check_iss_vs_val();
 unsigned long check_penult_vs_mat();
+unsigned long set_accrue_date_py();
+unsigned long check_tenor_py();
+unsigned long proc_def_dates_py();
 unsigned long pyproc45(
 //	char action,
 //	instr *instr_parm,
