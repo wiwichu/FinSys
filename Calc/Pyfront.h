@@ -657,6 +657,11 @@ unsigned long proc_penult_date_py();
 unsigned long proc_first_date_py(); 
 unsigned long proc_first_date_frn_py();
 unsigned long proc_all_dates_py();
+unsigned long proc_int_py();
+unsigned long proc_price_py();
+unsigned long check_price_vs_calc_py();
+unsigned long py_proc_calc_what_py();
+unsigned long check_all_parms_py();
 unsigned long pyproc45(
 //	char action,
 //	instr *instr_parm,

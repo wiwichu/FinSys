@@ -2390,6 +2390,133 @@ unsigned long FAR _export	Py_Front::proc_all_dates_py()
 
 	return return_success;
 }
+unsigned long FAR _export	Py_Front::proc_int_py()
+{
+	if (current_class == instr_cashflow_class)
+	{
+		return return_success;
+	}
+
+		//			  in_instr.rate_offset = int_rate;
+		in_instr.rate_offset = int_rate - service_fee;
+
+
+		if (((in_instr.instr_class == instr_usdsc_class) ||
+			(in_instr.instr_class == instr_ukdsc_class) ||
+			(in_instr.instr_class == instr_uschatz_buba_class) ||
+			(in_instr.instr_class == instr_cp_class)) &&
+			(in_instr.rate_offset != 0))
+		{
+
+			return_state = return_err_non_zero_disc;
+			////errproc(return_state,module_name,"","","");
+			return return_state;
+
+		}
+
+		if (in_instr.rate_offset < 0)
+		{
+
+			return_state = return_err_neg_int;
+			////errproc(return_state,module_name,"","","");
+			return return_state;
+
+		}
+
+		if (in_instr.rate_offset >= (py_max_int / 100))
+		{
+
+			return_state = return_err_int_too_high;
+			//errproc(return_state,module_name,"","","");
+			return return_state;
+
+		}
+
+	return return_success;
+}
+unsigned long FAR _export	Py_Front::proc_price_py()
+{
+	return return_success;
+}
+unsigned long FAR _export	Py_Front::check_price_vs_calc_py()
+{
+	if ((calc_what == py_yield_from_price_calc_what) &&
+		(in_price <= 0))
+	{
+
+		return_state = return_err_price_le_zero;
+		//errproc(return_state,module_name,"","","");
+		return return_state;
+
+	}
+
+
+	return return_success;
+}
+unsigned long FAR _export	Py_Front::py_proc_calc_what_py()
+{
+
+	pyparm.calc_what = calc_what;
+
+	if ((calc_what != py_yield_from_price_calc_what) &&
+		(calc_what != py_price_from_yield_calc_what))
+	{
+
+		return_state = return_err_calc_what_inv;
+		//errproc(return_state,module_name,"","","");
+		return return_state;
+
+	}
+	return return_success;
+}
+unsigned long FAR _export	Py_Front::check_all_parms_py()
+{
+	proc_all_dates_py();
+
+	if (return_state != return_success)
+	{
+		return return_state;
+	}
+	proc_day_count_py();
+	return_state = proc_yield_meth_py();
+	if (return_state != return_success)
+	{
+		return return_state;
+	}
+	return_state = proc_int_py();
+	if (return_state != return_success)
+	{
+		return return_state;
+	}
+	return_state = proc_price_py();
+	if (return_state != return_success)
+	{
+		return return_state;
+	}
+
+	return_state = check_price_vs_calc_py();
+	if (return_state != return_success)
+	{
+		return return_state;
+	}
+	return_state = py_proc_calc_what_py();
+	if (return_state != return_success)
+	{
+		return return_state;
+	}
+	return_state = calc_np_py();
+	if (return_state != return_success)
+	{
+		return return_state;
+	}
+	unsigned long return_status = action_proc_part_pay();
+	if (return_status != return_success)
+	{
+		return return_status;
+	}
+
+	return return_success;
+}
 unsigned long FAR _export	Py_Front::pyproc45	(
 //	char action,
 //	char instr_class_desc_choice [instr_last_class] [instr_class_desc_len],
@@ -4203,152 +4330,25 @@ size_t num_bytes = 0;
 		 }
 		 case py_check_all_parms:
 		 {
+			 return_state = check_all_parms_py();
+			 if (return_state != return_success)
+			 {
+				 return return_state;
+			 }
 
-			if (actions_array[actions_index].prev_action ==
-				py_proc_day_count)
-			{
-
-				actions_proc(change_new, actions_index,	actions_array,
-							py_proc_all_dates);
-
-				break;
-
-			}
-			if (actions_array[actions_index].prev_action ==
-				py_proc_all_dates)
-			{
-
-				actions_proc(change_new, actions_index,	actions_array,
-							py_proc_yield_meth);
-
-				break;
-
-			}
-			if (actions_array[actions_index].prev_action ==
-				py_proc_yield_meth)
-			{
-
-			  actions_proc(change_new, actions_index,	actions_array,
-										  py_proc_int);
-
-			  break;
-
-			}
-			if (actions_array[actions_index].prev_action ==
-				py_proc_int)
-			{
-
-			  actions_proc(change_new, actions_index,	actions_array,
-						  py_proc_price);
-
-			  break;
-
-			}
-			if (actions_array[actions_index].prev_action ==
-				py_proc_price)
-			{
-
-			  actions_proc(change_new, actions_index,	actions_array,
-					  py_check_price_vs_calc);
-
-			  break;
-
-			}
-			if (actions_array[actions_index].prev_action ==
-				py_check_price_vs_calc)
-			{
-
-			  actions_proc(change_new, actions_index,	actions_array,
-								  py_proc_calc_what);
-
-			  break;
-
-			}
-			if (actions_array[actions_index].prev_action ==
-				py_proc_calc_what)
-			{
-
-			  actions_proc(change_new, actions_index,	actions_array,
-					  py_calc_np);
-
-			  break;
-
-			}
-			if (actions_array[actions_index].prev_action ==
-				py_calc_np)
-			{
-
-			  actions_proc(change_new, actions_index,	actions_array,
-				py_action_proc_part_pay);
-
-			  break;
-
-			}
-			if (actions_array[actions_index].prev_action ==
-				py_action_proc_part_pay)
-			{
-
-				actions_index --;
-
-
-				actions_proc(change_step, actions_index,	actions_array,
+			 actions_proc(change_step, actions_index,	actions_array,
 						0);
-
-				break;
-
-			}
-
-			actions_index ++;
-
-			actions_proc(change_new, actions_index,	actions_array,
-						py_proc_day_count);
 
 			break;
 
 		 }
 		 case py_proc_int:
 		 {
-
-			if (current_class != instr_cashflow_class)
-
-			{
-
-//			  in_instr.rate_offset = int_rate;
-			  in_instr.rate_offset = int_rate - service_fee;
-
-
-			  if (((in_instr.instr_class == instr_usdsc_class) ||
-				(in_instr.instr_class == instr_ukdsc_class) ||
-				(in_instr.instr_class == instr_uschatz_buba_class) ||
-				(in_instr.instr_class == instr_cp_class)) &&
-				(in_instr.rate_offset != 0))
-			  {
-
-				return_state = return_err_non_zero_disc;
-				////errproc(return_state,module_name,"","","");
-				return return_state;
-
-			  }
-
-			  if (in_instr.rate_offset < 0)
-			  {
-
-				return_state = return_err_neg_int;
-				////errproc(return_state,module_name,"","","");
-				return return_state;
-
-			  }
-
-			  if (in_instr.rate_offset >= (py_max_int/100))
-			  {
-
-				return_state = return_err_int_too_high;
-				//errproc(return_state,module_name,"","","");
-				return return_state;
-
-			  }
-			}
-
+			 return_state = proc_int_py();
+			 if (return_state != return_success)
+			 {
+				 return return_state;
+			 }
 
 			actions_proc(change_step, actions_index,	actions_array,
 						0);
@@ -4359,20 +4359,11 @@ size_t num_bytes = 0;
 
 		 case py_proc_calc_what:
 		 {
-
-			pyparm.calc_what = calc_what;
-
-			if ((calc_what != py_yield_from_price_calc_what) &&
-				(calc_what != py_price_from_yield_calc_what))
+			return_state = py_proc_calc_what_py();
+			if (return_state != return_success)
 			{
-
-				return_state = return_err_calc_what_inv;
-				//errproc(return_state,module_name,"","","");
 				return return_state;
-
 			}
-
-
 
 			  actions_proc(change_step, actions_index,	actions_array,
 						0);
@@ -4384,6 +4375,7 @@ size_t num_bytes = 0;
 		 case py_proc_price:
 		 {
 
+			 proc_price_py();
 
 			  actions_proc(change_step, actions_index,	actions_array,
 						0);
@@ -4394,18 +4386,11 @@ size_t num_bytes = 0;
 
 		 case py_check_price_vs_calc:
 		 {
-
-			if ((calc_what == py_yield_from_price_calc_what) &&
-			(in_price <= 0))
+			return_state = check_price_vs_calc_py();
+			if (return_state != return_success)
 			{
-
-				return_state = return_err_price_le_zero;
-				//errproc(return_state,module_name,"","","");
 				return return_state;
-
 			}
-
-
 			actions_proc(change_step, actions_index,	actions_array,
 						0);
 
