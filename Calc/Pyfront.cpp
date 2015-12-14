@@ -39,6 +39,37 @@ unsigned long  FAR _export	Py_Front::action_init_mbs()
 {
 	current_class = instr_mbs_class;
 	in_instr.instr_class = instr_mbs_class;
+	return_state = init_fra_holiday();
+	if (return_state != return_state)
+	{
+		return return_state;
+	}
+	return_state = freq_count_init_py();
+	if (return_state != return_state)
+	{
+		return return_state;
+	}
+	return_state = yield_meth_init();
+	if (return_state != return_state)
+	{
+		return return_state;
+	}
+	return_state = prepay_type_init_py();
+	if (return_state != return_state)
+	{
+		return return_state;
+	}
+	return_state = action_init_part_pay();
+	if (return_state != return_state)
+	{
+		return return_state;
+	}
+	return_state = set_current();
+	if (return_state != return_state)
+	{
+		return return_state;
+	}
+
 	return return_success;
 }
 unsigned long  FAR _export	Py_Front::init_fra_holiday()
@@ -3008,111 +3039,11 @@ size_t num_bytes = 0;
 		 /*{Initialize the screen.}*/
 		 {
 
-					 /*{First do common setups.}*/
-
-			if (actions_array[actions_index].prev_action
-			== py_action_start)
+			return_state =	action_init_mbs();
+			if (return_state != return_success)
 			{
-
-				actions_index ++;
-				action_init_mbs();
-				//current_class = instr_mbs_class;
-				//in_instr.instr_class = instr_mbs_class;
-
-				actions_proc(change_new, actions_index,
-				actions_array, py_day_count_init );
-
-				break;
-
+				return return_state;
 			}
-
-			if (actions_array[actions_index].prev_action
-				== py_day_count_init)
-			{
-
-
-				actions_proc(change_new, actions_index,
-				actions_array, fra_holiday_init );
-
-				break;
-
-			}
-
-			if (actions_array[actions_index].prev_action
-			== fra_holiday_init)
-			{
-
-
-				actions_proc(change_new, actions_index,
-				actions_array, py_freq_count_init );
-
-				break;
-
-			}
-
-			if (actions_array[actions_index].prev_action
-			== py_freq_count_init)
-			{
-
-				actions_proc(change_new, actions_index,
-				actions_array, py_yield_freq_init );
-
-				break;
-			}
-
-			if (actions_array[actions_index].prev_action
-			== py_yield_freq_init)
-			{
-
-				actions_proc(change_new, actions_index,
-				actions_array, py_yield_days_init );
-
-				break;
-			}
-
-			if (actions_array[actions_index].prev_action
-			== py_yield_days_init)
-			{
-
-				actions_proc(change_new, actions_index,
-				actions_array, py_yield_meth_init );
-
-				break;
-
-			}
-
-			if (actions_array[actions_index].prev_action
-			== py_yield_meth_init)
-			{
-
-				actions_proc(change_new, actions_index,
-				actions_array, py_prepay_type_init );
-
-				break;
-			}
-
-			if (actions_array[actions_index].prev_action
-			== py_prepay_type_init)
-			{
-
-				actions_proc(change_new, actions_index,
-				actions_array, py_action_init_part_pay );
-
-				break;
-			}
-
-			if (actions_array[actions_index].prev_action
-			== py_action_init_part_pay)
-			{
-
-				actions_proc(change_new, actions_index,
-				actions_array, py_set_current );
-
-				break;
-			}
-
-			actions_index --;
-
 
 			actions_proc(change_step, actions_index,
 				actions_array, 0 );
@@ -4305,127 +4236,127 @@ return	action_init_screen_py();
 
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::proc_pay_freq	()
 {
-
-action = py_proc_pay_freq;
-return pyproc45();
+	return proc_pay_freq_py();
+//action = py_proc_pay_freq;
+//return pyproc45();
 
 }
 
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::proc_monthend()
 {
-
-action = py_action_proc_monthend;
-return pyproc45();
+	return action_proc_monthend();
+//action = py_action_proc_monthend;
+//return pyproc45();
 
 }
 
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::proc_excoup()
 {
-
-action = py_action_proc_excoup;
-return pyproc45();
+	return action_proc_excoup();
+//action = py_action_proc_excoup;
+//return pyproc45();
 
 }
 
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::proc_class_desc()
 {
-
-action = py_proc_class_desc;
-return pyproc45();
+	return proc_class_desc_py();
+//action = py_proc_class_desc;
+//return pyproc45();
 
 }
 
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::proc_day_count()
 {
-
-action = py_proc_day_count;
-return pyproc45();
+	return proc_day_count_py();
+//action = py_proc_day_count;
+//return pyproc45();
 
 }
 
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::proc_yield_meth()
 {
-
-action = py_proc_yield_meth;
-return pyproc45();
+	return proc_yield_meth_py();
+//action = py_proc_yield_meth;
+//return pyproc45();
 
 }
 
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::proc_yield_days()
 {
-
-action = py_proc_yield_days;
-return pyproc45();
+	return proc_yield_days_py();
+//action = py_proc_yield_days;
+//return pyproc45();
 
 }
 
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::proc_yield_freq()
 {
-
-action = py_proc_yield_freq;
-return pyproc45();
+	return proc_yield_freq_py();
+//action = py_proc_yield_freq;
+//return pyproc45();
 
 }
 
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::check_all_parms()
 {
-
-action = py_check_all_parms;
-return pyproc45();
+	return check_all_parms_py();
+//action = py_check_all_parms;
+//return pyproc45();
 
 }
 
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::calc_int()
 {
-
-action = py_calc_int;
-return pyproc45();
+	return calc_int_py();
+//action = py_calc_int;
+//return pyproc45();
 
 }
 
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::calc_py()
 {
-
-action = py_calc_py;
-return pyproc45();
+	return calc_py_py();
+//action = py_calc_py;
+//return pyproc45();
 
 }
 
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::proc_simp_comp_frn()
 {
-
-action = py_proc_simp_comp_frn;
-return pyproc45();
+	return proc_simp_comp_frn_py();
+//action = py_proc_simp_comp_frn;
+//return pyproc45();
 
 }
 
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::proc_pay_freq_frn()
 {
-
-action = py_proc_pay_freq_frn;
-return pyproc45();
+	return proc_pay_freq_frn_py();
+//action = py_proc_pay_freq_frn;
+//return pyproc45();
 
 }
 
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::proc_holi()
 {
-
-action = py_proc_holi;
-return pyproc45();
+	return proc_holi_py();
+//action = py_proc_holi;
+//return pyproc45();
 
 }
 
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::proc_gen_dates_frn()
 {
-
-action = py_proc_gen_dates_frn;
-return pyproc45();
+	return proc_gen_dates_frn_py();
+//action = py_proc_gen_dates_frn;
+//return pyproc45();
 
 }
 
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::init_frn()
 {
-
+	
 action = py_init_frn;
 return pyproc45();
 
