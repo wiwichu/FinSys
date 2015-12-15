@@ -35,6 +35,11 @@ namespace FinSys.Wpf.ViewModel
             {
                 SelectedDayCount = dayCounts[0];
             }
+            PayFreqs = new ObservableCollection<string>(RepositoryFactory.Calculator.GetPayFreqsAsync().Result);
+            if (PayFreqs.Count > 0)
+            {
+                SelectedPayFreq = payFreqs[0];
+            }
             InstrumentClasses = new ObservableCollection<InstrumentClass>(RepositoryFactory.Calculator.GetInstrumentClassesAsync().Result);
             if (instrumentClasses.Count>0)
             {
@@ -87,6 +92,7 @@ namespace FinSys.Wpf.ViewModel
             {
                 Instrument instr = instruments[0];
                 SelectedDayCount = instr.IntDayCount;
+                SelectedPayFreq = instr.IntPayFreq;
             }
         }
 
@@ -154,6 +160,35 @@ namespace FinSys.Wpf.ViewModel
                 if (selectedDayCount != value)
                 {
                     selectedDayCount = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private ObservableCollection<string> payFreqs = new ObservableCollection<string>();
+        public ObservableCollection<string> PayFreqs
+        {
+            get
+            {
+                return payFreqs;
+            }
+            set
+            {
+                payFreqs = value;
+                OnPropertyChanged();
+            }
+        }
+        object selectedPayFreq;
+        public object SelectedPayFreq
+        {
+            get
+            {
+                return selectedPayFreq;
+            }
+            set
+            {
+                if (selectedPayFreq != value)
+                {
+                    selectedPayFreq = value;
                     OnPropertyChanged();
                 }
             }

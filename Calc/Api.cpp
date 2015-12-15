@@ -19,6 +19,12 @@ char** getdaycounts(int& size)
 	size = date_last_day_count;
 	return (char**)day_count_names;
 }
+
+char** getpayfreqs(int& size)
+{
+	size = freq_count;
+	return (char**)freq_names;
+}
 int  getStatusText(int status, char* text, int&textSize)
 {
 	Py_Front pyfront;
@@ -45,6 +51,8 @@ int getInstrumentDefaults(InstrumentStruct &instrument)
 	instrument.instrumentClass = (int)charArg;
 	pyfront.getdaycount(&intArg);
 	instrument.intDayCount = intArg;
+	pyfront.getpayfreq(&intArg);
+	instrument.intPayFreq = intArg;
 	Date_Funcs::date_union dateArg;
 	//Date_Funcs::date_union *datePoint = new Date_Funcs::date_union();
 	//pyfront.getmatdate(dateArg);

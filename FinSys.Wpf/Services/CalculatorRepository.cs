@@ -16,7 +16,8 @@ namespace FinSys.Wpf.Services
         private static extern IntPtr getclassdescriptions(out int size);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr getdaycounts(out int size);
-
+        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern IntPtr getpayfreqs(out int size);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int getStatusText(int status, StringBuilder text, out int textSize);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -24,10 +25,12 @@ namespace FinSys.Wpf.Services
 
         private List<string> classes = new List<string>();
         private List<string> dayCounts = new List<string>();
+        private List<string> payFreqs = new List<string>();
         public CalculatorRepository()
         {
             classes = new List<string>( GetInstrumentClassesAsync().Result.Select((ic)=>ic.Name));
             dayCounts = GetDayCountsAsync().Result;
+            payFreqs = GetPayFreqsAsync().Result;
         }
 
         public async Task<List<string>> GetDayCountsAsync()
@@ -89,10 +92,12 @@ namespace FinSys.Wpf.Services
                     Instrument ins = instrumentsIn[i];
                     int insClassNum = classes.IndexOf(ins.Class.Name);
                     int insDayCount = dayCounts.IndexOf(ins.IntDayCount);
+                    int insPayFreq = payFreqs.IndexOf(ins.IntPayFreq);
                     InstrumentDescr instr = new InstrumentDescr
                     {
                         instrumentClass = insClassNum,
-                        intDayCount = insDayCount
+                        intDayCount = insDayCount,
+                        intPayFreq = insPayFreq
                     };
                     DateDescr maturityDate = new DateDescr
                     {
@@ -112,6 +117,7 @@ namespace FinSys.Wpf.Services
                     Instrument newInstr = new Instrument
                     {
                         IntDayCount = dayCounts[instr.intDayCount],
+                        IntPayFreq = payFreqs[instr.intPayFreq],
                         Class = new InstrumentClass
                         {
                             Name = classes[instr.instrumentClass]
@@ -128,12 +134,35 @@ namespace FinSys.Wpf.Services
             return result;
 
         }
+
+        public async Task<List<string>> GetPayFreqsAsync()
+        {
+            List<string> result = await Task.Run(() =>
+            {
+                List<string> payfreqs = new List<string>();
+                int size;
+                IntPtr ptr = getpayfreqs(out size);
+                IntPtr strPtr;
+                for (int i = 0; i < size; i++)
+                {
+                    strPtr = Marshal.ReadIntPtr(ptr);
+                    string name = Marshal.PtrToStringAnsi(strPtr);
+                    payfreqs.Add(name);
+                    ptr += Marshal.SizeOf(typeof(IntPtr));
+                }
+                return payfreqs;
+            })
+            .ConfigureAwait(false) //necessary on UI Thread
+            ;
+            return result;
+        }
     }
     [StructLayout(LayoutKind.Sequential)]
     internal class InstrumentDescr
     {
         public int instrumentClass;
         public int intDayCount;
+        public int intPayFreq;
         public IntPtr maturityDate;
     };
 

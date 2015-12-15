@@ -48,6 +48,19 @@ namespace FinSys.Wpf.Model
                 OnPropertyChanged();
             }
         }
+        private string intPayFreq;
+        public string IntPayFreq
+        {
+            get
+            {
+                return intPayFreq;
+            }
+            set
+            {
+                intPayFreq = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }
 

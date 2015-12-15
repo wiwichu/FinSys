@@ -12,6 +12,7 @@ namespace FinSys.Wpf.Services
     {
         Task<List<InstrumentClass>> GetInstrumentClassesAsync();
         Task<List<string>> GetDayCountsAsync();
+        Task<List<string>> GetPayFreqsAsync();
         Task<List<Instrument>> GetInstrumentDefaultsAsync(List<Instrument> calcs);
     }
 }

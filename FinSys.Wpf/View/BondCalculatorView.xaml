@@ -11,58 +11,62 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         >
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <TextBlock Text="Instrument Class: " Name="lblInstrumentClasses" Margin="10 15"/>
-        <ComboBox Name="cbInstrumentClasses" SelectedIndex="0"
-                           Grid.Column="1"
-                           Margin="10 15"
-                           ItemsSource="{Binding InstrumentClasses}"
-                           DisplayMemberPath="Name"
-                           SelectedItem="{Binding SelectedInstrumentClass}"
-                          IsSynchronizedWithCurrentItem="True"
-                           SelectedValuePath="Name"
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Instrument Class: " x:Name="lblInstrumentClasses" Margin="10 15"/>
+            <ComboBox x:Name="cbInstrumentClasses" SelectedIndex="0"
+				Grid.Column="1"
+				Margin="10 15"
+				ItemsSource="{Binding InstrumentClasses}"
+				DisplayMemberPath="Name"
+				SelectedItem="{Binding SelectedInstrumentClass}"
+				IsSynchronizedWithCurrentItem="True"
+				SelectedValuePath="Name"
                   
                 />
-        <TextBlock Text="Value Date: " Name="lblValueDate" Margin="10 15" Grid.Row="1"/>
-        <DatePicker Name="dpValueDate" Margin="10 15" Grid.Column="1" Grid.Row="1" 
-                        SelectedDate="{Binding
-        Path=ValueDate,
-        Mode=TwoWay,
-        TargetNullValue={x:Static sys:DateTime.Now}}"
+            <TextBlock Text="Value Date: " x:Name="lblValueDate" Margin="10 15" Grid.Row="1"/>
+            <DatePicker x:Name="dpValueDate" Margin="10 15" Grid.Column="1" Grid.Row="1" 
+				SelectedDate="{Binding ValueDate, Mode=TwoWay, TargetNullValue={x:Static sys:DateTime.Now}}"
 />
-        <TextBlock Text="Maturity Date: " Name="lblMaturityDate" Margin="10 15" Grid.Column="2"/>
-        <DatePicker Name="dpMaturityDate" Margin="10 15" Grid.Column="3" 
-                                            SelectedDate="{Binding
-        Path=MaturityDate,
-        Mode=TwoWay,
-        TargetNullValue={x:Static sys:DateTime.Now}}"
+            <TextBlock Text="Maturity Date: " x:Name="lblMaturityDate" Margin="10 15" Grid.Column="2"/>
+            <DatePicker x:Name="dpMaturityDate" Margin="10 15" Grid.Column="3" 
+				SelectedDate="{Binding MaturityDate, Mode=TwoWay, TargetNullValue={x:Static sys:DateTime.Now}}"
 />
-        <TextBlock Text="Day Count: " Name="lblDayCount" Margin="10 15" Grid.Column="2" Grid.Row="1" />
-        <ComboBox Name="cbDayCount" SelectedIndex="0"
-                           Grid.Column="3" Grid.Row="1"
-                           Margin="10 15"
-                           ItemsSource="{Binding DayCounts}"
-                           SelectedItem="{Binding SelectedDayCount}"
-                          IsSynchronizedWithCurrentItem="True"
+            <TextBlock Text="Day Count: " x:Name="lblDayCount" Margin="10 15" Grid.Column="2" Grid.Row="1" />
+            <ComboBox x:Name="cbDayCount" SelectedIndex="0"
+				Grid.Column="3" Grid.Row="1"
+				Margin="10 15"
+				ItemsSource="{Binding DayCounts}"
+				SelectedItem="{Binding SelectedDayCount}"
+				IsSynchronizedWithCurrentItem="True"
                 />
+            <TextBlock Text="Pay Frequency: " x:Name="lblPayFrequency" Margin="10 15" Grid.Column="2" Grid.Row="2" />
+            <ComboBox x:Name="cbPayFrequency" SelectedIndex="0"
+				Grid.Column="3" Grid.Row="2"
+				Margin="10 15"
+				ItemsSource="{Binding PayFreqs}"
+				SelectedItem="{Binding SelectedPayFreq}"
+				IsSynchronizedWithCurrentItem="True"
+                />
+        </Grid>
     </Grid>
 </Window>
