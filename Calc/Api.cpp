@@ -29,11 +29,27 @@ int  getStatusText(int status, char* text, int&textSize)
 }
 int getInstrumentDefaults(InstrumentStruct &instrument)
 {
+	Py_Front pyfront;
+	pyfront.init_screen();
+	pyfront.setclassdesc(instr_class_descs[instrument.instrumentClass]);
+	pyfront.proc_class_desc();
 	int result = return_success;
-	instrument.instrumentClass = 3;
-	instrument.intDayCount = 4;
-	instrument.maturityDate->day = 1;
-	instrument.maturityDate->month = 1;
-	instrument.maturityDate->year = 2001;
+	//instrument.instrumentClass = 3;
+	//instrument.intDayCount = 4;
+	//instrument.maturityDate->day = 1;
+	//instrument.maturityDate->month = 1;
+	//instrument.maturityDate->year = 2001;
+	char charArg = 0;
+	int intArg = 0;
+	pyfront.getclassnumber(&charArg);
+	instrument.instrumentClass = (int)charArg;
+	pyfront.getdaycount(&intArg);
+	instrument.intDayCount = intArg;
+	Date_Funcs::date_union dateArg;
+	//Date_Funcs::date_union *datePoint = new Date_Funcs::date_union();
+	//pyfront.getmatdate(dateArg);
+	//instrument.maturityDate->day = (int)dateArg.date.days;
+	//instrument.maturityDate->month = (int)dateArg.date.months;
+	//instrument.maturityDate->year = (int)dateArg.date.years;
 	return result;
 }

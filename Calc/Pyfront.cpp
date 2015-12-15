@@ -502,6 +502,7 @@ unsigned long FAR _export Py_Front::set_current()
 		pyparm.date_cal_den = in_instr.cal_den;
 
 	}
+	return return_success;
 }
 
 unsigned long FAR _export Py_Front::set_current_frn()
@@ -4356,7 +4357,6 @@ unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::proc_gen_dates_frn()
 
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::init_frn()
 {
-	
 action = py_init_frn;
 return pyproc45();
 
@@ -4364,17 +4364,17 @@ return pyproc45();
 
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::init_mbs()
 {
-
-action = py_action_init_mbs;
-return pyproc45();
+	return action_init_mbs();
+//action = py_action_init_mbs;
+//return pyproc45();
 
 }
 
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::proc_mbs()
 {
-
-action = py_action_proc_mbs;
-return pyproc45();
+	return action_proc_mbs_py();
+//action = py_action_proc_mbs;
+//return pyproc45();
 
 }
 

@@ -22,6 +22,14 @@ namespace FinSys.Wpf.Services
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int getInstrumentDefaults(InstrumentDescr instrument);
 
+        private List<string> classes = new List<string>();
+        private List<string> dayCounts = new List<string>();
+        public CalculatorRepository()
+        {
+            classes = new List<string>( GetInstrumentClassesAsync().Result.Select((ic)=>ic.Name));
+            dayCounts = GetDayCountsAsync().Result;
+        }
+
         public async Task<List<string>> GetDayCountsAsync()
         {
             List<string> result = await Task.Run(() =>
@@ -75,13 +83,16 @@ namespace FinSys.Wpf.Services
         {
             List<Instrument> result = await Task.Run(() =>
             {
+                List<Instrument> instruments = new List<Instrument>();
                 for (int i = 0; i < instrumentsIn.Count; i++)
                 {
                     Instrument ins = instrumentsIn[i];
+                    int insClassNum = classes.IndexOf(ins.Class.Name);
+                    int insDayCount = dayCounts.IndexOf(ins.IntDayCount);
                     InstrumentDescr instr = new InstrumentDescr
                     {
-                        instrumentClass = 2,
-                        intDayCount = 2,
+                        instrumentClass = insClassNum,
+                        intDayCount = insDayCount
                     };
                     DateDescr maturityDate = new DateDescr
                     {
@@ -98,10 +109,19 @@ namespace FinSys.Wpf.Services
                     IntPtr matPtr = Marshal.ReadIntPtr(instr.maturityDate);
                     DateDescr matDate = new DateDescr();
                     matDate = Marshal.PtrToStructure<DateDescr>(instr.maturityDate);
+                    Instrument newInstr = new Instrument
+                    {
+                        IntDayCount = dayCounts[instr.intDayCount],
+                        Class = new InstrumentClass
+                        {
+                            Name = classes[instr.instrumentClass]
+                        }
+
+                    };
+                    instruments.Add(newInstr);
                     GC.KeepAlive(instr);
                 }
-                List<Instrument> instruments = new List<Instrument>();
-                return instruments;
+               return instruments;
             })
             .ConfigureAwait(false) //necessary on UI Thread
             ;
