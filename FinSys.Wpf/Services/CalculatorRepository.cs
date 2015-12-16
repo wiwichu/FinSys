@@ -101,9 +101,9 @@ namespace FinSys.Wpf.Services
                     };
                     DateDescr maturityDate = new DateDescr
                     {
-                        year = 1000,
-                        month = 12,
-                        day = 12
+                        year = ins.MaturityDate.Year,
+                        month = ins.MaturityDate.Month,
+                        day = ins.MaturityDate.Day
                     };
                     instr.maturityDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
                     Marshal.StructureToPtr(maturityDate, instr.maturityDate, false);
@@ -121,8 +121,8 @@ namespace FinSys.Wpf.Services
                         Class = new InstrumentClass
                         {
                             Name = classes[instr.instrumentClass]
-                        }
-
+                        },
+                        MaturityDate = new DateTime(matDate.year, matDate.month, matDate.day)
                     };
                     instruments.Add(newInstr);
                     GC.KeepAlive(instr);

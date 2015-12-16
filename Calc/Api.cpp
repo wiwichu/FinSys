@@ -59,5 +59,6 @@ int getInstrumentDefaults(InstrumentStruct &instrument)
 	//instrument.maturityDate->day = (int)dateArg.date.days;
 	//instrument.maturityDate->month = (int)dateArg.date.months;
 	//instrument.maturityDate->year = (int)dateArg.date.years;
+	instrument.maturityDate->year++;
 	return result;
 }

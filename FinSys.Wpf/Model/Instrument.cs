@@ -61,6 +61,19 @@ namespace FinSys.Wpf.Model
                 OnPropertyChanged();
             }
         }
+        private DateTime maturityDate;
+        public DateTime MaturityDate
+        {
+            get
+            {
+                return maturityDate;
+            }
+            set
+            {
+                maturityDate = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }
 

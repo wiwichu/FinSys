@@ -84,8 +84,8 @@ namespace FinSys.Wpf.ViewModel
                 Name = "Instrument1",
                 Class = instrumentClass,
                 IntDayCount = (string)SelectedDayCount,
-                IntPayFreq = (string)SelectedPayFreq
-
+                IntPayFreq = (string)SelectedPayFreq,
+                MaturityDate = maturityDate
             };
             instruments.Add(instrument);
             instruments = await RepositoryFactory.Calculator.GetInstrumentDefaultsAsync(instruments);
@@ -95,6 +95,7 @@ namespace FinSys.Wpf.ViewModel
                 Instrument instr = instruments[0];
                 SelectedDayCount = instr.IntDayCount;
                 SelectedPayFreq = instr.IntPayFreq;
+                MaturityDate = instr.MaturityDate;
             }
         }
 
