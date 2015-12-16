@@ -10,7 +10,7 @@ typedef struct DateStruct
 typedef struct InstrumentStruct
 {
 	int					instrumentClass;
-	int					intDayCount;
+	int					intDayCount; 
 	int					intPayFreq;
 	DateStruct			*maturityDate;
 } InstrumnentStruct;

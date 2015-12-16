@@ -22,6 +22,7 @@ namespace FinSys.Wpf.ViewModel
             }
             this.InstrumentClasses = new ObservableCollection<InstrumentClass>();
             this.DayCounts = new ObservableCollection<string>();
+            this.PayFreqs = new ObservableCollection<string>();
             ValueDate = DateTime.Today;
             MaturityDate = DateTime.Today.AddYears(1);
             Initializer();
@@ -82,7 +83,8 @@ namespace FinSys.Wpf.ViewModel
             {
                 Name = "Instrument1",
                 Class = instrumentClass,
-                IntDayCount = (string)SelectedDayCount
+                IntDayCount = (string)SelectedDayCount,
+                IntPayFreq = (string)SelectedPayFreq
 
             };
             instruments.Add(instrument);
@@ -217,6 +219,19 @@ namespace FinSys.Wpf.ViewModel
             set
             {
                 maturityDate = value;
+                OnPropertyChanged();
+            }
+        }
+        private double interestRate;
+        public double InterestRate
+        {
+            get
+            {
+                return interestRate;
+            }
+            set
+            {
+                interestRate = value;
                 OnPropertyChanged();
             }
         }

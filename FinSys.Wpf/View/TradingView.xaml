@@ -47,10 +47,12 @@
             </Menu>
             <StackPanel></StackPanel>
         </DockPanel>
+        <!--
         <ContentControl Name="PortList" Content="{Binding}" ContentTemplate="{StaticResource PortfolioListTemplate}" Grid.Row="1" Grid.ColumnSpan="2" />
             <ContentControl Name="PosList" Content="{Binding SelectedPortfolio}" ContentTemplate="{StaticResource PositionListTemplate}" Grid.Row="2" Grid.ColumnSpan="2" />
             <ContentControl Name="TradeList" Content="{Binding SelectedPortfolio.SelectedPosition}" ContentTemplate="{StaticResource TradeListTemplate}" Grid.Row="3" Grid.ColumnSpan="2" />
             <Button DataContext="{Binding NewTradeViewModel}" Content="New Trade" Command="{Binding ViewCommand}" Grid.Row="4"/>
-    </Grid>
+-->
+        </Grid>
     
 </UserControl>
