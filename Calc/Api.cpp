@@ -74,6 +74,30 @@ int  getDefaultDates(InstrumentStruct &instrument, DateStruct &valueDate)
 		return result;
 	}
 
+
+	result = pyfront.setdaycount(day_count_names[instrument.intDayCount]);
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.proc_day_count();
+	if (result != return_success)
+	{
+		return result;
+	}
+
+	result = pyfront.setpayfreq(freq_names[instrument.intPayFreq]);
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.proc_pay_freq();
+	if (result != return_success)
+	{
+		return result;
+	}
+
+
 	result = pyfront.proc_def_dates();
 	if (result != return_success)
 	{
