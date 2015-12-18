@@ -151,7 +151,10 @@ int  getDefaultDates(InstrumentStruct &instrument, DateStruct &valueDate)
 
 	return return_success;
 }
-
+int  getDefaultDatesAndData(InstrumentStruct &instrument, CalculationsStruct &calculations)
+{
+	return getDefaultDates(instrument, calculations.valueDate);
+}
 int getInstrumentDefaults(InstrumentStruct &instrument)
 {
 	int result = return_success;

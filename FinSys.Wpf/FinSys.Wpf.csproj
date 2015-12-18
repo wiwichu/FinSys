@@ -71,6 +71,7 @@
     <Compile Include="Messages\PortfolioUpdate.cs" />
     <Compile Include="Messages\PositionUpdate.cs" />
     <Compile Include="Messages\TradeUpdate.cs" />
+    <Compile Include="Model\Calculations.cs" />
     <Compile Include="Model\Instrument.cs" />
     <Compile Include="Model\InstrumentClass.cs" />
     <Compile Include="Model\Portfolio.cs" />
