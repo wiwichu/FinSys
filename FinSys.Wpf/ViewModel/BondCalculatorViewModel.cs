@@ -25,6 +25,9 @@ namespace FinSys.Wpf.ViewModel
             this.PayFreqs = new ObservableCollection<string>();
             ValueDate = DateTime.Today;
             MaturityDate = DateTime.Today.AddYears(1);
+            FirstPayDate = DateTime.Today.AddYears(1);
+            IssueDate = DateTime.Today.AddYears(-1);
+            NextToLastPayDate = DateTime.Today.AddYears(-1);
             Initializer();
             LoadCommands();
         }
@@ -52,6 +55,11 @@ namespace FinSys.Wpf.ViewModel
             get;
             set;
         }
+        public ICommand DefaultDatesCommand
+        {
+            get;
+            set;
+        }
 
         public ICommand OpenWindowCommand
         {
@@ -64,6 +72,43 @@ namespace FinSys.Wpf.ViewModel
         {
             OpenWindowCommand = new RelayCommand(OpenWindow, CanOpenWindow);
             ChangeClassCommand = new RelayCommand(ChangeClass, CanChangeClass);
+            DefaultDatesCommand = new RelayCommand(DefaultDates, CanDefaultDatesClass);
+        }
+
+        private async void DefaultDates(object obj)
+        {
+            InstrumentClass ic = SelectedInstrumentClass as InstrumentClass;
+            Instrument instrument = new Instrument
+            {
+                Name = "Instrument1",
+                Class = ic,
+                IntDayCount = (string)SelectedDayCount,
+                IntPayFreq = (string)SelectedPayFreq,
+                MaturityDate = maturityDate,
+                IssueDate = issueDate,
+                FirstPayDate = firstPayDate,
+                NextToLastPayDate = nextToLastPayDate
+            };
+            Instrument instr = null;
+            try
+            {
+                instr = await RepositoryFactory.Calculator.GetDefaultDatesAsync(instrument, ValueDate);
+            }
+            catch (InvalidOperationException ex)
+            {
+                dialogService.ShowMessageBox(ex.Message);
+                return;
+            }
+
+            MaturityDate = instr.MaturityDate;
+            IssueDate = instr.IssueDate;
+            FirstPayDate = instr.FirstPayDate;
+            NextToLastPayDate = instr.NextToLastPayDate;
+        }
+
+        private bool CanDefaultDatesClass(object obj)
+        {
+            return true;
         }
 
         private bool CanChangeClass(object obj)
@@ -85,17 +130,30 @@ namespace FinSys.Wpf.ViewModel
                 Class = instrumentClass,
                 IntDayCount = (string)SelectedDayCount,
                 IntPayFreq = (string)SelectedPayFreq,
-                MaturityDate = maturityDate
+                MaturityDate = maturityDate,
+                IssueDate = issueDate,
+                FirstPayDate = firstPayDate,
+                NextToLastPayDate = nextToLastPayDate
             };
             instruments.Add(instrument);
-            instruments = await RepositoryFactory.Calculator.GetInstrumentDefaultsAsync(instruments);
-
+            try
+            {
+                instruments = await RepositoryFactory.Calculator.GetInstrumentDefaultsAsync(instruments);
+            }
+            catch (InvalidOperationException ex)
+            {
+                dialogService.ShowMessageBox(ex.Message);
+                return;
+            }
             if (instruments != null && instruments.Count >0)
             {
                 Instrument instr = instruments[0];
                 SelectedDayCount = instr.IntDayCount;
                 SelectedPayFreq = instr.IntPayFreq;
                 MaturityDate = instr.MaturityDate;
+                IssueDate = instr.IssueDate;
+                FirstPayDate = instr.FirstPayDate;
+                NextToLastPayDate = instr.NextToLastPayDate;
             }
         }
 
@@ -220,6 +278,45 @@ namespace FinSys.Wpf.ViewModel
             set
             {
                 maturityDate = value;
+                OnPropertyChanged();
+            }
+        }
+        private DateTime issueDate;
+        public DateTime IssueDate
+        {
+            get
+            {
+                return issueDate;
+            }
+            set
+            {
+                issueDate = value;
+                OnPropertyChanged();
+            }
+        }
+        private DateTime firstPayDate;
+        public DateTime FirstPayDate
+        {
+            get
+            {
+                return firstPayDate;
+            }
+            set
+            {
+                firstPayDate = value;
+                OnPropertyChanged();
+            }
+        }
+        private DateTime nextToLastPayDate;
+        public DateTime NextToLastPayDate
+        {
+            get
+            {
+                return nextToLastPayDate;
+            }
+            set
+            {
+                nextToLastPayDate = value;
                 OnPropertyChanged();
             }
         }

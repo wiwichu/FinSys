@@ -20,6 +20,10 @@ namespace FinSys.Wpf.Services
 
         private static ConcurrentDictionary<DIALOG, Window> dialogMap = new ConcurrentDictionary<DIALOG, Window>();
         private Window view = null;
+        public MessageBoxResult ShowMessageBox(string msg)
+        {
+            return MessageBox.Show(msg);
+        }
         public void ShowDialog(DIALOG dialog, NotifyPropertyChanged viewModel)
         {
             switch (dialog)

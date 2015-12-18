@@ -22,6 +22,9 @@ namespace FinSys.Wpf.Services
         private static extern int getStatusText(int status, StringBuilder text, out int textSize);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int getInstrumentDefaults(InstrumentDescr instrument);
+        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern int getDefaultDates(InstrumentDescr instrument, DateDescr valueDate);
+
 
         private List<string> classes = new List<string>();
         private List<string> dayCounts = new List<string>();
@@ -84,55 +87,100 @@ namespace FinSys.Wpf.Services
 
         public async Task<List<Instrument>> GetInstrumentDefaultsAsync(List<Instrument> instrumentsIn)
         {
-            List<Instrument> result = await Task.Run(() =>
-            {
-                List<Instrument> instruments = new List<Instrument>();
-                for (int i = 0; i < instrumentsIn.Count; i++)
+            try {
+                List<Instrument> result = await Task.Run(() =>
                 {
-                    Instrument ins = instrumentsIn[i];
-                    int insClassNum = classes.IndexOf(ins.Class.Name);
-                    int insDayCount = dayCounts.IndexOf(ins.IntDayCount);
-                    int insPayFreq = payFreqs.IndexOf(ins.IntPayFreq);
-                    InstrumentDescr instr = new InstrumentDescr
+                    List<Instrument> instruments = new List<Instrument>();
+                    for (int i = 0; i < instrumentsIn.Count; i++)
                     {
-                        instrumentClass = insClassNum,
-                        intDayCount = insDayCount,
-                        intPayFreq = insPayFreq
-                    };
-                    DateDescr maturityDate = new DateDescr
-                    {
-                        year = ins.MaturityDate.Year,
-                        month = ins.MaturityDate.Month,
-                        day = ins.MaturityDate.Day
-                    };
-                    instr.maturityDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
-                    Marshal.StructureToPtr(maturityDate, instr.maturityDate, false);
-                    StringBuilder statusText = new StringBuilder(200);
-                    int textSize;
-                    int status = getInstrumentDefaults(instr);
-                    status = getStatusText(status, statusText, out textSize);
-                    IntPtr matPtr = Marshal.ReadIntPtr(instr.maturityDate);
-                    DateDescr matDate = new DateDescr();
-                    matDate = Marshal.PtrToStructure<DateDescr>(instr.maturityDate);
-                    Instrument newInstr = new Instrument
-                    {
-                        IntDayCount = dayCounts[instr.intDayCount],
-                        IntPayFreq = payFreqs[instr.intPayFreq],
-                        Class = new InstrumentClass
+                        Instrument ins = instrumentsIn[i];
+                        int insClassNum = classes.IndexOf(ins.Class.Name);
+                        int insDayCount = dayCounts.IndexOf(ins.IntDayCount);
+                        int insPayFreq = payFreqs.IndexOf(ins.IntPayFreq);
+                        InstrumentDescr instr = new InstrumentDescr
                         {
-                            Name = classes[instr.instrumentClass]
-                        },
-                        MaturityDate = new DateTime(matDate.year, matDate.month, matDate.day)
-                    };
-                    instruments.Add(newInstr);
-                    GC.KeepAlive(instr);
-                }
-               return instruments;
-            })
-            .ConfigureAwait(false) //necessary on UI Thread
-            ;
-            return result;
-
+                            instrumentClass = insClassNum,
+                            intDayCount = insDayCount,
+                            intPayFreq = insPayFreq
+                        };
+                        DateDescr maturityDate = new DateDescr
+                        {
+                            year = ins.MaturityDate.Year,
+                            month = ins.MaturityDate.Month,
+                            day = ins.MaturityDate.Day
+                        };
+                        DateDescr issueDate = new DateDescr
+                        {
+                            year = ins.IssueDate.Year,
+                            month = ins.IssueDate.Month,
+                            day = ins.IssueDate.Day
+                        };
+                        DateDescr firstPayDate = new DateDescr
+                        {
+                            year = ins.FirstPayDate.Year,
+                            month = ins.FirstPayDate.Month,
+                            day = ins.FirstPayDate.Day
+                        };
+                        DateDescr nextToLastPayDate = new DateDescr
+                        {
+                            year = ins.NextToLastPayDate.Year,
+                            month = ins.NextToLastPayDate.Month,
+                            day = ins.NextToLastPayDate.Day
+                        };
+                        instr.maturityDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+                        Marshal.StructureToPtr(maturityDate, instr.maturityDate, false);
+                        instr.issueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+                        Marshal.StructureToPtr(issueDate, instr.issueDate, false);
+                        instr.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+                        Marshal.StructureToPtr(firstPayDate, instr.firstPayDate, false);
+                        instr.nextToLastPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+                        Marshal.StructureToPtr(nextToLastPayDate, instr.nextToLastPayDate, false);
+                        int status = getInstrumentDefaults(instr);
+                        if (status != 0)
+                        {
+                            StringBuilder statusText = new StringBuilder(200);
+                            int textSize;
+                            status = getStatusText(status, statusText, out textSize);
+                            throw new InvalidOperationException(statusText.ToString());
+                        }
+                        IntPtr matPtr = Marshal.ReadIntPtr(instr.maturityDate);
+                        DateDescr matDate = new DateDescr();
+                        matDate = Marshal.PtrToStructure<DateDescr>(instr.maturityDate);
+                        IntPtr issPtr = Marshal.ReadIntPtr(instr.issueDate);
+                        DateDescr issDate = new DateDescr();
+                        issDate = Marshal.PtrToStructure<DateDescr>(instr.issueDate);
+                        IntPtr fpPtr = Marshal.ReadIntPtr(instr.firstPayDate);
+                        DateDescr fpDate = new DateDescr();
+                        fpDate = Marshal.PtrToStructure<DateDescr>(instr.firstPayDate);
+                        IntPtr ntlPtr = Marshal.ReadIntPtr(instr.nextToLastPayDate);
+                        DateDescr ntlDate = new DateDescr();
+                        ntlDate = Marshal.PtrToStructure<DateDescr>(instr.nextToLastPayDate);
+                        Instrument newInstr = new Instrument
+                        {
+                            IntDayCount = dayCounts[instr.intDayCount],
+                            IntPayFreq = payFreqs[instr.intPayFreq],
+                            Class = new InstrumentClass
+                            {
+                                Name = classes[instr.instrumentClass]
+                            },
+                            MaturityDate = new DateTime(matDate.year, matDate.month, matDate.day),
+                            IssueDate = new DateTime(issDate.year, issDate.month, issDate.day),
+                            FirstPayDate = new DateTime(fpDate.year, fpDate.month, fpDate.day),
+                            NextToLastPayDate = new DateTime(ntlDate.year, ntlDate.month, ntlDate.day)
+                        };
+                        instruments.Add(newInstr);
+                        GC.KeepAlive(instr);
+                    }
+                    return instruments;
+                })
+                .ConfigureAwait(false) //necessary on UI Thread
+                ;
+                return result;
+            }
+            catch (InvalidOperationException)
+            {
+                throw;
+            }
         }
 
         public async Task<List<string>> GetPayFreqsAsync()
@@ -156,6 +204,107 @@ namespace FinSys.Wpf.Services
             ;
             return result;
         }
+
+        public async Task<Instrument> GetDefaultDatesAsync(Instrument instrument, DateTime valueDate)
+        {
+            try
+            {
+                Instrument result = await Task.Run(() =>
+                {
+                    Instrument ins = instrument;
+                    int insClassNum = classes.IndexOf(ins.Class.Name);
+                    int insDayCount = dayCounts.IndexOf(ins.IntDayCount);
+                    int insPayFreq = payFreqs.IndexOf(ins.IntPayFreq);
+                    InstrumentDescr instr = new InstrumentDescr
+                    {
+                        instrumentClass = insClassNum,
+                        intDayCount = insDayCount,
+                        intPayFreq = insPayFreq
+                    };
+                    DateDescr maturityDate = new DateDescr
+                    {
+                        year = ins.MaturityDate.Year,
+                        month = ins.MaturityDate.Month,
+                        day = ins.MaturityDate.Day
+                    };
+                    DateDescr issueDate = new DateDescr
+                    {
+                        year = ins.IssueDate.Year,
+                        month = ins.IssueDate.Month,
+                        day = ins.IssueDate.Day
+                    };
+                    DateDescr firstPayDate = new DateDescr
+                    {
+                        year = ins.FirstPayDate.Year,
+                        month = ins.FirstPayDate.Month,
+                        day = ins.FirstPayDate.Day
+                    };
+                    DateDescr nextToLastPayDate = new DateDescr
+                    {
+                        year = ins.NextToLastPayDate.Year,
+                        month = ins.NextToLastPayDate.Month,
+                        day = ins.NextToLastPayDate.Day
+                    };
+                    instr.maturityDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+                    Marshal.StructureToPtr(maturityDate, instr.maturityDate, false);
+                    instr.issueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+                    Marshal.StructureToPtr(issueDate, instr.issueDate, false);
+                    instr.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+                    Marshal.StructureToPtr(firstPayDate, instr.firstPayDate, false);
+                    instr.nextToLastPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+                    Marshal.StructureToPtr(nextToLastPayDate, instr.nextToLastPayDate, false);
+                    DateDescr valDate = new DateDescr
+                    {
+                        year = valueDate.Year,
+                        month = valueDate.Month,
+                        day = valueDate.Day
+                    };
+
+                    int status = getDefaultDates(instr, valDate);
+                    if (status != 0)
+                    {
+                        StringBuilder statusText = new StringBuilder(200);
+                        int textSize;
+                        status = getStatusText(status, statusText, out textSize);
+                        throw new InvalidOperationException(statusText.ToString());
+                    }
+                    IntPtr matPtr = Marshal.ReadIntPtr(instr.maturityDate);
+                    DateDescr matDate = new DateDescr();
+                    matDate = Marshal.PtrToStructure<DateDescr>(instr.maturityDate);
+                    IntPtr issPtr = Marshal.ReadIntPtr(instr.issueDate);
+                    DateDescr issDate = new DateDescr();
+                    issDate = Marshal.PtrToStructure<DateDescr>(instr.issueDate);
+                    IntPtr fpPtr = Marshal.ReadIntPtr(instr.firstPayDate);
+                    DateDescr fpDate = new DateDescr();
+                    fpDate = Marshal.PtrToStructure<DateDescr>(instr.firstPayDate);
+                    IntPtr ntlPtr = Marshal.ReadIntPtr(instr.nextToLastPayDate);
+                    DateDescr ntlDate = new DateDescr();
+                    ntlDate = Marshal.PtrToStructure<DateDescr>(instr.nextToLastPayDate);
+                    Instrument newInstr = new Instrument
+                    {
+                        IntDayCount = dayCounts[instr.intDayCount],
+                        IntPayFreq = payFreqs[instr.intPayFreq],
+                        Class = new InstrumentClass
+                        {
+                            Name = classes[instr.instrumentClass]
+                        },
+                        MaturityDate = new DateTime(matDate.year, matDate.month, matDate.day),
+                        IssueDate = new DateTime(issDate.year, issDate.month, issDate.day),
+                        FirstPayDate = new DateTime(fpDate.year, fpDate.month, fpDate.day),
+                        NextToLastPayDate = new DateTime(ntlDate.year, ntlDate.month, ntlDate.day)
+                    };
+                    GC.KeepAlive(instr);
+                    return newInstr;
+                })
+                .ConfigureAwait(false) //necessary on UI Thread
+                ;
+                return result;
+            }
+            catch(InvalidOperationException)
+            {
+                throw;
+            }
+        }
     }
     [StructLayout(LayoutKind.Sequential)]
     internal class InstrumentDescr
@@ -164,8 +313,26 @@ namespace FinSys.Wpf.Services
         public int intDayCount;
         public int intPayFreq;
         public IntPtr maturityDate;
+        public IntPtr issueDate;
+        public IntPtr firstPayDate;
+        public IntPtr nextToLastPayDate;
     };
-
+    [StructLayout(LayoutKind.Sequential)]
+    internal class CalculationsDescr
+    {
+        public int interestDays;
+        public IntPtr valueDate;
+        public IntPtr previousPayDate;
+        public IntPtr nextPayDate;
+        public double interest;
+        public double priceIn;
+        public double priceOut;
+        public double yieldIn;
+        public double yieldOut;
+        public double duration;
+        public double convexity;
+        public double pvbp;
+    };
     [StructLayout(LayoutKind.Sequential)]
     internal class DateDescr
     {

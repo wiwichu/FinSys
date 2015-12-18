@@ -74,6 +74,45 @@ namespace FinSys.Wpf.Model
                 OnPropertyChanged();
             }
         }
+        private DateTime issueDate;
+        public DateTime IssueDate
+        {
+            get
+            {
+                return issueDate;
+            }
+            set
+            {
+                issueDate = value;
+                OnPropertyChanged();
+            }
+        }
+        private DateTime firstPayDate;
+        public DateTime FirstPayDate
+        {
+            get
+            {
+                return firstPayDate;
+            }
+            set
+            {
+                firstPayDate = value;
+                OnPropertyChanged();
+            }
+        }
+        private DateTime nextToLastPayDate;
+        public DateTime NextToLastPayDate
+        {
+            get
+            {
+                return nextToLastPayDate;
+            }
+            set
+            {
+                nextToLastPayDate = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }
 

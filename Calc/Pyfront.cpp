@@ -4396,10 +4396,33 @@ unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::setmatdate(Date_Funcs::date_unio
 unsigned long  _FAR_FUNC _EX_IN_FUNC   Py_Front::getmatdate(Date_Funcs::date_union &date)
 {
 
-	date = mat_date;
+	date = this->in_instr.mat_date;
+	//date = mat_date;
 	return return_success;
 }
 
+unsigned long  _FAR_FUNC _EX_IN_FUNC   Py_Front::getissdate(Date_Funcs::date_union &date)
+{
+	date = this->in_instr.issue_date;
+	//date = issue_date;
+	return return_success;
+}
+
+unsigned long  _FAR_FUNC _EX_IN_FUNC   Py_Front::getpenultdate(Date_Funcs::date_union &date)
+{
+	date = this->in_instr.pre_last_pay;
+
+	//date = penult_date;
+	return return_success;
+}
+
+unsigned long  _FAR_FUNC _EX_IN_FUNC   Py_Front::getfirstdate(Date_Funcs::date_union &date)
+{
+	date = this->in_instr.pay_freq.first_date;
+
+	//date = first_date;
+	return return_success;
+}
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::setvaldate(char val_date_str [date_str_size])
 {
 

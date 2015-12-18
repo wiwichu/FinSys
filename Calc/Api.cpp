@@ -33,32 +33,140 @@ int  getStatusText(int status, char* text, int&textSize)
 	textSize = error_text_len;
 	return result;
 }
-int getInstrumentDefaults(InstrumentStruct &instrument)
+int  getDefaultDates(InstrumentStruct &instrument, DateStruct &valueDate)
 {
 	Py_Front pyfront;
-	pyfront.init_screen();
-	pyfront.setclassdesc(instr_class_descs[instrument.instrumentClass]);
-	pyfront.proc_class_desc();
+	int result = pyfront.init_screen();
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.setclassdesc(instr_class_descs[instrument.instrumentClass]);
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.proc_class_desc();
+	if (result != return_success)
+	{
+		return result;
+	}
+
+	Date_Funcs::date_union matDate;
+	matDate.date.centuries = instrument.maturityDate->year / 100;
+	matDate.date.years = instrument.maturityDate->year % 100;
+	matDate.date.months = instrument.maturityDate->month;
+	matDate.date.days = instrument.maturityDate->day % 100;
+	result = pyfront.setmatdate(matDate);
+	if (result != return_success)
+	{
+		return result;
+	}
+
+	Date_Funcs::date_union valDate;
+	valDate.date.centuries = valueDate.year / 100;
+	valDate.date.years = valueDate.year % 100;
+	valDate.date.months = valueDate.month;
+	valDate.date.days = valueDate.day % 100;
+	result = pyfront.setvaldate(valDate);
+	if (result != return_success)
+	{
+		return result;
+	}
+
+	result = pyfront.proc_def_dates();
+	if (result != return_success)
+	{
+		return result;
+	}
+
+	Date_Funcs::date_union matDateOut;
+
+	result = pyfront.getmatdate(matDateOut);
+	if (result != return_success)
+	{
+		return result;
+	}
+	instrument.maturityDate->day = matDateOut.date.days;
+	instrument.maturityDate->month = matDateOut.date.months;
+	instrument.maturityDate->year = matDateOut.date.centuries * 100 + matDateOut.date.years;
+
+	Date_Funcs::date_union issDateOut;
+
+	result = pyfront.getissdate(issDateOut);
+	if (result != return_success)
+	{
+		return result;
+	}
+	instrument.issueDate->day = issDateOut.date.days;
+	instrument.issueDate->month = issDateOut.date.months;
+	instrument.issueDate->year = issDateOut.date.centuries * 100 + issDateOut.date.years;
+
+	Date_Funcs::date_union firstDateOut;
+
+	result = pyfront.getfirstdate(firstDateOut);
+	if (result != return_success)
+	{
+		return result;
+	}
+	instrument.firstPayDate->day = firstDateOut.date.days;
+	instrument.firstPayDate->month = firstDateOut.date.months;
+	instrument.firstPayDate->year = firstDateOut.date.centuries * 100 + firstDateOut.date.years;
+
+	Date_Funcs::date_union penultDateOut;
+
+	result = pyfront.getpenultdate(penultDateOut);
+	if (result != return_success)
+	{
+		return result;
+	}
+	instrument.nextToLastPayDate->day = penultDateOut.date.days;
+	instrument.nextToLastPayDate->month = penultDateOut.date.months;
+	instrument.nextToLastPayDate->year = penultDateOut.date.centuries * 100 + penultDateOut.date.years;
+
+
+	return return_success;
+}
+
+int getInstrumentDefaults(InstrumentStruct &instrument)
+{
 	int result = return_success;
-	//instrument.instrumentClass = 3;
-	//instrument.intDayCount = 4;
-	//instrument.maturityDate->day = 1;
-	//instrument.maturityDate->month = 1;
-	//instrument.maturityDate->year = 2001;
+	Py_Front pyfront;
+	result = pyfront.init_screen();
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.setclassdesc(instr_class_descs[instrument.instrumentClass]);
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.proc_class_desc();
+	if (result != return_success)
+	{
+		return result;
+	}
 	char charArg = 0;
 	int intArg = 0;
-	pyfront.getclassnumber(&charArg);
+	result = pyfront.getclassnumber(&charArg);
+	if (result != return_success)
+	{
+		return result;
+	}
 	instrument.instrumentClass = (int)charArg;
-	pyfront.getdaycount(&intArg);
+	result = pyfront.getdaycount(&intArg);
+	if (result != return_success)
+	{
+		return result;
+	}
 	instrument.intDayCount = intArg;
-	pyfront.getpayfreq(&intArg);
+	result = pyfront.getpayfreq(&intArg);
+	if (result != return_success)
+	{
+		return result;
+	}
 	instrument.intPayFreq = intArg;
 	Date_Funcs::date_union dateArg;
-	//Date_Funcs::date_union *datePoint = new Date_Funcs::date_union();
-	//pyfront.getmatdate(dateArg);
-	//instrument.maturityDate->day = (int)dateArg.date.days;
-	//instrument.maturityDate->month = (int)dateArg.date.months;
-	//instrument.maturityDate->year = (int)dateArg.date.years;
-	instrument.maturityDate->year++;
 	return result;
 }

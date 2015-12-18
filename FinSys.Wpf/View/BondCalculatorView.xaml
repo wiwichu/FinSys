@@ -47,6 +47,7 @@
             <DatePicker x:Name="dpValueDate" Margin="10 15" Grid.Column="1" Grid.Row="1" 
 				SelectedDate="{Binding ValueDate, Mode=TwoWay, TargetNullValue={x:Static sys:DateTime.Now}}"
 />
+            <Button Content="Generate Default Dates" Command="{Binding DefaultDatesCommand}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"  Margin="10 15" />
             <TextBlock Text="Maturity Date: " x:Name="lblMaturityDate" Margin="10 15" Grid.Column="2"/>
             <DatePicker x:Name="dpMaturityDate" Margin="10 15" Grid.Column="3" 
 				SelectedDate="{Binding MaturityDate, Mode=TwoWay, TargetNullValue={x:Static sys:DateTime.Now}}"
@@ -67,6 +68,18 @@
 				SelectedItem="{Binding SelectedPayFreq}"
 				IsSynchronizedWithCurrentItem="True"
                 />
+            <TextBlock Text="Issue Date: " x:Name="lblIssueDate" Margin="10 15" Grid.Column="2" Grid.Row="3"/>
+            <DatePicker x:Name="dpIssueDate" Margin="10 15" Grid.Column="3" Grid.Row="3"
+				SelectedDate="{Binding IssueDate, Mode=TwoWay, TargetNullValue={x:Static sys:DateTime.Now}}"
+/>
+            <TextBlock Text="First Pay Date: " x:Name="lblFirstPayDate" Margin="10 15" Grid.Column="2" Grid.Row="4"/>
+            <DatePicker x:Name="dpFirstPayDate" Margin="10 15" Grid.Column="3" Grid.Row="4"
+				SelectedDate="{Binding FirstPayDate, Mode=TwoWay, TargetNullValue={x:Static sys:DateTime.Now}}"
+/>
+            <TextBlock Text="Next to Last Pay: " x:Name="lblNextToLastPayDate" Margin="10 15" Grid.Column="2" Grid.Row="5"/>
+            <DatePicker x:Name="dpNextToLastPayDate" Margin="10 15" Grid.Column="3" Grid.Row="5"
+				SelectedDate="{Binding NextToLastPayDate, Mode=TwoWay, TargetNullValue={x:Static sys:DateTime.Now}}"
+/>
             <TextBlock Text="Interest Rate: " x:Name="lblInterestRate" Margin="10 15" Grid.Column="4" Grid.Row="0" />
             <TextBox TextAlignment="Right" Text="{Binding InterestRate, StringFormat='#0.##########'}" Grid.Column="5" Margin="10 15"/>
         </Grid>
