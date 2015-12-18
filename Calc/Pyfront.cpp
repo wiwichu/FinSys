@@ -4529,6 +4529,12 @@ unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::getexcoup(char excoup_name_str [
 	strcpy(excoup_name_str, current_excoup_name);
 	return return_state;
 }
+unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::getexcoup(char &excoup)
+{
+	return_state = return_success;
+	excoup = current_excoup;
+	return return_state;
+}
 
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setsimpcomp (char simp_comp_str[simp_comp_names_len])
 {

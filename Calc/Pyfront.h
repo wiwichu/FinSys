@@ -435,6 +435,7 @@ unsigned long  _FAR_FUNC _EX_IN_FUNC   getfirstdate(	char first_date_str[date_st
 unsigned long  _FAR_FUNC _EX_IN_FUNC   setfirstdate(Date_Funcs::date_union &date);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   setfirstdate(	char first_date_str[date_str_size]);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   getexcoup (char excoup_name_str[excoup_name_length]);
+unsigned long  _FAR_FUNC _EX_IN_FUNC   getexcoup(char &excoup);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   setexcoup (char excoup_name_str[excoup_name_length]);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   getexcoupchoice(int element_count, char excoup_name_str[excoup_name_length]);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   getcalcwhat(char *current_calc_what);
