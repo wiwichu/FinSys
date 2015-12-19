@@ -20,9 +20,9 @@ typedef struct InstrumentStruct
 typedef struct CalculationsStruct
 {
 	int interestDays;
-	DateStruct valueDate;
-	DateStruct previousPayDate;
-	DateStruct nextPayDate;
+	DateStruct *valueDate;
+	DateStruct *previousPayDate;
+	DateStruct *nextPayDate;
 	double interest;
 	double priceIn;
 	double priceOut;

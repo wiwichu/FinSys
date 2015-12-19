@@ -5092,6 +5092,16 @@ unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::getnextcoup(char next_coup_str [
 		next_coup_str, &next_coup, &work_double);
 
 }
+unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::getprevcoup(Date_Funcs::date_union &date)
+{
+	date = prev_coup;
+	return return_success;
+}
+unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::getnextcoup(Date_Funcs::date_union &date)
+{
+	date = next_coup;
+	return return_success;
+}
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getintdays(long *intdaysparm)
 {
 

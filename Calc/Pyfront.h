@@ -419,6 +419,8 @@ unsigned long  _FAR_FUNC _EX_IN_FUNC   proc_mbs	();
 unsigned long  _FAR_FUNC _EX_IN_FUNC   setmatdate(	char mat_date_str[date_str_size]);
 unsigned long   _FAR_FUNC _EX_IN_FUNC  setmatdate(Date_Funcs::date_union &date);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   getmatdate(Date_Funcs::date_union &date);
+unsigned long  _FAR_FUNC _EX_IN_FUNC   getnextcoup(Date_Funcs::date_union &date);
+unsigned long  _FAR_FUNC _EX_IN_FUNC   getprevcoup(Date_Funcs::date_union &date);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   getissdate(Date_Funcs::date_union &date);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   getpenultdate(Date_Funcs::date_union &date);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   getfirstdate(Date_Funcs::date_union &date);

@@ -265,6 +265,56 @@ namespace FinSys.Wpf.Services
 
             return calculations;
         }
+        private Calculations makeCalculations(CalculationsDescr calcs)
+        {
+            IntPtr valPtr = Marshal.ReadIntPtr(calcs.valueDate);
+            DateDescr valDate = new DateDescr();
+            valDate = Marshal.PtrToStructure<DateDescr>(calcs.valueDate);
+            IntPtr ppdPtr = Marshal.ReadIntPtr(calcs.previousPayDate);
+            DateDescr ppdDate = new DateDescr();
+            ppdDate = Marshal.PtrToStructure<DateDescr>(calcs.previousPayDate);
+            IntPtr npdPtr = Marshal.ReadIntPtr(calcs.nextPayDate);
+            DateDescr npdDate = new DateDescr();
+            npdDate = Marshal.PtrToStructure<DateDescr>(calcs.nextPayDate);
+            Calculations newInstr = new Calculations
+            {
+                Interest = calcs.interest,
+                InterestDays = calcs.interestDays,
+                Duration = calcs.duration,
+                Convexity = calcs.convexity,
+                ExCoupDays = calcs.exCoupDays,
+                IsExCoup = calcs.isExCoup,
+                PriceIn = calcs.priceIn,
+                PriceOut = calcs.priceOut,
+                YieldIn = calcs.yieldIn,
+                YieldOut = calcs.yieldOut,
+                Pvbp = calcs.pvbp,
+                ServiceFee = calcs.serviceFee,
+                PrepayModel = calcs.prepayModel,
+                PreviousPayDate = new DateTime(ppdDate.year, ppdDate.month, ppdDate.day),
+                NextPayDate = new DateTime(npdDate.year,npdDate.month,npdDate.day),
+                ValueDate = new DateTime(valDate.year,valDate.month,valDate.day)
+            };
+
+            Calculations calculations = new Calculations
+            {
+                IsExCoup = calcs.isExCoup,
+                PriceIn = calcs.priceIn,
+                YieldIn = calcs.yieldIn,
+                ServiceFee = calcs.serviceFee,
+                PrepayModel = calcs.prepayModel,
+                Interest = calcs.interest,
+                InterestDays = calcs.interestDays,
+                Convexity = 0,
+                Duration = 0,
+                PriceOut = 0,
+                Pvbp = 0,
+                YieldOut = 0,
+                ExCoupDays = 0
+            };
+
+            return calculations;
+        }
 
         public async Task<KeyValuePair<Instrument, Calculations>> GetDefaultDatesAsync(Instrument instrument, Calculations calculations)
         {
@@ -272,8 +322,18 @@ namespace FinSys.Wpf.Services
             {
                 InstrumentDescr instr = makeInstrumentDescr(instrument);
                 CalculationsDescr calcs = makeCalculationsDescr(calculations);
+                int status = getDefaultDatesAndData(instr, calcs);
+                if (status != 0)
+                {
+                    StringBuilder statusText = new StringBuilder(200);
+                    int textSize;
+                    status = getStatusText(status, statusText, out textSize);
+                    throw new InvalidOperationException(statusText.ToString());
+                }
+                Instrument newInstr = makeInstrument(instr);
+                Calculations newCalcs = makeCalculations(calcs);
 
-                return new KeyValuePair<Instrument, Calculations>();
+                return new KeyValuePair<Instrument, Calculations>(newInstr,newCalcs);
                 })
                 .ConfigureAwait(false) //necessary on UI Thread
                 ;

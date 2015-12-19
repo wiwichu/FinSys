@@ -89,16 +89,41 @@ namespace FinSys.Wpf.ViewModel
                 FirstPayDate = firstPayDate,
                 NextToLastPayDate = nextToLastPayDate
             };
+            Calculations calculations = new Calculations
+            {
+                ValueDate = valueDate,
+                Convexity = 0,
+                Duration = 0,
+                Interest = 0,
+                ExCoupDays = 0,
+                IsExCoup = false,
+                NextPayDate = maturityDate,
+                PrepayModel = 0,
+                PreviousPayDate = issueDate,
+                PriceIn = 0,
+                PriceOut = 0,
+                YieldIn = 0,
+                YieldOut=0,
+                ServiceFee = 0,
+                Pvbp = 0
+            };
+
             Instrument instr = null;
+            Calculations calcs = null;
+            KeyValuePair<Instrument, Calculations> kvp = new KeyValuePair<Instrument, Calculations>(instr, calcs);
             try
             {
-                instr = await RepositoryFactory.Calculator.GetDefaultDatesAsync(instrument, ValueDate);
+                //instr = await RepositoryFactory.Calculator.GetDefaultDatesAsync(instrument, ValueDate);
+                kvp = await RepositoryFactory.Calculator.GetDefaultDatesAsync(instrument, calculations);
             }
             catch (InvalidOperationException ex)
             {
                 dialogService.ShowMessageBox(ex.Message);
                 return;
             }
+
+            instr = kvp.Key;
+            calcs = kvp.Value;
 
             MaturityDate = instr.MaturityDate;
             IssueDate = instr.IssueDate;

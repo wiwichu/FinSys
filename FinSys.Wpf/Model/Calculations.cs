@@ -14,7 +14,7 @@ namespace FinSys.Wpf.Model
         {
             get
             {
-                return ValueDate;
+                return valueDate;
             }
             set
             {
@@ -27,7 +27,7 @@ namespace FinSys.Wpf.Model
         {
             get
             {
-                return PreviousPayDate;
+                return previousPayDate;
             }
             set
             {
@@ -40,7 +40,7 @@ namespace FinSys.Wpf.Model
         {
             get
             {
-                return NextPayDate;
+                return nextPayDate;
             }
             set
             {
@@ -175,6 +175,19 @@ namespace FinSys.Wpf.Model
             set
             {
                 exCoupDays = value;
+                OnPropertyChanged();
+            }
+        }
+        private int interestDays;
+        public int InterestDays
+        {
+            get
+            {
+                return interestDays;
+            }
+            set
+            {
+                interestDays = value;
                 OnPropertyChanged();
             }
         }

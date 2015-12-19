@@ -188,10 +188,10 @@ int  getDefaultDatesAndData(InstrumentStruct &instrument, CalculationsStruct &ca
 	}
 
 	Date_Funcs::date_union valDate;
-	valDate.date.centuries = calculations.valueDate.year / 100;
-	valDate.date.years = calculations.valueDate.year % 100;
-	valDate.date.months = calculations.valueDate.month;
-	valDate.date.days = calculations.valueDate.day % 100;
+	valDate.date.centuries = calculations.valueDate->year / 100;
+	valDate.date.years = calculations.valueDate->year % 100;
+	valDate.date.months = calculations.valueDate->month;
+	valDate.date.days = calculations.valueDate->day % 100;
 	result = pyfront.setvaldate(valDate);
 	if (result != return_success)
 	{
@@ -236,7 +236,29 @@ int  getDefaultDatesAndData(InstrumentStruct &instrument, CalculationsStruct &ca
 	{
 		return result;
 	}
+/*
+	Date_Funcs::date_union nxtDateOut;
 
+	result = pyfront.getnextcoup(nxtDateOut);
+	if (result != return_success)
+	{
+		return result;
+	}
+	calculations.nextPayDate->day = nxtDateOut.date.days;
+	calculations.nextPayDate->month = nxtDateOut.date.months;
+	calculations.nextPayDate->year = nxtDateOut.date.centuries * 100 + nxtDateOut.date.years;
+
+	Date_Funcs::date_union prvDateOut;
+
+	result = pyfront.getprevcoup(prvDateOut);
+	if (result != return_success)
+	{
+		return result;
+	}
+	calculations.previousPayDate->day = prvDateOut.date.days;
+	calculations.previousPayDate->month = prvDateOut.date.months;
+	calculations.previousPayDate->year = prvDateOut.date.centuries * 100 + prvDateOut.date.years;
+	*/
 	Date_Funcs::date_union matDateOut;
 
 	result = pyfront.getmatdate(matDateOut);
