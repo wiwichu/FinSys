@@ -207,6 +207,7 @@ int  getDefaultDatesAndData(InstrumentStruct &instrument, CalculationsStruct &ca
 	{
 		return result;
 	}
+	result = pyfront.proc_excoup();
 	if (result != return_success)
 	{
 		return result;
@@ -217,6 +218,11 @@ int  getDefaultDatesAndData(InstrumentStruct &instrument, CalculationsStruct &ca
 		eom = monthend_yes;
 	}
 	result = pyfront.setmonthend(monthend_names[eom]);
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.proc_monthend();
 	if (result != return_success)
 	{
 		return result;

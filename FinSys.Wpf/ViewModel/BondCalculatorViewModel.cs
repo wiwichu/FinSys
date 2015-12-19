@@ -87,7 +87,8 @@ namespace FinSys.Wpf.ViewModel
                 MaturityDate = maturityDate,
                 IssueDate = issueDate,
                 FirstPayDate = firstPayDate,
-                NextToLastPayDate = nextToLastPayDate
+                NextToLastPayDate = nextToLastPayDate,
+                EndOfMonthPay = endOfMonthPay
             };
             Calculations calculations = new Calculations
             {
@@ -129,6 +130,7 @@ namespace FinSys.Wpf.ViewModel
             IssueDate = instr.IssueDate;
             FirstPayDate = instr.FirstPayDate;
             NextToLastPayDate = instr.NextToLastPayDate;
+            EndOfMonthPay = instr.EndOfMonthPay;
         }
 
         private bool CanDefaultDatesClass(object obj)
@@ -158,7 +160,8 @@ namespace FinSys.Wpf.ViewModel
                 MaturityDate = maturityDate,
                 IssueDate = issueDate,
                 FirstPayDate = firstPayDate,
-                NextToLastPayDate = nextToLastPayDate
+                NextToLastPayDate = nextToLastPayDate,
+                EndOfMonthPay = endOfMonthPay
             };
             instruments.Add(instrument);
             try
@@ -179,6 +182,7 @@ namespace FinSys.Wpf.ViewModel
                 IssueDate = instr.IssueDate;
                 FirstPayDate = instr.FirstPayDate;
                 NextToLastPayDate = instr.NextToLastPayDate;
+                EndOfMonthPay = instr.EndOfMonthPay;
             }
         }
 
