@@ -16,6 +16,7 @@ typedef struct InstrumentStruct
 	DateStruct			*issueDate;
 	DateStruct			*firstPayDate;
 	DateStruct			*nextToLastPayDate;
+	bool				endOfMonthPay;
 } InstrumentStruct;
 typedef struct CalculationsStruct
 {

@@ -158,6 +158,7 @@ namespace FinSys.Wpf.Services
             ntlDate = Marshal.PtrToStructure<DateDescr>(instr.nextToLastPayDate);
             Instrument newInstr = new Instrument
             {
+                EndOfMonthPay = (instr.endOfMonthPay==1),
                 IntDayCount = dayCounts[instr.intDayCount],
                 IntPayFreq = payFreqs[instr.intPayFreq],
                 Class = new InstrumentClass
@@ -181,6 +182,7 @@ namespace FinSys.Wpf.Services
             int insPayFreq = payFreqs.IndexOf(ins.IntPayFreq);
             InstrumentDescr instr = new InstrumentDescr
             {
+                endOfMonthPay = ins.EndOfMonthPay ? 1:0,
                 instrumentClass = insClassNum,
                 intDayCount = insDayCount,
                 intPayFreq = insPayFreq
@@ -224,7 +226,7 @@ namespace FinSys.Wpf.Services
         {
             CalculationsDescr calculations = new CalculationsDescr
             {
-                isExCoup = calcs.IsExCoup,
+                isExCoup = calcs.IsExCoup ? 1:0,
                 priceIn = calcs.PriceIn,
                 yieldIn = calcs.YieldIn,
                 serviceFee = calcs.ServiceFee,
@@ -283,7 +285,7 @@ namespace FinSys.Wpf.Services
                 Duration = calcs.duration,
                 Convexity = calcs.convexity,
                 ExCoupDays = calcs.exCoupDays,
-                IsExCoup = calcs.isExCoup,
+                IsExCoup = (calcs.isExCoup == 1),
                 PriceIn = calcs.priceIn,
                 PriceOut = calcs.priceOut,
                 YieldIn = calcs.yieldIn,
@@ -298,7 +300,7 @@ namespace FinSys.Wpf.Services
 
             Calculations calculations = new Calculations
             {
-                IsExCoup = calcs.isExCoup,
+                IsExCoup = (calcs.isExCoup==1),
                 PriceIn = calcs.priceIn,
                 YieldIn = calcs.yieldIn,
                 ServiceFee = calcs.serviceFee,
@@ -386,6 +388,7 @@ namespace FinSys.Wpf.Services
         public IntPtr issueDate;
         public IntPtr firstPayDate;
         public IntPtr nextToLastPayDate;
+        public int endOfMonthPay;
     };
     [StructLayout(LayoutKind.Sequential)]
     internal class CalculationsDescr
@@ -402,7 +405,7 @@ namespace FinSys.Wpf.Services
         public double duration;
         public double convexity;
         public double pvbp;
-        public bool isExCoup;
+        public int isExCoup;
         public int exCoupDays;
         public double serviceFee;
         public int prepayModel;

@@ -207,6 +207,20 @@ int  getDefaultDatesAndData(InstrumentStruct &instrument, CalculationsStruct &ca
 	{
 		return result;
 	}
+	if (result != return_success)
+	{
+		return result;
+	}
+	int eom = monthend_no;
+	if (instrument.endOfMonthPay)
+	{
+		eom = monthend_yes;
+	}
+	result = pyfront.setmonthend(monthend_names[eom]);
+	if (result != return_success)
+	{
+		return result;
+	}
 
 	result = pyfront.setdaycount(day_count_names[instrument.intDayCount]);
 	if (result != return_success)
@@ -259,6 +273,7 @@ int  getDefaultDatesAndData(InstrumentStruct &instrument, CalculationsStruct &ca
 	calculations.previousPayDate->month = prvDateOut.date.months;
 	calculations.previousPayDate->year = prvDateOut.date.centuries * 100 + prvDateOut.date.years;
 	*/
+	
 	Date_Funcs::date_union matDateOut;
 
 	result = pyfront.getmatdate(matDateOut);
@@ -309,7 +324,18 @@ int  getDefaultDatesAndData(InstrumentStruct &instrument, CalculationsStruct &ca
 	{
 		return result;
 	}
-
+	int eomOut = 0;
+	bool eomOutB = false;
+	result = pyfront.getmonthend(&eomOut);
+	if (result != return_success)
+	{
+		return result;
+	}
+	if (eomOut == monthend_yes)
+	{
+		eomOutB = true;
+	}
+	instrument.endOfMonthPay = eomOutB;
 	return return_success;
 }
 

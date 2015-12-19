@@ -293,6 +293,19 @@ namespace FinSys.Wpf.ViewModel
                 OnPropertyChanged();
             }
         }
+        private bool endOfMonthPay;
+        public bool EndOfMonthPay
+        {
+            get
+            {
+                return endOfMonthPay;
+            }
+            set
+            {
+                endOfMonthPay = value;
+                OnPropertyChanged();
+            }
+        }
         private DateTime maturityDate;
         public DateTime MaturityDate
         {

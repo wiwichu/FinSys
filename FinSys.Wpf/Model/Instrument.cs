@@ -113,6 +113,19 @@ namespace FinSys.Wpf.Model
                 OnPropertyChanged();
             }
         }
+        private bool endOfMonthPay;
+        public bool EndOfMonthPay
+        {
+            get
+            {
+                return endOfMonthPay;
+            }
+            set
+            {
+                endOfMonthPay = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }
 
