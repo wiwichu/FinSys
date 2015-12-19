@@ -20,6 +20,10 @@ namespace FinSys.Wpf.ViewModel
         private ObservableCollection<PortfolioViewModel> portfolios = new ObservableCollection<PortfolioViewModel>();
         public TradingViewModel()
         {
+            if (DesignerProperties.GetIsInDesignMode(new System.Windows.DependencyObject()))
+            {
+                return;
+            }
             Initialize();
             RegisterWithMessenger();
         }

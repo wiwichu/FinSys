@@ -19,6 +19,10 @@ namespace FinSys.Wpf.ViewModel
 
         public PositionViewModel(Position p)
         {
+            if (DesignerProperties.GetIsInDesignMode(new System.Windows.DependencyObject()))
+            {
+                return;
+            }
             this.Amount = p.Amount;
             this.InstrumentId = p.InstrumentId;
             this.PortfolioId = p.PortfolioId;

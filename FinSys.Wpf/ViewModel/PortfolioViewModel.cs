@@ -16,6 +16,10 @@ namespace FinSys.Wpf.ViewModel
     {
         public PortfolioViewModel(Portfolio p)
         {
+            if (DesignerProperties.GetIsInDesignMode(new System.Windows.DependencyObject()))
+            {
+                return;
+            }
             this.Id = p.Id;
             this.Positions = new ObservableCollection<PositionViewModel>();
 

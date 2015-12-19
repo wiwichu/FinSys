@@ -39,6 +39,10 @@ namespace FinSys.Wpf.ViewModel
         }
         public TradeViewModel(Trade t)
         {
+            if (DesignerProperties.GetIsInDesignMode(new System.Windows.DependencyObject()))
+            {
+                return;
+            }
             this.Amount = t.Amount;
             this.CounterParty = t.CounterParty;
             this.Id = t.Id;
