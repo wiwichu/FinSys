@@ -131,6 +131,8 @@ namespace FinSys.Wpf.ViewModel
             FirstPayDate = instr.FirstPayDate;
             NextToLastPayDate = instr.NextToLastPayDate;
             EndOfMonthPay = instr.EndOfMonthPay;
+            PreviousPayDate = calcs.PreviousPayDate.Date.ToShortDateString();
+            NextPayDate = calcs.NextPayDate.Date.ToShortDateString();
         }
 
         private bool CanDefaultDatesClass(object obj)
@@ -183,6 +185,9 @@ namespace FinSys.Wpf.ViewModel
                 FirstPayDate = instr.FirstPayDate;
                 NextToLastPayDate = instr.NextToLastPayDate;
                 EndOfMonthPay = instr.EndOfMonthPay;
+                PreviousPayDate = instr.IssueDate.Date.ToShortDateString();
+                NextPayDate = instr.MaturityDate.Date.ToShortDateString();
+
             }
         }
 
@@ -281,6 +286,32 @@ namespace FinSys.Wpf.ViewModel
                     selectedPayFreq = value;
                     OnPropertyChanged();
                 }
+            }
+        }
+        private string previousPayDate;
+        public string PreviousPayDate
+        {
+            get
+            {
+                return previousPayDate;
+            }
+            set
+            {
+                previousPayDate = value;
+                OnPropertyChanged();
+            }
+        }
+        private string nextPayDate;
+        public string NextPayDate
+        {
+            get
+            {
+                return nextPayDate;
+            }
+            set
+            {
+                nextPayDate = value;
+                OnPropertyChanged();
             }
         }
 

@@ -278,7 +278,7 @@ namespace FinSys.Wpf.Services
             IntPtr npdPtr = Marshal.ReadIntPtr(calcs.nextPayDate);
             DateDescr npdDate = new DateDescr();
             npdDate = Marshal.PtrToStructure<DateDescr>(calcs.nextPayDate);
-            Calculations newInstr = new Calculations
+            Calculations calculations = new Calculations
             {
                 Interest = calcs.interest,
                 InterestDays = calcs.interestDays,
@@ -296,23 +296,6 @@ namespace FinSys.Wpf.Services
                 PreviousPayDate = new DateTime(ppdDate.year, ppdDate.month, ppdDate.day),
                 NextPayDate = new DateTime(npdDate.year,npdDate.month,npdDate.day),
                 ValueDate = new DateTime(valDate.year,valDate.month,valDate.day)
-            };
-
-            Calculations calculations = new Calculations
-            {
-                IsExCoup = (calcs.isExCoup==1),
-                PriceIn = calcs.priceIn,
-                YieldIn = calcs.yieldIn,
-                ServiceFee = calcs.serviceFee,
-                PrepayModel = calcs.prepayModel,
-                Interest = calcs.interest,
-                InterestDays = calcs.interestDays,
-                Convexity = 0,
-                Duration = 0,
-                PriceOut = 0,
-                Pvbp = 0,
-                YieldOut = 0,
-                ExCoupDays = 0
             };
 
             return calculations;

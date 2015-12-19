@@ -47,6 +47,11 @@
             <DatePicker x:Name="dpValueDate" Margin="10 15" Grid.Column="1" Grid.Row="1" 
 				SelectedDate="{Binding ValueDate, Mode=TwoWay, TargetNullValue={x:Static sys:DateTime.Now}}"
 />
+            <TextBlock Text="Previous Pay: " x:Name="lblPreviousPay" Margin="10 15" Grid.Row="2"/>
+            <TextBlock  x:Name="lblPreviousPayResult" Text="{Binding PreviousPayDate}" Margin="10 15" Grid.Row="2" Grid.Column="1"/>
+            <TextBlock Text="Next Pay: " x:Name="lblNextPay" Margin="10 15" Grid.Row="3"/>
+            <TextBlock  x:Name="lblNextPayResult" Text="{Binding NextPayDate}" Margin="10 15" Grid.Row="3" Grid.Column="1"/>
+
             <TextBlock Text="Maturity Date: " x:Name="lblMaturityDate" Margin="10 15" Grid.Column="2"/>
             <DatePicker x:Name="dpMaturityDate" Margin="10 15" Grid.Column="3" 
 				SelectedDate="{Binding MaturityDate, Mode=TwoWay, TargetNullValue={x:Static sys:DateTime.Now}}"
@@ -81,8 +86,8 @@
 />
             <TextBlock Text="Interest Rate: " x:Name="lblInterestRate" Margin="10 15" Grid.Column="4" Grid.Row="0" />
             <TextBox TextAlignment="Right" Text="{Binding InterestRate, StringFormat='#0.##########'}" Grid.Column="5" Margin="10 15"/>
-            <CheckBox x:Name="cbEndOfMonth"  Content="Pay End of Month" IsChecked="{Binding EndOfMonthPay, Mode=TwoWay}" Margin="10 15" Grid.Row="1" Grid.Column="4" />
-            <Button Content="Generate Default Dates" Command="{Binding DefaultDatesCommand}" Grid.Row="1" Grid.Column="5" Margin="10 15" />
+            <CheckBox x:Name="cbEndOfMonth"  Content="End of Month" IsChecked="{Binding EndOfMonthPay, Mode=TwoWay}" Margin="10 15" Grid.Row="1" Grid.Column="4" />
+            <Button Content="Default Dates" Command="{Binding DefaultDatesCommand}" Grid.Row="1" Grid.Column="5" Margin="10,15" />
         </Grid>
     </Grid>
 </Window>

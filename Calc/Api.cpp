@@ -342,6 +342,29 @@ int  getDefaultDatesAndData(InstrumentStruct &instrument, CalculationsStruct &ca
 		eomOutB = true;
 	}
 	instrument.endOfMonthPay = eomOutB;
+
+	pyfront.calc_np_py();
+
+	Date_Funcs::date_union prevCoup;
+	result = pyfront.getprevcoup(prevCoup);
+	if (result != return_success)
+	{
+		return result;
+	}
+	calculations.previousPayDate->year = prevCoup.date.years;
+	calculations.previousPayDate->month = prevCoup.date.months;
+	calculations.previousPayDate->day = prevCoup.date.days;
+
+	Date_Funcs::date_union nextCoup;
+	result = pyfront.getnextcoup(nextCoup);
+	if (result != return_success)
+	{
+		return result;
+	}
+	calculations.nextPayDate->year = nextCoup.date.years;
+	calculations.nextPayDate->month = nextCoup.date.months;
+	calculations.nextPayDate->day = nextCoup.date.days;
+
 	return return_success;
 }
 
