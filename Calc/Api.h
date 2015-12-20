@@ -36,6 +36,10 @@ typedef struct CalculationsStruct
 	int exCoupDays;
 	double serviceFee;
 	int prepayModel;
+	bool calculatePrice;
+	int yieldDayCount;
+	int yieldFreq;
+	int yieldMethod;
 } CalculationsStruct;
 
 extern "C" __declspec(dllexport) char**  getclassdescriptions(int& size);
@@ -45,4 +49,5 @@ extern "C" __declspec(dllexport) int  getInstrumentDefaults(InstrumentStruct &in
 extern "C" __declspec(dllexport) int  getStatusText(int status, char* text, int &textSize);
 extern "C" __declspec(dllexport) int  getDefaultDates(InstrumentStruct &instrument, DateStruct &valueDate);
 extern "C" __declspec(dllexport) int  getDefaultDatesAndData(InstrumentStruct &instrument, CalculationsStruct &calculations);
+extern "C" __declspec(dllexport) char**  getyieldmethods(int& size);
 

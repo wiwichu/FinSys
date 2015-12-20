@@ -16,5 +16,6 @@ namespace FinSys.Wpf.Services
         Task<List<Instrument>> GetInstrumentDefaultsAsync(List<Instrument> calcs);
         Task<Instrument> GetDefaultDatesAsync(Instrument instrument, DateTime valueDate);
         Task<KeyValuePair<Instrument,Calculations>> GetDefaultDatesAsync(Instrument instrument, Calculations calculations);
+        Task<List<string>> GetYieldMethodsAsync();
     }
 }

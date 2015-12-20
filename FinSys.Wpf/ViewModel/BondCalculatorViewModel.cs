@@ -23,6 +23,9 @@ namespace FinSys.Wpf.ViewModel
             this.InstrumentClasses = new ObservableCollection<InstrumentClass>();
             this.DayCounts = new ObservableCollection<string>();
             this.PayFreqs = new ObservableCollection<string>();
+            this.YieldDayCount = new ObservableCollection<string>();
+            this.YieldFrequency = new ObservableCollection<string>();
+            this.YieldMethod = new ObservableCollection<string>();
             ValueDate = DateTime.Today;
             MaturityDate = DateTime.Today.AddYears(1);
             FirstPayDate = DateTime.Today.AddYears(1);
@@ -44,11 +47,31 @@ namespace FinSys.Wpf.ViewModel
             {
                 SelectedPayFreq = payFreqs[0];
             }
+            YieldDayCount = new ObservableCollection<string>(RepositoryFactory.Calculator.GetDayCountsAsync().Result);
+            if (YieldDayCount.Count > 0)
+            {
+                SelectedYieldDayCount = yieldDayCount[0];
+            }
+            YieldFrequency = new ObservableCollection<string>(RepositoryFactory.Calculator.GetPayFreqsAsync().Result);
+            if (YieldFrequency.Count > 0)
+            {
+                SelectedYieldFrequency = yieldFrequency[0];
+            }
+            YieldMethod = new ObservableCollection<string>(RepositoryFactory.Calculator.GetYieldMethodsAsync().Result);
+            if (YieldMethod.Count > 0)
+            {
+                SelectedYieldMethod = yieldMethod[0];
+            }
             InstrumentClasses = new ObservableCollection<InstrumentClass>(RepositoryFactory.Calculator.GetInstrumentClassesAsync().Result);
             if (instrumentClasses.Count>0)
             {
                 SelectedInstrumentClass = instrumentClasses[0];
             }
+        }
+        public ICommand CalculateCommand
+        {
+            get;
+            set;
         }
         public ICommand ChangeClassCommand
         {
@@ -73,6 +96,17 @@ namespace FinSys.Wpf.ViewModel
             OpenWindowCommand = new RelayCommand(OpenWindow, CanOpenWindow);
             ChangeClassCommand = new RelayCommand(ChangeClass, CanChangeClass);
             DefaultDatesCommand = new RelayCommand(DefaultDates, CanDefaultDatesClass);
+            CalculateCommand = new RelayCommand(Calculate, CanCalculate);
+        }
+
+        private bool CanCalculate(object obj)
+        {
+            return true;
+        }
+
+        private void Calculate(object obj)
+        {
+            
         }
 
         private async void DefaultDates(object obj)
@@ -406,6 +440,227 @@ namespace FinSys.Wpf.ViewModel
                 OnPropertyChanged();
             }
         }
+        private double cleanPrice;
+        public double CleanPrice
+        {
+            get
+            {
+                return cleanPrice;
+            }
+            set
+            {
+                cleanPrice = value;
+                OnPropertyChanged();
+            }
+        }
+        private double interest;
+        public double Interest
+        {
+            get
+            {
+                return interest;
+            }
+            set
+            {
+                interest = value;
+                OnPropertyChanged();
+            }
+        }
+        private double dirtyPrice;
+        public double DirtyPrice
+        {
+            get
+            {
+                return dirtyPrice;
+            }
+            set
+            {
+                dirtyPrice = value;
+                OnPropertyChanged();
+            }
+        }
+        private int interestDays;
+        public int InterestDays
+        {
+            get
+            {
+                return interestDays;
+            }
+            set
+            {
+                interestDays = value;
+                OnPropertyChanged();
+            }
+        }
+        private double yieldDiscount;
+        public double YieldDiscount
+        {
+            get
+            {
+                return yieldDiscount;
+            }
+            set
+            {
+                yieldDiscount = value;
+                OnPropertyChanged();
+            }
+        }
+        private double duration;
+        public double Duration
+        {
+            get
+            {
+                return duration;
+            }
+            set
+            {
+                duration = value;
+                OnPropertyChanged();
+            }
+        }
+        private double modifiedDuration;
+        public double ModifiedDuration
+        {
+            get
+            {
+                return modifiedDuration;
+            }
+            set
+            {
+                modifiedDuration = value;
+                OnPropertyChanged();
+            }
+        }
+        private double convexity;
+        public double Convexity
+        {
+            get
+            {
+                return convexity;
+            }
+            set
+            {
+                convexity = value;
+                OnPropertyChanged();
+            }
+        }
+        private double pvbp;
+        public double Pvbp
+        {
+            get
+            {
+                return pvbp;
+            }
+            set
+            {
+                pvbp = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool calculatePrice;
+        public bool CalculatePrice
+        {
+            get
+            {
+                return calculatePrice;
+            }
+            set
+            {
+                calculatePrice = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<string> yieldDayCount = new ObservableCollection<string>();
+        public ObservableCollection<string> YieldDayCount
+        {
+            get
+            {
+                return yieldDayCount;
+            }
+            set
+            {
+                yieldDayCount = value;
+                OnPropertyChanged();
+            }
+        }
+        object selectedYieldDayCount;
+        public object SelectedYieldDayCount
+        {
+            get
+            {
+                return selectedYieldDayCount;
+            }
+            set
+            {
+                if (selectedYieldDayCount != value)
+                {
+                    selectedYieldDayCount = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private ObservableCollection<string> yieldFrequency = new ObservableCollection<string>();
+        public ObservableCollection<string> YieldFrequency
+        {
+            get
+            {
+                return yieldFrequency;
+            }
+            set
+            {
+                yieldFrequency = value;
+                OnPropertyChanged();
+            }
+        }
+        object selectedYieldFrequency;
+        public object SelectedYieldFrequency
+        {
+            get
+            {
+                return selectedYieldFrequency;
+            }
+            set
+            {
+                if (selectedYieldFrequency != value)
+                {
+                    selectedYieldFrequency = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private ObservableCollection<string> yieldMethod = new ObservableCollection<string>();
+        public ObservableCollection<string> YieldMethod
+        {
+            get
+            {
+                return yieldMethod;
+            }
+            set
+            {
+                yieldMethod = value;
+                OnPropertyChanged();
+            }
+        }
+        object selectedYieldMethod;
+        public object SelectedYieldMethod
+        {
+            get
+            {
+                return selectedYieldMethod;
+            }
+            set
+            {
+                if (selectedYieldMethod != value)
+                {
+                    selectedYieldMethod = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+
 
     }
 }

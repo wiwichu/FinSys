@@ -26,6 +26,8 @@ namespace FinSys.Wpf.Services
         private static extern int getDefaultDates(InstrumentDescr instrument, DateDescr valueDate);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int getDefaultDatesAndData(InstrumentDescr instrument, CalculationsDescr calculations);
+        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern IntPtr getyieldmethods(out int size);
 
 
         private List<string> classes = new List<string>();
@@ -360,6 +362,29 @@ namespace FinSys.Wpf.Services
                 throw;
             }
         }
+
+ 
+        public async Task<List<string>> GetYieldMethodsAsync()
+        {
+            List<string> result = await Task.Run(() =>
+            {
+                List<string> yieldmethods = new List<string>();
+                int size;
+                IntPtr ptr = getyieldmethods(out size);
+                IntPtr strPtr;
+                for (int i = 0; i < size; i++)
+                {
+                    strPtr = Marshal.ReadIntPtr(ptr);
+                    string name = Marshal.PtrToStringAnsi(strPtr);
+                    yieldmethods.Add(name);
+                    ptr += Marshal.SizeOf(typeof(IntPtr));
+                }
+                return yieldmethods;
+            })
+             .ConfigureAwait(false) //necessary on UI Thread
+             ;
+            return result;
+        }
     }
     [StructLayout(LayoutKind.Sequential)]
     internal class InstrumentDescr
@@ -392,6 +417,10 @@ namespace FinSys.Wpf.Services
         public int exCoupDays;
         public double serviceFee;
         public int prepayModel;
+        public int calculatePrice;
+        public int yieldDayCount;
+        public int yieldFreq;
+        public int yieldMethod;
     };
     [StructLayout(LayoutKind.Sequential)]
     internal class DateDescr

@@ -25,6 +25,14 @@ char** getpayfreqs(int& size)
 	size = freq_count;
 	return (char**)freq_names;
 }
+
+char**  getyieldmethods(int& size)
+{
+	size = py_last_yield_meth;
+	return (char**)yield_meth_names;
+}
+
+
 int  getStatusText(int status, char* text, int&textSize)
 {
 	Py_Front pyfront;

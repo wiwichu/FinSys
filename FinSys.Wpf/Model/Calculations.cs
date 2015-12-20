@@ -217,5 +217,57 @@ namespace FinSys.Wpf.Model
                 OnPropertyChanged();
             }
         }
+        private bool calculatePrice;
+        public bool CalculatePrice
+        {
+            get
+            {
+                return calculatePrice;
+            }
+            set
+            {
+                calculatePrice = value;
+                OnPropertyChanged();
+            }
+        }
+        private string yieldDayCount;
+        public string YieldDayCount
+        {
+            get
+            {
+                return yieldDayCount;
+            }
+            set
+            {
+                yieldDayCount = value;
+                OnPropertyChanged();
+            }
+        }
+        private string yieldFreq;
+        public string YieldFreq
+        {
+            get
+            {
+                return yieldFreq;
+            }
+            set
+            {
+                yieldFreq = value;
+                OnPropertyChanged();
+            }
+        }
+        private string yieldMethod;
+        public string YieldMethod
+        {
+            get
+            {
+                return yieldMethod;
+            }
+            set
+            {
+                yieldMethod = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }
