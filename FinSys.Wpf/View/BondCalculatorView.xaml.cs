@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FinSys.Wpf.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,16 @@ namespace FinSys.Wpf.View
         public BondCalculatorView()
         {
             InitializeComponent();
+            Loaded += BondCalculatorView_Loaded;
+        }
+
+        private void BondCalculatorView_Loaded(object sender, RoutedEventArgs e)
+        {
+            BondCalculatorViewModel vm = DataContext as BondCalculatorViewModel;
+            if (vm != null)
+            {
+                vm.DefaultDatesCommand.Execute(new object());
+            }
         }
     }
 }

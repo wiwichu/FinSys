@@ -165,9 +165,8 @@ int  getDefaultDatesAndData(InstrumentStruct &instrument, CalculationsStruct &ca
 	return getDefaultDates(instrument, calculations.valueDate);
 }
 */
-int  getDefaultDatesAndData(InstrumentStruct &instrument, CalculationsStruct &calculations)
+int preProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_Front &pyfront)
 {
-	Py_Front pyfront;
 	int result = pyfront.init_screen();
 	if (result != return_success)
 	{
@@ -205,6 +204,22 @@ int  getDefaultDatesAndData(InstrumentStruct &instrument, CalculationsStruct &ca
 	{
 		return result;
 	}
+	result = pyfront.proc_mat_date_py();
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.proc_val_date_py();
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.check_val_vs_mat_py();
+	if (result != return_success)
+	{
+		return result;
+	}
+
 	int excoup = ex_coup_no;
 	if (calculations.isExCoup)
 	{
@@ -259,38 +274,14 @@ int  getDefaultDatesAndData(InstrumentStruct &instrument, CalculationsStruct &ca
 	}
 
 
-	result = pyfront.proc_def_dates();
-	if (result != return_success)
-	{
-		return result;
-	}
-/*
-	Date_Funcs::date_union nxtDateOut;
+	return return_success;
+}
+int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_Front &pyfront)
+{
 
-	result = pyfront.getnextcoup(nxtDateOut);
-	if (result != return_success)
-	{
-		return result;
-	}
-	calculations.nextPayDate->day = nxtDateOut.date.days;
-	calculations.nextPayDate->month = nxtDateOut.date.months;
-	calculations.nextPayDate->year = nxtDateOut.date.centuries * 100 + nxtDateOut.date.years;
-
-	Date_Funcs::date_union prvDateOut;
-
-	result = pyfront.getprevcoup(prvDateOut);
-	if (result != return_success)
-	{
-		return result;
-	}
-	calculations.previousPayDate->day = prvDateOut.date.days;
-	calculations.previousPayDate->month = prvDateOut.date.months;
-	calculations.previousPayDate->year = prvDateOut.date.centuries * 100 + prvDateOut.date.years;
-	*/
-	
 	Date_Funcs::date_union matDateOut;
 
-	result = pyfront.getmatdate(matDateOut);
+	int result = pyfront.getmatdate(matDateOut);
 	if (result != return_success)
 	{
 		return result;
@@ -359,7 +350,7 @@ int  getDefaultDatesAndData(InstrumentStruct &instrument, CalculationsStruct &ca
 	{
 		return result;
 	}
-	calculations.previousPayDate->year = prevCoup.date.years;
+	calculations.previousPayDate->year = prevCoup.date.centuries*100 + prevCoup.date.years;
 	calculations.previousPayDate->month = prevCoup.date.months;
 	calculations.previousPayDate->day = prevCoup.date.days;
 
@@ -369,13 +360,120 @@ int  getDefaultDatesAndData(InstrumentStruct &instrument, CalculationsStruct &ca
 	{
 		return result;
 	}
-	calculations.nextPayDate->year = nextCoup.date.years;
+	calculations.nextPayDate->year = nextCoup.date.centuries*100+ nextCoup.date.years;
 	calculations.nextPayDate->month = nextCoup.date.months;
 	calculations.nextPayDate->day = nextCoup.date.days;
 
+
 	return return_success;
 }
+int  getDefaultDatesAndData(InstrumentStruct &instrument, CalculationsStruct &calculations)
+{
+	Py_Front pyfront;
+	int result = preProc(instrument, calculations, pyfront);
+	if (result != return_success)
+	{
+		return result;
+	}
 
+	result = pyfront.proc_def_dates();
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = postProc(instrument, calculations, pyfront);
+	if (result != return_success)
+	{
+		return result;
+	}
+
+	return return_success;
+}
+int  calculate(InstrumentStruct &instrument, CalculationsStruct &calculations)
+{
+	Py_Front pyfront;
+	int result = preProc(instrument, calculations, pyfront);
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.proc_def_dates();
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = preProc(instrument, calculations, pyfront);
+	if (result != return_success)
+	{
+		return result;
+	}
+
+	Date_Funcs::date_union issDate;
+	issDate.date.centuries = instrument.issueDate->year / 100;
+	issDate.date.years = instrument.issueDate->year % 100;
+	issDate.date.months = instrument.issueDate->month;
+	issDate.date.days = instrument.issueDate->day % 100;
+	result = pyfront.setissuedate(issDate);
+	if (result != return_success)
+	{
+		return result;
+	}
+	Date_Funcs::date_union fpdDate;
+	fpdDate.date.centuries = instrument.firstPayDate->year / 100;
+	fpdDate.date.years = instrument.firstPayDate->year % 100;
+	fpdDate.date.months = instrument.firstPayDate->month;
+	fpdDate.date.days = instrument.firstPayDate->day % 100;
+	result = pyfront.setfirstdate(fpdDate);
+	if (result != return_success)
+	{
+		return result;
+	}
+
+	Date_Funcs::date_union ntlDate;
+	ntlDate.date.centuries = instrument.nextToLastPayDate->year / 100;
+	ntlDate.date.years = instrument.nextToLastPayDate->year % 100;
+	ntlDate.date.months = instrument.nextToLastPayDate->month;
+	ntlDate.date.days = instrument.nextToLastPayDate->day % 100;
+	result = pyfront.setpenultdate(ntlDate);
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.proc_iss_date_py();
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.proc_first_date_py();
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.proc_penult_date_py();
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.proc_all_dates_py();
+	if (result != return_success)
+	{
+		return result;
+	}
+
+
+	//result = pyfront.proc_def_dates();
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = postProc(instrument, calculations, pyfront);
+	if (result != return_success)
+	{
+		return result;
+	}
+
+	return return_success;
+}
 int getInstrumentDefaults(InstrumentStruct &instrument)
 {
 	int result = return_success;

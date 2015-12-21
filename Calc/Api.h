@@ -50,4 +50,7 @@ extern "C" __declspec(dllexport) int  getStatusText(int status, char* text, int 
 extern "C" __declspec(dllexport) int  getDefaultDates(InstrumentStruct &instrument, DateStruct &valueDate);
 extern "C" __declspec(dllexport) int  getDefaultDatesAndData(InstrumentStruct &instrument, CalculationsStruct &calculations);
 extern "C" __declspec(dllexport) char**  getyieldmethods(int& size);
+extern "C" __declspec(dllexport) int  calculate(InstrumentStruct &instrument, CalculationsStruct &calculations);
 
+int preProc(InstrumentStruct &instrument, CalculationsStruct &calculations,Py_Front &pyfront);
+int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_Front &pyfront);

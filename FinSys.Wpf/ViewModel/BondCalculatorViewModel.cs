@@ -33,6 +33,7 @@ namespace FinSys.Wpf.ViewModel
             NextToLastPayDate = DateTime.Today.AddYears(-1);
             Initializer();
             LoadCommands();
+            
         }
 
         private void Initializer()
@@ -104,9 +105,64 @@ namespace FinSys.Wpf.ViewModel
             return true;
         }
 
-        private void Calculate(object obj)
+        private async void Calculate(object obj)
         {
-            
+            InstrumentClass ic = SelectedInstrumentClass as InstrumentClass;
+            Instrument instrument = new Instrument
+            {
+                Name = "Instrument1",
+                Class = ic,
+                IntDayCount = (string)SelectedDayCount,
+                IntPayFreq = (string)SelectedPayFreq,
+                MaturityDate = maturityDate,
+                IssueDate = issueDate,
+                FirstPayDate = firstPayDate,
+                NextToLastPayDate = nextToLastPayDate,
+                EndOfMonthPay = endOfMonthPay
+            };
+            Calculations calculations = new Calculations
+            {
+                ValueDate = valueDate,
+                Convexity = 0,
+                Duration = 0,
+                Interest = 0,
+                ExCoupDays = 0,
+                IsExCoup = false,
+                NextPayDate = maturityDate,
+                PrepayModel = 0,
+                PreviousPayDate = issueDate,
+                PriceIn = 0,
+                PriceOut = 0,
+                YieldIn = 0,
+                YieldOut = 0,
+                ServiceFee = 0,
+                Pvbp = 0
+            };
+
+            Instrument instr = null;
+            Calculations calcs = null;
+            KeyValuePair<Instrument, Calculations> kvp = new KeyValuePair<Instrument, Calculations>(instr, calcs);
+            try
+            {
+                kvp = await RepositoryFactory.Calculator.CalculateAsync(instrument, calculations);
+            }
+            catch (InvalidOperationException ex)
+            {
+                dialogService.ShowMessageBox(ex.Message);
+                return;
+            }
+
+            instr = kvp.Key;
+            calcs = kvp.Value;
+
+            MaturityDate = instr.MaturityDate;
+            IssueDate = instr.IssueDate;
+            FirstPayDate = instr.FirstPayDate;
+            NextToLastPayDate = instr.NextToLastPayDate;
+            EndOfMonthPay = instr.EndOfMonthPay;
+            PreviousPayDate = calcs.PreviousPayDate.Date.ToShortDateString();
+            NextPayDate = calcs.NextPayDate.Date.ToShortDateString();
+
         }
 
         private async void DefaultDates(object obj)
