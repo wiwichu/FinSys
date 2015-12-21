@@ -126,7 +126,20 @@ namespace FinSys.Wpf.Model
                 OnPropertyChanged();
             }
         }
-        private double convexity;
+        private double modifiedDuration;
+        public double ModifiedDuration
+        {
+            get
+            {
+                return modifiedDuration;
+            }
+            set
+            {
+                modifiedDuration = value;
+                OnPropertyChanged();
+            }
+        }
+        public double convexity;
         public double Convexity
         {
             get

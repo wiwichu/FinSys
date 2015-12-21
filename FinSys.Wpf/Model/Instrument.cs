@@ -126,6 +126,19 @@ namespace FinSys.Wpf.Model
                 OnPropertyChanged();
             }
         }
+        private double interestRate;
+        public double InterestRate
+        {
+            get
+            {
+                return interestRate;
+            }
+            set
+            {
+                interestRate = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }
 

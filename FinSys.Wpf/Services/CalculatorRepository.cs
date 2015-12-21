@@ -35,11 +35,13 @@ namespace FinSys.Wpf.Services
         private List<string> classes = new List<string>();
         private List<string> dayCounts = new List<string>();
         private List<string> payFreqs = new List<string>();
+        private List<string> yieldMethods = new List<string>();
         public CalculatorRepository()
         {
             classes = new List<string>( GetInstrumentClassesAsync().Result.Select((ic)=>ic.Name));
             dayCounts = GetDayCountsAsync().Result;
             payFreqs = GetPayFreqsAsync().Result;
+            yieldMethods = GetYieldMethodsAsync().Result;
         }
 
         public async Task<List<string>> GetDayCountsAsync()
@@ -172,7 +174,8 @@ namespace FinSys.Wpf.Services
                 MaturityDate = new DateTime(matDate.year, matDate.month, matDate.day),
                 IssueDate = new DateTime(issDate.year, issDate.month, issDate.day),
                 FirstPayDate = new DateTime(fpDate.year, fpDate.month, fpDate.day),
-                NextToLastPayDate = new DateTime(ntlDate.year, ntlDate.month, ntlDate.day)
+                NextToLastPayDate = new DateTime(ntlDate.year, ntlDate.month, ntlDate.day),
+                InterestRate = instr.interestRate              
             };
 
             return newInstr;
@@ -189,7 +192,8 @@ namespace FinSys.Wpf.Services
                 endOfMonthPay = ins.EndOfMonthPay ? 1:0,
                 instrumentClass = insClassNum,
                 intDayCount = insDayCount,
-                intPayFreq = insPayFreq
+                intPayFreq = insPayFreq,
+                interestRate = ins.InterestRate
             };
             DateDescr maturityDate = new DateDescr
             {
@@ -239,10 +243,15 @@ namespace FinSys.Wpf.Services
                 interestDays = 0,
                 convexity = 0,
                 duration = 0,
+                modifiedDuration = 0,
                 priceOut = 0,
                 pvbp = 0,
                 yieldOut = 0,
-                exCoupDays = 0
+                exCoupDays = 0,
+                calculatePrice = calcs.CalculatePrice ? 1:0,
+                yieldDayCount = dayCounts.IndexOf(calcs.YieldDayCount),
+                yieldFreq = payFreqs.IndexOf(calcs.YieldFreq),
+                yieldMethod = yieldMethods.IndexOf(calcs.YieldMethod)
             };
             DateDescr valueDate = new DateDescr
             {
@@ -287,6 +296,7 @@ namespace FinSys.Wpf.Services
                 Interest = calcs.interest,
                 InterestDays = calcs.interestDays,
                 Duration = calcs.duration,
+                ModifiedDuration = calcs.modifiedDuration,
                 Convexity = calcs.convexity,
                 ExCoupDays = calcs.exCoupDays,
                 IsExCoup = (calcs.isExCoup == 1),
@@ -299,7 +309,11 @@ namespace FinSys.Wpf.Services
                 PrepayModel = calcs.prepayModel,
                 PreviousPayDate = new DateTime(ppdDate.year, ppdDate.month, ppdDate.day),
                 NextPayDate = new DateTime(npdDate.year,npdDate.month,npdDate.day),
-                ValueDate = new DateTime(valDate.year,valDate.month,valDate.day)
+                ValueDate = new DateTime(valDate.year,valDate.month,valDate.day),
+                CalculatePrice = (calcs.calculatePrice == 1),
+                YieldDayCount = dayCounts[calcs.yieldDayCount],
+                YieldFreq = payFreqs[calcs.yieldFreq],
+                YieldMethod = yieldMethods[calcs.yieldMethod] 
             };
 
             return calculations;
@@ -423,6 +437,7 @@ namespace FinSys.Wpf.Services
         public IntPtr firstPayDate;
         public IntPtr nextToLastPayDate;
         public int endOfMonthPay;
+        public double interestRate;
     };
     [StructLayout(LayoutKind.Sequential)]
     internal class CalculationsDescr
@@ -447,6 +462,7 @@ namespace FinSys.Wpf.Services
         public int yieldDayCount;
         public int yieldFreq;
         public int yieldMethod;
+        public double modifiedDuration;
     };
     [StructLayout(LayoutKind.Sequential)]
     internal class DateDescr

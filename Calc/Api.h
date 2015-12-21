@@ -17,6 +17,7 @@ typedef struct InstrumentStruct
 	DateStruct			*firstPayDate;
 	DateStruct			*nextToLastPayDate;
 	bool				endOfMonthPay;
+	double				interestRate;
 } InstrumentStruct;
 typedef struct CalculationsStruct
 {
@@ -40,6 +41,7 @@ typedef struct CalculationsStruct
 	int yieldDayCount;
 	int yieldFreq;
 	int yieldMethod;
+	double modifiedDuration;
 } CalculationsStruct;
 
 extern "C" __declspec(dllexport) char**  getclassdescriptions(int& size);

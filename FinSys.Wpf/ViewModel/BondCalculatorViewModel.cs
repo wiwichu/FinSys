@@ -118,7 +118,8 @@ namespace FinSys.Wpf.ViewModel
                 IssueDate = issueDate,
                 FirstPayDate = firstPayDate,
                 NextToLastPayDate = nextToLastPayDate,
-                EndOfMonthPay = endOfMonthPay
+                EndOfMonthPay = endOfMonthPay,
+                InterestRate = interestRate
             };
             Calculations calculations = new Calculations
             {
@@ -131,12 +132,15 @@ namespace FinSys.Wpf.ViewModel
                 NextPayDate = maturityDate,
                 PrepayModel = 0,
                 PreviousPayDate = issueDate,
-                PriceIn = 0,
+                PriceIn = CleanPrice,
                 PriceOut = 0,
-                YieldIn = 0,
+                YieldIn = yieldDiscount,
                 YieldOut = 0,
                 ServiceFee = 0,
-                Pvbp = 0
+                Pvbp = 0,
+                YieldDayCount = (string)selectedYieldDayCount,
+                YieldFreq = (string)selectedYieldFrequency,
+                YieldMethod = (string)selectedYieldMethod
             };
 
             Instrument instr = null;
@@ -162,7 +166,21 @@ namespace FinSys.Wpf.ViewModel
             EndOfMonthPay = instr.EndOfMonthPay;
             PreviousPayDate = calcs.PreviousPayDate.Date.ToShortDateString();
             NextPayDate = calcs.NextPayDate.Date.ToShortDateString();
-
+            Convexity = calcs.Convexity;
+            Duration = calcs.Duration;
+            Pvbp = calcs.Pvbp;
+            Interest = calcs.Interest;
+            ModifiedDuration = calcs.ModifiedDuration;
+            if (CalculatePrice)
+            {
+                CleanPrice = calcs.PriceOut;
+            }
+            else
+            {
+                YieldDiscount = calcs.YieldOut;
+            }
+            DirtyPrice = CleanPrice + Interest;
+            InterestDays = calcs.InterestDays;
         }
 
         private async void DefaultDates(object obj)
@@ -196,7 +214,10 @@ namespace FinSys.Wpf.ViewModel
                 YieldIn = 0,
                 YieldOut=0,
                 ServiceFee = 0,
-                Pvbp = 0
+                Pvbp = 0,
+                YieldDayCount = (string)selectedYieldDayCount,
+                YieldFreq = (string)selectedYieldFrequency,
+                YieldMethod = (string)selectedYieldMethod
             };
 
             Instrument instr = null;
@@ -277,7 +298,7 @@ namespace FinSys.Wpf.ViewModel
                 EndOfMonthPay = instr.EndOfMonthPay;
                 PreviousPayDate = instr.IssueDate.Date.ToShortDateString();
                 NextPayDate = instr.MaturityDate.Date.ToShortDateString();
-
+               
             }
         }
 

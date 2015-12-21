@@ -272,9 +272,74 @@ int preProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_F
 	{
 		return result;
 	}
+	result = pyfront.setintrate(instrument.interestRate);
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.proc_int_py();
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.setinprice(calculations.priceIn);
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.proc_price_py();
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.setinyield(calculations.yieldIn);
+	if (result != return_success)
+	{
+		return result;
+	}
+	char calcWhat = py_yield_from_price_calc_what;
+	if (calculations.calculatePrice)
+	{
+		calcWhat = py_price_from_yield_calc_what;
+	}
+	result = pyfront.setcalcwhat(calcWhat);
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.setyielddays(day_count_names[calculations.yieldDayCount]);
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.proc_yield_days();
+	if (result != return_success)
+	{
+		return result;
+	}
 
+	result = pyfront.setyieldfreq(freq_names[calculations.yieldFreq]);
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.proc_yield_freq();
+	if (result != return_success)
+	{
+		return result;
+	}
 
-	return return_success;
+	result = pyfront.setyieldmeth(yield_meth_names[calculations.yieldMethod]);
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.proc_yield_meth();
+	if (result != return_success)
+	{
+		return result;
+	}
+
 }
 int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_Front &pyfront)
 {
@@ -364,6 +429,63 @@ int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_
 	calculations.nextPayDate->month = nextCoup.date.months;
 	calculations.nextPayDate->day = nextCoup.date.days;
 
+	long double doubleHold = 0;
+	result = pyfront.getinprice(&doubleHold);
+	if (result != return_success)
+	{
+		return result;
+	}
+	calculations.calculatePrice = doubleHold;
+	result = pyfront.getconvexity(&doubleHold);
+	if (result != return_success)
+	{
+		return result;
+	}
+	calculations.convexity = doubleHold;
+	result = pyfront.getduration(&doubleHold);
+	if (result != return_success)
+	{
+		return result;
+	}
+	calculations.duration = doubleHold;
+	result = pyfront.getmodduration(&doubleHold);
+	if (result != return_success)
+	{
+		return result;
+	}
+	calculations.modifiedDuration = doubleHold;
+	result = pyfront.getinterest(&doubleHold);
+	if (result != return_success)
+	{
+		return result;
+	}
+	calculations.interest = doubleHold;
+	result = pyfront.getoutprice(&doubleHold);
+	if (result != return_success)
+	{
+		return result;
+	}
+	calculations.priceOut = doubleHold;
+	result = pyfront.getpvbp(&doubleHold);
+	if (result != return_success)
+	{
+		return result;
+	}
+	calculations.pvbp = doubleHold;
+	result = pyfront.getoutyield(&doubleHold);
+	if (result != return_success)
+	{
+		return result;
+	}
+	calculations.yieldOut = doubleHold;
+
+	long longHold = 0;
+	result = pyfront.getintdays(&longHold);
+	if (result != return_success)
+	{
+		return result;
+	}
+	calculations.interestDays = longHold;
 
 	return return_success;
 }
@@ -460,8 +582,12 @@ int  calculate(InstrumentStruct &instrument, CalculationsStruct &calculations)
 		return result;
 	}
 
-
-	//result = pyfront.proc_def_dates();
+	result = pyfront.calc_int();
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.calc_py();
 	if (result != return_success)
 	{
 		return result;
