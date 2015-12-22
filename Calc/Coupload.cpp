@@ -524,22 +524,21 @@ date_union base_date;
 				interest = 0;
 
 			}
-
-			return_status = py_frac_per(py_period_length, simp_comp_frac,
-			days_in_year, comp_freq, sett_2_first_fact,
-			py_cal_num, py_date, py_parm, nxt_pay, in_instr
-			,holi_chan, first_simp_comp_frac
-//			, holi_parm
-			,holiSet
-			);
-
-			if (return_status != return_success)
+			if (py_parm->day_count != date_act_act_day_count)
 			{
+				return_status = py_frac_per(py_period_length, simp_comp_frac,
+					days_in_year, comp_freq, sett_2_first_fact,
+					py_cal_num, py_date, py_parm, nxt_pay, in_instr
+					, holi_chan, first_simp_comp_frac
+					//			, holi_parm
+					, holiSet
+					);
 
-
-				return return_status;
+				if (return_status != return_success)
+				{
+					return return_status;
+				}
 			}
-
 			/* If the first payment is passed, load this into the first coupon.*/
 
 			if (py_parm->parm_use == py_yes_parm_use &&
