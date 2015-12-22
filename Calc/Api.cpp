@@ -282,27 +282,41 @@ int preProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_F
 	{
 		return result;
 	}
-	result = pyfront.setinprice(calculations.priceIn);
+	char calcWhat = py_yield_from_price_calc_what;
+	if (calculations.calculatePrice)
+	{
+		calcWhat = py_price_from_yield_calc_what;
+		result = pyfront.setinprice(0);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.setinyield(calculations.yieldIn);
+		if (result != return_success)
+		{
+			return result;
+		}
+	}
+	else
+	{
+		result = pyfront.setinprice(calculations.priceIn);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.setinyield(0);
+		if (result != return_success)
+		{
+			return result;
+		}
+
+	}
+	result = pyfront.setcalcwhat(calcWhat);
 	if (result != return_success)
 	{
 		return result;
 	}
 	result = pyfront.proc_price_py();
-	if (result != return_success)
-	{
-		return result;
-	}
-	result = pyfront.setinyield(calculations.yieldIn);
-	if (result != return_success)
-	{
-		return result;
-	}
-	char calcWhat = py_yield_from_price_calc_what;
-	if (calculations.calculatePrice)
-	{
-		calcWhat = py_price_from_yield_calc_what;
-	}
-	result = pyfront.setcalcwhat(calcWhat);
 	if (result != return_success)
 	{
 		return result;

@@ -31,6 +31,7 @@ namespace FinSys.Wpf.ViewModel
             FirstPayDate = DateTime.Today.AddYears(1);
             IssueDate = DateTime.Today.AddYears(-1);
             NextToLastPayDate = DateTime.Today.AddYears(-1);
+            CleanPrice = 100;
             Initializer();
             LoadCommands();
             
@@ -119,7 +120,7 @@ namespace FinSys.Wpf.ViewModel
                 FirstPayDate = firstPayDate,
                 NextToLastPayDate = nextToLastPayDate,
                 EndOfMonthPay = endOfMonthPay,
-                InterestRate = interestRate
+                InterestRate = interestRate/100
             };
             Calculations calculations = new Calculations
             {
@@ -132,15 +133,16 @@ namespace FinSys.Wpf.ViewModel
                 NextPayDate = maturityDate,
                 PrepayModel = 0,
                 PreviousPayDate = issueDate,
-                PriceIn = CleanPrice,
+                PriceIn = CleanPrice/100,
                 PriceOut = 0,
-                YieldIn = yieldDiscount,
+                YieldIn = yieldDiscount/100,
                 YieldOut = 0,
                 ServiceFee = 0,
                 Pvbp = 0,
                 YieldDayCount = (string)selectedYieldDayCount,
                 YieldFreq = (string)selectedYieldFrequency,
-                YieldMethod = (string)selectedYieldMethod
+                YieldMethod = (string)selectedYieldMethod,
+                CalculatePrice = calculatePrice
             };
 
             Instrument instr = null;
@@ -168,16 +170,16 @@ namespace FinSys.Wpf.ViewModel
             NextPayDate = calcs.NextPayDate.Date.ToShortDateString();
             Convexity = calcs.Convexity;
             Duration = calcs.Duration;
-            Pvbp = calcs.Pvbp;
-            Interest = calcs.Interest;
+            Pvbp = calcs.Pvbp*100;
+            Interest = calcs.Interest*100;
             ModifiedDuration = calcs.ModifiedDuration;
             if (CalculatePrice)
             {
-                CleanPrice = calcs.PriceOut;
+                CleanPrice = calcs.PriceOut*100;
             }
             else
             {
-                YieldDiscount = calcs.YieldOut;
+                YieldDiscount = calcs.YieldOut*100;
             }
             DirtyPrice = CleanPrice + Interest;
             InterestDays = calcs.InterestDays;

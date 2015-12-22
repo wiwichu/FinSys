@@ -55,23 +55,23 @@
             <TextBlock Text="Next Pay: " x:Name="lblNextPay" Margin="5" Grid.Row="3"/>
             <TextBlock  x:Name="lblNextPayResult" Text="{Binding NextPayDate}" Margin="5" Grid.Row="3" Grid.Column="1"/>
             <TextBlock Text="Interest Rate: " x:Name="lblInterestRate" Margin="5" Grid.Column="0" Grid.Row="4" />
-            <TextBox TextAlignment="Right" Text="{Binding InterestRate, StringFormat='#0.##########'}" Grid.Column="1" Grid.Row="4"  Margin="5"/>
+            <TextBox TextAlignment="Right" Text="{Binding InterestRate, StringFormat='#0.00############'}" Grid.Column="1" Grid.Row="4"  Margin="5"/>
             <TextBlock Text="Clean Price: " x:Name="lblCleanPrice" Margin="5" Grid.Column="0" Grid.Row="5" />
-            <TextBox TextAlignment="Right" Text="{Binding CleanPrice, StringFormat='#0.##########'}" Grid.Column="1" Grid.Row="5"  Margin="5"/>
+            <TextBox TextAlignment="Right" Text="{Binding CleanPrice, StringFormat='#0.00############'}" Grid.Column="1" Grid.Row="5"  Margin="5"/>
             <TextBlock Text="Accrued Interest: " x:Name="lblAccruedInterest" Margin="5" Grid.Column="0" Grid.Row="6" />
-            <TextBlock TextAlignment="Right" Text="{Binding Interest, StringFormat='#0.##########'}" Grid.Column="1" Grid.Row="6"  Margin="5"/>
+            <TextBlock TextAlignment="Right" Text="{Binding Interest, StringFormat='#0.00############'}" Grid.Column="1" Grid.Row="6"  Margin="5"/>
             <TextBlock Text="Dirty Price: " x:Name="lblDirtyPrice" Margin="5" Grid.Column="0" Grid.Row="7" />
-            <TextBlock TextAlignment="Right" Text="{Binding DirtyPrice, StringFormat='#0.##########'}" Grid.Column="1" Grid.Row="7"  Margin="5"/>
+            <TextBlock TextAlignment="Right" Text="{Binding DirtyPrice, StringFormat='#0.00############'}" Grid.Column="1" Grid.Row="7"  Margin="5"/>
             <TextBlock Text="Yield/Discount: " x:Name="lblYieldDiscount" Margin="5" Grid.Column="0" Grid.Row="8" />
-            <TextBox TextAlignment="Right" Text="{Binding YieldDiscount, StringFormat='#0.##########'}" Grid.Column="1" Grid.Row="8"  Margin="5"/>
+            <TextBox TextAlignment="Right" Text="{Binding YieldDiscount, StringFormat='#0.00############'}" Grid.Column="1" Grid.Row="8"  Margin="5"/>
             <TextBlock Text="Duration: " x:Name="lblDuration" Margin="5" Grid.Column="0" Grid.Row="9" />
-            <TextBlock TextAlignment="Right" Text="{Binding Duration, StringFormat='#0.##########'}" Grid.Column="1" Grid.Row="9"  Margin="5"/>
+            <TextBlock TextAlignment="Right" Text="{Binding Duration, StringFormat='#0.##############'}" Grid.Column="1" Grid.Row="9"  Margin="5"/>
             <TextBlock Text="Modified Duration: " x:Name="lblModifiedDuration" Margin="5" Grid.Column="0" Grid.Row="10" />
-            <TextBlock TextAlignment="Right" Text="{Binding ModifiedDuration, StringFormat='#0.##########'}" Grid.Column="1" Grid.Row="10"  Margin="5"/>
+            <TextBlock TextAlignment="Right" Text="{Binding ModifiedDuration, StringFormat='#0.##############'}" Grid.Column="1" Grid.Row="10"  Margin="5"/>
             <TextBlock Text="Convexity: " x:Name="lblConvexity" Margin="5" Grid.Column="0" Grid.Row="11" />
-            <TextBlock TextAlignment="Right" Text="{Binding Convexity, StringFormat='#0.##########'}" Grid.Column="1" Grid.Row="11"  Margin="5"/>
+            <TextBlock TextAlignment="Right" Text="{Binding Convexity, StringFormat='#0.##############'}" Grid.Column="1" Grid.Row="11"  Margin="5"/>
             <TextBlock Text="PVBP(+.01): " x:Name="lblPVBP" Margin="5" Grid.Column="0" Grid.Row="12" />
-            <TextBlock TextAlignment="Right" Text="{Binding Pvbp, StringFormat='#0.##########'}" Grid.Column="1" Grid.Row="12"  Margin="5"/>
+            <TextBlock TextAlignment="Right" Text="{Binding Pvbp, StringFormat='#0.##############'}" Grid.Column="1" Grid.Row="12"  Margin="5"/>
 
             <TextBlock Text="Maturity Date: " x:Name="lblMaturityDate" Margin="5" Grid.Column="2"/>
             <DatePicker x:Name="dpMaturityDate" Margin="5" Grid.Column="3" 
