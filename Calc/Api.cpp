@@ -408,6 +408,7 @@ int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_
 	{
 		return result;
 	}
+	calculations.isExCoup = excoupOut;
 	int eomOut = 0;
 	bool eomOutB = false;
 	result = pyfront.getmonthend(&eomOut);

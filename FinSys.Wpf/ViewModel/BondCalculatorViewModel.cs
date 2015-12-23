@@ -129,7 +129,7 @@ namespace FinSys.Wpf.ViewModel
                 Duration = 0,
                 Interest = 0,
                 ExCoupDays = 0,
-                IsExCoup = false,
+                IsExCoup = IsExCoup,
                 NextPayDate = maturityDate,
                 PrepayModel = 0,
                 PreviousPayDate = issueDate,
@@ -207,7 +207,7 @@ namespace FinSys.Wpf.ViewModel
                 Duration = 0,
                 Interest = 0,
                 ExCoupDays = 0,
-                IsExCoup = false,
+                IsExCoup = isExCoup,
                 NextPayDate = maturityDate,
                 PrepayModel = 0,
                 PreviousPayDate = issueDate,
@@ -280,7 +280,7 @@ namespace FinSys.Wpf.ViewModel
                 Duration = 0,
                 Interest = 0,
                 ExCoupDays = 0,
-                IsExCoup = false,
+                IsExCoup = isExCoup,
                 NextPayDate = maturityDate,
                 PrepayModel = 0,
                 PreviousPayDate = issueDate,
@@ -470,6 +470,20 @@ namespace FinSys.Wpf.ViewModel
                 OnPropertyChanged();
             }
         }
+        private bool isExCoup;
+        public bool IsExCoup
+        {
+            get
+            {
+                return isExCoup;
+            }
+            set
+            {
+                isExCoup = value;
+                OnPropertyChanged();
+            }
+        }
+
         private DateTime maturityDate;
         public DateTime MaturityDate
         {

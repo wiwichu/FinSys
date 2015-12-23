@@ -249,7 +249,7 @@ namespace FinSys.Wpf.Services
                 priceOut = 0,
                 pvbp = 0,
                 yieldOut = 0,
-                exCoupDays = 0,
+                exCoupDays = calcs.IsExCoup ? 1:0,
                 calculatePrice = calcs.CalculatePrice ? 1:0,
                 yieldDayCount = dayCounts.IndexOf(calcs.YieldDayCount),
                 yieldFreq = payFreqs.IndexOf(calcs.YieldFreq),
