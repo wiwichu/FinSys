@@ -500,7 +500,44 @@ int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_
 		return result;
 	}
 	calculations.interestDays = longHold;
-
+	char charArg = 0;
+	int intArg = 0;
+	result = pyfront.getclassnumber(&charArg);
+	if (result != return_success)
+	{
+		return result;
+	}
+	instrument.instrumentClass = (int)charArg;
+	result = pyfront.getdaycount(&intArg);
+	if (result != return_success)
+	{
+		return result;
+	}
+	instrument.intDayCount = intArg;
+	result = pyfront.getpayfreq(&intArg);
+	if (result != return_success)
+	{
+		return result;
+	}
+	instrument.intPayFreq = intArg;
+	result = pyfront.getyieldfreq(&intArg);
+	if (result != return_success)
+	{
+		return result;
+	}
+	calculations.yieldFreq = intArg;
+	result = pyfront.getyielddays(&intArg);
+	if (result != return_success)
+	{
+		return result;
+	}
+	calculations.yieldDayCount = intArg;
+	result = pyfront.getyieldmeth(&intArg);
+	if (result != return_success)
+	{
+		return result;
+	}
+	calculations.yieldMethod = intArg;
 	return return_success;
 }
 int  getDefaultDatesAndData(InstrumentStruct &instrument, CalculationsStruct &calculations)
@@ -614,6 +651,35 @@ int  calculate(InstrumentStruct &instrument, CalculationsStruct &calculations)
 
 	return return_success;
 }
+int  getInstrumentDefaultsAndData(InstrumentStruct &instrument, CalculationsStruct &calculations)
+{
+	int result = return_success;
+	Py_Front pyfront;
+	result = preProc(instrument, calculations, pyfront);
+	if (result != return_success)
+	{
+		return result;
+	}
+
+	result = pyfront.setclassdesc(instr_class_descs[instrument.instrumentClass]);
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.proc_class_desc();
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = postProc(instrument, calculations, pyfront);
+	if (result != return_success)
+	{
+		return result;
+	}
+
+	return return_success;
+}
+
 int getInstrumentDefaults(InstrumentStruct &instrument)
 {
 	int result = return_success;

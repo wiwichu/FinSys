@@ -30,6 +30,8 @@ namespace FinSys.Wpf.Services
         private static extern IntPtr getyieldmethods(out int size);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int calculate(InstrumentDescr instrument, CalculationsDescr calculations);
+        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern int getInstrumentDefaultsAndData(InstrumentDescr instrument, CalculationsDescr calculations);
 
 
         private List<string> classes = new List<string>();
@@ -310,10 +312,7 @@ namespace FinSys.Wpf.Services
                 PreviousPayDate = new DateTime(ppdDate.year, ppdDate.month, ppdDate.day),
                 NextPayDate = new DateTime(npdDate.year,npdDate.month,npdDate.day),
                 ValueDate = new DateTime(valDate.year,valDate.month,valDate.day),
-                CalculatePrice = (calcs.calculatePrice == 1),
-                YieldDayCount = dayCounts[calcs.yieldDayCount],
-                YieldFreq = payFreqs[calcs.yieldFreq],
-                YieldMethod = yieldMethods[calcs.yieldMethod] 
+                CalculatePrice = (calcs.calculatePrice == 1)
             };
 
             return calculations;
@@ -402,6 +401,46 @@ namespace FinSys.Wpf.Services
             return result;
         }
 
+        public async Task<KeyValuePair<Instrument, Calculations>> GetInstrumentDefaultsAsync(Instrument instrument, Calculations calculations)
+        {
+            KeyValuePair<Instrument, Calculations> result = await Task.Run(() =>
+            {
+                InstrumentDescr instr = makeInstrumentDescr(instrument);
+                CalculationsDescr calcs = makeCalculationsDescr(calculations);
+                int status = getInstrumentDefaultsAndData(instr,calcs);
+                if (status != 0)
+                {
+                    StringBuilder statusText = new StringBuilder(200);
+                    int textSize;
+                    status = getStatusText(status, statusText, out textSize);
+                    throw new InvalidOperationException(statusText.ToString());
+                }
+                Instrument newInstr = new Instrument
+                {
+                    EndOfMonthPay = (instr.endOfMonthPay == 1),
+                    IntDayCount = dayCounts[instr.intDayCount],
+                    IntPayFreq = payFreqs[instr.intPayFreq],
+                    Class = new InstrumentClass
+                    {
+                        Name = classes[instr.instrumentClass]
+                    }
+                };
+                Calculations newCalcs = new Calculations
+                {
+                    ExCoupDays = calcs.exCoupDays,
+                    IsExCoup = (calcs.isExCoup == 1),
+                    PrepayModel = calcs.prepayModel,
+                    YieldDayCount = dayCounts[calcs.yieldDayCount],
+                    YieldFreq = payFreqs[calcs.yieldFreq],
+                    YieldMethod = yieldMethods[calcs.yieldMethod]
+                };
+
+                return new KeyValuePair<Instrument, Calculations>(newInstr, newCalcs);
+            })
+                .ConfigureAwait(false) //necessary on UI Thread
+                ;
+            return result;
+        }
         public async Task<KeyValuePair<Instrument, Calculations>> CalculateAsync(Instrument instrument, Calculations calculations)
         {
             KeyValuePair<Instrument, Calculations> result = await Task.Run(() =>

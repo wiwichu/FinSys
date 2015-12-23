@@ -260,16 +260,11 @@ namespace FinSys.Wpf.ViewModel
 
         private async void ChangeClass(object obj)
         {
-            InstrumentClass instrumentClass = obj as InstrumentClass;
-            if (instrumentClass == null)
-            {
-                return;
-            }
-            List<Instrument> instruments = new List<Instrument>();
+            InstrumentClass ic = SelectedInstrumentClass as InstrumentClass;
             Instrument instrument = new Instrument
             {
                 Name = "Instrument1",
-                Class = instrumentClass,
+                Class = ic,
                 IntDayCount = (string)SelectedDayCount,
                 IntPayFreq = (string)SelectedPayFreq,
                 MaturityDate = maturityDate,
@@ -278,30 +273,51 @@ namespace FinSys.Wpf.ViewModel
                 NextToLastPayDate = nextToLastPayDate,
                 EndOfMonthPay = endOfMonthPay
             };
-            instruments.Add(instrument);
+            Calculations calculations = new Calculations
+            {
+                ValueDate = valueDate,
+                Convexity = 0,
+                Duration = 0,
+                Interest = 0,
+                ExCoupDays = 0,
+                IsExCoup = false,
+                NextPayDate = maturityDate,
+                PrepayModel = 0,
+                PreviousPayDate = issueDate,
+                PriceIn = CleanPrice / 100,
+                PriceOut = 0,
+                YieldIn = yieldDiscount / 100,
+                YieldOut = 0,
+                ServiceFee = 0,
+                Pvbp = 0,
+                YieldDayCount = (string)selectedYieldDayCount,
+                YieldFreq = (string)selectedYieldFrequency,
+                YieldMethod = (string)selectedYieldMethod,
+                CalculatePrice = calculatePrice
+            };
+
+            Instrument instr = null;
+            Calculations calcs = null;
+            KeyValuePair<Instrument, Calculations> kvp = new KeyValuePair<Instrument, Calculations>(instr, calcs);
             try
             {
-                instruments = await RepositoryFactory.Calculator.GetInstrumentDefaultsAsync(instruments);
+                kvp = await RepositoryFactory.Calculator.GetInstrumentDefaultsAsync(instrument, calculations);
             }
             catch (InvalidOperationException ex)
             {
                 dialogService.ShowMessageBox(ex.Message);
                 return;
             }
-            if (instruments != null && instruments.Count >0)
-            {
-                Instrument instr = instruments[0];
-                SelectedDayCount = instr.IntDayCount;
-                SelectedPayFreq = instr.IntPayFreq;
-                MaturityDate = instr.MaturityDate;
-                IssueDate = instr.IssueDate;
-                FirstPayDate = instr.FirstPayDate;
-                NextToLastPayDate = instr.NextToLastPayDate;
-                EndOfMonthPay = instr.EndOfMonthPay;
-                PreviousPayDate = instr.IssueDate.Date.ToShortDateString();
-                NextPayDate = instr.MaturityDate.Date.ToShortDateString();
-               
-            }
+
+            instr = kvp.Key;
+            calcs = kvp.Value;
+
+            SelectedDayCount = instr.IntDayCount;
+            SelectedPayFreq = instr.IntPayFreq;
+            SelectedYieldDayCount = calcs.YieldDayCount;
+            SelectedYieldFrequency = calcs.YieldFreq;
+            SelectedYieldMethod = calcs.YieldMethod;
+            EndOfMonthPay = instr.EndOfMonthPay;
         }
 
         private bool CanOpenWindow(object obj)
