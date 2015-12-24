@@ -59,12 +59,12 @@ namespace FinSys.Wpf.ViewModel
             {
                 SelectedYieldFrequency = yieldFrequency[0];
             }
-            YieldMethod = new ObservableCollection<string>(RepositoryFactory.Calculator.GetYieldMethodsAsync().Result);
+            YieldMethod = new ObservableCollection<string>(RepositoryFactory.Calculator.GetYieldMethodsAsync().Result.Where((c) => c != "MBS"));
             if (YieldMethod.Count > 0)
             {
                 SelectedYieldMethod = yieldMethod[0];
-            }
-            InstrumentClasses = new ObservableCollection<InstrumentClass>(RepositoryFactory.Calculator.GetInstrumentClassesAsync().Result.Where((c) => c.Name != "MBS"));
+            }           InstrumentClasses = new ObservableCollection<InstrumentClass>(RepositoryFactory.Calculator.GetInstrumentClassesAsync().Result.Where((c) => c.Name != "MBS"));
+ 
             if (instrumentClasses.Count>0)
             {
                 SelectedInstrumentClass = instrumentClasses[0];

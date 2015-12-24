@@ -359,11 +359,19 @@ int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_
 {
 
 	Date_Funcs::date_union matDateOut;
+	DateStruct tmpDate;
+	tmpDate.year = 1;
+	tmpDate.month = 1;
+	tmpDate.day = 1;
 
 	int result = pyfront.getmatdate(matDateOut);
 	if (result != return_success)
 	{
 		return result;
+	}
+	if (instrument.maturityDate == null)
+	{
+		instrument.maturityDate = new DateStruct(tmpDate);
 	}
 	instrument.maturityDate->day = matDateOut.date.days;
 	instrument.maturityDate->month = matDateOut.date.months;
@@ -376,6 +384,10 @@ int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_
 	{
 		return result;
 	}
+	if (instrument.issueDate == null)
+	{
+		instrument.issueDate = new DateStruct(tmpDate);
+	}
 	instrument.issueDate->day = issDateOut.date.days;
 	instrument.issueDate->month = issDateOut.date.months;
 	instrument.issueDate->year = issDateOut.date.centuries * 100 + issDateOut.date.years;
@@ -387,6 +399,11 @@ int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_
 	{
 		return result;
 	}
+	if (instrument.firstPayDate == null)
+	{
+		instrument.firstPayDate = new DateStruct(tmpDate);
+	}
+
 	instrument.firstPayDate->day = firstDateOut.date.days;
 	instrument.firstPayDate->month = firstDateOut.date.months;
 	instrument.firstPayDate->year = firstDateOut.date.centuries * 100 + firstDateOut.date.years;
@@ -397,6 +414,10 @@ int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_
 	if (result != return_success)
 	{
 		return result;
+	}
+	if (instrument.nextToLastPayDate == null)
+	{
+		instrument.nextToLastPayDate = new DateStruct(tmpDate);
 	}
 	instrument.nextToLastPayDate->day = penultDateOut.date.days;
 	instrument.nextToLastPayDate->month = penultDateOut.date.months;
@@ -430,6 +451,11 @@ int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_
 	{
 		return result;
 	}
+	if (calculations.previousPayDate == null)
+	{
+		calculations.previousPayDate = new DateStruct(tmpDate);
+	}
+
 	calculations.previousPayDate->year = prevCoup.date.centuries*100 + prevCoup.date.years;
 	calculations.previousPayDate->month = prevCoup.date.months;
 	calculations.previousPayDate->day = prevCoup.date.days;
@@ -439,6 +465,10 @@ int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_
 	if (result != return_success)
 	{
 		return result;
+	}
+	if (calculations.nextPayDate == null)
+	{
+		calculations.nextPayDate = new DateStruct(tmpDate);
 	}
 	calculations.nextPayDate->year = nextCoup.date.centuries*100+ nextCoup.date.years;
 	calculations.nextPayDate->month = nextCoup.date.months;
@@ -582,36 +612,44 @@ int  calculate(InstrumentStruct &instrument, CalculationsStruct &calculations)
 		return result;
 	}
 
-	Date_Funcs::date_union issDate;
-	issDate.date.centuries = instrument.issueDate->year / 100;
-	issDate.date.years = instrument.issueDate->year % 100;
-	issDate.date.months = instrument.issueDate->month;
-	issDate.date.days = instrument.issueDate->day % 100;
-	result = pyfront.setissuedate(issDate);
-	if (result != return_success)
+	if (instrument.issueDate != null)
 	{
-		return result;
+		Date_Funcs::date_union issDate;
+		issDate.date.centuries = instrument.issueDate->year / 100;
+		issDate.date.years = instrument.issueDate->year % 100;
+		issDate.date.months = instrument.issueDate->month;
+		issDate.date.days = instrument.issueDate->day % 100;
+		result = pyfront.setissuedate(issDate);
+		if (result != return_success)
+		{
+			return result;
+		}
 	}
-	Date_Funcs::date_union fpdDate;
-	fpdDate.date.centuries = instrument.firstPayDate->year / 100;
-	fpdDate.date.years = instrument.firstPayDate->year % 100;
-	fpdDate.date.months = instrument.firstPayDate->month;
-	fpdDate.date.days = instrument.firstPayDate->day % 100;
-	result = pyfront.setfirstdate(fpdDate);
-	if (result != return_success)
+	if (instrument.firstPayDate != null)
 	{
-		return result;
+		Date_Funcs::date_union fpdDate;
+		fpdDate.date.centuries = instrument.firstPayDate->year / 100;
+		fpdDate.date.years = instrument.firstPayDate->year % 100;
+		fpdDate.date.months = instrument.firstPayDate->month;
+		fpdDate.date.days = instrument.firstPayDate->day % 100;
+		result = pyfront.setfirstdate(fpdDate);
+		if (result != return_success)
+		{
+			return result;
+		}
 	}
-
-	Date_Funcs::date_union ntlDate;
-	ntlDate.date.centuries = instrument.nextToLastPayDate->year / 100;
-	ntlDate.date.years = instrument.nextToLastPayDate->year % 100;
-	ntlDate.date.months = instrument.nextToLastPayDate->month;
-	ntlDate.date.days = instrument.nextToLastPayDate->day % 100;
-	result = pyfront.setpenultdate(ntlDate);
-	if (result != return_success)
+	if (instrument.nextToLastPayDate != null)
 	{
-		return result;
+		Date_Funcs::date_union ntlDate;
+		ntlDate.date.centuries = instrument.nextToLastPayDate->year / 100;
+		ntlDate.date.years = instrument.nextToLastPayDate->year % 100;
+		ntlDate.date.months = instrument.nextToLastPayDate->month;
+		ntlDate.date.days = instrument.nextToLastPayDate->day % 100;
+		result = pyfront.setpenultdate(ntlDate);
+		if (result != return_success)
+		{
+			return result;
+		}
 	}
 	result = pyfront.proc_iss_date_py();
 	if (result != return_success)

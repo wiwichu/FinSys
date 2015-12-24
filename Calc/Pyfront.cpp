@@ -797,6 +797,7 @@ unsigned long FAR _export	Py_Front::proc_yield_freq_py()
 	{
 
 		pyparm.comp_freq = 12;
+		current_yield_freq = 0;
 
 	}
 
@@ -807,6 +808,7 @@ unsigned long FAR _export	Py_Front::proc_yield_freq_py()
 		{
 
 			pyparm.comp_freq = 1;
+			current_yield_freq = 1;
 
 		}
 		else
@@ -815,6 +817,7 @@ unsigned long FAR _export	Py_Front::proc_yield_freq_py()
 			{
 
 				pyparm.comp_freq = 3;
+				current_yield_freq = 2;
 
 			}
 
@@ -825,6 +828,7 @@ unsigned long FAR _export	Py_Front::proc_yield_freq_py()
 				{
 
 					pyparm.comp_freq = 6;
+					current_yield_freq = 3;
 
 				}
 				else
@@ -843,7 +847,6 @@ unsigned long FAR _export	Py_Front::proc_yield_freq_py()
 
 
 	pyparm.parm_use = py_yes_parm_use;
-	current_yield_freq = pyparm.comp_freq;
 	return return_success;
 }
 unsigned long FAR _export	 	Py_Front::proc_day_count_py()
