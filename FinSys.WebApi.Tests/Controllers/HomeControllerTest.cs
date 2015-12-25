@@ -8,6 +8,7 @@ namespace FinSys.WebApi.Tests.Controllers
     [TestClass]
     public class HomeControllerTest
     {
+        /*
         [TestMethod]
         public void Index()
         {
@@ -21,5 +22,6 @@ namespace FinSys.WebApi.Tests.Controllers
             Assert.IsNotNull(result);
             Assert.AreEqual("Home Page", result.ViewBag.Title);
         }
+        */
     }
 }
