@@ -1370,6 +1370,12 @@ unsigned long FAR _export	Py_Front::proc_iss_date_py()
 	{
 		return return_err_iss_date_bad;
 	}
+	datecpy(in_instr.issue_date.date_string, issue_date.date_string);
+	return_state = set_accrue_date_py();
+	if (return_state != return_success)
+	{
+		return return_state;
+	}
 	return return_success;
 }
 unsigned long FAR _export	Py_Front::proc_val_date_py()
