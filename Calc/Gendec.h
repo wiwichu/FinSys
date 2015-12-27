@@ -1,3 +1,4 @@
+#pragma once
 
 #ifndef __gendec_H
 #define __gendec_H
@@ -23,7 +24,7 @@
 
 const char date_default = 0;
 const char int_default = 99;
-
+//bool calcSlow;
 typedef struct instr_a{
 
 			int		instr_class;

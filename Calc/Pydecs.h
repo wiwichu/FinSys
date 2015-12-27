@@ -138,6 +138,8 @@ public:
 Py_Funcs();
 //Py_Funcs(CDB * DB_parm);
 
+bool calcSlow;
+
   typedef struct	py_parms	{char	parm_use;
 				 /*{parm_use indicates whether the parameters are used, or standards are taken from the
 				 yield method. See py_xxx_parm_use for allowable values.}*/
@@ -215,7 +217,7 @@ Py_Funcs();
 				 /*{ price_var is the acceptable price variation when calculating yield.}*/
 				}
 		py_parms;
-
+		unsigned long forceSlowCalc_py(bool forceSlowCalc);
   unsigned long py_calc( instr,  date_union,
 			 long double *,  long double *,
 			 long double *,  long double *,
@@ -362,7 +364,7 @@ private:
 			long double *, char, date_union,	py_parms *,
 			date_union, instr *, unsigned int, char *
 //			,holidays_struct []
-			,const set<string> &holiSet
+			,const set<string> &holiSet, long double *last_2_mat_fact
 			);
 
 
@@ -445,7 +447,8 @@ unsigned long   fast_calc_check(booleans *, instr, long double,
 			,const set<string> &holiSet
 			, long, long double,
 			int *, insevent_struct rate_array [], int *,
-			booleans, pay_struc [], long double first_int);
+			booleans, pay_struc [], long double first_int
+			,long double *last_2_mat_fact);
 
 
   unsigned long	py_pv_coups(char, char, long double, long double *, long double,
@@ -456,7 +459,7 @@ unsigned long   fast_calc_check(booleans *, instr, long double,
 			unsigned int
 //			, holidays_struct []
 			, instr, int,
-			long double *, int *, int, pay_struc []);
+			long double *, int *, int, pay_struc [],long double last_2_mat_fact);
 
   unsigned long	py_get_disc(date_union, long double *);
 

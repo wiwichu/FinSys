@@ -633,6 +633,7 @@ int  calculate(InstrumentStruct &instrument, CalculationsStruct &calculations)
 		fpdDate.date.months = instrument.firstPayDate->month;
 		fpdDate.date.days = instrument.firstPayDate->day % 100;
 		result = pyfront.setfirstdate(fpdDate);
+		pyfront.forceSlowCalc(true);
 		if (result != return_success)
 		{
 			return result;
@@ -645,6 +646,7 @@ int  calculate(InstrumentStruct &instrument, CalculationsStruct &calculations)
 		ntlDate.date.years = instrument.nextToLastPayDate->year % 100;
 		ntlDate.date.months = instrument.nextToLastPayDate->month;
 		ntlDate.date.days = instrument.nextToLastPayDate->day % 100;
+		pyfront.forceSlowCalc(true);
 		result = pyfront.setpenultdate(ntlDate);
 		if (result != return_success)
 		{

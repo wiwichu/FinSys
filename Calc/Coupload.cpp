@@ -21,7 +21,8 @@ unsigned long	_PYFUNCS py_coup_load( char py_period_length, char *simp_comp_frac
 					,long days_sett_to_mat, long double pay_freq,
 					int *coups_left, insevent_struct rate_array [max_rates],
 					int *pay_array_index, booleans fast_calc,
-					pay_struc pay_array_a [max_coups], long double first_int)
+					pay_struc pay_array_a [max_coups], long double first_int,
+					long double *last_2_mat_fact)
 
 {
 
@@ -472,11 +473,16 @@ date_union base_date;
 
 				{
 
-					datecpy(base_date.date_string,  in_instr->mat_date.date_string);
-					datecpy(date_hold.date_string,  in_instr->mat_date.date_string);
+					date_cmp2 = datecmp(nxt_pay.date_string,
+						in_instr->pre_last_pay.date_string);
+					if (date_cmp2 != 0)
 
-					date_cmp = 0;
+					{
+						datecpy(base_date.date_string, in_instr->mat_date.date_string);
+						datecpy(date_hold.date_string, in_instr->mat_date.date_string);
 
+						date_cmp = 0;
+					}
 				}
 
 			}
@@ -531,7 +537,7 @@ date_union base_date;
 					py_cal_num, py_date, py_parm, nxt_pay, in_instr
 					, holi_chan, first_simp_comp_frac
 					//			, holi_parm
-					, holiSet
+					, holiSet,last_2_mat_fact
 					);
 
 				if (return_status != return_success)
@@ -590,13 +596,28 @@ unsigned long	_PYFUNCS py_frac_per(char py_period_length, char *simp_comp_frac,
 			py_parms *py_parm, date_union nxt_pay, instr *in_instr,
 			unsigned int holi_chan, char *first_simp_comp_frac
 //			,holidays_struct holi_parm []
-			,const set<string> &holiSet
+			,const set<string> &holiSet, long double *last_2_mat_fact
 			)
 
 {
 
 #include "locals.h"
 long days_to_next = 0;
+
+long last_to_mat_days = 0;
+return_status = tenor(in_instr->pre_last_pay,
+	in_instr->mat_date,
+	py_cal_num,
+	&last_to_mat_days);
+
+if (return_status != return_success)
+{
+
+
+	return return_status;
+}
+
+*last_2_mat_fact = last_to_mat_days / (days_in_year / comp_freq);
 
 
 	if (py_period_length == py_total_days_per_len)
@@ -643,6 +664,8 @@ long days_to_next = 0;
 			}
 
 			*sett_2_first_fact = days_to_next/(days_in_year/comp_freq);
+
+
 
 	  }
 	}
@@ -779,7 +802,7 @@ unsigned long	_PYFUNCS py_pv_coups(char py_period_length, char simp_comp_frac,
 			, instr in_instr,
 			int coups_left, long double *comp_freq_hold,
 			int *pay_array_index, int fast_calc,
-			pay_struc pay_array_a [max_coups] )
+			pay_struc pay_array_a [max_coups] , long double last_2_mat_fact)
 
 {
 
@@ -834,6 +857,7 @@ unsigned int this_cycle = 0;
 unsigned int cycle_count = 0;
 int cycle_adj = 0;
 unsigned int extra_cycles = 0;
+unsigned int extra_end_cycles = 0;
 unsigned int comp_pay_int_ratio = 0;
 
 	*coups_prime = 0;
@@ -866,6 +890,7 @@ unsigned int comp_pay_int_ratio = 0;
 	comp_pay_ratio = *comp_freq/pay_freq;
 
 	sett_2_first_fact= sett_2_first_fact * comp_pay_ratio;
+	last_2_mat_fact = last_2_mat_fact * comp_pay_ratio;
 
 	if (*comp_freq > pay_freq)
 
@@ -879,6 +904,7 @@ unsigned int comp_pay_int_ratio = 0;
 	  first coupon.}*/
 
 	  extra_cycles = (unsigned int)(sett_2_first_fact/1);
+	  extra_end_cycles = (unsigned int)(last_2_mat_fact / 1);
 
 	  cycle_count = cycle_count + extra_cycles;
 
@@ -1376,7 +1402,8 @@ unsigned int comp_pay_int_ratio = 0;
 					wf = (1 / (1 + *work_yield/ *comp_freq));
 
 					*pv_coups =
-						( pay_array_a[this_coup].payment +
+						( pay_array_a[this_coup].payment 
+							+
 						((in_instr.rate_offset/ *comp_freq) *
 						((1 / (1 + *work_yield/ *comp_freq)) -
 						pow((1 / (1 + *work_yield/ *comp_freq)),coups_left)) /

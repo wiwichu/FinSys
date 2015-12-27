@@ -6,6 +6,14 @@
 _PYFUNCS Py_Funcs()
 {
 }
+
+unsigned long 	_PYFUNCS forceSlowCalc_py(bool forceSlowCalc)
+{
+	bool result = return_success;
+	calcSlow = forceSlowCalc;
+	return result;
+}
+
 /*
 _PYFUNCS Py_Funcs(CDB * DB_parm) : Int_Calcs (DB_parm)
 {
@@ -187,6 +195,7 @@ long double comp_freq_hold = 0;	/*{ Holds the frequency of compounding per year.
 long double pay_freq = 0;	/*{ Holds the frequency of payments.}*/
 long double freq_adj = 0;	/*{ Holds the frequency of payments.}*/
 long double sett_2_first_fact = 0;
+long double last_2_mat_fact = 0;
 long double simp_frac = 0;
 long double comp_frac = 0;
 long double price_var = 0;		/*{ Price_var holds the acceptable price variance when calculating yield.}*/
@@ -637,7 +646,7 @@ date_union prev_date;
 				,holiSet
 				,days_sett_to_mat, pay_freq, &coups_left,
 				rate_array, &pay_array_index, fast_calc,
-				pay_array_a, first_int);
+				pay_array_a, first_int,&last_2_mat_fact);
 
 	if (return_status)
 	{
@@ -779,7 +788,7 @@ date_union prev_date;
 //					, holi_parm
 					, in_instr,
 					coups_left, &comp_freq_hold, &pay_array_index,
-					fast_calc, pay_array_a);
+					fast_calc, pay_array_a,last_2_mat_fact);
 
 		if (return_status)
 		{
@@ -2110,7 +2119,18 @@ unsigned long  _PYFUNCS fast_calc_check(booleans *fast_calc, instr in_instr,
 #include "locals.h"
 
   return_status = return_success;
+  if (calcSlow)
+  {
 
+	  *fast_calc = isfalse;
+	  if (coups_left >= max_coups)
+	  {
+
+		  return_status = return_err_max_coups;
+
+	  }
+	  return return_status;
+  }
   if(
 		((in_instr.instr_class != instr_cashflow_class) &&
 		 (in_instr.pay_type == instr_fixed_pay_type) &&

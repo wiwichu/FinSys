@@ -2817,6 +2817,8 @@ unsigned long FAR _export	Py_Front::calc_int_py()
 
 	return return_success;
 }
+
+
 unsigned long FAR _export	Py_Front::calc_py_py()
 {
 	return_state = check_all_parms_py();
@@ -4321,6 +4323,12 @@ unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::calc_int()
 	return calc_int_py();
 //action = py_calc_int;
 //return pyproc45();
+
+}
+
+unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::forceSlowCalc(bool slowCalc)
+{
+	return forceSlowCalc_py(slowCalc);
 
 }
 
