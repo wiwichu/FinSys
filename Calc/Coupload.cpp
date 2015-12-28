@@ -1021,23 +1021,81 @@ unsigned int comp_pay_int_ratio = 0;
 						/*{ Find the number of days in this period.}*/
 
 						unsigned int prev_index = this_coup - 1;
-						long days_to_pay;
-						return_status = tenor(pay_array_a[prev_index].pay_date,
-							pay_array_a[this_coup].pay_date,
-							py_cal_num,
-							&days_to_pay);
 
 						if (return_status != return_success)
 						{
 							return return_status;
 						}
-						if (days_to_pay > days_in_per)
+
+						int months_per = 0;
+						switch (in_instr.pay_freq.period)
 						{
-							num_pers = num_pers - 1 + (long double)days_to_pay / days_in_per;
+
+						case event_sched_month_period:
+
+						{ months_per = in_instr.pay_freq.freq;
+						break;
 						}
-						else if (days_to_pay < days_in_per)
+
+						case event_sched_end_period:
+
+						{ months_per = 12;
+						break;
+						}
+
+						default:
+
 						{
-							num_pers = num_pers + days_to_pay - days_in_per;
+							return_status = return_err_invalid_period;
+							return return_status;
+						}
+						}
+						date_union quasi_prv_pay = pay_array_a[prev_index].pay_date;
+						date_union quasi_nxt_pay = pay_array_a[this_coup].pay_date;
+						int cmpnp = datecmp(quasi_prv_pay.date_string,
+							quasi_nxt_pay.date_string);
+						num_pers--;
+						while (cmpnp < 0)
+						{
+							return_status = forecast(quasi_prv_pay,
+								months_per,
+								0,
+								in_instr.cal_den,
+								&quasi_nxt_pay);
+							if (return_status != return_success)
+							{
+								return return_status;
+							}
+							cmpnp = datecmp(quasi_nxt_pay.date_string,
+								pay_array_a[this_coup].pay_date.date_string);
+							if (cmpnp <= 0)
+							{
+								num_pers++;
+							}
+							else
+							{
+								long days_to_pay;
+								long per_days;
+								return_status = tenor(quasi_prv_pay,
+									pay_array_a[this_coup].pay_date,
+									py_cal_num,
+									&days_to_pay);
+								if (return_status != return_success)
+								{
+									return return_status;
+								}
+								return_status = tenor(quasi_prv_pay,
+									quasi_nxt_pay,
+									in_instr.cal_den,
+									&per_days);
+								if (return_status != return_success)
+								{
+									return return_status;
+								}
+								num_pers += (long double)days_to_pay / per_days;
+							}
+
+							quasi_prv_pay = quasi_nxt_pay;
 						}
 					}
 
