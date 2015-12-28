@@ -632,8 +632,21 @@ int  calculate(InstrumentStruct &instrument, CalculationsStruct &calculations)
 		fpdDate.date.years = instrument.firstPayDate->year % 100;
 		fpdDate.date.months = instrument.firstPayDate->month;
 		fpdDate.date.days = instrument.firstPayDate->day % 100;
+		Date_Funcs::date_union holdDate;
+		result = pyfront.getfirstdate(holdDate);
+		if (
+			!
+			(
+				fpdDate.date.centuries == holdDate.date.centuries &&
+				fpdDate.date.years == holdDate.date.years &&
+				fpdDate.date.months == holdDate.date.months &&
+				fpdDate.date.days == holdDate.date.days
+				)
+			)
+		{
+			pyfront.forceSlowCalc(true);
+		}
 		result = pyfront.setfirstdate(fpdDate);
-		pyfront.forceSlowCalc(true);
 		if (result != return_success)
 		{
 			return result;
@@ -646,7 +659,20 @@ int  calculate(InstrumentStruct &instrument, CalculationsStruct &calculations)
 		ntlDate.date.years = instrument.nextToLastPayDate->year % 100;
 		ntlDate.date.months = instrument.nextToLastPayDate->month;
 		ntlDate.date.days = instrument.nextToLastPayDate->day % 100;
-		pyfront.forceSlowCalc(true);
+		Date_Funcs::date_union holdDate;
+		result = pyfront.getpenultdate(holdDate);
+		if (
+			!
+			(
+				ntlDate.date.centuries == holdDate.date.centuries &&
+				ntlDate.date.years == holdDate.date.years &&
+				ntlDate.date.months == holdDate.date.months &&
+				ntlDate.date.days == holdDate.date.days
+				)
+			)
+		{
+			pyfront.forceSlowCalc(true);
+		}
 		result = pyfront.setpenultdate(ntlDate);
 		if (result != return_success)
 		{

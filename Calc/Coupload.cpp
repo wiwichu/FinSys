@@ -582,7 +582,7 @@ date_union base_date;
 	  }
 	 }
 	}
-
+	coup_count--;
 py_coup_load_end:
 
 	return return_status;
@@ -1013,6 +1013,33 @@ unsigned int comp_pay_int_ratio = 0;
 				  {
 
 					num_pers = num_pers + comp_pay_ratio;
+
+					// Adjust last period for odd coupons is the value date is not in the last period
+
+					if (!fast_calc && this_coup != 0 && ((this_cycle +1) == cycle_count)  )
+					{
+						/*{ Find the number of days in this period.}*/
+
+						unsigned int prev_index = this_coup - 1;
+						long days_to_pay;
+						return_status = tenor(pay_array_a[prev_index].pay_date,
+							pay_array_a[this_coup].pay_date,
+							py_cal_num,
+							&days_to_pay);
+
+						if (return_status != return_success)
+						{
+							return return_status;
+						}
+						if (days_to_pay > days_in_per)
+						{
+							num_pers = num_pers - 1 + (long double)days_to_pay / days_in_per;
+						}
+						else if (days_to_pay < days_in_per)
+						{
+							num_pers = num_pers + days_to_pay - days_in_per;
+						}
+					}
 
 				  }
 

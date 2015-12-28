@@ -5,6 +5,7 @@
 
 _PYFUNCS Py_Funcs()
 {
+	calcSlow = false;
 }
 
 unsigned long 	_PYFUNCS forceSlowCalc_py(bool forceSlowCalc)
