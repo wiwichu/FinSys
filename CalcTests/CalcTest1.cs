@@ -860,17 +860,16 @@ namespace CalcTests
             CalculationsDescr calculations = new CalculationsDescr();
             instrument.instrumentClass = (int)TestHelper.instr_class_descs.instr_ustbo_class_desc;
 
-            DateDescr matDate = new DateDescr { year = 2005, month = 3, day = 1 };
-            DateDescr valueDate = new DateDescr { year = 1992, month = 11, day = 11 };
-            DateDescr issueDate = new DateDescr { year = 1992, month = 10, day = 15 };
-            DateDescr firstPayDate = new DateDescr { year = 1993, month = 3, day = 1 };
+            DateDescr matDate = new DateDescr { year = 2021, month = 3, day = 1 };
+            DateDescr valueDate = new DateDescr { year = 2008, month = 11, day = 11 };
+            DateDescr issueDate = new DateDescr { year = 2008, month = 10, day = 15 };
+            DateDescr firstPayDate = new DateDescr { year = 2009, month = 3, day = 1 };
+            //DateDescr preLastPayDate = new DateDescr { year = 2009, month = 3, day = 1 };
 
             instrument.maturityDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             instrument.issueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
-            instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
-            Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
             calculations.valueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
             int status = getInstrumentDefaultsAndData(instrument, calculations);
@@ -893,10 +892,16 @@ namespace CalcTests
                 throw new InvalidOperationException(statusText.ToString());
             }
             double result = 0.0625;
-            calculations.priceIn = 1.136;
+            calculations.priceIn = 1.1359771747;
             calculations.calculatePrice = 0;
             calculations.yieldMethod = (int)TestHelper.yield_method.py_ustr_yield_meth;
             instrument.interestRate = 0.0785;
+            //instrument.nextToLastPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            //Marshal.StructureToPtr(preLastPayDate, instrument.nextToLastPayDate, false);
+            instrument.issueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
+            instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
             status = calculate(instrument, calculations);
             if (status != 0)
             {
@@ -905,7 +910,7 @@ namespace CalcTests
                 status = getStatusText(status, statusText, out textSize);
                 throw new InvalidOperationException(statusText.ToString());
             }
-            Assert.IsTrue(Math.Abs(result - calculations.yieldOut) < .0005);
+            Assert.IsTrue(Math.Abs(result - calculations.yieldOut) < .000000005);
             GC.KeepAlive(instrument);
             GC.KeepAlive(calculations);
 
@@ -917,17 +922,16 @@ namespace CalcTests
             CalculationsDescr calculations = new CalculationsDescr();
             instrument.instrumentClass = (int)TestHelper.instr_class_descs.instr_ustbo_class_desc;
 
-            DateDescr matDate = new DateDescr { year = 2005, month = 3, day = 1 };
-            DateDescr valueDate = new DateDescr { year = 1992, month = 11, day = 11 };
-            DateDescr issueDate = new DateDescr { year = 1992, month = 10, day = 15 };
-            DateDescr firstPayDate = new DateDescr { year = 1993, month = 3, day = 1 };
+            DateDescr matDate = new DateDescr { year = 2021, month = 3, day = 1 };
+            DateDescr valueDate = new DateDescr { year = 2008, month = 11, day = 11 };
+            DateDescr issueDate = new DateDescr { year = 2008, month = 10, day = 15 };
+            DateDescr firstPayDate = new DateDescr { year = 2009, month = 3, day = 1 };
+            //DateDescr preLastPayDate = new DateDescr { year = 2009, month = 3, day = 1 };
 
             instrument.maturityDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             instrument.issueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
-            instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
-            Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
             calculations.valueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
             int status = getInstrumentDefaultsAndData(instrument, calculations);
@@ -949,11 +953,17 @@ namespace CalcTests
                 status = getStatusText(status, statusText, out textSize);
                 throw new InvalidOperationException(statusText.ToString());
             }
-            double result = 1.136;
+            double result = 1.13597717474079;
             calculations.yieldIn = 0.0625;
             calculations.calculatePrice = 1;
             calculations.yieldMethod = (int)TestHelper.yield_method.py_ustr_yield_meth;
             instrument.interestRate = 0.0785;
+            //instrument.nextToLastPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            //Marshal.StructureToPtr(preLastPayDate, instrument.nextToLastPayDate, false);
+            instrument.issueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
+            instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
             status = calculate(instrument, calculations);
             if (status != 0)
             {
@@ -962,7 +972,7 @@ namespace CalcTests
                 status = getStatusText(status, statusText, out textSize);
                 throw new InvalidOperationException(statusText.ToString());
             }
-            Assert.IsTrue(Math.Abs(result - calculations.priceOut) < .0005);
+            Assert.IsTrue(Math.Abs(result - calculations.priceOut) < .000000005);
             GC.KeepAlive(instrument);
             GC.KeepAlive(calculations);
 
@@ -977,9 +987,7 @@ namespace CalcTests
             DateDescr matDate = new DateDescr { year = 2009, month = 3, day = 20 };
             DateDescr valueDate = new DateDescr { year = 2006, month = 9, day = 10 };
 //            DateDescr issueDate = new DateDescr { year = 2000, month = 1, day = 1 };
-            DateDescr firstPayDate = new DateDescr { year = 2004, month = 3, day = 10 };
-            DateDescr preLastPayDate = new DateDescr { year = 2008, month = 9, day = 10 };
-
+ 
             instrument.maturityDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             calculations.valueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
@@ -998,12 +1006,6 @@ namespace CalcTests
             calculations.yieldDayCount = (int)TestHelper.day_counts.date_30_360US_day_count;
             calculations.yieldFreq = (int)TestHelper.frequency.frequency_semiannually;
 
-            instrument.nextToLastPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
-            Marshal.StructureToPtr(preLastPayDate, instrument.nextToLastPayDate, false);
-//            instrument.issueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
- //           Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
-            instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
-            Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
             status = getDefaultDatesAndData(instrument, calculations);
@@ -1019,6 +1021,14 @@ namespace CalcTests
             calculations.calculatePrice = 1;
             calculations.yieldMethod = (int)TestHelper.yield_method.py_aibd_yield_meth;
             instrument.interestRate = 0.05;
+            DateDescr firstPayDate = new DateDescr { year = 2004, month = 3, day = 10 };
+            DateDescr preLastPayDate = new DateDescr { year = 2008, month = 9, day = 10 };
+            instrument.nextToLastPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(preLastPayDate, instrument.nextToLastPayDate, false);
+            //            instrument.issueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            //           Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
+            instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
             status = calculate(instrument, calculations);
             if (status != 0)
             {
@@ -1027,7 +1037,7 @@ namespace CalcTests
                 status = getStatusText(status, statusText, out textSize);
                 throw new InvalidOperationException(statusText.ToString());
             }
-            Assert.IsTrue(Math.Abs(result - calculations.priceOut) < .0000005);
+            Assert.IsTrue(Math.Abs(result - calculations.priceOut) < .000000005);
             GC.KeepAlive(instrument);
             GC.KeepAlive(calculations);
 
@@ -1063,12 +1073,6 @@ namespace CalcTests
             calculations.yieldDayCount = (int)TestHelper.day_counts.date_30_360US_day_count;
             calculations.yieldFreq = (int)TestHelper.frequency.frequency_semiannually;
 
-            instrument.nextToLastPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
-            Marshal.StructureToPtr(preLastPayDate, instrument.nextToLastPayDate, false);
-            //            instrument.issueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
-            //           Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
-            instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
-            Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
             status = getDefaultDatesAndData(instrument, calculations);
@@ -1084,6 +1088,12 @@ namespace CalcTests
             calculations.calculatePrice = 1;
             calculations.yieldMethod = (int)TestHelper.yield_method.py_aibd_yield_meth;
             instrument.interestRate = 0.05;
+            instrument.nextToLastPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(preLastPayDate, instrument.nextToLastPayDate, false);
+            //            instrument.issueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            //           Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
+            instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
             status = calculate(instrument, calculations);
             if (status != 0)
             {
@@ -1092,11 +1102,79 @@ namespace CalcTests
                 status = getStatusText(status, statusText, out textSize);
                 throw new InvalidOperationException(statusText.ToString());
             }
-            Assert.IsTrue(Math.Abs(result - calculations.priceOut) < .000005);
+            Assert.IsTrue(Math.Abs(result - calculations.priceOut) < .000000005);
             GC.KeepAlive(instrument);
             GC.KeepAlive(calculations);
 
         }
+        [TestMethod]
+        public void TBondPriceFromYtmShortLastCoupon_1()
+        {
+            InstrumentDescr instrument = new InstrumentDescr();
+            CalculationsDescr calculations = new CalculationsDescr();
+            instrument.instrumentClass = (int)TestHelper.instr_class_descs.instr_euro_class_desc;
+
+            DateDescr matDate = new DateDescr { year = 2009, month = 6, day = 10 };
+            DateDescr valueDate = new DateDescr { year = 2006, month = 9, day = 10 };
+            //            DateDescr issueDate = new DateDescr { year = 2000, month = 1, day = 1 };
+            DateDescr firstPayDate = new DateDescr { year = 2004, month = 3, day = 10 };
+            DateDescr preLastPayDate = new DateDescr { year = 2009, month = 3, day = 10 };
+
+            instrument.maturityDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
+            calculations.valueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
+            int status = getInstrumentDefaultsAndData(instrument, calculations);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+
+            instrument.intDayCount = (int)TestHelper.day_counts.date_act_act_day_count;
+            instrument.intPayFreq = (int)TestHelper.frequency.frequency_semiannually;
+            calculations.yieldDayCount = (int)TestHelper.day_counts.date_act_act_day_count;
+            calculations.yieldFreq = (int)TestHelper.frequency.frequency_semiannually;
+
+            Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
+            Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
+            status = getDefaultDatesAndData(instrument, calculations);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            double result = 0.98747213511112;
+            calculations.yieldIn = 0.055;
+            calculations.calculatePrice = 1;
+            calculations.yieldMethod = (int)TestHelper.yield_method.py_ustr_yield_meth;
+            instrument.interestRate = 0.05;
+            instrument.nextToLastPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(preLastPayDate, instrument.nextToLastPayDate, false);
+            //            instrument.issueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            //           Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
+            instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
+            status = calculate(instrument, calculations);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            Assert.IsTrue(Math.Abs(result - calculations.priceOut) < .0000005);
+            GC.KeepAlive(instrument);
+            GC.KeepAlive(calculations);
+
+        }
+
+
+
         /*
                 [TestMethod]
                 public void BondPriceFromYtmShortFirstCouponAndLongLastCoupon_1()
