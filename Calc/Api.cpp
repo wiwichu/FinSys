@@ -632,20 +632,20 @@ int  calculate(InstrumentStruct &instrument, CalculationsStruct &calculations)
 		fpdDate.date.years = instrument.firstPayDate->year % 100;
 		fpdDate.date.months = instrument.firstPayDate->month;
 		fpdDate.date.days = instrument.firstPayDate->day % 100;
-		Date_Funcs::date_union holdDate;
-		result = pyfront.getfirstdate(holdDate);
-		if (
-			!
-			(
-				fpdDate.date.centuries == holdDate.date.centuries &&
-				fpdDate.date.years == holdDate.date.years &&
-				fpdDate.date.months == holdDate.date.months &&
-				fpdDate.date.days == holdDate.date.days
-				)
-			)
-		{
-			pyfront.forceSlowCalc(true);
-		}
+		//Date_Funcs::date_union holdDate;
+		//result = pyfront.getfirstdate(holdDate);
+		//if (
+		//	!
+		//	(
+		//		fpdDate.date.centuries == holdDate.date.centuries &&
+		//		fpdDate.date.years == holdDate.date.years &&
+		//		fpdDate.date.months == holdDate.date.months &&
+		//		fpdDate.date.days == holdDate.date.days
+		//		)
+		//	)
+		//{
+		//	pyfront.forceSlowCalc(true);
+		//}
 		result = pyfront.setfirstdate(fpdDate);
 		if (result != return_success)
 		{
