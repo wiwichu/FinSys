@@ -32,6 +32,8 @@ namespace FinSys.Wpf.Services
         private static extern int calculate(InstrumentDescr instrument, CalculationsDescr calculations);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int getInstrumentDefaultsAndData(InstrumentDescr instrument, CalculationsDescr calculations);
+        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern int getCashFlows( CashFlowsDescr cashFlows, ref int size);
 
 
         private List<string> classes = new List<string>();
@@ -510,4 +512,19 @@ namespace FinSys.Wpf.Services
         public int month;
         public int day;
     };
+    [StructLayout(LayoutKind.Sequential)]
+    internal class CashFlowDescr
+    {
+        public int year;
+        public int month;
+        public int day;
+        public double amount;
+    };
+    [StructLayout(LayoutKind.Sequential)]
+    internal class CashFlowsDescr
+    {
+        public IntPtr cashFlows; //CashFlowStruct Array
+        public int size;
+    };
+
 }

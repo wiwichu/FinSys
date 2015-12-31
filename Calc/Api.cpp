@@ -789,3 +789,34 @@ int getInstrumentDefaults(InstrumentStruct &instrument)
 	Date_Funcs::date_union dateArg;
 	return result;
 }
+	int  getCashFlows(CashFlowsStruct &cashFlowsStruct)
+	{
+		for (int i = 0; i < cashFlowsStruct.size; i++)
+		{
+			cashFlowsStruct.cashFlows[i].year += 1;
+			cashFlowsStruct.cashFlows[i].amount += 1;
+		}
+		return return_success;
+	}
+	int  getNewCashFlows(CashFlowsStruct &cashFlowStruct)
+	{
+
+		const int size = 1000;
+		CashFlowStruct *cf = new CashFlowStruct[size];
+		cashFlowStruct.cashFlows = cf;
+		cashFlowStruct.size = size;
+		int year = 2000;
+		for (int i = 0; i < size; i++)
+		{
+			CashFlowStruct *cfs = new CashFlowStruct();
+			cf[i] = *cfs;
+			cf[i].year = year + i;
+			cf[i].month = 6;
+			cf[i].day = 1;
+
+			cf[i].amount = 1000 + i*100;
+		}
+		return return_success;
+	}
+
+

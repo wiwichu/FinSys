@@ -1,5 +1,18 @@
 #pragma once
 
+
+typedef struct CashFlowStruct
+{
+	int year;
+	int month;
+	int day;
+	double amount;
+} CashFlowStruct;
+typedef struct CashFlowsStruct
+{
+	CashFlowStruct *cashFlows;
+	int size;
+} CashFlowsStruct;
 typedef struct DateStruct
 {
 	int year;
@@ -54,6 +67,8 @@ extern "C" __declspec(dllexport) int  getDefaultDates(InstrumentStruct &instrume
 extern "C" __declspec(dllexport) int  getDefaultDatesAndData(InstrumentStruct &instrument, CalculationsStruct &calculations);
 extern "C" __declspec(dllexport) char**  getyieldmethods(int& size);
 extern "C" __declspec(dllexport) int  calculate(InstrumentStruct &instrument, CalculationsStruct &calculations);
+extern "C" __declspec(dllexport) int  getCashFlows(CashFlowsStruct &cashFlowsStruct);
+extern "C" __declspec(dllexport) int  getNewCashFlows(CashFlowsStruct &cashFlowsStruct);
 
 int preProc(InstrumentStruct &instrument, CalculationsStruct &calculations,Py_Front &pyfront);
 int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_Front &pyfront);

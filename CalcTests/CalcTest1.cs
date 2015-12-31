@@ -2,6 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CalcTests
 {
@@ -30,6 +32,120 @@ namespace CalcTests
         public static extern int calculate(InstrumentDescr instrument, CalculationsDescr calculations);
         [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Debug/calc.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int getInstrumentDefaultsAndData(InstrumentDescr instrument, CalculationsDescr calculations);
+        [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Debug/calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern int getCashFlows(CashFlowsDescr cashFlows);
+        [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Debug/calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern int getNewCashFlows(CashFlowsDescr cashFlows);
+
+        public TestContext TestContext { get; set; }
+
+        [TestMethod]
+        public void GetCashFlows_1()
+        {
+            CashFlowsDescr cashFlows = new CashFlowsDescr();
+            int startYear = 2000;
+            int startMonth = 6;
+            int startDay = 1;
+            int startAmount = 100;
+            List<CashFlowDescr> cfList = new List<CashFlowDescr>();
+            TestContext.WriteLine("BEFORE CALL:");
+            TestContext.WriteLine("");
+            for (int i = 1;i<=10;i++)
+            {
+                CashFlowDescr cashFlow = new CashFlowDescr();
+                cashFlow.year = startYear + i;
+                cashFlow.month = startMonth;
+                cashFlow.day = startDay;
+                cashFlow.amount = (startAmount * i) + i;
+
+                cfList.Add(cashFlow);
+
+                TestContext.WriteLine("Date: {0}.{1}.{2} Amount: {3}",cashFlow.year,cashFlow.month,cashFlow.day,cashFlow.amount);
+                cashFlows.size = cfList.Count;
+
+            }
+            CashFlowDescr[] cfArray = cfList.ToArray();
+            cashFlows.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) * cfArray.Length);
+            IntPtr buffer = new IntPtr(cashFlows.cashFlows.ToInt64());
+            for (int i = 0; i < cfArray.Length; i++)
+            {
+                Marshal.StructureToPtr(cfArray[i], buffer, true);
+                buffer = new IntPtr(buffer.ToInt64() + Marshal.SizeOf(typeof(CashFlowDescr)));
+            }
+            int status = getCashFlows(cashFlows);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+
+
+            var structSize = Marshal.SizeOf(typeof(CashFlowDescr));
+            var cashFlowsOut = new List<CashFlowDescr>();
+            var cashFlowOut = cashFlows.cashFlows;
+
+            for (int i = 0; i < cashFlows.size; i++)
+            {
+                cashFlowsOut.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
+                    typeof(CashFlowDescr)));
+                cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
+            }
+            TestContext.WriteLine("");
+            TestContext.WriteLine("After CALL:");
+            TestContext.WriteLine("");
+
+            foreach (CashFlowDescr cfd in cashFlowsOut)
+            {
+                TestContext.WriteLine("Date: {0}.{1}.{2} Amount: {3}", cfd.year, cfd.month, cfd.day, cfd.amount);
+            }
+        }
+        [TestMethod]
+        public void MemTest()
+        {
+            //for (int i =0;i<10000;i++)
+            //{
+            //    GetCashFlows_1();
+            //    System.Threading.Thread.Sleep(10);
+            //    //Task.Delay(100).Wait();
+            //}
+        }
+        [TestMethod]
+        public void GetNewCashFlows_1()
+        {
+            CashFlowsDescr cashFlows = new CashFlowsDescr();
+            //cashFlows.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) );
+            int status = getNewCashFlows(cashFlows);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+
+
+            var structSize = Marshal.SizeOf(typeof(CashFlowDescr));
+            var cashFlowsOut = new List<CashFlowDescr>();
+            var cashFlowOut = cashFlows.cashFlows;
+
+            for (int i = 0; i < cashFlows.size; i++)
+            {
+                cashFlowsOut.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
+                    typeof(CashFlowDescr)));
+                //cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
+                cashFlowOut = (IntPtr)(cashFlowOut.ToInt32() + structSize);
+            }
+            TestContext.WriteLine("");
+            TestContext.WriteLine("After CALL:");
+            TestContext.WriteLine("");
+
+            foreach (CashFlowDescr cfd in cashFlowsOut)
+            {
+                TestContext.WriteLine("Date: {0}.{1}.{2} Amount: {3}", cfd.year, cfd.month, cfd.day, cfd.amount);
+            }
+        }
 
 
         [TestMethod]

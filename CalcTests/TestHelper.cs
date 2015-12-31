@@ -73,6 +73,21 @@ namespace CalcTests
         };
     }
     [StructLayout(LayoutKind.Sequential)]
+    internal class CashFlowDescr
+    {
+        public int year;
+        public int month;
+        public int day;
+        public double amount;
+    };
+    [StructLayout(LayoutKind.Sequential)]
+    internal class CashFlowsDescr
+    {
+        public IntPtr cashFlows; //CashFlowStruct Array
+        public int size;
+    };
+
+    [StructLayout(LayoutKind.Sequential)]
     public class InstrumentDescr
     {
         public int instrumentClass;
