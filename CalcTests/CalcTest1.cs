@@ -666,6 +666,220 @@ namespace CalcTests
 
         }
         [TestMethod]
+        public void BundPriceFromYMoos_1()
+        {
+            InstrumentDescr instrument = new InstrumentDescr();
+            CalculationsDescr calculations = new CalculationsDescr();
+            instrument.instrumentClass = (int)TestHelper.instr_class_descs.instr_bund_class_desc;
+
+            DateDescr matDate = new DateDescr { year = 2013, month = 11, day = 15 };
+            DateDescr valueDate = new DateDescr { year = 2009, month = 2, day = 18 };
+
+            instrument.maturityDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
+            calculations.valueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
+            int status = getInstrumentDefaultsAndData(instrument, calculations);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+
+            Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
+            Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
+            status = getDefaultDatesAndData(instrument, calculations);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            double result = 1.039487;
+            calculations.yieldIn = 0.06;
+            calculations.calculatePrice = 1;
+            instrument.intDayCount = (int)TestHelper.day_counts.date_act_365_day_count;
+            calculations.yieldDayCount = (int)TestHelper.day_counts.date_act_365_day_count;
+            calculations.yieldMethod = (int)TestHelper.yield_method.py_moos_yield_meth;
+            instrument.interestRate = 0.07;
+            status = calculate(instrument, calculations);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            Assert.IsTrue(Math.Abs(result - calculations.priceOut) < .0000005);
+            GC.KeepAlive(instrument);
+            GC.KeepAlive(calculations);
+
+        }
+        [TestMethod]
+        public void BundYMoosFromPrice_1()
+        {
+            InstrumentDescr instrument = new InstrumentDescr();
+            CalculationsDescr calculations = new CalculationsDescr();
+            instrument.instrumentClass = (int)TestHelper.instr_class_descs.instr_bund_class_desc;
+
+            DateDescr matDate = new DateDescr { year = 2013, month = 11, day = 15 };
+            DateDescr valueDate = new DateDescr { year = 2009, month = 2, day = 18 };
+
+            instrument.maturityDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
+            calculations.valueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
+            int status = getInstrumentDefaultsAndData(instrument, calculations);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+
+            Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
+            Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
+            status = getDefaultDatesAndData(instrument, calculations);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            double result = 0.06;
+            calculations.priceIn = 1.039487;
+            calculations.calculatePrice = 0;
+            instrument.intDayCount = (int)TestHelper.day_counts.date_act_365_day_count;
+            calculations.yieldDayCount = (int)TestHelper.day_counts.date_act_365_day_count;
+            calculations.yieldMethod = (int)TestHelper.yield_method.py_moos_yield_meth;
+            instrument.interestRate = 0.07;
+            status = calculate(instrument, calculations);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            Assert.IsTrue(Math.Abs(result - calculations.yieldOut) < .0000005);
+            GC.KeepAlive(instrument);
+            GC.KeepAlive(calculations);
+
+        }
+        [TestMethod]
+        public void BundPriceFromYISMA_1()
+        {
+            InstrumentDescr instrument = new InstrumentDescr();
+            CalculationsDescr calculations = new CalculationsDescr();
+            instrument.instrumentClass = (int)TestHelper.instr_class_descs.instr_bund_class_desc;
+
+            DateDescr matDate = new DateDescr { year = 2013, month = 11, day = 15 };
+            DateDescr valueDate = new DateDescr { year = 2009, month = 2, day = 18 };
+
+            instrument.maturityDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
+            calculations.valueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
+            int status = getInstrumentDefaultsAndData(instrument, calculations);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+
+            Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
+            Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
+            status = getDefaultDatesAndData(instrument, calculations);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            double result = 1.039830;
+            calculations.yieldIn = 0.06;
+            calculations.calculatePrice = 1;
+            instrument.intDayCount = (int)TestHelper.day_counts.date_act_365_day_count;
+            calculations.yieldDayCount = (int)TestHelper.day_counts.date_act_365_day_count;
+            calculations.yieldMethod = (int)TestHelper.yield_method.py_aibd_yield_meth;
+            instrument.interestRate = 0.07;
+            status = calculate(instrument, calculations);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            Assert.IsTrue(Math.Abs(result - calculations.priceOut) < .0000005);
+            GC.KeepAlive(instrument);
+            GC.KeepAlive(calculations);
+
+        }
+        [TestMethod]
+        public void BundYISMAFromPrice_1()
+        {
+            InstrumentDescr instrument = new InstrumentDescr();
+            CalculationsDescr calculations = new CalculationsDescr();
+            instrument.instrumentClass = (int)TestHelper.instr_class_descs.instr_bund_class_desc;
+
+            DateDescr matDate = new DateDescr { year = 2013, month = 11, day = 15 };
+            DateDescr valueDate = new DateDescr { year = 2009, month = 2, day = 18 };
+
+            instrument.maturityDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
+            calculations.valueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
+            int status = getInstrumentDefaultsAndData(instrument, calculations);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+
+            Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
+            Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
+            status = getDefaultDatesAndData(instrument, calculations);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            double result = 0.06;
+            calculations.priceIn = 1.039830;
+            calculations.calculatePrice = 0;
+            instrument.intDayCount = (int)TestHelper.day_counts.date_act_365_day_count;
+            calculations.yieldDayCount = (int)TestHelper.day_counts.date_act_365_day_count;
+            calculations.yieldMethod = (int)TestHelper.yield_method.py_aibd_yield_meth;
+            instrument.interestRate = 0.07;
+            status = calculate(instrument, calculations);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            Assert.IsTrue(Math.Abs(result - calculations.yieldOut) < .0000005);
+            GC.KeepAlive(instrument);
+            GC.KeepAlive(calculations);
+
+        }
+
+
+        [TestMethod]
         public void TBondPriceFromYtm_1()
         {
             InstrumentDescr instrument = new InstrumentDescr();
