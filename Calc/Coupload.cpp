@@ -545,6 +545,21 @@ date_union base_date;
 					return return_status;
 				}
 			}
+			else
+			{
+
+				return_status = py_simp_comp_frac(simp_comp_frac, py_parm,
+					in_instr, py_date, holi_chan, first_simp_comp_frac
+					//		,holi_parm
+					, holiSet
+					);
+
+				if (return_status != return_success)
+				{
+					return return_status;
+				}
+
+			}
 			/* If the first payment is passed, load this into the first coupon.*/
 
 			if (py_parm->parm_use == py_yes_parm_use &&

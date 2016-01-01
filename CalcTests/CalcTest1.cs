@@ -383,11 +383,11 @@ namespace CalcTests
                 status = getStatusText(status, statusText, out textSize);
                 throw new InvalidOperationException(statusText.ToString());
             }
-            double result = 0.0517;
-            calculations.priceIn = 0.97501194;
-            calculations.yieldMethod = (int)TestHelper.yield_method.py_mm_yield_meth;
-            calculations.yieldDayCount = (int)TestHelper.day_counts.date_act_act_day_count;
-            calculations.yieldFreq = (int)TestHelper.frequency.frequency_semiannually;
+            double result = 0.045;
+            calculations.priceIn = 0.978172;
+            calculations.yieldMethod = (int)TestHelper.yield_method.py_ustr_yield_meth;
+            calculations.yieldDayCount = (int)TestHelper.day_counts.date_act_365_day_count;
+            calculations.yieldFreq = (int)TestHelper.frequency.frequency_annually;
             calculations.calculatePrice = 0;
             status = calculate(instrument, calculations);
             if (status != 0)
@@ -397,7 +397,7 @@ namespace CalcTests
                 status = getStatusText(status, statusText, out textSize);
                 throw new InvalidOperationException(statusText.ToString());
             }
-            Assert.IsTrue(Math.Abs(result - calculations.yieldOut) < .0001);
+            Assert.IsTrue(Math.Abs(result - calculations.yieldOut) < .0000005);
             GC.KeepAlive(instrument);
             GC.KeepAlive(calculations);
 
@@ -436,11 +436,15 @@ namespace CalcTests
                 status = getStatusText(status, statusText, out textSize);
                 throw new InvalidOperationException(statusText.ToString());
             }
-            double result = 0.97501194;
-            calculations.yieldIn = 0.0517;
+            double result = 0.978172;
+            calculations.yieldIn = 0.045;
             calculations.yieldMethod = (int)TestHelper.yield_method.py_mm_yield_meth;
             calculations.yieldDayCount = (int)TestHelper.day_counts.date_act_act_day_count;
             calculations.yieldFreq = (int)TestHelper.frequency.frequency_semiannually;
+
+            calculations.yieldMethod = (int)TestHelper.yield_method.py_ustr_yield_meth;
+            calculations.yieldDayCount = (int)TestHelper.day_counts.date_act_365_day_count;
+            calculations.yieldFreq = (int)TestHelper.frequency.frequency_annually;
             calculations.calculatePrice = 1;
             status = calculate(instrument, calculations);
             if (status != 0)
@@ -450,7 +454,7 @@ namespace CalcTests
                 status = getStatusText(status, statusText, out textSize);
                 throw new InvalidOperationException(statusText.ToString());
             }
-            Assert.IsTrue(Math.Abs(result - calculations.priceOut) < .000007);
+            Assert.IsTrue(Math.Abs(result - calculations.priceOut) < .0000005);
             GC.KeepAlive(instrument);
             GC.KeepAlive(calculations);
 
