@@ -51,7 +51,7 @@ namespace CalcTests
             DateDescr endDate = new DateDescr { year = 2008, month = 2, day = 28 };
             int status = intCalc(startDate,
                 endDate,
-                (int)TestHelper.day_counts.date_act_act_day_count,
+                (int)TestHelper.day_counts.date_act_actISDA_day_count,
                 out days,
                 out dayCountFraction);
             if (status != 0)
@@ -62,7 +62,7 @@ namespace CalcTests
                 throw new InvalidOperationException(statusText.ToString());
             }
             int intDaysResult = 62;
-            double dayCountFractionResult = 0.16942884946478;
+            double dayCountFractionResult = 0.016942884946478;
             Assert.AreEqual(intDaysResult, days);
             Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
 
@@ -87,7 +87,7 @@ namespace CalcTests
                 throw new InvalidOperationException(statusText.ToString());
             }
             int intDaysResult = 62;
-            double dayCountFractionResult = 0.16986301369863;
+            double dayCountFractionResult = 0.016986301369863;
             Assert.AreEqual(intDaysResult, days);
             Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
 
@@ -112,7 +112,7 @@ namespace CalcTests
                 throw new InvalidOperationException(statusText.ToString());
             }
             int intDaysResult = 62;
-            double dayCountFractionResult = 0.172222222222222;
+            double dayCountFractionResult = 0.0172222222222222;
             Assert.AreEqual(intDaysResult, days);
             Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
 
@@ -138,7 +138,7 @@ namespace CalcTests
                 throw new InvalidOperationException(statusText.ToString());
             }
             int intDaysResult = 62;
-            double dayCountFractionResult = 0.16986301369863;
+            double dayCountFractionResult = 0.016986301369863;
             Assert.AreEqual(intDaysResult, days);
             Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
 
@@ -163,7 +163,7 @@ namespace CalcTests
                 throw new InvalidOperationException(statusText.ToString());
             }
             int intDaysResult = 62;
-            double dayCountFractionResult = 0.169398907103825;
+            double dayCountFractionResult = 0.0169398907103825;
             Assert.AreEqual(intDaysResult, days);
             Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
 
@@ -188,7 +188,7 @@ namespace CalcTests
                 throw new InvalidOperationException(statusText.ToString());
             }
             int intDaysResult = 62;
-            double dayCountFractionResult = 0.16986301369863;
+            double dayCountFractionResult = 0.016986301369863;
             Assert.AreEqual(intDaysResult, days);
             Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
 

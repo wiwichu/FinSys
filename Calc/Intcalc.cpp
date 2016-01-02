@@ -441,7 +441,15 @@ accrued interest and number of days of interest for that date.
 	if (in_instr.cal_den == date_365A_cal)
 	{
 		instr *inst = new instr(in_instr);
-		if (isLeapDayInRange(prv_pay,nxt_pay))
+		date_union perEndDate;
+		return_status = forecast(nxt_pay,
+			0,
+			-1,
+			date_act_cal,
+			&perEndDate);
+
+
+		if (isLeapDayInRange(prv_pay,perEndDate))
 		{
 			inst->cal_den = date_366_cal;
 		}
