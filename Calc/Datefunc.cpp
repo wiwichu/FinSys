@@ -3203,8 +3203,8 @@ unsigned long Date_Funcs::tenor	(date_union start_date,
 		if (isLeapDayInRange(start_date, end_date))
 		{
 			(*tenor_days)--;
-			break;
 		}
+		break;
 
 	case date_30US_cal:
 	case date_30eplus_cal:

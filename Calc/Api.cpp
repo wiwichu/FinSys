@@ -936,12 +936,26 @@ int getInstrumentDefaults(InstrumentStruct &instrument)
 			return result;
 		}
 		result = pyfront.proc_int_py();
+		if (result != return_success)
+		{
+			return result;
+		}
 		result = pyfront.setinprice(1);
 		if (result != return_success)
 		{
 			return result;
 		}
 		result = pyfront.proc_price_py();
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.setmonthend(monthend_yes);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.proc_monthend();
 		if (result != return_success)
 		{
 			return result;

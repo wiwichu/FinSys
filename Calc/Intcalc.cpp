@@ -204,7 +204,6 @@ accrued interest and number of days of interest for that date.
 
 	date_union	in_date;
 
-//	strcpy(module_name,"intcalc");
 
 	*interest = 0;
 	*int_days = 0;
@@ -567,10 +566,6 @@ accrued interest and number of days of interest for that date.
 
 	/*{Start with the date boundaries at the start of the calculation
 	period.}*/
-/*
-	datecpy(sub_per_end.date_string,calc_start.date_string);
-	datecpy(sub_per_start.date_string,sub_per_end.date_string);
-*/
 	datecpy(sub_per_end.date_string,calc_end.date_string);
 	datecpy(sub_per_start.date_string,calc_start.date_string);
 
@@ -740,19 +735,6 @@ accrued interest and number of days of interest for that date.
 			{
 
 				/*{ Accumulate interest over all the quasi periods.}*/
-/*
-		return_status = quasi_proc(in_instr, nxt_pay, holi_chan, event_chan,
-					&sub_per_start, &sub_per_end, &comp_factor,
-					months_per, days_per, &days_to_next,
-					&divisor_days, &sett_to_first_fact, &quasi_prv_pay,
-					&quasi_nxt_pay, &calc_end, in_date, nom_adj,
-					rate_array );
-
-		if (return_status != return_success) {
-
-		  return return_status;
-		}
-*/
 
 		/*{ Accumulate the interest over all the quasi periods.}*/
 
@@ -770,80 +752,6 @@ accrued interest and number of days of interest for that date.
 					{
 						return return_status;
 					}
-
-					//if (in_instr.cal_den == date_actISDA_cal)
-					//{
-					//	date_union end_date = in_date;
-					//	cmpint = datecmp(in_date.date_string,
-					//		quasi_nxt_pay.date_string);
-
-					//	if (cmpint > 0)
-					//	{
-					//		end_date = quasi_nxt_pay;
-					//	}
-
-					//	double base_fact = 365;
-					//	if (isLeapDayInRange(quasi_prv_pay, end_date))
-					//	{
-					//		base_fact = 366;
-					//	}
-					//	long perDays = 0;
-					//	return_status = tenor(quasi_prv_pay,
-					//		end_date,
-					//		in_instr.cal_den,
-					//		&perDays);
-					//	if (return_status != return_success)
-					//	{
-					//		return return_status;
-					//	}
-					//	long per1Days = 0;
-					//	long per2Days = 0;
-					//	if (quasi_prv_pay.date.years == in_date.date.years)
-					//	{
-					//		per1Days = perDays;
-					//	}
-					//	else
-					//	{
-					//		date_union eoy = prv_pay;
-					//		eoy.date.months = 12;
-					//		eoy.date.days = 31;
-					//		return_status = tenor(quasi_prv_pay,
-					//			eoy,
-					//			in_instr.cal_den,
-					//			&per1Days);
-					//		if (return_status != return_success)
-					//		{
-					//			return return_status;
-					//		}
-					//		return_status = tenor(
-					//			eoy, end_date,
-					//			in_instr.cal_den,
-					//			&per2Days);
-					//		if (return_status != return_success)
-					//		{
-					//			return return_status;
-					//		}
-					//	}
-					//	double p1Fact = 0;
-					//	double p2Fact = 0;
-					//	if (isLeapYear(quasi_prv_pay))
-					//	{
-					//		p1Fact = (366.0 / base_fact)*(double)((double)per1Days / (double)perDays);
-					//	}
-					//	else
-					//	{
-					//		p1Fact = (365.0 / base_fact)*(double)((double)per1Days / (double)perDays);
-					//	}
-					//	if (isLeapYear(end_date))
-					//	{
-					//		p2Fact = (366.0 / base_fact)*(double)((double)per2Days / (double)perDays);
-					//	}
-					//	else
-					//	{
-					//		p2Fact = (365.0 / base_fact)*(double)((double)per2Days / (double)perDays);
-					//	}
-					//	divisor_days = divisor_days * (double)(p1Fact + p2Fact);
-					//}
 					if (
 						(in_instr.cal_den == date_365L_cal && isLeapYear(in_date))
 						&& !isLeapDayInRange(quasi_prv_pay, quasi_nxt_pay)
@@ -1012,71 +920,6 @@ accrued interest and number of days of interest for that date.
 					return return_status;
 				}
 
-				//if (in_instr.cal_den == date_actISDA_cal)
-				//{
-				//	double base_fact = 365;
-				//	if (isLeapDayInRange(prv_pay, in_date))
-				//	{
-				//		base_fact = 366;
-				//	}
-				//	long perDays = 0;
-				//	return_status = tenor(prv_pay,
-				//		in_date,
-				//		in_instr.cal_den,
-				//		&perDays);
-				//	if (return_status != return_success)
-				//	{
-				//		return return_status;
-				//	}
-				//	long per1Days = 0;
-				//	long per2Days = 0;
-				//	if (prv_pay.date.years == in_date.date.years)
-				//	{
-				//		per1Days = perDays;
-				//	}
-				//	else
-				//	{
-				//		date_union eoy = prv_pay;
-				//		eoy.date.months = 12;
-				//		eoy.date.days = 31;
-				//		return_status = tenor(prv_pay,
-				//			eoy,
-				//			in_instr.cal_den,
-				//			&per1Days);
-				//		if (return_status != return_success)
-				//		{
-				//			return return_status;
-				//		}
-				//		return_status = tenor(
-				//			eoy,in_date,
-				//			in_instr.cal_den,
-				//			&per2Days);
-				//		if (return_status != return_success)
-				//		{
-				//			return return_status;
-				//		}
-				//	}
-				//	double p1Fact = 0;
-				//	double p2Fact = 0;
-				//	if (isLeapYear(prv_pay))
-				//	{
-				//		p1Fact = (366.0/base_fact)*(double)((double)per1Days/ (double)perDays);
-				//	}
-				//	else
-				//	{
-				//		p1Fact = (365.0 / base_fact)*(double)((double)per1Days / (double)perDays);
-				//	}
-				//	if (isLeapYear(in_date))
-				//	{
-				//		p2Fact = (366.0 / base_fact)*(double)((double)per2Days / (double)perDays);
-				//	}
-				//	else
-				//	{
-				//		p2Fact = (365.0 / base_fact)*(double)((double)per2Days / (double)perDays);
-				//	}
-				//	divisor_days = divisor_days * (p1Fact + p2Fact);
-				//}
-
 				if (
 					(in_instr.cal_den == date_365L_cal && isLeapYear(in_date))
 					&& !isLeapDayInRange(quasi_prv_pay, quasi_nxt_pay)
@@ -1127,17 +970,6 @@ accrued interest and number of days of interest for that date.
 
 	  }
 
-	  //case date_366_cal: 	/*{ If calendar denominator is 366, then
-			//	determine number of quasi periods due to
-			//	leap years.}*/
-	  //{
-		 ///*This method is not yet supported.*/
-		 ///* For now always 366 */
-
-		 //divisor_days = 366;
-
-		 //break;
-	  //}
 	  case date_NL365_cal:
 	  case date_365_cal: 	/*{ If calendar denominator is 365, days are
 				simply divided by 365.}*/
