@@ -40,6 +40,15 @@ namespace CalcTests
         private static extern int tenor(DateDescr startDate, DateDescr endDate, int dayCountRule, out int tenor);
         [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Debug/calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int intCalc(DateDescr startDate, DateDescr endDate, int dayCountRule, out int days, out double dayCountFraction);
+
+        private static DateDescr startDate_1 = new DateDescr { year = 2007, month = 12, day = 28 };
+        private static DateDescr endDate_1 = new DateDescr { year = 2008, month = 2, day = 28 };
+        private static DateDescr startDate_2 = new DateDescr { year = 2007, month = 12, day = 28 };
+        private static DateDescr endDate_2 = new DateDescr { year = 2008, month = 2, day = 29 };
+        private static DateDescr startDate_3 = new DateDescr { year = 2007, month = 2, day = 28 };
+        private static DateDescr endDate_3 = new DateDescr { year = 2008, month = 2, day = 29 };
+
+
         public TestContext TestContext { get; set; }
 
         [TestMethod]
@@ -47,10 +56,8 @@ namespace CalcTests
         {
             int days = 0;
             double dayCountFraction = 0;
-            DateDescr startDate = new DateDescr { year = 2007, month = 12, day = 28 };
-            DateDescr endDate = new DateDescr { year = 2008, month = 2, day = 28 };
-            int status = intCalc(startDate,
-                endDate,
+            int status = intCalc(startDate_1,
+                endDate_1,
                 (int)TestHelper.day_counts.date_act_actISDA_day_count,
                 out days,
                 out dayCountFraction);
@@ -72,10 +79,8 @@ namespace CalcTests
         {
             int days = 0;
             double dayCountFraction = 0;
-            DateDescr startDate = new DateDescr { year = 2007, month = 12, day = 28 };
-            DateDescr endDate = new DateDescr { year = 2008, month = 2, day = 28 };
-            int status = intCalc(startDate,
-                endDate,
+            int status = intCalc(startDate_1,
+                endDate_1,
                 (int)TestHelper.day_counts.date_act_365_day_count,
                 out days,
                 out dayCountFraction);
@@ -97,10 +102,8 @@ namespace CalcTests
         {
             int days = 0;
             double dayCountFraction = 0;
-            DateDescr startDate = new DateDescr { year = 2007, month = 12, day = 28 };
-            DateDescr endDate = new DateDescr { year = 2008, month = 2, day = 28 };
-            int status = intCalc(startDate,
-                endDate,
+            int status = intCalc(startDate_1,
+                endDate_1,
                 (int)TestHelper.day_counts.date_act_360_day_count,
                 out days,
                 out dayCountFraction);
@@ -117,16 +120,13 @@ namespace CalcTests
             Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
 
         }
-
         [TestMethod]
         public void IntCalcAct365A_1()
         {
             int days = 0;
             double dayCountFraction = 0;
-            DateDescr startDate = new DateDescr { year = 2007, month = 12, day = 28 };
-            DateDescr endDate = new DateDescr { year = 2008, month = 2, day = 28 };
-            int status = intCalc(startDate,
-                endDate,
+            int status = intCalc(startDate_1,
+                endDate_1,
                 (int)TestHelper.day_counts.date_act_365A_day_count,
                 out days,
                 out dayCountFraction);
@@ -148,10 +148,8 @@ namespace CalcTests
         {
             int days = 0;
             double dayCountFraction = 0;
-            DateDescr startDate = new DateDescr { year = 2007, month = 12, day = 28 };
-            DateDescr endDate = new DateDescr { year = 2008, month = 2, day = 28 };
-            int status = intCalc(startDate,
-                endDate,
+            int status = intCalc(startDate_1,
+                endDate_1,
                 (int)TestHelper.day_counts.date_act_365L_day_count,
                 out days,
                 out dayCountFraction);
@@ -173,10 +171,8 @@ namespace CalcTests
         {
             int days = 0;
             double dayCountFraction = 0;
-            DateDescr startDate = new DateDescr { year = 2007, month = 12, day = 28 };
-            DateDescr endDate = new DateDescr { year = 2008, month = 2, day = 28 };
-            int status = intCalc(startDate,
-                endDate,
+            int status = intCalc(startDate_1,
+                endDate_1,
                 (int)TestHelper.day_counts.date_NL_365_day_count,
                 out days,
                 out dayCountFraction);
@@ -189,6 +185,638 @@ namespace CalcTests
             }
             int intDaysResult = 62;
             double dayCountFractionResult = 0.016986301369863;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
+
+        }
+        [TestMethod]
+        public void IntCalc30360ISDA_1()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            int status = intCalc(startDate_1,
+                endDate_1,
+                (int)TestHelper.day_counts.date_30_360_day_count,
+                out days,
+                out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 60;
+            double dayCountFractionResult = 0.0166666666666667;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
+
+        }
+        [TestMethod]
+        public void IntCalc30E360_1()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            int status = intCalc(startDate_1,
+                endDate_1,
+                (int)TestHelper.day_counts.date_30e_360_day_count,
+                out days,
+                out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 60;
+            double dayCountFractionResult = 0.0166666666666667;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
+
+        }
+        [TestMethod]
+        public void IntCalc30EPlus360_1()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            int status = intCalc(startDate_1,
+                endDate_1,
+                (int)TestHelper.day_counts.date_30eplus_360_day_count,
+                out days,
+                out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 60;
+            double dayCountFractionResult = 0.0166666666666667;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
+
+        }
+        [TestMethod]
+        public void IntCalc30360German_1()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            int status = intCalc(startDate_1,
+                endDate_1,
+                (int)TestHelper.day_counts.date_30_360german_day_count,
+                out days,
+                out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 60;
+            double dayCountFractionResult = 0.0166666666666667;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
+
+        }
+        [TestMethod]
+        public void IntCalc30360US_1()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            int status = intCalc(startDate_1,
+                endDate_1,
+                (int)TestHelper.day_counts.date_30_360US_day_count,
+                out days,
+                out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 60;
+            double dayCountFractionResult = 0.0166666666666667;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
+
+        }
+
+        ////////////////////////////////////////////////////////////////////
+        //Tests 2
+        ////////////////////////////////////////////////////////////////////
+
+        [TestMethod]
+        public void IntCalcActAct_2()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            int status = intCalc(startDate_2,
+                endDate_2,
+                (int)TestHelper.day_counts.date_act_actISDA_day_count,
+                out days,
+                out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 63;
+            double dayCountFractionResult = 0.0172161089901939;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
+
+        }
+        [TestMethod]
+        public void IntCalcAct365_2()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            int status = intCalc(startDate_2,
+                endDate_2,
+                (int)TestHelper.day_counts.date_act_365_day_count,
+                out days,
+                out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 63;
+            double dayCountFractionResult = 0.0172602739726027;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
+
+        }
+        [TestMethod]
+        public void IntCalcAct360_2()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            int status = intCalc(startDate_2,
+                endDate_2,
+                (int)TestHelper.day_counts.date_act_360_day_count,
+                out days,
+                out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 63;
+            double dayCountFractionResult = 0.0175;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
+
+        }
+        [TestMethod]
+        public void IntCalcAct365A_2()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            int status = intCalc(startDate_2,
+                endDate_2,
+                (int)TestHelper.day_counts.date_act_365A_day_count,
+                out days,
+                out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 63;
+            double dayCountFractionResult = 0.0172131147540984;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
+
+        }
+        [TestMethod]
+        public void IntCalcAct365L_2()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            int status = intCalc(startDate_2,
+                endDate_2,
+                (int)TestHelper.day_counts.date_act_365L_day_count,
+                out days,
+                out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 63;
+            double dayCountFractionResult = 0.0172131147540984;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
+
+        }
+        [TestMethod]
+        public void IntCalcNL365_2()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            int status = intCalc(startDate_2,
+                endDate_2,
+                (int)TestHelper.day_counts.date_NL_365_day_count,
+                out days,
+                out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 62;
+            double dayCountFractionResult = 0.016986301369863;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
+
+        }
+        [TestMethod]
+        public void IntCalc30360ISDA_2()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            int status = intCalc(startDate_2,
+                endDate_2,
+                (int)TestHelper.day_counts.date_30_360_day_count,
+                out days,
+                out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 61;
+            double dayCountFractionResult = 0.0169444444444444;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
+
+        }
+        [TestMethod]
+        public void IntCalc30E360_2()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            int status = intCalc(startDate_2,
+                endDate_2,
+                (int)TestHelper.day_counts.date_30e_360_day_count,
+                out days,
+                out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 61;
+            double dayCountFractionResult = 0.0169444444444444;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
+
+        }
+        [TestMethod]
+        public void IntCalc30EPlus360_2()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            int status = intCalc(startDate_2,
+                endDate_2,
+                (int)TestHelper.day_counts.date_30eplus_360_day_count,
+                out days,
+                out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 61;
+            double dayCountFractionResult = 0.0169444444444444;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
+
+        }
+        [TestMethod]
+        public void IntCalc30360German_2()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            int status = intCalc(startDate_2,
+                endDate_2,
+                (int)TestHelper.day_counts.date_30_360german_day_count,
+                out days,
+                out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 62;
+            double dayCountFractionResult = 0.0172222222222222;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
+
+        }
+        [TestMethod]
+        public void IntCalc30360US_2()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            int status = intCalc(startDate_2,
+                endDate_2,
+                (int)TestHelper.day_counts.date_30_360US_day_count,
+                out days,
+                out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 61;
+            double dayCountFractionResult = 0.0169444444444444;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
+
+        }
+
+
+        ////////////////////////////////////////////////////////////////////
+        //Tests 3
+        ////////////////////////////////////////////////////////////////////
+
+        [TestMethod]
+        public void IntCalcActAct_3()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            int status = intCalc(startDate_3,
+                endDate_3,
+                (int)TestHelper.day_counts.date_act_actISDA_day_count,
+                out days,
+                out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 366;
+            double dayCountFractionResult = 0.10022980762033096;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
+
+        }
+        [TestMethod]
+        public void IntCalcAct365_3()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            int status = intCalc(startDate_3,
+                endDate_3,
+                (int)TestHelper.day_counts.date_act_365_day_count,
+                out days,
+                out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 366;
+            double dayCountFractionResult = 0.10027397260273974;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
+
+        }
+        [TestMethod]
+        public void IntCalcAct360_3()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            int status = intCalc(startDate_3,
+                endDate_3,
+                (int)TestHelper.day_counts.date_act_360_day_count,
+                out days,
+                out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 366;
+            double dayCountFractionResult = 0.10166666666666657;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
+
+        }
+        [TestMethod]
+        public void IntCalcAct365A_3()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            int status = intCalc(startDate_3,
+                endDate_3,
+                (int)TestHelper.day_counts.date_act_365A_day_count,
+                out days,
+                out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 366;
+            double dayCountFractionResult = 0.1;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
+
+        }
+        [TestMethod]
+        public void IntCalcAct365L_3()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            int status = intCalc(startDate_3,
+                endDate_3,
+                (int)TestHelper.day_counts.date_act_365L_day_count,
+                out days,
+                out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 366;
+            double dayCountFractionResult = 0.1;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
+
+        }
+        [TestMethod]
+        public void IntCalcNL365_3()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            int status = intCalc(startDate_3,
+                endDate_3,
+                (int)TestHelper.day_counts.date_NL_365_day_count,
+                out days,
+                out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 365;
+            double dayCountFractionResult = 0.1;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
+
+        }
+        [TestMethod]
+        public void IntCalc30360ISDA_3()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            int status = intCalc(startDate_3,
+                endDate_3,
+                (int)TestHelper.day_counts.date_30_360_day_count,
+                out days,
+                out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 361;
+            double dayCountFractionResult = 0.10027777777777769;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
+
+        }
+        [TestMethod]
+        public void IntCalc30E360_3()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            int status = intCalc(startDate_3,
+                endDate_3,
+                (int)TestHelper.day_counts.date_30e_360_day_count,
+                out days,
+                out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 361;
+            double dayCountFractionResult = 0.10027777777777769;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
+
+        }
+        [TestMethod]
+        public void IntCalc30EPlus360_3()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            int status = intCalc(startDate_3,
+                endDate_3,
+                (int)TestHelper.day_counts.date_30eplus_360_day_count,
+                out days,
+                out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 361;
+            double dayCountFractionResult = 0.10027777777777769;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
+
+        }
+        [TestMethod]
+        public void IntCalc30360German_3()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            int status = intCalc(startDate_3,
+                endDate_3,
+                (int)TestHelper.day_counts.date_30_360german_day_count,
+                out days,
+                out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 360;
+            double dayCountFractionResult = 0.1;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
+
+        }
+        [TestMethod]
+        public void IntCalc30360US_3()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            int status = intCalc(startDate_3,
+                endDate_3,
+                (int)TestHelper.day_counts.date_30_360US_day_count,
+                out days,
+                out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 360;
+            double dayCountFractionResult = 0.10000000000000009;
             Assert.AreEqual(intDaysResult, days);
             Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFraction) < .0000000001);
 
