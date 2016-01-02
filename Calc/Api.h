@@ -69,6 +69,9 @@ extern "C" __declspec(dllexport) char**  getyieldmethods(int& size);
 extern "C" __declspec(dllexport) int  calculate(InstrumentStruct &instrument, CalculationsStruct &calculations);
 extern "C" __declspec(dllexport) int  getCashFlows(CashFlowsStruct &cashFlowsStruct);
 extern "C" __declspec(dllexport) int  getNewCashFlows(CashFlowsStruct &cashFlowsStruct);
+extern "C" __declspec(dllexport) int  tenor(DateStruct &startDate, DateStruct &endDate, int dayCountRule, int &tenor);
+extern "C" __declspec(dllexport) int  intCalc(DateStruct &startDate, DateStruct &endDate, int dayCountRule, int &days, double &dayCountFraction);
+
 
 int preProc(InstrumentStruct &instrument, CalculationsStruct &calculations,Py_Front &pyfront);
 int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_Front &pyfront);

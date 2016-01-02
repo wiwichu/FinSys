@@ -36,8 +36,37 @@ namespace CalcTests
         private static extern int getCashFlows(CashFlowsDescr cashFlows);
         [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Debug/calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int getNewCashFlows(CashFlowsDescr cashFlows);
+        [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Debug/calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern int tenor(DateDescr startDate, DateDescr endDate, int dayCountRule, out int tenor);
+        [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Debug/calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern int intCalc(DateDescr startDate, DateDescr endDate, int dayCountRule,out int days,out double dayCountFraction);
 
         public TestContext TestContext { get; set; }
+        [TestMethod]
+        public void DayCountActAct_1()
+        {
+            int days = 0;
+            double dayCountFraction = 0;
+            DateDescr startDate = new DateDescr { year = 2007, month = 12, day = 28 };
+            //IntPtr startDatePtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            //Marshal.StructureToPtr(startDate, startDatePtr, false);
+            DateDescr endDate = new DateDescr { year = 2008, month = 2, day = 28 };
+            //IntPtr endDatePtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            //Marshal.StructureToPtr(endDate, endDatePtr, false);
+            int status = intCalc(startDate, endDate, (int)TestHelper.day_counts.date_act_act_day_count, out days, out dayCountFraction);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            int intDaysResult = 62;
+            double dayCountFractionResult = 0.16942884946478;
+            Assert.AreEqual(intDaysResult, days);
+            Assert.IsTrue(Math.Abs(dayCountFractionResult - dayCountFractionResult) < .0000000001);
+
+        }
 
         [TestMethod]
         public void GetCashFlows_1()

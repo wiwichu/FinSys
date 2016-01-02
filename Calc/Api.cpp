@@ -818,5 +818,178 @@ int getInstrumentDefaults(InstrumentStruct &instrument)
 		}
 		return return_success;
 	}
+	int  intCalc(DateStruct &startDate, DateStruct &endDate, int dayCountRule, int &days, double &dayCountFraction)
+	{
+		Py_Front pyfront;
+		Date_Funcs::date_union fromDate;
+		fromDate.date.centuries = startDate.year / 100;
+		fromDate.date.years = startDate.year % 100;
+		fromDate.date.months = startDate.month;
+		fromDate.date.days = startDate.day;
+		Date_Funcs::date_union toDate;
+		toDate.date.centuries = endDate.year / 100;
+		toDate.date.years = endDate.year % 100;
+		toDate.date.months = endDate.month;
+		toDate.date.days = endDate.day;
+		int result = return_success;
+		result = pyfront.init_screen();
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.setclassdesc(instr_euro_class_desc);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.proc_class_desc();
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.setdaycount(dayCountRule);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.proc_day_count();
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.setvaldate(toDate);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.proc_val_date_py();
+		if (result != return_success)
+		{
+			return result;
+		}
+		Date_Funcs::date_union firstPayDate;
+		result = pyfront.forecast(toDate, 0, 1, date_act_cal, &firstPayDate);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.setfirstdate(firstPayDate);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.proc_first_date_py();
+		if (result != return_success)
+		{
+			return result;
+		}
+		Date_Funcs::date_union penultDate;
+		result = pyfront.forecast(firstPayDate, 12, 0, date_act_cal, &penultDate);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.setpenultdate(penultDate);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.proc_penult_date_py();
+		if (result != return_success)
+		{
+			return result;
+		}
+		Date_Funcs::date_union matDate;
+		result = pyfront.forecast(penultDate, 12, 0, date_act_cal, &matDate);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.setmatdate(matDate);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.proc_mat_date_py();
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.setissuedate(fromDate);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.proc_iss_date_py();
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.proc_all_dates_py();
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.setintrate(0.1);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.proc_int_py();
+		result = pyfront.setinprice(1);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.proc_price_py();
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.calc_int();
+		if (result != return_success)
+		{
+			return result;
+		}
+		long double interest = 0;
+		result = pyfront.getinterest(&interest);
+		if (result != return_success)
+		{
+			return result;
+		}
+		dayCountFraction = interest;
+		long intDays = 0;
+		result = pyfront.getintdays(&intDays);
+		if (result != return_success)
+		{
+			return result;
+		}
+		days = intDays;
+		return return_success;
+	}
+
+	int  tenor(DateStruct startDate, DateStruct endDate, int dayCountRule, int &tenor)
+	{
+		Date_Funcs::date_union date1;
+		date1.date.centuries = startDate.year / 100;
+		date1.date.years = startDate.year % 100;
+		date1.date.months = startDate.month;
+		date1.date.days = startDate.day;
+		Date_Funcs::date_union date2;
+		date2.date.centuries = endDate.year / 100;
+		date2.date.years = endDate.year % 100;
+		date2.date.months = endDate.month;
+		date2.date.days = endDate.day;
+		long days = tenor;
+		int result = Py_Front::tenor(date1, date2, dayCountRule, &days);
+		if (result != return_success)
+		{
+			return result;
+		}
+		tenor = (int)days;
+
+		return return_success;
+
+	}
 
 

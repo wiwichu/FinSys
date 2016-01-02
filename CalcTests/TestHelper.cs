@@ -10,6 +10,23 @@ namespace CalcTests
 
     public class TestHelper
     {
+        enum tenor_rule
+        {
+        date_no_cal,
+        date_act_cal,
+        date_30_cal ,
+        date_30e_cal ,
+        date_365_cal ,
+        date_365L_cal ,
+        date_actISDA_cal,
+        date_365_25_cal ,
+        date_30german_cal,
+        date_NL365_cal ,
+        date_30eplus_cal,
+        date_30US_cal ,
+        date_365A_cal ,
+        date_366_cal
+    };
         public enum instr_class_descs
         {
             instr_bund_class_desc,

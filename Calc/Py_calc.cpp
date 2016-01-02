@@ -1537,37 +1537,33 @@ unsigned long	_PYFUNCS py_comp_freq(long double *comp_freq, instr *in_instr,
 
 	}
 
-	if ((py_parm->parm_use == py_yes_parm_use) && (py_parm->comp_freq != 0))
+	if (py_parm->yield_meth == py_bf_yield_meth)
 	{
 
-		*comp_freq = 12/py_parm->comp_freq;
+		*comp_freq = 1;
+
+	}
+	else if ((py_parm->parm_use == py_yes_parm_use) && (py_parm->comp_freq != 0))
+	{
+
+		*comp_freq = 12 / py_parm->comp_freq;
 
 	}
 	else
 	{
 
-	  if (py_parm->yield_meth == py_bf_yield_meth)
-	  {
-
-		 *comp_freq = 1;
-
-	  }
-	  else
-	  {
-		 if (in_instr->pay_freq.period == event_sched_month_period)
-		 {
+		if (in_instr->pay_freq.period == event_sched_month_period)
+		{
 
 			*comp_freq = *pay_freq;
 
-		 }
-		 else
-		 {
+		}
+		else
+		{
 
 			*comp_freq = 1;
 
-		 }
-	  }
-
+		}
 	}
 
 	*comp_freq_hold = *comp_freq;
