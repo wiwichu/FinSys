@@ -860,7 +860,7 @@ int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &ca
 			{
 				continue;
 			}
-			cf[i].year = _it_vector_pay_struc->pay_date.date.years;
+			cf[i].year = _it_vector_pay_struc->pay_date.date.centuries*100 + _it_vector_pay_struc->pay_date.date.years;
 			cf[i].month = _it_vector_pay_struc->pay_date.date.months;
 			cf[i].day = _it_vector_pay_struc->pay_date.date.days;
 			Date_Funcs::date_union date_hold = _it_vector_pay_struc->pay_date;
@@ -885,7 +885,7 @@ int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &ca
 			}
 
 
-			cf[i].adjustedYear = date_hold.date.years;
+			cf[i].adjustedYear = date_hold.date.centuries*100 + date_hold.date.years;
 			cf[i].adjustedMonth = date_hold.date.months;
 			cf[i].adjustedDay = date_hold.date.days;
 	}
