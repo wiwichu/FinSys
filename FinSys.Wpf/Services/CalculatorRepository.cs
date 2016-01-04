@@ -109,9 +109,12 @@ namespace FinSys.Wpf.Services
                     {
                         Instrument ins = instrumentsIn[i];
                         InstrumentDescr instr = makeInstrumentDescr(ins);
-                        instr.holidayAdjust = (int)InstrumentDescr.DateAdjustRule.event_sched_no_holiday_adj;
-                        instr.intDayCount = InstrumentDescr.date_last_day_count;
-                        instr.intPayFreq = InstrumentDescr.freq_count;
+                        //instr.holidayAdjust = (int)InstrumentDescr.DateAdjustRule.event_sched_no_holiday_adj;
+                        instr.holidayAdjust = InstrumentDescr.noValue;
+                        //instr.intDayCount = InstrumentDescr.date_last_day_count;
+                        //instr.intPayFreq = InstrumentDescr.freq_count;
+                        instr.intDayCount = InstrumentDescr.noValue;
+                        instr.intPayFreq = InstrumentDescr.noValue;
 
                         int status = getInstrumentDefaults(instr);
                         if (status != 0)
@@ -415,12 +418,18 @@ namespace FinSys.Wpf.Services
             {
                 InstrumentDescr instr = makeInstrumentDescr(instrument);
                 CalculationsDescr calcs = makeCalculationsDescr(calculations);
-                calcs.yieldDayCount = InstrumentDescr.date_last_day_count;
-                calcs.yieldFreq = InstrumentDescr.freq_count;
-                calcs.yieldMethod = CalculationsDescr.py_last_yield_meth;
-                instr.holidayAdjust = (int)InstrumentDescr.DateAdjustRule.event_sched_no_holiday_adj;
-                instr.intDayCount = InstrumentDescr.date_last_day_count;
-                instr.intPayFreq = InstrumentDescr.freq_count;
+                //calcs.yieldDayCount = InstrumentDescr.date_last_day_count;
+                //calcs.yieldFreq = InstrumentDescr.freq_count;
+                //calcs.yieldMethod = CalculationsDescr.py_last_yield_meth;
+                //instr.holidayAdjust = (int)InstrumentDescr.DateAdjustRule.event_sched_no_holiday_adj;
+                //instr.intDayCount = InstrumentDescr.date_last_day_count;
+                //instr.intPayFreq = InstrumentDescr.freq_count;
+                calcs.yieldDayCount = InstrumentDescr.noValue;
+                calcs.yieldFreq = InstrumentDescr.noValue;
+                calcs.yieldMethod = InstrumentDescr.noValue;
+                instr.holidayAdjust = InstrumentDescr.noValue;
+                instr.intDayCount = InstrumentDescr.noValue;
+                instr.intPayFreq = InstrumentDescr.noValue;
 
                 int status = getInstrumentDefaultsAndData(instr,calcs);
                 if (status != 0)
@@ -445,12 +454,15 @@ namespace FinSys.Wpf.Services
                     ExCoupDays = calcs.exCoupDays,
                     IsExCoup = (calcs.isExCoup == 1),
                     PrepayModel = calcs.prepayModel
-                    ,YieldDayCount = calcs.yieldDayCount == InstrumentDescr.date_last_day_count ?
-                dayCounts[0] : dayCounts[calcs.yieldDayCount],
-                    YieldFreq = calcs.yieldFreq == InstrumentDescr.freq_count ?
-                payFreqs[0] : payFreqs[calcs.yieldFreq],
-                    YieldMethod = calcs.yieldMethod == CalculationsDescr.py_last_yield_meth ?
-                   yieldMethods[0] : yieldMethods[calcs.yieldMethod]
+                   // ,YieldDayCount = calcs.yieldDayCount == InstrumentDescr.date_last_day_count ?
+                   ,YieldDayCount = calcs.yieldDayCount == InstrumentDescr.noValue ?
+                    dayCounts[0] : dayCounts[calcs.yieldDayCount],
+                    //YieldFreq = calcs.yieldFreq == InstrumentDescr.freq_count ?
+                    YieldFreq = calcs.yieldFreq == InstrumentDescr.noValue ?
+                    payFreqs[0] : payFreqs[calcs.yieldFreq],
+                    //YieldMethod = calcs.yieldMethod == CalculationsDescr.py_last_yield_meth ?
+                    YieldMethod = calcs.yieldMethod == InstrumentDescr.noValue ?
+                    yieldMethods[0] : yieldMethods[calcs.yieldMethod]
                 };
 
                 return new KeyValuePair<Instrument, Calculations>(newInstr, newCalcs);
@@ -603,8 +615,9 @@ internal class CashFlowsDescr
 [StructLayout(LayoutKind.Sequential)]
 public class InstrumentDescr
 {
-    static public readonly int date_last_day_count = 14;
-    public static readonly int freq_count = 4;
+    static public readonly int noValue = 99999;
+    //static public readonly int date_last_day_count = 14;
+    //public static readonly int freq_count = 4;
     public enum DateAdjustRule
     {
         event_sched_march_holiday_adj,
@@ -629,9 +642,12 @@ public class InstrumentDescr
 
     public InstrumentDescr()
     {
-        holidayAdjust = (int)DateAdjustRule.event_sched_no_holiday_adj;
-        intDayCount = date_last_day_count;
-        intPayFreq = freq_count;
+        //holidayAdjust = (int)DateAdjustRule.event_sched_no_holiday_adj;
+        //intDayCount = date_last_day_count;
+        //intPayFreq = freq_count;
+        holidayAdjust = noValue;
+        intDayCount = noValue;
+        intPayFreq = noValue;
     }
     public int instrumentClass;
     public int intDayCount;
@@ -648,13 +664,16 @@ public class InstrumentDescr
 [StructLayout(LayoutKind.Sequential)]
 public class CalculationsDescr
 {
-    public static readonly int py_last_yield_meth = 15; /*{py_last_yield_meth marks the last symbol.}*/
+    //public static readonly int py_last_yield_meth = 15; /*{py_last_yield_meth marks the last symbol.}*/
 
     public CalculationsDescr()
     {
-        yieldDayCount = InstrumentDescr.date_last_day_count;
-        yieldFreq = InstrumentDescr.freq_count;
-        yieldMethod = py_last_yield_meth;
+        //yieldDayCount = InstrumentDescr.date_last_day_count;
+        //yieldFreq = InstrumentDescr.freq_count;
+        //yieldMethod = py_last_yield_meth;
+        yieldDayCount = InstrumentDescr.noValue;
+        yieldFreq = InstrumentDescr.noValue;
+        yieldMethod = InstrumentDescr.noValue;
     }
     public int interestDays;
     public IntPtr valueDate;

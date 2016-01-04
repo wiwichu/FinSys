@@ -47,7 +47,8 @@ namespace CalcTests
 			instr_float_class_desc,
 			instr_cashflow_class_desc*/
         };
-        static public readonly int date_last_day_count = 14;
+        //static public readonly int date_last_day_count = 14;
+        static public readonly int noValue = 99999;
 
         public enum day_counts
         {
@@ -87,7 +88,7 @@ namespace CalcTests
         /*{ event_sched_same_holiday_adj means that no adjustment occurs.}*/
         event_sched_no_holiday_adj=99
         }
-        public static readonly int freq_count = 4;
+        //public static readonly int freq_count = 4;
         public enum frequency
         {
             frequency_annually
@@ -95,7 +96,7 @@ namespace CalcTests
         , frequency_quarterly
         , frequency_semiannually
         };
-        public static readonly int py_last_yield_meth = 15; /*{py_last_yield_meth marks the last symbol.}*/
+       // public static readonly int py_last_yield_meth = 15; /*{py_last_yield_meth marks the last symbol.}*/
         public enum yield_method
         {
             py_aibd_yield_meth,
@@ -139,9 +140,12 @@ namespace CalcTests
     {
         public InstrumentDescr()
         {
-            holidayAdjust = (int)TestHelper.DateAdjustRule.event_sched_no_holiday_adj;
-            intDayCount = TestHelper.date_last_day_count;
-            intPayFreq = TestHelper.freq_count;
+            //holidayAdjust = (int)TestHelper.DateAdjustRule.event_sched_no_holiday_adj;
+            holidayAdjust = TestHelper.noValue;
+            //intDayCount = TestHelper.date_last_day_count;
+            intDayCount = TestHelper.noValue;
+            //intPayFreq = TestHelper.freq_count;
+            intPayFreq = TestHelper.noValue;
         }
         public int instrumentClass;
         public int intDayCount;
@@ -160,9 +164,12 @@ namespace CalcTests
     {
         public CalculationsDescr()
         {
-            yieldDayCount = TestHelper.date_last_day_count;
-            yieldFreq = TestHelper.freq_count;
-            yieldMethod = TestHelper.py_last_yield_meth;
+            //yieldDayCount = TestHelper.date_last_day_count;
+            yieldDayCount = TestHelper.noValue;
+            //yieldFreq = TestHelper.freq_count;
+            yieldFreq = TestHelper.noValue;
+            // yieldMethod = TestHelper.py_last_yield_meth;
+            yieldMethod = TestHelper.noValue;
         }
         public int interestDays;
         public IntPtr valueDate;

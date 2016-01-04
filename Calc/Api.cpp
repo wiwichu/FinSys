@@ -251,7 +251,8 @@ int preProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_F
 		return result;
 	}
 
-	if (instrument.intDayCount != date_last_day_count)
+	//if (instrument.intDayCount != date_last_day_count)
+	if (instrument.intDayCount != noValue)
 	{
 		result = pyfront.setdaycount(day_count_names[instrument.intDayCount]);
 		if (result != return_success)
@@ -264,7 +265,8 @@ int preProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_F
 			return result;
 		}
 	}
-	if (instrument.intPayFreq != freq_count)
+	//if (instrument.intPayFreq != freq_count)
+	if (instrument.intPayFreq != noValue)
 	{
 		result = pyfront.setpayfreq(freq_names[instrument.intPayFreq]);
 		if (result != return_success)
@@ -326,8 +328,9 @@ int preProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_F
 	{
 		return result;
 	}
-	if (calculations.yieldDayCount != freq_count)
-	{
+		//if (calculations.yieldDayCount != freq_count)
+		if (calculations.yieldDayCount != noValue)
+		{
 		result = pyfront.setyielddays(day_count_names[calculations.yieldDayCount]);
 		if (result != return_success)
 		{
@@ -339,8 +342,9 @@ int preProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_F
 			return result;
 		}
 	}
-	if (calculations.yieldFreq != freq_count)
-	{
+		//if (calculations.yieldFreq != freq_count)
+		if (calculations.yieldFreq != noValue)
+		{
 		result = pyfront.setyieldfreq(freq_names[calculations.yieldFreq]);
 		if (result != return_success)
 		{
@@ -352,8 +356,9 @@ int preProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_F
 			return result;
 		}
 	}
-	if (calculations.yieldMethod != py_last_yield_meth)
-	{
+	//if (calculations.yieldMethod != py_last_yield_meth)
+	if (calculations.yieldMethod != noValue)
+		{
 		result = pyfront.setyieldmeth(yield_meth_names[calculations.yieldMethod]);
 		if (result != return_success)
 		{
@@ -365,7 +370,8 @@ int preProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_F
 			return result;
 		}
 	}
-	if (instrument.holidayAdjust != event_sched_no_holiday_adj)
+	//if (instrument.holidayAdjust != event_sched_no_holiday_adj)
+	if (instrument.holidayAdjust != noValue)
 	{
 		result = pyfront.setholidayadj(instrument.holidayAdjust);
 		if (result != return_success)
@@ -564,7 +570,8 @@ int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_
 	//	return result;
 	//}
 	//instrument.instrumentClass = (int)charArg;
-	if (instrument.intDayCount == date_last_day_count)
+	//if (instrument.intDayCount == date_last_day_count)
+	if (instrument.intDayCount == noValue)
 	{
 		result = pyfront.getdaycount(&intArg);
 		if (result != return_success)
@@ -588,8 +595,9 @@ int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_
 		}
 
 	}
-	if (instrument.intPayFreq == freq_count)
-	{
+		//if (instrument.intPayFreq != freq_count)
+		if (instrument.intPayFreq == noValue)
+		{
 		result = pyfront.getpayfreq(&intArg);
 		if (result != return_success)
 		{
@@ -611,8 +619,9 @@ int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_
 		}
 
 	}
-	if (calculations.yieldFreq == freq_count)
-	{
+		//if (calculations.yieldFreq != freq_count)
+		if (calculations.yieldFreq == noValue)
+		{
 		result = pyfront.getyieldfreq(&intArg);
 		if (result != return_success)
 		{
@@ -634,8 +643,9 @@ int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_
 		}
 
 	}
-	if (calculations.yieldDayCount == freq_count)
-	{
+		//if (calculations.yieldDayCount != freq_count)
+		if (calculations.yieldDayCount == noValue)
+		{
 		result = pyfront.getyielddays(&intArg);
 		if (result != return_success)
 		{
@@ -657,8 +667,9 @@ int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_
 		}
 
 	}
-	if (calculations.yieldMethod == py_last_yield_meth)
-	{
+	//if (calculations.yieldMethod == py_last_yield_meth)
+	if (calculations.yieldMethod == noValue)
+		{
 		result = pyfront.getyieldmeth(&intArg);
 		if (result != return_success)
 		{

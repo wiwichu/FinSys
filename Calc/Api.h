@@ -1,5 +1,6 @@
 #pragma once
 
+const int noValue = 99999;
 
 typedef struct CashFlowStruct
 {
