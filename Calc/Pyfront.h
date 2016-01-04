@@ -26,7 +26,9 @@
 #include "pydecs.h"
 #include "errdecs.h"
 #include "holicodeproc.h"
+#include <vector>
 
+using namespace std;
 
 const char change_new = 0;
 const char change_step = 1;
@@ -587,6 +589,7 @@ unsigned long  _FAR_FUNC _EX_IN_FUNC   getfrnpayfreq(int payfreq_number,	char pa
 unsigned long  _FAR_FUNC _EX_IN_FUNC   getsimpcomp(int simpcomp_number,	char simpcompparm [simp_comp_names_len]);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   getsimpcomp(int *simpcomp_number);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   getsimpcomp(char simpcompparm [simp_comp_names_len]);
+unsigned long  _FAR_FUNC _EX_IN_FUNC   getcashFlows(vector<pay_struc> &cashFlows );
 //unsigned long  _FAR_FUNC _EX_IN_FUNC   getcprrate(int *cprrate);
 
 static Py_Front& getInstance()
@@ -897,7 +900,7 @@ py_parms pyparm;
   redemps_struc part_pay_array_a[max_part_pays];
 //Instrument::redemps_struc even_redemps[max_coups];
   redemps_struc even_redemps[max_coups];
-
+  vector<pay_struc> cashFlows;
 typedef struct pyproc_parm
 	{
 //	char holiday_choice [fra_last_holiday] [fra_holiday_names_len];

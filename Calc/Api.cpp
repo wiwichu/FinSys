@@ -251,26 +251,31 @@ int preProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_F
 		return result;
 	}
 
-	result = pyfront.setdaycount(day_count_names[instrument.intDayCount]);
-	if (result != return_success)
+	if (instrument.intDayCount != date_last_day_count)
 	{
-		return result;
+		result = pyfront.setdaycount(day_count_names[instrument.intDayCount]);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.proc_day_count();
+		if (result != return_success)
+		{
+			return result;
+		}
 	}
-	result = pyfront.proc_day_count();
-	if (result != return_success)
+	if (instrument.intPayFreq != freq_count)
 	{
-		return result;
-	}
-
-	result = pyfront.setpayfreq(freq_names[instrument.intPayFreq]);
-	if (result != return_success)
-	{
-		return result;
-	}
-	result = pyfront.proc_pay_freq();
-	if (result != return_success)
-	{
-		return result;
+		result = pyfront.setpayfreq(freq_names[instrument.intPayFreq]);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.proc_pay_freq();
+		if (result != return_success)
+		{
+			return result;
+		}
 	}
 	result = pyfront.setintrate(instrument.interestRate);
 	if (result != return_success)
@@ -321,39 +326,59 @@ int preProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_F
 	{
 		return result;
 	}
-	result = pyfront.setyielddays(day_count_names[calculations.yieldDayCount]);
-	if (result != return_success)
+	if (calculations.yieldDayCount != freq_count)
 	{
-		return result;
+		result = pyfront.setyielddays(day_count_names[calculations.yieldDayCount]);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.proc_yield_days();
+		if (result != return_success)
+		{
+			return result;
+		}
 	}
-	result = pyfront.proc_yield_days();
-	if (result != return_success)
+	if (calculations.yieldFreq != freq_count)
 	{
-		return result;
+		result = pyfront.setyieldfreq(freq_names[calculations.yieldFreq]);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.proc_yield_freq();
+		if (result != return_success)
+		{
+			return result;
+		}
 	}
-
-	result = pyfront.setyieldfreq(freq_names[calculations.yieldFreq]);
-	if (result != return_success)
+	if (calculations.yieldMethod != py_last_yield_meth)
 	{
-		return result;
+		result = pyfront.setyieldmeth(yield_meth_names[calculations.yieldMethod]);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.proc_yield_meth();
+		if (result != return_success)
+		{
+			return result;
+		}
 	}
-	result = pyfront.proc_yield_freq();
-	if (result != return_success)
+	if (instrument.holidayAdjust != event_sched_no_holiday_adj)
 	{
-		return result;
+		result = pyfront.setholidayadj(instrument.holidayAdjust);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.proc_holi();
+		if (result != return_success)
+		{
+			return result;
+		}
 	}
-
-	result = pyfront.setyieldmeth(yield_meth_names[calculations.yieldMethod]);
-	if (result != return_success)
-	{
-		return result;
-	}
-	result = pyfront.proc_yield_meth();
-	if (result != return_success)
-	{
-		return result;
-	}
-
+	return return_success;
 }
 int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_Front &pyfront)
 {
@@ -533,42 +558,128 @@ int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_
 	calculations.interestDays = longHold;
 	char charArg = 0;
 	int intArg = 0;
-	result = pyfront.getclassnumber(&charArg);
-	if (result != return_success)
+	//result = pyfront.getclassnumber(&charArg);
+	//if (result != return_success)
+	//{
+	//	return result;
+	//}
+	//instrument.instrumentClass = (int)charArg;
+	if (instrument.intDayCount == date_last_day_count)
 	{
-		return result;
+		result = pyfront.getdaycount(&intArg);
+		if (result != return_success)
+		{
+			return result;
+		}
+
+		instrument.intDayCount = intArg;
 	}
-	instrument.instrumentClass = (int)charArg;
-	result = pyfront.getdaycount(&intArg);
-	if (result != return_success)
+	else
 	{
-		return result;
+		result = pyfront.setdaycount(instrument.intDayCount);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.proc_day_count();
+		if (result != return_success)
+		{
+			return result;
+		}
+
 	}
-	instrument.intDayCount = intArg;
-	result = pyfront.getpayfreq(&intArg);
-	if (result != return_success)
+	if (instrument.intPayFreq == freq_count)
 	{
-		return result;
+		result = pyfront.getpayfreq(&intArg);
+		if (result != return_success)
+		{
+			return result;
+		}
+		instrument.intPayFreq = intArg;
 	}
-	instrument.intPayFreq = intArg;
-	result = pyfront.getyieldfreq(&intArg);
-	if (result != return_success)
+	else
 	{
-		return result;
+		result = pyfront.setpayfreq(instrument.intPayFreq);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.proc_pay_freq();
+		if (result != return_success)
+		{
+			return result;
+		}
+
 	}
-	calculations.yieldFreq = intArg;
-	result = pyfront.getyielddays(&intArg);
-	if (result != return_success)
+	if (calculations.yieldFreq == freq_count)
 	{
-		return result;
+		result = pyfront.getyieldfreq(&intArg);
+		if (result != return_success)
+		{
+			return result;
+		}
+		calculations.yieldFreq = intArg;
 	}
-	calculations.yieldDayCount = intArg;
-	result = pyfront.getyieldmeth(&intArg);
-	if (result != return_success)
+	else
 	{
-		return result;
+		result = pyfront.setyieldfreq(calculations.yieldFreq);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.proc_yield_freq();
+		if (result != return_success)
+		{
+			return result;
+		}
+
 	}
-	calculations.yieldMethod = intArg;
+	if (calculations.yieldDayCount == freq_count)
+	{
+		result = pyfront.getyielddays(&intArg);
+		if (result != return_success)
+		{
+			return result;
+		}
+		calculations.yieldDayCount = intArg;
+	}
+	else
+	{
+		result = pyfront.setyielddays(calculations.yieldDayCount);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.proc_yield_days();
+		if (result != return_success)
+		{
+			return result;
+		}
+
+	}
+	if (calculations.yieldMethod == py_last_yield_meth)
+	{
+		result = pyfront.getyieldmeth(&intArg);
+		if (result != return_success)
+		{
+			return result;
+		}
+		calculations.yieldMethod = intArg;
+	}
+	else
+	{
+		result = pyfront.setyieldmeth(calculations.yieldMethod);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.proc_yield_meth();
+		if (result != return_success)
+		{
+			return result;
+		}
+
+	}
 	return return_success;
 }
 int  getDefaultDatesAndData(InstrumentStruct &instrument, CalculationsStruct &calculations)
@@ -593,6 +704,185 @@ int  getDefaultDatesAndData(InstrumentStruct &instrument, CalculationsStruct &ca
 
 	return return_success;
 }
+int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &calculations,CashFlowsStruct &cashFlowsStruct, int adjustRule)
+{
+	Py_Front pyfront;
+	int result = preProc(instrument, calculations, pyfront);
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.proc_def_dates();
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = preProc(instrument, calculations, pyfront);
+	if (result != return_success)
+	{
+		return result;
+	}
+
+	if (instrument.issueDate != null)
+	{
+		Date_Funcs::date_union issDate;
+		issDate.date.centuries = instrument.issueDate->year / 100;
+		issDate.date.years = instrument.issueDate->year % 100;
+		issDate.date.months = instrument.issueDate->month;
+		issDate.date.days = instrument.issueDate->day % 100;
+		result = pyfront.setissuedate(issDate);
+		if (result != return_success)
+		{
+			return result;
+		}
+	}
+	if (instrument.firstPayDate != null)
+	{
+		Date_Funcs::date_union fpdDate;
+		fpdDate.date.centuries = instrument.firstPayDate->year / 100;
+		fpdDate.date.years = instrument.firstPayDate->year % 100;
+		fpdDate.date.months = instrument.firstPayDate->month;
+		fpdDate.date.days = instrument.firstPayDate->day % 100;
+		//Date_Funcs::date_union holdDate;
+		//result = pyfront.getfirstdate(holdDate);
+		//if (
+		//	!
+		//	(
+		//		fpdDate.date.centuries == holdDate.date.centuries &&
+		//		fpdDate.date.years == holdDate.date.years &&
+		//		fpdDate.date.months == holdDate.date.months &&
+		//		fpdDate.date.days == holdDate.date.days
+		//		)
+		//	)
+		//{
+		//	pyfront.forceSlowCalc(true);
+		//}
+		result = pyfront.setfirstdate(fpdDate);
+		if (result != return_success)
+		{
+			return result;
+		}
+	}
+	if (instrument.nextToLastPayDate != null)
+	{
+		Date_Funcs::date_union ntlDate;
+		ntlDate.date.centuries = instrument.nextToLastPayDate->year / 100;
+		ntlDate.date.years = instrument.nextToLastPayDate->year % 100;
+		ntlDate.date.months = instrument.nextToLastPayDate->month;
+		ntlDate.date.days = instrument.nextToLastPayDate->day % 100;
+		Date_Funcs::date_union holdDate;
+		result = pyfront.getpenultdate(holdDate);
+		if (
+			!
+			(
+				ntlDate.date.centuries == holdDate.date.centuries &&
+				ntlDate.date.years == holdDate.date.years &&
+				ntlDate.date.months == holdDate.date.months &&
+				ntlDate.date.days == holdDate.date.days
+				)
+			)
+		{
+			pyfront.forceSlowCalc(true);
+		}
+		result = pyfront.setpenultdate(ntlDate);
+		if (result != return_success)
+		{
+			return result;
+		}
+	}
+	result = pyfront.proc_iss_date_py();
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.proc_first_date_py();
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.proc_penult_date_py();
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.proc_all_dates_py();
+	if (result != return_success)
+	{
+		return result;
+	}
+
+	result = pyfront.calc_int();
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.calc_py();
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = postProc(instrument, calculations, pyfront);
+	if (result != return_success)
+	{
+		return result;
+	}
+	//Buld cashflows
+	vector<Instrument::pay_struc> cashFlows;
+	result = pyfront.getcashFlows(cashFlows);
+	if (result != return_success)
+	{
+		return result;
+	}
+	vector<Instrument::pay_struc>::iterator _it_vector_pay_struc;
+	CashFlowStruct *cf = new CashFlowStruct[max_coups];
+	cashFlowsStruct.cashFlows = cf;
+	int year = 2000;
+	int i = 0;
+	for (_it_vector_pay_struc = cashFlows.begin();
+	_it_vector_pay_struc < cashFlows.end();
+		_it_vector_pay_struc++, i++)
+	{
+			CashFlowStruct *cfs = new CashFlowStruct();
+			cf[i] = *cfs;
+			cf[i].amount = _it_vector_pay_struc->payment;
+			if (cf[i].amount == 0)
+			{
+				continue;
+			}
+			cf[i].year = _it_vector_pay_struc->pay_date.date.years;
+			cf[i].month = _it_vector_pay_struc->pay_date.date.months;
+			cf[i].day = _it_vector_pay_struc->pay_date.date.days;
+			Date_Funcs::date_union date_hold = _it_vector_pay_struc->pay_date;
+			int holi_chan = 0;
+			const set<string> holiSet;
+			result = Date_Funcs::adj_date(&date_hold,
+					adj_date_non_to_bus,
+					adjustRule,
+					adj_date_yes_we,
+					adj_date_yes_hol,
+					//				in_instr->holiday_code,
+					holi_chan
+					//				,holi_parm
+					, holiSet
+					);
+
+			if (result != return_success)
+			{
+
+				return result;
+
+			}
+
+
+			cf[i].adjustedYear = date_hold.date.years;
+			cf[i].adjustedMonth = date_hold.date.months;
+			cf[i].adjustedDay = date_hold.date.days;
+	}
+	cashFlowsStruct.size = i;
+
+	return return_success;
+}
+
 int  calculate(InstrumentStruct &instrument, CalculationsStruct &calculations)
 {
 	Py_Front pyfront;
@@ -789,7 +1079,7 @@ int getInstrumentDefaults(InstrumentStruct &instrument)
 	Date_Funcs::date_union dateArg;
 	return result;
 }
-	int  getCashFlows(CashFlowsStruct &cashFlowsStruct)
+	int  getCashFlows(CashFlowsStruct &cashFlowsStruct, int adjustRule)
 	{
 		for (int i = 0; i < cashFlowsStruct.size; i++)
 		{
@@ -798,7 +1088,7 @@ int getInstrumentDefaults(InstrumentStruct &instrument)
 		}
 		return return_success;
 	}
-	int  getNewCashFlows(CashFlowsStruct &cashFlowStruct)
+	int  getNewCashFlows(CashFlowsStruct &cashFlowStruct, int adjustRule)
 	{
 
 		const int size = 1000;

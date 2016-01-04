@@ -34,6 +34,8 @@ namespace FinSys.Wpf.Services
         private static extern int getInstrumentDefaultsAndData(InstrumentDescr instrument, CalculationsDescr calculations);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int getCashFlows( CashFlowsDescr cashFlows, ref int size);
+        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern int calculateWithCashFlows(InstrumentDescr instrument, CalculationsDescr calculations, CashFlowsDescr cashFlows, int dateAdjustRule);
 
 
         private List<string> classes = new List<string>();
@@ -449,7 +451,11 @@ namespace FinSys.Wpf.Services
             {
                 InstrumentDescr instr = makeInstrumentDescr(instrument);
                 CalculationsDescr calcs = makeCalculationsDescr(calculations);
-                int status = calculate(instr, calcs);
+                CashFlowsDescr cashFlows = new CashFlowsDescr();
+                //cashFlows.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) );
+                int dateAdjust = (int)DateAdjustRule.event_sched_same_holiday_adj;
+                //int status = calculate(instr, calcs);
+                int status = calculateWithCashFlows(instr, calcs, cashFlows,dateAdjust);
                 if (status != 0)
                 {
                     StringBuilder statusText = new StringBuilder(200);
@@ -457,6 +463,19 @@ namespace FinSys.Wpf.Services
                     status = getStatusText(status, statusText, out textSize);
                     throw new InvalidOperationException(statusText.ToString());
                 }
+
+                var structSize = Marshal.SizeOf(typeof(CashFlowDescr));
+                var cashFlowsOut = new List<CashFlowDescr>();
+                var cashFlowOut = cashFlows.cashFlows;
+
+                for (int i = 0; i < cashFlows.size; i++)
+                {
+                    cashFlowsOut.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
+                        typeof(CashFlowDescr)));
+                    //cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
+                    cashFlowOut = (IntPtr)(cashFlowOut.ToInt32() + structSize);
+                }
+
                 Instrument newInstr = makeInstrument(instr);
                 Calculations newCalcs = makeCalculations(calcs);
 
@@ -468,8 +487,14 @@ namespace FinSys.Wpf.Services
         }
     }
     [StructLayout(LayoutKind.Sequential)]
-    internal class InstrumentDescr
+    public class InstrumentDescr
     {
+        readonly int freq_count = 4;
+        public InstrumentDescr()
+        {
+            holidayAdjust = (int)DateAdjustRule.event_sched_no_holiday_adj;
+            intPayFreq = freq_count;
+        }
         public int instrumentClass;
         public int intDayCount;
         public int intPayFreq;
@@ -479,6 +504,7 @@ namespace FinSys.Wpf.Services
         public IntPtr nextToLastPayDate;
         public int endOfMonthPay;
         public double interestRate;
+        public int holidayAdjust;
     };
     [StructLayout(LayoutKind.Sequential)]
     internal class CalculationsDescr
@@ -519,12 +545,44 @@ namespace FinSys.Wpf.Services
         public int month;
         public int day;
         public double amount;
+        public int adjustedYear;
+        public int adjustedMonth;
+        public int adjustedDay;
     };
     [StructLayout(LayoutKind.Sequential)]
     internal class CashFlowsDescr
     {
         public IntPtr cashFlows; //CashFlowStruct Array
         public int size;
+    };
+
+    public enum DateAdjustRule
+    {
+        event_sched_march_holiday_adj,
+        /*{ event_sched_march_holiday_adj means the next business day is taken,
+        and then becomes the new base for the next calculation, causing the day to
+        march forward from month to month. It will never go into the next month
+        however, but stay on the last business date once that is reached.}*/
+        event_sched_next_holiday_adj,
+        /*{ event_sched_next_holiday_adj means the next business day is taken.}*/
+        event_sched_np_holiday_adj,
+        /*{ event_sched_np_holiday_adj means the next business day is taken,
+        but if this is in a different month, the previous business day is taken.}*/
+        event_sched_prev_holiday_adj,
+        /*{ event_sched_prev_holiday_adj means the previous business day is taken.}*/
+        event_sched_pn_holiday_adj,
+        /*{ event_sched_pn_holiday_adj means the previous business day is taken,
+        but if this is in a different month, the next business day is taken.}*/
+        event_sched_same_holiday_adj,
+        /*{ event_sched_same_holiday_adj means that no adjustment occurs.}*/
+        event_sched_no_holiday_adj=99
+    }
+    public enum frequency
+    {
+        frequency_annually
+    , frequency_monthly
+    , frequency_quarterly
+    , frequency_semiannually
     };
 
 }

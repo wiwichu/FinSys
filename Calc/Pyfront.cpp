@@ -29,6 +29,13 @@ cholicodeproc (DB_parm)
 	
 }
 */
+
+unsigned long  FAR _export	Py_Front::getcashFlows(vector<pay_struc> &cashFlows)
+{
+	cashFlows = this->cashFlows;
+	return return_success;
+}
+
 unsigned long  FAR _export	Py_Front::action_init_cf()
 {
 	current_class = instr_cashflow_class;
@@ -2850,7 +2857,8 @@ unsigned long FAR _export	Py_Front::calc_py_py()
 			, &conv, &pvbp_out, redemps_array_parm, rate_array
 			, pay_array_a,
 			part_pay_array_a,
-			even_redemps
+			even_redemps,
+			cashFlows
 			);
 
 		if (return_state)
@@ -5463,7 +5471,21 @@ unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getholidayadj(int *holadj_numbe
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setholidayadj(int holadj_number)
 {
 	return_state = return_success;
+	if (holadj_number >= holiday_adj_count)
+	{
+		rerate_sched.rerate_sched.holiday_adj =
+			event_sched_same_holiday_adj;
+
+		return_state = return_err_invalid_holiday;
+
+		return return_state;
+
+	}
 	rerate_sched.current_holiday_adj = holadj_number;
+	
+	strcpy(rerate_sched.current_holiday_adj_name,
+		holiday_adj_names[holadj_number]);
+
 	return return_state;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getfrnpayfreq(char payfreqparm [freq_names_len])

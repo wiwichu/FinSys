@@ -7,6 +7,9 @@ typedef struct CashFlowStruct
 	int month;
 	int day;
 	double amount;
+	int adjustedYear;
+	int adjustedMonth;
+	int adjustedDay;
 } CashFlowStruct;
 typedef struct CashFlowsStruct
 {
@@ -31,6 +34,7 @@ typedef struct InstrumentStruct
 	DateStruct			*nextToLastPayDate;
 	bool				endOfMonthPay;
 	double				interestRate;
+	int					holidayAdjust;
 } InstrumentStruct;
 typedef struct CalculationsStruct
 {
@@ -67,8 +71,9 @@ extern "C" __declspec(dllexport) int  getDefaultDates(InstrumentStruct &instrume
 extern "C" __declspec(dllexport) int  getDefaultDatesAndData(InstrumentStruct &instrument, CalculationsStruct &calculations);
 extern "C" __declspec(dllexport) char**  getyieldmethods(int& size);
 extern "C" __declspec(dllexport) int  calculate(InstrumentStruct &instrument, CalculationsStruct &calculations);
-extern "C" __declspec(dllexport) int  getCashFlows(CashFlowsStruct &cashFlowsStruct);
-extern "C" __declspec(dllexport) int  getNewCashFlows(CashFlowsStruct &cashFlowsStruct);
+extern "C" __declspec(dllexport) int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &calculations,CashFlowsStruct &cashFlowsStruct, int adjustRule);
+extern "C" __declspec(dllexport) int  getCashFlows(CashFlowsStruct &cashFlowsStruct, int adjustRule);
+extern "C" __declspec(dllexport) int  getNewCashFlows(CashFlowsStruct &cashFlowsStruct, int adjustRule);
 extern "C" __declspec(dllexport) int  tenor(DateStruct &startDate, DateStruct &endDate, int dayCountRule, int &tenor);
 extern "C" __declspec(dllexport) int  intCalc(DateStruct &startDate, DateStruct &endDate, int dayCountRule, int &days, double &dayCountFraction);
 

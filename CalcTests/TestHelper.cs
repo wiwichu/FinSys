@@ -12,21 +12,21 @@ namespace CalcTests
     {
         enum tenor_rule
         {
-        date_no_cal,
-        date_act_cal,
-        date_30_cal ,
-        date_30e_cal ,
-        date_365_cal ,
-        date_365L_cal ,
-        date_actISDA_cal,
-        date_365_25_cal ,
-        date_30german_cal,
-        date_NL365_cal ,
-        date_30eplus_cal,
-        date_30US_cal ,
-        date_365A_cal ,
-        date_366_cal
-    };
+            date_no_cal,
+            date_act_cal,
+            date_30_cal,
+            date_30e_cal,
+            date_365_cal,
+            date_365L_cal,
+            date_actISDA_cal,
+            date_365_25_cal,
+            date_30german_cal,
+            date_NL365_cal,
+            date_30eplus_cal,
+            date_30US_cal,
+            date_365A_cal,
+            date_366_cal
+        };
         public enum instr_class_descs
         {
             instr_bund_class_desc,
@@ -47,6 +47,8 @@ namespace CalcTests
 			instr_float_class_desc,
 			instr_cashflow_class_desc*/
         };
+        static public readonly int date_last_day_count = 14;
+
         public enum day_counts
         {
             date_30e_360_day_count
@@ -64,6 +66,28 @@ namespace CalcTests
         , date_act_365A_day_count
         , date_act_366_day_count
         };
+        public enum DateAdjustRule
+        {
+        event_sched_march_holiday_adj,
+        /*{ event_sched_march_holiday_adj means the next business day is taken,
+        and then becomes the new base for the next calculation, causing the day to
+        march forward from month to month. It will never go into the next month
+        however, but stay on the last business date once that is reached.}*/
+        event_sched_next_holiday_adj,
+        /*{ event_sched_next_holiday_adj means the next business day is taken.}*/
+        event_sched_np_holiday_adj,
+        /*{ event_sched_np_holiday_adj means the next business day is taken,
+        but if this is in a different month, the previous business day is taken.}*/
+        event_sched_prev_holiday_adj,
+        /*{ event_sched_prev_holiday_adj means the previous business day is taken.}*/
+        event_sched_pn_holiday_adj,
+        /*{ event_sched_pn_holiday_adj means the previous business day is taken,
+        but if this is in a different month, the next business day is taken.}*/
+        event_sched_same_holiday_adj,
+        /*{ event_sched_same_holiday_adj means that no adjustment occurs.}*/
+        event_sched_no_holiday_adj=99
+        }
+        public static readonly int freq_count = 4;
         public enum frequency
         {
             frequency_annually
@@ -71,6 +95,7 @@ namespace CalcTests
         , frequency_quarterly
         , frequency_semiannually
         };
+        public static readonly int py_last_yield_meth = 15; /*{py_last_yield_meth marks the last symbol.}*/
         public enum yield_method
         {
             py_aibd_yield_meth,
@@ -88,6 +113,8 @@ namespace CalcTests
             py_bf_yield_meth,
             py_ty_yield_meth
         };
+
+
     }
     [StructLayout(LayoutKind.Sequential)]
     internal class CashFlowDescr
@@ -96,6 +123,9 @@ namespace CalcTests
         public int month;
         public int day;
         public double amount;
+        public int adjustedYear;
+        public int adjustedMonth;
+        public int adjustedDay;
     };
     [StructLayout(LayoutKind.Sequential)]
     internal class CashFlowsDescr
@@ -107,6 +137,12 @@ namespace CalcTests
     [StructLayout(LayoutKind.Sequential)]
     public class InstrumentDescr
     {
+        public InstrumentDescr()
+        {
+            holidayAdjust = (int)TestHelper.DateAdjustRule.event_sched_no_holiday_adj;
+            intDayCount = TestHelper.date_last_day_count;
+            intPayFreq = TestHelper.freq_count;
+        }
         public int instrumentClass;
         public int intDayCount;
         public int intPayFreq;
@@ -116,10 +152,18 @@ namespace CalcTests
         public IntPtr nextToLastPayDate;
         public int endOfMonthPay;
         public double interestRate;
+        public int holidayAdjust;
     };
+
     [StructLayout(LayoutKind.Sequential)]
     public class CalculationsDescr
     {
+        public CalculationsDescr()
+        {
+            yieldDayCount = TestHelper.date_last_day_count;
+            yieldFreq = TestHelper.freq_count;
+            yieldMethod = TestHelper.py_last_yield_meth;
+        }
         public int interestDays;
         public IntPtr valueDate;
         public IntPtr previousPayDate;

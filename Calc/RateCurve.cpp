@@ -1843,6 +1843,7 @@ unsigned long _RATECURVE  RCBootDisc(date_union ValueDate,
 	BootResult LowerInstr;
 	BootResult UpperInstr;
 	date_union hold_date;
+	vector<pay_struc> cashFlows;
 
 	return_state = SortRCInstr(InstrArrayParm, TotalInstr, ValueDate,holiSet);
 	if (return_state != return_success)
@@ -2044,7 +2045,8 @@ unsigned long _RATECURVE  RCBootDisc(date_union ValueDate,
 					rate_array,
 					pay_array_a,
 					part_pay_array_a,
-					even_redemps
+					even_redemps,
+					cashFlows
 				);
 
 				if (return_state)

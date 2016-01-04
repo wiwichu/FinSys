@@ -2,7 +2,7 @@
 #include "datedec.h"
 #include "gendec.h"
 #include <math.h>
-
+//#include <vector>
 _PYFUNCS Py_Funcs()
 {
 	calcSlow = false;
@@ -169,7 +169,9 @@ unsigned long 	_PYFUNCS py_calc(instr in_instr_parm, date_union py_date_parm,
 			,
 			pay_struc  pay_array_a[],
 			redemps_struc  part_pay_array_a[],
-			redemps_struc even_redemps[]
+			redemps_struc even_redemps[],
+			vector<pay_struc> &cashflows
+			
 			)
 
 {
@@ -305,6 +307,7 @@ date_union prev_date;
 	curr_nom = 1;
 	py_rule_hold = py_parm.calc_what;
 
+	vector<pay_struc>::iterator _it_vector_pay_struc;
 	/*{ Validate eligibility for py_calc.}*/
 
 	py_eligible_check(&in_instr, py_eligible_general, &eligible_result);
@@ -653,6 +656,11 @@ date_union prev_date;
 	{
 	 goto py_calc_end;
 	}
+	for (int i = 0; i < coup_count; i++)
+	{
+		cashflows.push_back(pay_array_a[i]);
+
+	}
 
 	if (in_instr.instr_class != instr_cashflow_class)
 
@@ -668,6 +676,22 @@ date_union prev_date;
 	  {
 		 goto py_calc_end;
 	  }
+	for (int i = 0; i < even_redemps_count; i++)
+	{
+		pay_struc thisFlow;
+		redemps_struc thisRedemp = even_redemps[i];
+		thisFlow.pay_date = thisRedemp.redemps_date;
+		thisFlow.payment = thisRedemp.redemps_factor;
+		thisFlow.pv_factor = thisRedemp.pv_factor;
+		int dateStat = 
+			CheckDate(thisRedemp.redemps_date.date.years,
+				thisRedemp.redemps_date.date.months,
+				thisRedemp.redemps_date.date.days);
+		if (dateStat == return_success)
+		{
+			cashflows.push_back(thisFlow);
+		}
+	}
 
 			 /*{ Process partial payments.}*/
 
@@ -693,6 +717,23 @@ date_union prev_date;
 		 if (return_status)
 		 {
 			goto py_calc_end;
+		 }
+		 for (int i = 0; i < even_redemps_count; i++)
+		 {
+			 pay_struc thisFlow;
+			 redemps_struc thisRedemp = part_pay_array_a[i];
+			 thisFlow.pay_date = thisRedemp.redemps_date;
+			 thisFlow.payment = thisRedemp.redemps_factor;
+			 thisFlow.pv_factor = thisRedemp.pv_factor;
+			 int dateStat =
+				 CheckDate(thisRedemp.redemps_date.date.years,
+					 thisRedemp.redemps_date.date.months,
+					 thisRedemp.redemps_date.date.days);
+			 if (dateStat == return_success)
+			 {
+				 cashflows.push_back(thisFlow);
+			 }
+
 		 }
 
 	  }

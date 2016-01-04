@@ -21,6 +21,7 @@
 #include "scrdec.h"
 //#include "convutil.h"
 #include "pydecs.h"
+#include <vector>
 
 /* Define the valid Instrument types. */
 

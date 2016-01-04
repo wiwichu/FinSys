@@ -867,7 +867,7 @@ public:
   }*/
 //#endif
 
-  unsigned long   adj_date	(date_union *,
+ static unsigned long   adj_date	(date_union *,
 				char,
 				char,
 				char,
@@ -943,7 +943,7 @@ public:
   }*/
 
 
-  unsigned long   findhol 	(date_union,
+  static unsigned long   findhol 	(date_union,
 				char [],
 				char *,
 				unsigned int,

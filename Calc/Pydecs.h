@@ -1,4 +1,6 @@
 //#define FAR
+#pragma once
+
 #define _export
 #ifndef __pydecs_H
 #define __pydecs_H
@@ -23,8 +25,9 @@
 #include "intdecs.h"
 #endif
 
-/*{ Py_parms describes parameters to be used in py_calc.}*/
+#include <vector>
 
+/*{ Py_parms describes parameters to be used in py_calc.}*/
 const	char	py_yes_parm_use = 0; /*{py_yes_parm_use means use the parameters.}*/
 const	char	py_no_parm_use = 1;  /*{py_no_parm_use means use standards from the yield method.}*/
 const	char	py_yes_calc_acc = 0; /*{py_yes_calc_acc means accrued interest should be calculated.}*/
@@ -233,7 +236,8 @@ bool calcSlow;
 			,
 			pay_struc  pay_array_a[],
 			redemps_struc * part_pay_array_a,
-			redemps_struc even_redemps[]
+			redemps_struc even_redemps[],
+			vector<pay_struc> &cashflows
 			 );
 
   /*{py_calc accepts .
