@@ -74,9 +74,9 @@ namespace FinSys.Wpf.Services
 
         public async Task<List<InstrumentClass>> GetInstrumentClassesAsync()
         {
-            List<Model.InstrumentClass> result = await Task.Run(() =>
+            List<InstrumentClass> result = await Task.Run(() =>
             {
-                List<Model.InstrumentClass> instrumentClasses = new List<Model.InstrumentClass>();
+                List<InstrumentClass> instrumentClasses = new List<InstrumentClass>();
                 int size;
                 IntPtr ptr = getclassdescriptions(out size);
                 IntPtr strPtr;
@@ -109,6 +109,10 @@ namespace FinSys.Wpf.Services
                     {
                         Instrument ins = instrumentsIn[i];
                         InstrumentDescr instr = makeInstrumentDescr(ins);
+                        instr.holidayAdjust = (int)InstrumentDescr.DateAdjustRule.event_sched_no_holiday_adj;
+                        instr.intDayCount = InstrumentDescr.date_last_day_count;
+                        instr.intPayFreq = InstrumentDescr.freq_count;
+
                         int status = getInstrumentDefaults(instr);
                         if (status != 0)
                         {
@@ -411,6 +415,13 @@ namespace FinSys.Wpf.Services
             {
                 InstrumentDescr instr = makeInstrumentDescr(instrument);
                 CalculationsDescr calcs = makeCalculationsDescr(calculations);
+                calcs.yieldDayCount = InstrumentDescr.date_last_day_count;
+                calcs.yieldFreq = InstrumentDescr.freq_count;
+                calcs.yieldMethod = CalculationsDescr.py_last_yield_meth;
+                instr.holidayAdjust = (int)InstrumentDescr.DateAdjustRule.event_sched_no_holiday_adj;
+                instr.intDayCount = InstrumentDescr.date_last_day_count;
+                instr.intPayFreq = InstrumentDescr.freq_count;
+
                 int status = getInstrumentDefaultsAndData(instr,calcs);
                 if (status != 0)
                 {
@@ -433,10 +444,13 @@ namespace FinSys.Wpf.Services
                 {
                     ExCoupDays = calcs.exCoupDays,
                     IsExCoup = (calcs.isExCoup == 1),
-                    PrepayModel = calcs.prepayModel,
-                    YieldDayCount = dayCounts[calcs.yieldDayCount],
-                    YieldFreq = payFreqs[calcs.yieldFreq],
-                    YieldMethod = yieldMethods[calcs.yieldMethod]
+                    PrepayModel = calcs.prepayModel
+                    ,YieldDayCount = calcs.yieldDayCount == InstrumentDescr.date_last_day_count ?
+                dayCounts[0] : dayCounts[calcs.yieldDayCount],
+                    YieldFreq = calcs.yieldFreq == InstrumentDescr.freq_count ?
+                payFreqs[0] : payFreqs[calcs.yieldFreq],
+                    YieldMethod = calcs.yieldMethod == CalculationsDescr.py_last_yield_meth ?
+                   yieldMethods[0] : yieldMethods[calcs.yieldMethod]
                 };
 
                 return new KeyValuePair<Instrument, Calculations>(newInstr, newCalcs);
@@ -453,7 +467,7 @@ namespace FinSys.Wpf.Services
                 CalculationsDescr calcs = makeCalculationsDescr(calculations);
                 CashFlowsDescr cashFlows = new CashFlowsDescr();
                 //cashFlows.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) );
-                int dateAdjust = (int)DateAdjustRule.event_sched_same_holiday_adj;
+                int dateAdjust = (int)InstrumentDescr.DateAdjustRule.event_sched_same_holiday_adj;
                 //int status = calculate(instr, calcs);
                 int status = calculateWithCashFlows(instr, calcs, cashFlows,dateAdjust);
                 if (status != 0)
@@ -486,76 +500,111 @@ namespace FinSys.Wpf.Services
             return result;
         }
     }
-    [StructLayout(LayoutKind.Sequential)]
-    public class InstrumentDescr
+    enum tenor_rule
     {
-        readonly int freq_count = 4;
-        public InstrumentDescr()
-        {
-            holidayAdjust = (int)DateAdjustRule.event_sched_no_holiday_adj;
-            intPayFreq = freq_count;
-        }
-        public int instrumentClass;
-        public int intDayCount;
-        public int intPayFreq;
-        public IntPtr maturityDate;
-        public IntPtr issueDate;
-        public IntPtr firstPayDate;
-        public IntPtr nextToLastPayDate;
-        public int endOfMonthPay;
-        public double interestRate;
-        public int holidayAdjust;
+        date_no_cal,
+        date_act_cal,
+        date_30_cal,
+        date_30e_cal,
+        date_365_cal,
+        date_365L_cal,
+        date_actISDA_cal,
+        date_365_25_cal,
+        date_30german_cal,
+        date_NL365_cal,
+        date_30eplus_cal,
+        date_30US_cal,
+        date_365A_cal,
+        date_366_cal
     };
-    [StructLayout(LayoutKind.Sequential)]
-    internal class CalculationsDescr
+    public enum instr_class_descs
     {
-        public int interestDays;
-        public IntPtr valueDate;
-        public IntPtr previousPayDate;
-        public IntPtr nextPayDate;
-        public double interest;
-        public double priceIn;
-        public double priceOut;
-        public double yieldIn;
-        public double yieldOut;
-        public double duration;
-        public double convexity;
-        public double pvbp;
-        public int isExCoup;
-        public int exCoupDays;
-        public double serviceFee;
-        public int prepayModel;
-        public int calculatePrice;
-        public int yieldDayCount;
-        public int yieldFreq;
-        public int yieldMethod;
-        public double modifiedDuration;
-    };
-    [StructLayout(LayoutKind.Sequential)]
-    internal class DateDescr
-    {
-        public int year;
-        public int month;
-        public int day;
-    };
-    [StructLayout(LayoutKind.Sequential)]
-    internal class CashFlowDescr
-    {
-        public int year;
-        public int month;
-        public int day;
-        public double amount;
-        public int adjustedYear;
-        public int adjustedMonth;
-        public int adjustedDay;
-    };
-    [StructLayout(LayoutKind.Sequential)]
-    internal class CashFlowsDescr
-    {
-        public IntPtr cashFlows; //CashFlowStruct Array
-        public int size;
+        instr_bund_class_desc,
+        instr_goj_class_desc,
+        instr_euro_class_desc,
+        instr_gilt_class_desc,
+        instr_ukcd_class_desc,
+        instr_ukdsc_class_desc,
+        instr_uscd_class_desc,
+        instr_usdsc_class_desc,
+        instr_ustbo_class_desc,
+        instr_cp_class_desc,
+        instr_fschatz_class_desc,
+        instr_uschatz_class_desc,
+        instr_uschatz_buba_class_desc,
+        instr_ssd_class_desc,
+        instr_mbs_class_desc/*,
+			instr_float_class_desc,
+			instr_cashflow_class_desc*/
     };
 
+    public enum day_counts
+    {
+        date_30e_360_day_count
+        , date_30_360_day_count
+        , date_act_360_day_count
+        , date_act_365_day_count
+        , date_act_365cd_day_count
+        , date_act_act_day_count
+        , date_act_365L_day_count
+    , date_act_actISDA_day_count
+    , date_30_360german_day_count
+    , date_NL_365_day_count
+    , date_30eplus_360_day_count
+    , date_30_360US_day_count
+    , date_act_365A_day_count
+    , date_act_366_day_count
+    };
+    public enum frequency
+    {
+        frequency_annually
+    , frequency_monthly
+    , frequency_quarterly
+    , frequency_semiannually
+    };
+    public enum yield_method
+    {
+        py_aibd_yield_meth,
+        py_mmdisc_yield_meth,
+        py_mm_yield_meth,
+        py_ytm_simp_yield_meth,
+        py_ytm_comp_yield_meth,
+        py_simp_yield_meth,
+        py_curr_yield_meth,
+        py_gm_yield_meth,
+        py_muni_yield_meth,
+        py_corp_yield_meth,
+        py_ustr_yield_meth,
+        py_moos_yield_meth,
+        py_bf_yield_meth,
+        py_ty_yield_meth
+    };
+
+
+}
+[StructLayout(LayoutKind.Sequential)]
+internal class CashFlowDescr
+{
+    public int year;
+    public int month;
+    public int day;
+    public double amount;
+    public int adjustedYear;
+    public int adjustedMonth;
+    public int adjustedDay;
+};
+[StructLayout(LayoutKind.Sequential)]
+internal class CashFlowsDescr
+{
+    public IntPtr cashFlows; //CashFlowStruct Array
+    public int size;
+};
+
+[StructLayout(LayoutKind.Sequential)]
+public class InstrumentDescr
+{
+    static public readonly int date_last_day_count = 14;
+    public static readonly int freq_count = 4;
     public enum DateAdjustRule
     {
         event_sched_march_holiday_adj,
@@ -575,14 +624,107 @@ namespace FinSys.Wpf.Services
         but if this is in a different month, the next business day is taken.}*/
         event_sched_same_holiday_adj,
         /*{ event_sched_same_holiday_adj means that no adjustment occurs.}*/
-        event_sched_no_holiday_adj=99
+        event_sched_no_holiday_adj = 99
     }
-    public enum frequency
-    {
-        frequency_annually
-    , frequency_monthly
-    , frequency_quarterly
-    , frequency_semiannually
-    };
 
+    public InstrumentDescr()
+    {
+        holidayAdjust = (int)DateAdjustRule.event_sched_no_holiday_adj;
+        intDayCount = date_last_day_count;
+        intPayFreq = freq_count;
+    }
+    public int instrumentClass;
+    public int intDayCount;
+    public int intPayFreq;
+    public IntPtr maturityDate;
+    public IntPtr issueDate;
+    public IntPtr firstPayDate;
+    public IntPtr nextToLastPayDate;
+    public int endOfMonthPay;
+    public double interestRate;
+    public int holidayAdjust;
+};
+
+[StructLayout(LayoutKind.Sequential)]
+public class CalculationsDescr
+{
+    public static readonly int py_last_yield_meth = 15; /*{py_last_yield_meth marks the last symbol.}*/
+
+    public CalculationsDescr()
+    {
+        yieldDayCount = InstrumentDescr.date_last_day_count;
+        yieldFreq = InstrumentDescr.freq_count;
+        yieldMethod = py_last_yield_meth;
+    }
+    public int interestDays;
+    public IntPtr valueDate;
+    public IntPtr previousPayDate;
+    public IntPtr nextPayDate;
+    public double interest;
+    public double priceIn;
+    public double priceOut;
+    public double yieldIn;
+    public double yieldOut;
+    public double duration;
+    public double convexity;
+    public double pvbp;
+    public int isExCoup;
+    public int exCoupDays;
+    public double serviceFee;
+    public int prepayModel;
+    public int calculatePrice;
+    public int yieldDayCount;
+    public int yieldFreq;
+    public int yieldMethod;
+    public double modifiedDuration;
+};
+[StructLayout(LayoutKind.Sequential)]
+public class DateDescr
+{
+    public int year;
+    public int month;
+    public int day;
+};
+public class InstrumentClass
+{
+    public string Name { get; set; }
 }
+public class Instrument
+{
+    public string Name { get; set; }
+    public InstrumentClass Class { get; set; }
+    public string IntDayCount { get; set; }
+    public string IntPayFreq { get; set; }
+    public DateTime MaturityDate { get; set; }
+    public DateTime IssueDate { get; set; }
+    public DateTime FirstPayDate { get; set; }
+    public DateTime NextToLastPayDate { get; set; }
+    public bool EndOfMonthPay { get; set; }
+    public double InterestRate { get; set; }
+}
+public class Calculations
+{
+    public DateTime ValueDate { get; set; }
+    public DateTime PreviousPayDate { get; set; }
+    public DateTime NextPayDate { get; set; }
+    public double Interest { get; set; }
+    public double PriceIn { get; set; }
+    public double PriceOut { get; set; }
+    public double YieldIn { get; set; }
+    public double YieldOut { get; set; }
+    public double Duration { get; set; }
+    public double ModifiedDuration { get; set; }
+    public double Convexity { get; set; }
+    public double Pvbp { get; set; }
+    public bool IsExCoup { get; set; }
+    public int ExCoupDays { get; set; }
+    public int InterestDays { get; set; }
+    public double ServiceFee { get; set; }
+    public int PrepayModel { get; set; }
+    public bool CalculatePrice { get; set; }
+    public string YieldDayCount { get; set; }
+    public string YieldFreq { get; set; }
+    public string YieldMethod { get; set; }
+}
+
+
