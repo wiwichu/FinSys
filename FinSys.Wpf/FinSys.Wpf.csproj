@@ -72,6 +72,7 @@
     <Compile Include="Messages\PositionUpdate.cs" />
     <Compile Include="Messages\TradeUpdate.cs" />
     <Compile Include="Model\Calculations.cs" />
+    <Compile Include="Model\CashFlow.cs" />
     <Compile Include="Model\Instrument.cs" />
     <Compile Include="Model\InstrumentClass.cs" />
     <Compile Include="Model\Portfolio.cs" />
@@ -87,12 +88,16 @@
     <Compile Include="Services\RepositoryFactory.cs" />
     <Compile Include="Services\TradesRepositoryWcf.cs" />
     <Compile Include="ViewModel\BondCalculatorViewModel.cs" />
+    <Compile Include="ViewModel\CashFlowViewModel.cs" />
     <Compile Include="ViewModel\PortfolioViewModel.cs" />
     <Compile Include="ViewModel\PositionViewModel.cs" />
     <Compile Include="ViewModel\TradeViewModel.cs" />
     <Compile Include="ViewModel\TradingViewModel.cs" />
     <Compile Include="View\BondCalculatorView.xaml.cs">
       <DependentUpon>BondCalculatorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CashFlowView.xaml.cs">
+      <DependentUpon>CashFlowView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PortfolioListView.xaml.cs">
       <DependentUpon>PortfolioListView.xaml</DependentUpon>
@@ -126,6 +131,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\BondCalculatorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CashFlowView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

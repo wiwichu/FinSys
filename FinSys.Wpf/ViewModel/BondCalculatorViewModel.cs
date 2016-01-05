@@ -14,6 +14,8 @@ namespace FinSys.Wpf.ViewModel
 {
     public class BondCalculatorViewModel : NotifyPropertyChanged
     {
+        DialogService dialogService = new DialogService();
+
         public BondCalculatorViewModel()
         {
             if (DesignerProperties.GetIsInDesignMode(new System.Windows.DependencyObject()))
@@ -75,6 +77,11 @@ namespace FinSys.Wpf.ViewModel
             get;
             set;
         }
+        public ICommand CashFlowCommand
+        {
+            get;
+            set;
+        }
         public ICommand ChangeClassCommand
         {
             get;
@@ -91,7 +98,6 @@ namespace FinSys.Wpf.ViewModel
             get;
             set;
         }
-        DialogService dialogService = new DialogService();
 
         private void LoadCommands()
         {
@@ -99,6 +105,17 @@ namespace FinSys.Wpf.ViewModel
             ChangeClassCommand = new RelayCommand(ChangeClass, CanChangeClass);
             DefaultDatesCommand = new RelayCommand(DefaultDates, CanDefaultDatesClass);
             CalculateCommand = new RelayCommand(Calculate, CanCalculate);
+            CashFlowCommand = new RelayCommand(OpenCashFlow, CanOpenCashFlow);
+        }
+
+        private void OpenCashFlow(object obj)
+        {
+            dialogService.ShowDialog(DialogService.DIALOG.CASHFLOWVIEW, this);
+        }
+
+        private bool CanOpenCashFlow(object obj)
+        {
+            return true;
         }
 
         private bool CanCalculate(object obj)
