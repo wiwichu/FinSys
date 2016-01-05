@@ -156,6 +156,7 @@ namespace FinSys.Wpf.ViewModel
                 YieldOut = 0,
                 ServiceFee = 0,
                 Pvbp = 0,
+                PvbpConvexityAdjusted = 0,
                 YieldDayCount = (string)selectedYieldDayCount,
                 YieldFreq = (string)selectedYieldFrequency,
                 YieldMethod = (string)selectedYieldMethod,
@@ -187,7 +188,8 @@ namespace FinSys.Wpf.ViewModel
             NextPayDate = calcs.NextPayDate.Date.ToShortDateString();
             Convexity = calcs.Convexity;
             Duration = calcs.Duration;
-            Pvbp = calcs.Pvbp*100;
+            Pvbp = calcs.Pvbp;
+            PvbpConvexityAdjusted = calcs.PvbpConvexityAdjusted ;
             Interest = calcs.Interest*100;
             ModifiedDuration = calcs.ModifiedDuration;
             if (CalculatePrice)
@@ -234,6 +236,7 @@ namespace FinSys.Wpf.ViewModel
                 YieldOut=0,
                 ServiceFee = 0,
                 Pvbp = 0,
+                PvbpConvexityAdjusted = 0,
                 YieldDayCount = (string)selectedYieldDayCount,
                 YieldFreq = (string)selectedYieldFrequency,
                 YieldMethod = (string)selectedYieldMethod
@@ -307,6 +310,7 @@ namespace FinSys.Wpf.ViewModel
                 YieldOut = 0,
                 ServiceFee = 0,
                 Pvbp = 0,
+                PvbpConvexityAdjusted = 0,
                 YieldDayCount = (string)selectedYieldDayCount,
                 YieldFreq = (string)selectedYieldFrequency,
                 YieldMethod = (string)selectedYieldMethod,
@@ -680,6 +684,19 @@ namespace FinSys.Wpf.ViewModel
             set
             {
                 pvbp = value;
+                OnPropertyChanged();
+            }
+        }
+        private double pvbpConvexityAdjusted;
+        public double PvbpConvexityAdjusted
+        {
+            get
+            {
+                return pvbpConvexityAdjusted;
+            }
+            set
+            {
+                pvbpConvexityAdjusted = value;
                 OnPropertyChanged();
             }
         }

@@ -192,6 +192,7 @@ namespace CalcTests
         public int yieldFreq;
         public int yieldMethod;
         public double modifiedDuration;
+        public double pvbpConvexityAdjusted;
     };
     [StructLayout(LayoutKind.Sequential)]
     public class DateDescr

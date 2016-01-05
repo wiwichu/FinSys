@@ -318,6 +318,7 @@ namespace FinSys.Wpf.Services
                 YieldIn = calcs.yieldIn,
                 YieldOut = calcs.yieldOut,
                 Pvbp = calcs.pvbp,
+                PvbpConvexityAdjusted = calcs.pvbpConvexityAdjusted,
                 ServiceFee = calcs.serviceFee,
                 PrepayModel = calcs.prepayModel,
                 PreviousPayDate = new DateTime(ppdDate.year, ppdDate.month, ppdDate.day),
@@ -696,6 +697,7 @@ public class CalculationsDescr
     public int yieldFreq;
     public int yieldMethod;
     public double modifiedDuration;
+    public double pvbpConvexityAdjusted;
 };
 [StructLayout(LayoutKind.Sequential)]
 public class DateDescr
@@ -744,6 +746,7 @@ public class Calculations
     public string YieldDayCount { get; set; }
     public string YieldFreq { get; set; }
     public string YieldMethod { get; set; }
+    public double PvbpConvexityAdjusted { get; set; }
 }
 
 

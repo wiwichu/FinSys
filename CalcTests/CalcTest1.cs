@@ -2705,7 +2705,7 @@ namespace CalcTests
             }
             double durationResult = 5.007;
             double modDurationResult = 4.77;
-            double convexityResult = 0.2772;
+            double convexityResult = 27.72;
             calculations.yieldIn = 0.10;
             calculations.calculatePrice = 1;
             calculations.yieldMethod = (int)TestHelper.yield_method.py_ustr_yield_meth;
@@ -2720,7 +2720,66 @@ namespace CalcTests
             }
             Assert.IsTrue(Math.Abs(durationResult - calculations.duration) < .0005);
             Assert.IsTrue(Math.Abs(modDurationResult - calculations.modifiedDuration) < .005);
-            Assert.IsTrue(Math.Abs(convexityResult - calculations.convexity) < .00005);
+            Assert.IsTrue(Math.Abs(convexityResult - calculations.convexity) < .005);
+            GC.KeepAlive(instrument);
+            GC.KeepAlive(calculations);
+
+        }
+        [TestMethod]
+        public void DurationConvexityPvbp_1()
+        {
+            InstrumentDescr instrument = new InstrumentDescr();
+            CalculationsDescr calculations = new CalculationsDescr();
+            instrument.instrumentClass = (int)TestHelper.instr_class_descs.instr_ustbo_class_desc;
+
+            DateDescr matDate = new DateDescr { year = 2022, month = 1, day = 5 };
+            DateDescr valueDate = new DateDescr { year = 2016, month = 1, day = 5 };
+
+            instrument.maturityDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
+            calculations.valueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
+            int status = getInstrumentDefaultsAndData(instrument, calculations);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+
+            Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
+            Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
+            status = getDefaultDatesAndData(instrument, calculations);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            double durationResult = 4.88;
+            double modDurationResult = 4.69;
+            double convexityResult = 27.23;
+            double pvbpResult = .04693;
+            double pvbpConvResult = .04556;
+            calculations.yieldIn = 0.08;
+            calculations.calculatePrice = 1;
+            calculations.yieldMethod = (int)TestHelper.yield_method.py_ustr_yield_meth;
+            instrument.interestRate = 0.08;
+            status = calculate(instrument, calculations);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            Assert.IsTrue(Math.Abs(durationResult - calculations.duration) < .0005);
+            Assert.IsTrue(Math.Abs(modDurationResult - calculations.modifiedDuration) < .005);
+            Assert.IsTrue(Math.Abs(convexityResult - calculations.convexity) < .005);
+            Assert.IsTrue(Math.Abs(pvbpResult - calculations.pvbp) < .000005);
+            Assert.IsTrue(Math.Abs(pvbpConvResult - calculations.pvbpConvexityAdjusted) < .000005);
             GC.KeepAlive(instrument);
             GC.KeepAlive(calculations);
 

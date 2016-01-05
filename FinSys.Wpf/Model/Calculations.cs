@@ -165,6 +165,19 @@ namespace FinSys.Wpf.Model
                 OnPropertyChanged();
             }
         }
+        private double pvbpConvexityAdjusted;
+        public double PvbpConvexityAdjusted
+        {
+            get
+            {
+                return pvbpConvexityAdjusted;
+            }
+            set
+            {
+                pvbpConvexityAdjusted = value;
+                OnPropertyChanged();
+            }
+        }
         private bool isExCoup;
         public bool IsExCoup
         {

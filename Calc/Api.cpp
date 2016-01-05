@@ -511,13 +511,13 @@ int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_
 	{
 		return result;
 	}
-	calculations.calculatePrice = doubleHold;
+	calculations.priceIn = doubleHold;
 	result = pyfront.getconvexity(&doubleHold);
 	if (result != return_success)
 	{
 		return result;
 	}
-	calculations.convexity = doubleHold;
+	calculations.convexity = doubleHold*100;
 	result = pyfront.getduration(&doubleHold);
 	if (result != return_success)
 	{
@@ -837,6 +837,18 @@ int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &ca
 	{
 		return result;
 	}
+	if (calculations.calculatePrice == 1)
+	{
+		calculations.pvbpConvexityAdjusted =
+			calculations.pvbp - calculations.convexity*0.05*(calculations.priceOut+calculations.interest)/100000;
+	}
+	else
+	{
+		calculations.pvbpConvexityAdjusted =
+			calculations.pvbp - calculations.convexity*0.05*(calculations.priceIn + calculations.interest)/100000;
+	}
+	calculations.pvbp *= 100;
+	calculations.pvbpConvexityAdjusted *= 100;
 	//Buld cashflows
 	vector<Instrument::pay_struc> cashFlows;
 	result = pyfront.getcashFlows(cashFlows);
@@ -1016,7 +1028,18 @@ int  calculate(InstrumentStruct &instrument, CalculationsStruct &calculations)
 	{
 		return result;
 	}
-
+	if (calculations.calculatePrice == 1)
+	{
+		calculations.pvbpConvexityAdjusted =
+			calculations.pvbp - calculations.convexity*0.05*(calculations.priceOut + calculations.interest) / 100000;
+	}
+	else
+	{
+		calculations.pvbpConvexityAdjusted =
+			calculations.pvbp - calculations.convexity*0.05*(calculations.priceIn + calculations.interest) / 100000;
+	}
+	calculations.pvbp *= 100;
+	calculations.pvbpConvexityAdjusted *= 100;
 	return return_success;
 }
 int  getInstrumentDefaultsAndData(InstrumentStruct &instrument, CalculationsStruct &calculations)

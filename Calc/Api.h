@@ -60,6 +60,7 @@ typedef struct CalculationsStruct
 	int yieldFreq;
 	int yieldMethod;
 	double modifiedDuration;
+	double pvbpConvexityAdjusted;
 } CalculationsStruct;
 
 extern "C" __declspec(dllexport) char**  getclassdescriptions(int& size);
