@@ -77,11 +77,6 @@ namespace FinSys.Wpf.ViewModel
             get;
             set;
         }
-        public ICommand CashFlowCommand
-        {
-            get;
-            set;
-        }
         public ICommand ChangeClassCommand
         {
             get;
@@ -106,16 +101,6 @@ namespace FinSys.Wpf.ViewModel
             DefaultDatesCommand = new RelayCommand(DefaultDates, CanDefaultDatesClass);
             CalculateCommand = new RelayCommand(Calculate, CanCalculate);
             CashFlowCommand = new RelayCommand(OpenCashFlow, CanOpenCashFlow);
-        }
-
-        private void OpenCashFlow(object obj)
-        {
-            dialogService.ShowDialog(DialogService.DIALOG.CASHFLOWVIEW, this);
-        }
-
-        private bool CanOpenCashFlow(object obj)
-        {
-            return true;
         }
 
         private bool CanCalculate(object obj)
@@ -202,6 +187,14 @@ namespace FinSys.Wpf.ViewModel
             }
             DirtyPrice = CleanPrice + Interest;
             InterestDays = calcs.InterestDays;
+            CashFlows = new ObservableCollection<CashFlow>(
+                calcs.Cashflows.Select((c)=> new CashFlow
+                {
+                    AdjustedDate = c.AdjustedDate,
+                    Amount = c.Amount,
+                    PresentValue = c.PresentValue,
+                    ScheduledDate = c.ScheduledDate
+                }));
         }
 
         private async void DefaultDates(object obj)
@@ -802,7 +795,37 @@ namespace FinSys.Wpf.ViewModel
                 }
             }
         }
+        public ICommand CashFlowCommand
+        {
+            get;
+            set;
+        }
 
+        private void OpenCashFlow(object obj)
+        {
+            var cfm = new CashFlowViewModel(cashFlows);
+            dialogService.ShowDialog(DialogService.DIALOG.CASHFLOWVIEW, cfm);
+        }
+
+        private bool CanOpenCashFlow(object obj)
+        {
+            return true;
+        }
+
+
+        private ObservableCollection<CashFlow> cashFlows = new ObservableCollection<CashFlow>();
+        public ObservableCollection<CashFlow> CashFlows
+        {
+            get
+            {
+                return cashFlows;
+            }
+            set
+            {
+                cashFlows = value;
+                OnPropertyChanged();
+            }
+        }
 
 
     }

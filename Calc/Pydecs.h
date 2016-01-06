@@ -142,6 +142,7 @@ Py_Funcs();
 //Py_Funcs(CDB * DB_parm);
 
 bool calcSlow;
+bool justCoups;
 
   typedef struct	py_parms	{char	parm_use;
 				 /*{parm_use indicates whether the parameters are used, or standards are taken from the
@@ -221,7 +222,8 @@ bool calcSlow;
 				}
 		py_parms;
 		unsigned long forceSlowCalc_py(bool forceSlowCalc);
-  unsigned long py_calc( instr,  date_union,
+		unsigned long justCoupsCalc_py(bool justCoupsCalc);
+		unsigned long py_calc( instr,  date_union,
 			 long double *,  long double *,
 			 long double *,  long double *,
 			  long double *,  long double *,

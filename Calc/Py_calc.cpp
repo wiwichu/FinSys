@@ -6,6 +6,7 @@
 _PYFUNCS Py_Funcs()
 {
 	calcSlow = false;
+	justCoups = false;
 }
 
 unsigned long 	_PYFUNCS forceSlowCalc_py(bool forceSlowCalc)
@@ -15,6 +16,12 @@ unsigned long 	_PYFUNCS forceSlowCalc_py(bool forceSlowCalc)
 	return result;
 }
 
+unsigned long 	_PYFUNCS justCoupsCalc_py(bool justCoupsCalc)
+{
+	bool result = return_success;
+	justCoups = justCoupsCalc;
+	return result;
+}
 /*
 _PYFUNCS Py_Funcs(CDB * DB_parm) : Int_Calcs (DB_parm)
 {
@@ -658,6 +665,10 @@ date_union prev_date;
 	}
 	for (int i = 0; i < coup_count; i++)
 	{
+		if (justCoups)
+		{
+			pay_array_a[i].pv_factor = 0;
+		}
 		cashflows.push_back(pay_array_a[i]);
 
 	}
@@ -689,6 +700,10 @@ date_union prev_date;
 				thisRedemp.redemps_date.date.days);
 		if (dateStat == return_success)
 		{
+			if (justCoups)
+			{
+				thisFlow.pv_factor = 0;
+			}
 			cashflows.push_back(thisFlow);
 		}
 	}
@@ -731,6 +746,10 @@ date_union prev_date;
 					 thisRedemp.redemps_date.date.days);
 			 if (dateStat == return_success)
 			 {
+				 if (justCoups)
+				 {
+					 thisFlow.pv_factor = 0;
+				 }
 				 cashflows.push_back(thisFlow);
 			 }
 
@@ -745,7 +764,10 @@ date_union prev_date;
 	  coup_count = coups_left + 1;
 
 	}
-
+	if (justCoups)
+	{
+		return return_success;
+	}
 	/*{ establish acceptable price variance.}*/
 
 	return_status = py_price_var(&price_var, &py_parm);
@@ -1811,6 +1833,12 @@ unsigned long	_PYFUNCS py_even_redemps_load(char *redemp_sched, unsigned int cou
 		 goto py_even_redemps_load_end;
 	}
 */
+	//invalidate array
+	//
+	for (int i = 0; i < *even_redemps_count; i++)
+	{
+		even_redemps[i].redemps_date.date.months = 0;
+	}
 	datecpy(even_redemps[*even_redemps_count].redemps_date.date_string,
 		pay_array_a[*even_redemps_count].pay_date.date_string);
 

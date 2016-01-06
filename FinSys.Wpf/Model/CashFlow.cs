@@ -35,6 +35,19 @@ namespace FinSys.Wpf.Model
                 OnPropertyChanged();
             }
         }
+        private double presentValue;
+        public double PresentValue
+        {
+            get
+            {
+                return presentValue;
+            }
+            set
+            {
+                presentValue = value;
+                OnPropertyChanged();
+            }
+        }
 
         private DateTime adjustedDate;
         public DateTime AdjustedDate

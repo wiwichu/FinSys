@@ -411,6 +411,7 @@ unsigned long  _FAR_FUNC _EX_IN_FUNC   check_all_parms	();
 unsigned long  _FAR_FUNC _EX_IN_FUNC   calc_int	();
 unsigned long  _FAR_FUNC _EX_IN_FUNC   calc_py	();
 unsigned long  _FAR_FUNC _EX_IN_FUNC   forceSlowCalc(bool slowCalc);
+unsigned long  _FAR_FUNC _EX_IN_FUNC   justCoupsCalc(bool justCoups);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   proc_simp_comp_frn	();
 unsigned long  _FAR_FUNC _EX_IN_FUNC   proc_pay_freq_frn	();
 unsigned long  _FAR_FUNC _EX_IN_FUNC   proc_holi	();

@@ -8,6 +8,7 @@ typedef struct CashFlowStruct
 	int month;
 	int day;
 	double amount;
+	double presentValue;
 	int adjustedYear;
 	int adjustedMonth;
 	int adjustedDay;

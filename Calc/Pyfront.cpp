@@ -2847,7 +2847,10 @@ unsigned long FAR _export	Py_Front::calc_py_py()
 	unsigned int dummy_ui = 0;
 	if (in_instr.pay_type != instr_float_pay_type)
 	{
-
+		if (justCoups)
+		{
+			cashFlows.clear();
+		}
 		return_state = py_calc(in_instr, val_date, &in_price,
 			&out_price, &interest, &first_int, &nominal_adjust,
 			&in_yield, &out_yield, pyparm, 0, dummy_ui, dummy_ui,
@@ -4340,6 +4343,11 @@ unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::forceSlowCalc(bool slowCalc)
 
 }
 
+unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::justCoupsCalc(bool justCoups)
+{
+	return justCoupsCalc_py(justCoups);
+
+}
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::calc_py()
 {
 	return calc_py_py();

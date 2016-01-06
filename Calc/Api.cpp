@@ -850,6 +850,21 @@ int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &ca
 	calculations.pvbp *= 100;
 	calculations.pvbpConvexityAdjusted *= 100;
 	//Buld cashflows
+	result = pyfront.forceSlowCalc_py(true);
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.justCoupsCalc_py(true);
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.calc_py();
+	if (result != return_success)
+	{
+		return result;
+	}
 	vector<Instrument::pay_struc> cashFlows;
 	result = pyfront.getcashFlows(cashFlows);
 	if (result != return_success)
@@ -863,15 +878,16 @@ int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &ca
 	int i = 0;
 	for (_it_vector_pay_struc = cashFlows.begin();
 	_it_vector_pay_struc < cashFlows.end();
-		_it_vector_pay_struc++, i++)
+		_it_vector_pay_struc++ )
 	{
-			CashFlowStruct *cfs = new CashFlowStruct();
+		if (_it_vector_pay_struc->payment == 0)
+		{
+			continue;
+		}
+		CashFlowStruct *cfs = new CashFlowStruct();
 			cf[i] = *cfs;
 			cf[i].amount = _it_vector_pay_struc->payment;
-			if (cf[i].amount == 0)
-			{
-				continue;
-			}
+			cf[i].presentValue = _it_vector_pay_struc->pv_factor;
 			cf[i].year = _it_vector_pay_struc->pay_date.date.centuries*100 + _it_vector_pay_struc->pay_date.date.years;
 			cf[i].month = _it_vector_pay_struc->pay_date.date.months;
 			cf[i].day = _it_vector_pay_struc->pay_date.date.days;
@@ -900,6 +916,7 @@ int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &ca
 			cf[i].adjustedYear = date_hold.date.centuries*100 + date_hold.date.years;
 			cf[i].adjustedMonth = date_hold.date.months;
 			cf[i].adjustedDay = date_hold.date.days;
+			i++;
 	}
 	cashFlowsStruct.size = i;
 

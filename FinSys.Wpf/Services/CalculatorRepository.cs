@@ -490,21 +490,56 @@ namespace FinSys.Wpf.Services
                     status = getStatusText(status, statusText, out textSize);
                     throw new InvalidOperationException(statusText.ToString());
                 }
+                ////////////////
 
-                var structSize = Marshal.SizeOf(typeof(CashFlowDescr));
-                var cashFlowsOut = new List<CashFlowDescr>();
-                var cashFlowOut = cashFlows.cashFlows;
+                var structSizeX = Marshal.SizeOf(typeof(CashFlowDescr));
+                var cashFlowsOutX = new List<CashFlowDescr>();
+                var cashFlowOutX = cashFlows.cashFlows;
 
                 for (int i = 0; i < cashFlows.size; i++)
                 {
-                    cashFlowsOut.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
+                    cashFlowsOutX.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOutX,
                         typeof(CashFlowDescr)));
+                    cashFlowOutX = (IntPtr)((int)cashFlowOutX + structSizeX);
+                }
+
+                ////////////////
+                var structSize = Marshal.SizeOf(typeof(CashFlowDescr));
+                var cashFlowsOut = new List<CashFlowDescr>();
+                var cashFlowOut = cashFlows.cashFlows;
+                var cashFlowsResult = new List<CashFlow>();
+
+            for (int i = 0; i < cashFlows.size; i++)
+            {
+                CashFlowDescr cashFlowDescr = (CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
+                    typeof(CashFlowDescr));
+                if (
+                      cashFlowDescr.adjustedDay == 0 ||
+                      cashFlowDescr.adjustedMonth == 0 ||
+                      cashFlowDescr.adjustedYear == 0 ||
+                        cashFlowDescr.day == 0 ||
+                        cashFlowDescr.month == 0 ||
+                        cashFlowDescr.year == 0
+                    )
+                    {
+                        continue;
+                    }
+                    CashFlow cf = new CashFlow
+                    {
+                        Amount = cashFlowDescr.amount,
+                        AdjustedDate = new DateTime(cashFlowDescr.adjustedYear, cashFlowDescr.adjustedMonth, cashFlowDescr.adjustedDay),
+                        PresentValue = cashFlowDescr.presentValue,
+                        ScheduledDate = new DateTime(cashFlowDescr.year, cashFlowDescr.month, cashFlowDescr.day)
+                    };
+                    cashFlowsResult.Add(cf);
+                    cashFlowsOut.Add(cashFlowDescr);
                     //cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
                     cashFlowOut = (IntPtr)(cashFlowOut.ToInt32() + structSize);
                 }
 
                 Instrument newInstr = makeInstrument(instr);
                 Calculations newCalcs = makeCalculations(calcs);
+                newCalcs.Cashflows = cashFlowsResult.OrderBy((c) => c.ScheduledDate).ToList();
 
                 return new KeyValuePair<Instrument, Calculations>(newInstr, newCalcs);
             })
@@ -602,6 +637,7 @@ internal class CashFlowDescr
     public int month;
     public int day;
     public double amount;
+    public double presentValue;
     public int adjustedYear;
     public int adjustedMonth;
     public int adjustedDay;
@@ -747,6 +783,8 @@ public class Calculations
     public string YieldFreq { get; set; }
     public string YieldMethod { get; set; }
     public double PvbpConvexityAdjusted { get; set; }
+    public IEnumerable<CashFlow> Cashflows {get;set;}
+    public string HolidayAdjust { get; set; }
 }
 
 

@@ -124,6 +124,7 @@ namespace CalcTests
         public int month;
         public int day;
         public double amount;
+        public double presentValue;
         public int adjustedYear;
         public int adjustedMonth;
         public int adjustedDay;
