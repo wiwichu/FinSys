@@ -61,6 +61,19 @@ namespace FinSys.Wpf.Model
                 OnPropertyChanged();
             }
         }
+        private string holidayAdjust;
+        public string HolidayAdjust
+        {
+            get
+            {
+                return holidayAdjust;
+            }
+            set
+            {
+                holidayAdjust = value;
+                OnPropertyChanged();
+            }
+        }
         private DateTime maturityDate;
         public DateTime MaturityDate
         {

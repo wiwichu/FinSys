@@ -65,6 +65,7 @@ typedef struct CalculationsStruct
 } CalculationsStruct;
 
 extern "C" __declspec(dllexport) char**  getclassdescriptions(int& size);
+extern "C" __declspec(dllexport) char**  getHolidayAdjust(int& size);
 extern "C" __declspec(dllexport) char**  getdaycounts(int& size);
 extern "C" __declspec(dllexport) char**  getpayfreqs(int& size);
 extern "C" __declspec(dllexport) int  getInstrumentDefaults(InstrumentStruct &instrument);

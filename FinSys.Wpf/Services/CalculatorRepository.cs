@@ -36,18 +36,22 @@ namespace FinSys.Wpf.Services
         private static extern int getCashFlows( CashFlowsDescr cashFlows, ref int size);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int calculateWithCashFlows(InstrumentDescr instrument, CalculationsDescr calculations, CashFlowsDescr cashFlows, int dateAdjustRule);
+        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern IntPtr getHolidayAdjust(out int size);
 
 
         private List<string> classes = new List<string>();
         private List<string> dayCounts = new List<string>();
         private List<string> payFreqs = new List<string>();
         private List<string> yieldMethods = new List<string>();
+        private List<string> holidayAdjusts = new List<string>();
         public CalculatorRepository()
         {
             classes = new List<string>( GetInstrumentClassesAsync().Result.Select((ic)=>ic.Name));
             dayCounts = GetDayCountsAsync().Result;
             payFreqs = GetPayFreqsAsync().Result;
             yieldMethods = GetYieldMethodsAsync().Result;
+            holidayAdjusts = GetHolidayAdjustAsync().Result;
         }
 
         public async Task<List<string>> GetDayCountsAsync()
@@ -180,6 +184,7 @@ namespace FinSys.Wpf.Services
                 EndOfMonthPay = (instr.endOfMonthPay==1),
                 IntDayCount = dayCounts[instr.intDayCount],
                 IntPayFreq = payFreqs[instr.intPayFreq],
+                HolidayAdjust = holidayAdjusts[instr.holidayAdjust],
                 Class = new InstrumentClass
                 {
                     Name = classes[instr.instrumentClass]
@@ -200,13 +205,15 @@ namespace FinSys.Wpf.Services
             int insClassNum = classes.IndexOf(ins.Class.Name);
             int insDayCount = dayCounts.IndexOf(ins.IntDayCount);
             int insPayFreq = payFreqs.IndexOf(ins.IntPayFreq);
+            int insHolidayAdjust = holidayAdjusts.IndexOf(ins.HolidayAdjust);
             InstrumentDescr instr = new InstrumentDescr
             {
                 endOfMonthPay = ins.EndOfMonthPay ? 1:0,
                 instrumentClass = insClassNum,
                 intDayCount = insDayCount,
                 intPayFreq = insPayFreq,
-                interestRate = ins.InterestRate
+                interestRate = ins.InterestRate,
+                holidayAdjust = insHolidayAdjust
             };
             DateDescr maturityDate = new DateDescr
             {
@@ -445,6 +452,7 @@ namespace FinSys.Wpf.Services
                     EndOfMonthPay = (instr.endOfMonthPay == 1),
                     IntDayCount = dayCounts[instr.intDayCount],
                     IntPayFreq = payFreqs[instr.intPayFreq],
+                    HolidayAdjust = holidayAdjusts[instr.holidayAdjust],
                     Class = new InstrumentClass
                     {
                         Name = classes[instr.instrumentClass]
@@ -545,6 +553,28 @@ namespace FinSys.Wpf.Services
             })
                 .ConfigureAwait(false) //necessary on UI Thread
                 ;
+            return result;
+        }
+
+        public async Task<List<string>> GetHolidayAdjustAsync()
+        {
+            List<string> result = await Task.Run(() =>
+            {
+                List<string> adjusts = new List<string>();
+                int size;
+                IntPtr ptr = getHolidayAdjust(out size);
+                IntPtr strPtr;
+                for (int i = 0; i < size; i++)
+                {
+                    strPtr = Marshal.ReadIntPtr(ptr);
+                    string name = Marshal.PtrToStringAnsi(strPtr);
+                    adjusts.Add(name);
+                    ptr += Marshal.SizeOf(typeof(IntPtr));
+                }
+                return adjusts;
+            })
+            .ConfigureAwait(false) //necessary on UI Thread
+            ;
             return result;
         }
     }
@@ -758,6 +788,8 @@ public class Instrument
     public DateTime NextToLastPayDate { get; set; }
     public bool EndOfMonthPay { get; set; }
     public double InterestRate { get; set; }
+    public string HolidayAdjust { get; set; }
+
 }
 public class Calculations
 {

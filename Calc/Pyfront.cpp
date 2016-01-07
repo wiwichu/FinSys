@@ -382,6 +382,19 @@ unsigned long FAR _export Py_Front::set_current()
 
 	datecpy(prev_date.date_string, zero_date);
 	datecpy(next_date.date_string, zero_date);
+	return_state = setholidayadj(in_instr.rerate_freq.holiday_adj);
+	if (return_state != return_success) {
+
+		return return_state;
+
+	}
+	return_state = proc_holi_py();
+	if (return_state != return_success) {
+
+		return return_state;
+
+	}
+
 
 	current_class = in_instr.instr_class;
 	current_day_count = in_instr.day_count;

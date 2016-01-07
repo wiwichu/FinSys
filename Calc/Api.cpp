@@ -19,7 +19,11 @@ char** getdaycounts(int& size)
 	size = date_last_day_count;
 	return (char**)day_count_names;
 }
-
+char** getHolidayAdjust(int& size)
+{
+	size = event_sched_last_holiday_adj;
+	return (char**)holiday_adj_names;
+}
 char** getpayfreqs(int& size)
 {
 	size = freq_count;
@@ -251,6 +255,19 @@ int preProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_F
 		return result;
 	}
 
+	if (instrument.holidayAdjust != noValue)
+	{
+		result = pyfront.setholidayadj(holiday_adj_names[instrument.holidayAdjust]);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.proc_holi_py();
+		if (result != return_success)
+		{
+			return result;
+		}
+	}
 	//if (instrument.intDayCount != date_last_day_count)
 	if (instrument.intDayCount != noValue)
 	{
@@ -595,7 +612,31 @@ int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_
 		}
 
 	}
-		//if (instrument.intPayFreq != freq_count)
+	if (instrument.holidayAdjust == noValue)
+	{
+		result = pyfront.getholidayadj(&intArg);
+		if (result != return_success)
+		{
+			return result;
+		}
+
+		instrument.holidayAdjust = intArg;
+	}
+	else
+	{
+		result = pyfront.setholidayadj(instrument.holidayAdjust);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.proc_holi_py();
+		if (result != return_success)
+		{
+			return result;
+		}
+
+	}
+	//if (instrument.intPayFreq != freq_count)
 		if (instrument.intPayFreq == noValue)
 		{
 		result = pyfront.getpayfreq(&intArg);

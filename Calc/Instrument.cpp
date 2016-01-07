@@ -523,6 +523,7 @@ switch (in_instr->instr_class)
   }
 }
 
+in_instr->rerate_freq = in_instr->pay_freq;
 
 
 
