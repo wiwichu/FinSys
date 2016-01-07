@@ -2223,20 +2223,25 @@ unsigned long FAR _export	Py_Front::check_date_synch_py()
 			return return_state;
 
 		}
-
-		if (str_cmp == (int)in_instr.pre_last_pay.date.days)
+		if (
+			in_instr.pay_freq.holiday_adj != event_sched_same_holiday_adj
+			&& in_instr.pay_freq.month_day == in_instr.pay_freq.first_date.date.days
+			&& in_instr.pay_freq.month_day == in_instr.mat_date.date.days
+			)
 		{
-
-			in_instr.pay_freq.month_day = date_last_day_in_month;
-
+			//Date has been adjusted for holiday, so leave it.
 		}
 		else
 		{
-
-			in_instr.pay_freq.month_day = in_instr.pre_last_pay.date.days;
-
+			if (str_cmp == (int)in_instr.pre_last_pay.date.days)
+			{
+				in_instr.pay_freq.month_day = date_last_day_in_month;
+			}
+			else
+			{
+				in_instr.pay_freq.month_day = in_instr.pre_last_pay.date.days;
+			}
 		}
-
 		/*{ If previous date on the next to last date does not equal the next
 		to last date, dates are not in synch.}*/
 		unsigned int dummy_ui = 0;

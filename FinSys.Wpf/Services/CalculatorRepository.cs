@@ -488,7 +488,7 @@ namespace FinSys.Wpf.Services
                 CalculationsDescr calcs = makeCalculationsDescr(calculations);
                 CashFlowsDescr cashFlows = new CashFlowsDescr();
                 //cashFlows.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) );
-                int dateAdjust = (int)InstrumentDescr.DateAdjustRule.event_sched_same_holiday_adj;
+                int dateAdjust = holidayAdjusts.IndexOf(calculations.PayHolidayAdjust);
                 //int status = calculate(instr, calcs);
                 int status = calculateWithCashFlows(instr, calcs, cashFlows,dateAdjust);
                 if (status != 0)
@@ -816,7 +816,7 @@ public class Calculations
     public string YieldMethod { get; set; }
     public double PvbpConvexityAdjusted { get; set; }
     public IEnumerable<CashFlow> Cashflows {get;set;}
-    public string HolidayAdjust { get; set; }
+    public string PayHolidayAdjust { get; set; }
 }
 
 

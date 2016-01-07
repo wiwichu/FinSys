@@ -46,6 +46,11 @@ namespace FinSys.Wpf.ViewModel
             {
                 SelectedHolidayAdjust = holidayAdjusts[0];
             }
+            PayHolidayAdjusts = new ObservableCollection<string>(RepositoryFactory.Calculator.GetHolidayAdjustAsync().Result);
+            if (PayHolidayAdjusts.Count > 0)
+            {
+                SelectedPayHolidayAdjust = payHolidayAdjusts[0];
+            }
             DayCounts = new ObservableCollection<string>(RepositoryFactory.Calculator.GetDayCountsAsync().Result);
             if (DayCounts.Count > 0)
             {
@@ -151,7 +156,8 @@ namespace FinSys.Wpf.ViewModel
                 YieldDayCount = (string)selectedYieldDayCount,
                 YieldFreq = (string)selectedYieldFrequency,
                 YieldMethod = (string)selectedYieldMethod,
-                CalculatePrice = calculatePrice
+                CalculatePrice = calculatePrice,
+                PayHolidayAdjust = (string)SelectedPayHolidayAdjust
             };
 
             Instrument instr = null;
@@ -239,7 +245,8 @@ namespace FinSys.Wpf.ViewModel
                 PvbpConvexityAdjusted = 0,
                 YieldDayCount = (string)selectedYieldDayCount,
                 YieldFreq = (string)selectedYieldFrequency,
-                YieldMethod = (string)selectedYieldMethod
+                YieldMethod = (string)selectedYieldMethod,
+                PayHolidayAdjust = (string)SelectedPayHolidayAdjust
             };
 
             Instrument instr = null;
@@ -315,7 +322,8 @@ namespace FinSys.Wpf.ViewModel
                 YieldDayCount = (string)selectedYieldDayCount,
                 YieldFreq = (string)selectedYieldFrequency,
                 YieldMethod = (string)selectedYieldMethod,
-                CalculatePrice = calculatePrice
+                CalculatePrice = calculatePrice,
+                PayHolidayAdjust = (string)SelectedPayHolidayAdjust
             };
 
             Instrument instr = null;
@@ -341,6 +349,7 @@ namespace FinSys.Wpf.ViewModel
             SelectedYieldMethod = calcs.YieldMethod;
             EndOfMonthPay = instr.EndOfMonthPay;
             SelectedHolidayAdjust = instr.HolidayAdjust;
+            SelectedPayHolidayAdjust = instr.HolidayAdjust;
         }
 
         private bool CanOpenWindow(object obj)
@@ -436,6 +445,35 @@ namespace FinSys.Wpf.ViewModel
                 if (selectedHolidayAdjust != value)
                 {
                     selectedHolidayAdjust = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private ObservableCollection<string> payHolidayAdjusts = new ObservableCollection<string>();
+        public ObservableCollection<string> PayHolidayAdjusts
+        {
+            get
+            {
+                return payHolidayAdjusts;
+            }
+            set
+            {
+                payHolidayAdjusts = value;
+                OnPropertyChanged();
+            }
+        }
+        object selectedPayHolidayAdjust;
+        public object SelectedPayHolidayAdjust
+        {
+            get
+            {
+                return selectedPayHolidayAdjust;
+            }
+            set
+            {
+                if (selectedPayHolidayAdjust != value)
+                {
+                    selectedPayHolidayAdjust = value;
                     OnPropertyChanged();
                 }
             }

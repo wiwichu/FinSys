@@ -165,6 +165,19 @@ namespace FinSys.Wpf.Model
                 OnPropertyChanged();
             }
         }
+        private string payHolidayAdjust;
+        public string PayHolidayAdjust
+        {
+            get
+            {
+                return payHolidayAdjust;
+            }
+            set
+            {
+                payHolidayAdjust = value;
+                OnPropertyChanged();
+            }
+        }
         private double pvbpConvexityAdjusted;
         public double PvbpConvexityAdjusted
         {
