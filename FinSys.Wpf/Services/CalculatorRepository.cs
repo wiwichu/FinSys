@@ -547,8 +547,45 @@ namespace FinSys.Wpf.Services
 
                 Instrument newInstr = makeInstrument(instr);
                 Calculations newCalcs = makeCalculations(calcs);
-                newCalcs.Cashflows = cashFlowsResult.OrderBy((c) => c.ScheduledDate).ToList();
-
+                //newCalcs.Cashflows = cashFlowsResult.OrderBy((c) => c.ScheduledDate).ToList();
+                //////////////
+                //newCalcs.Cashflows =
+                //cashFlowsResult
+                //.OrderBy((c) => c.ScheduledDate).GroupBy((c) => new
+                //{
+                //    c.ScheduledDate,
+                //    c.AdjustedDate
+                //},
+                //(c) => c.Amount,
+                //(groupKey, totals) => new
+                //{
+                //    Key = groupKey,
+                //    TotalAmount = totals.Sum()
+                //}
+                //).Select((cf) => new CashFlow
+                //{
+                //    Amount = cf.TotalAmount,
+                //    ScheduledDate = cf.Key.ScheduledDate,
+                //    PresentValue = cf.TotalAmount,
+                //    AdjustedDate = cf.Key.AdjustedDate
+                //})
+                //.ToList();
+                newCalcs.Cashflows =
+                cashFlowsResult
+                .OrderBy((c) => c.ScheduledDate).GroupBy((c) => new
+                {
+                    c.ScheduledDate,
+                    c.AdjustedDate
+                }
+                )
+                .Select((cf) => new CashFlow
+                {
+                    Amount = cf.Sum(r=> r.Amount),
+                    ScheduledDate = cf.Key.ScheduledDate,
+                    PresentValue = cf.Sum(r => r.PresentValue),
+                    AdjustedDate = cf.Key.AdjustedDate
+                })
+                .ToList();
                 return new KeyValuePair<Instrument, Calculations>(newInstr, newCalcs);
             })
                 .ConfigureAwait(false) //necessary on UI Thread
