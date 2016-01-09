@@ -22,7 +22,8 @@ unsigned long	_PYFUNCS py_coup_load( char py_period_length, char *simp_comp_frac
 					int *coups_left, insevent_struct rate_array [max_rates],
 					int *pay_array_index, booleans fast_calc,
 					pay_struc pay_array_a [max_coups], long double first_int,
-					long double *last_2_mat_fact)
+					long double *last_2_mat_fact,
+					vector<pay_struc> &cashflows)
 
 {
 
@@ -59,6 +60,9 @@ date_union base_date;
 		  /*{ Determine size of array necessary to hold all the payments.}*/
 
 	pay_array_a[0].time_to_pay = 0;
+	cashflows.push_back(pay_array_a[0]);
+	//invalidate first entry
+	cashflows.back().payment = 0;
 
 	if (fast_calc == istrue)
 	{
@@ -593,6 +597,14 @@ date_union base_date;
 			date_hold.date_string);
 
 		 pay_array_a[*pay_array_index].payment = interest;
+
+		 if (justCoups)
+		 {
+			 pay_array_a[*pay_array_index].pv_factor = 0;
+		 }
+		 cashflows.push_back(pay_array_a[*pay_array_index]);
+		 datecpy(cashflows.back().pay_date.date_string,
+			 base_date.date_string);
 
 	  }
 	 }

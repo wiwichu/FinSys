@@ -657,21 +657,21 @@ date_union prev_date;
 				,holiSet
 				,days_sett_to_mat, pay_freq, &coups_left,
 				rate_array, &pay_array_index, fast_calc,
-				pay_array_a, first_int,&last_2_mat_fact);
+				pay_array_a, first_int,&last_2_mat_fact,cashflows);
 
 	if (return_status)
 	{
 	 goto py_calc_end;
 	}
-	for (int i = 0; i < coup_count; i++)
-	{
-		if (justCoups)
-		{
-			pay_array_a[i].pv_factor = 0;
-		}
-		cashflows.push_back(pay_array_a[i]);
+	//for (int i = 0; i < coup_count; i++)
+	//{
+	//	if (justCoups)
+	//	{
+	//		pay_array_a[i].pv_factor = 0;
+	//	}
+	//	cashflows.push_back(pay_array_a[i]);
 
-	}
+	//}
 
 	if (in_instr.instr_class != instr_cashflow_class)
 
@@ -681,32 +681,32 @@ date_union prev_date;
 	  return_status = py_even_redemps_load( &redemp_sched, coup_count,
 				&even_redemps_count, &in_instr, pay_adj,
 				&py_parm, &redemps_array_index, pay_array_a,
-				even_redemps);
+				even_redemps,cashflows);
 
 	  if (return_status)
 	  {
 		 goto py_calc_end;
 	  }
-	for (int i = 0; i < even_redemps_count; i++)
-	{
-		pay_struc thisFlow;
-		redemps_struc thisRedemp = even_redemps[i];
-		thisFlow.pay_date = thisRedemp.redemps_date;
-		thisFlow.payment = thisRedemp.redemps_factor;
-		thisFlow.pv_factor = thisRedemp.pv_factor;
-		int dateStat = 
-			CheckDate(thisRedemp.redemps_date.date.years,
-				thisRedemp.redemps_date.date.months,
-				thisRedemp.redemps_date.date.days);
-		if (dateStat == return_success)
-		{
-			if (justCoups)
-			{
-				thisFlow.pv_factor = 0;
-			}
-			cashflows.push_back(thisFlow);
-		}
-	}
+	//for (int i = 0; i < even_redemps_count; i++)
+	//{
+	//	pay_struc thisFlow;
+	//	redemps_struc thisRedemp = even_redemps[i];
+	//	thisFlow.pay_date = thisRedemp.redemps_date;
+	//	thisFlow.payment = thisRedemp.redemps_factor;
+	//	thisFlow.pv_factor = thisRedemp.pv_factor;
+	//	int dateStat = 
+	//		CheckDate(thisRedemp.redemps_date.date.years,
+	//			thisRedemp.redemps_date.date.months,
+	//			thisRedemp.redemps_date.date.days);
+	//	if (dateStat == return_success)
+	//	{
+	//		if (justCoups)
+	//		{
+	//			thisFlow.pv_factor = 0;
+	//		}
+	//		cashflows.push_back(thisFlow);
+	//	}
+	//}
 
 			 /*{ Process partial payments.}*/
 
@@ -733,27 +733,27 @@ date_union prev_date;
 		 {
 			goto py_calc_end;
 		 }
-		 for (int i = 0; i < even_redemps_count; i++)
-		 {
-			 pay_struc thisFlow;
-			 redemps_struc thisRedemp = part_pay_array_a[i];
-			 thisFlow.pay_date = thisRedemp.redemps_date;
-			 thisFlow.payment = thisRedemp.redemps_factor;
-			 thisFlow.pv_factor = thisRedemp.pv_factor;
-			 int dateStat =
-				 CheckDate(thisRedemp.redemps_date.date.years,
-					 thisRedemp.redemps_date.date.months,
-					 thisRedemp.redemps_date.date.days);
-			 if (dateStat == return_success)
-			 {
-				 if (justCoups)
-				 {
-					 thisFlow.pv_factor = 0;
-				 }
-				 cashflows.push_back(thisFlow);
-			 }
+		 //for (int i = 0; i < even_redemps_count; i++)
+		 //{
+			// pay_struc thisFlow;
+			// redemps_struc thisRedemp = part_pay_array_a[i];
+			// thisFlow.pay_date = thisRedemp.redemps_date;
+			// thisFlow.payment = thisRedemp.redemps_factor;
+			// thisFlow.pv_factor = thisRedemp.pv_factor;
+			// int dateStat =
+			//	 CheckDate(thisRedemp.redemps_date.date.years,
+			//		 thisRedemp.redemps_date.date.months,
+			//		 thisRedemp.redemps_date.date.days);
+			// if (dateStat == return_success)
+			// {
+			//	 if (justCoups)
+			//	 {
+			//		 thisFlow.pv_factor = 0;
+			//	 }
+			//	 cashflows.push_back(thisFlow);
+			// }
 
-		 }
+		 //}
 
 	  }
 
@@ -1787,7 +1787,8 @@ py_part_pay_load_end:
 unsigned long	_PYFUNCS py_even_redemps_load(char *redemp_sched, unsigned int coup_count,
 			unsigned int *even_redemps_count, instr *in_instr,
 			char pay_adj, py_parms *py_parm, int *redemps_array_index,
-			pay_struc pay_array_a [max_coups], redemps_struc even_redemps [max_coups])
+			pay_struc pay_array_a [max_coups], redemps_struc even_redemps [max_coups],
+			vector<pay_struc> &cashflows)
 
 {
 
@@ -1847,6 +1848,12 @@ unsigned long	_PYFUNCS py_even_redemps_load(char *redemp_sched, unsigned int cou
 	even_redemps[*even_redemps_count].coup_num = *even_redemps_count;
 
 	*even_redemps_count = *even_redemps_count + 1;
+	if (justCoups)
+	{
+		even_redemps[*even_redemps_count].pv_factor = 0;
+	}
+	//cashflows[*even_redemps_count].payment += in_instr->redemp_price;
+	cashflows.back().payment += in_instr->redemp_price;
 
 //py_even_redemps_load_end:
 

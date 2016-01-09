@@ -454,7 +454,8 @@ unsigned long   fast_calc_check(booleans *, instr, long double,
 			, long, long double,
 			int *, insevent_struct rate_array [], int *,
 			booleans, pay_struc [], long double first_int
-			,long double *last_2_mat_fact);
+			,long double *last_2_mat_fact,
+			  vector<pay_struc> &cashflows);
 
 
   unsigned long	py_pv_coups(char, char, long double, long double *, long double,
@@ -471,7 +472,7 @@ unsigned long   fast_calc_check(booleans *, instr, long double,
 
   unsigned long	py_even_redemps_load(char *, unsigned int, unsigned int *,
 			instr *, char, py_parms *, int *, pay_struc [],
-			redemps_struc []);
+			redemps_struc [], vector<pay_struc> &cashflows);
 
   unsigned long	py_pv_redemps( char, long double *, long double,
 				unsigned int, long double *, long double,
