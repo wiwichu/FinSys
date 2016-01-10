@@ -44,6 +44,8 @@ namespace CalcTests
         private static extern int calculateWithCashFlows(InstrumentDescr instrument, CalculationsDescr calculations, CashFlowsDescr cashFlows, int dateAdjustRule);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr getHolidayAdjust(out int size);
+        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern int forecast(DateDescr startDate, DateDescr endDate, int dayCountRule, int months, int days);
         public TestContext TestContext { get; set; }
         [TestMethod]
         public void GetCashFlows_1()

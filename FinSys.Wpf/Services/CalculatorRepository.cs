@@ -38,6 +38,8 @@ namespace FinSys.Wpf.Services
         private static extern int calculateWithCashFlows(InstrumentDescr instrument, CalculationsDescr calculations, CashFlowsDescr cashFlows, int dateAdjustRule);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr getHolidayAdjust(out int size);
+        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern int forecast(DateDescr startDate, DateDescr endDate, int dayCountRule, int months, int days);
 
 
         private List<string> classes = new List<string>();
@@ -609,6 +611,39 @@ namespace FinSys.Wpf.Services
                     ptr += Marshal.SizeOf(typeof(IntPtr));
                 }
                 return adjusts;
+            })
+            .ConfigureAwait(false) //necessary on UI Thread
+            ;
+            return result;
+        }
+
+        public async Task<DateTime> Forecast(DateTime startDate, DateTime endDate, int dayCountRule, int months, int days)
+        {
+            DateTime result = await Task.Run(() =>
+            {
+                DateDescr dateIn = new DateDescr
+                {
+                    year = startDate.Year,
+                    month = startDate.Month,
+                    day = startDate.Day
+                };
+                DateDescr dateOut = new DateDescr
+                {
+                    year = startDate.Year,
+                    month = startDate.Month,
+                    day = startDate.Day
+                };
+                int status = forecast(dateIn, dateOut, dayCountRule, months, days);
+                if (status != 0)
+                {
+                    StringBuilder statusText = new StringBuilder(200);
+                    int textSize;
+                    status = getStatusText(status, statusText, out textSize);
+                    throw new InvalidOperationException(statusText.ToString());
+                }
+                DateTime dateResult = new DateTime(dateOut.year, dateOut.month, dateOut.day);
+
+                return dateResult;
             })
             .ConfigureAwait(false) //necessary on UI Thread
             ;

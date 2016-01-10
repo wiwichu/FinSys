@@ -1363,6 +1363,32 @@ int getInstrumentDefaults(InstrumentStruct &instrument)
 		days = intDays;
 		return return_success;
 	}
+	int  forecast(
+		DateStruct &startDate, 
+		DateStruct &endDate, 
+		int dayCountRule, 
+		int months, 
+		int days)
+	{
+		Date_Funcs::date_union date1;
+		date1.date.centuries = startDate.year / 100;
+		date1.date.years = startDate.year % 100;
+		date1.date.months = startDate.month;
+		date1.date.days = startDate.day;
+		Date_Funcs::date_union date2;
+
+		int result = Py_Front::forecast(date1, months, days, dayCountRule, &date2);
+		if (result != return_success)
+		{
+			return result;
+		}
+
+		endDate.day = date2.date.days;
+		endDate.month = date2.date.months;
+		endDate.year = date2.date.centuries * 100 + date2.date.years;
+
+		return return_success;
+	}
 
 	int  tenor(DateStruct startDate, DateStruct endDate, int dayCountRule, int &tenor)
 	{

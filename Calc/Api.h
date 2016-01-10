@@ -80,6 +80,7 @@ extern "C" __declspec(dllexport) int  getCashFlows(CashFlowsStruct &cashFlowsStr
 extern "C" __declspec(dllexport) int  getNewCashFlows(CashFlowsStruct &cashFlowsStruct, int adjustRule);
 extern "C" __declspec(dllexport) int  tenor(DateStruct &startDate, DateStruct &endDate, int dayCountRule, int &tenor);
 extern "C" __declspec(dllexport) int  intCalc(DateStruct &startDate, DateStruct &endDate, int dayCountRule, int &days, double &dayCountFraction);
+extern "C" __declspec(dllexport) int  forecast(DateStruct &startDate, DateStruct &endDate, int dayCountRule, int months, int days);
 
 
 int preProc(InstrumentStruct &instrument, CalculationsStruct &calculations,Py_Front &pyfront);

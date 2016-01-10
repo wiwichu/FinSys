@@ -40,6 +40,8 @@ namespace CalcTests
         private static extern int tenor(DateDescr startDate, DateDescr endDate, int dayCountRule, out int tenor);
         [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Debug/calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int intCalc(DateDescr startDate, DateDescr endDate, int dayCountRule, out int days, out double dayCountFraction);
+        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern int forecast(DateDescr startDate, DateDescr endDate, int dayCountRule, int months, int days);
 
         private static DateDescr startDate_1 = new DateDescr { year = 2007, month = 12, day = 28 };
         private static DateDescr endDate_1 = new DateDescr { year = 2008, month = 2, day = 28 };
@@ -1342,6 +1344,43 @@ namespace CalcTests
         }
 
 
+        [TestMethod]
+        public void Forecast_1()
+        {
+            int days = 0;
+            int months = 6;
+            DateDescr startDate = new DateDescr
+            {
+                year = 2010,
+                month = 7,
+                day = 15
+            };
+            DateDescr endDate = new DateDescr
+            {
+                year = 1900,
+                month = 1,
+                day = 1
+            };
+            int status = forecast(startDate,
+              endDate,
+            (int)TestHelper.tenor_rule.date_act_cal,
+            months,
+            days);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            TestContext.WriteLine("Start Date: {0}.{1}.{2} ", startDate.year, startDate.month, startDate.day);
+            TestContext.WriteLine("End Date: {0}.{1}.{2} ", endDate.year, endDate.month, endDate.day);
+
+            Assert.AreEqual(15, endDate.day);
+            Assert.AreEqual(1, endDate.month);
+            Assert.AreEqual(2011, endDate.year);
+
+        }
 
 
 

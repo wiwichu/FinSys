@@ -10,7 +10,7 @@ namespace CalcTests
 
     public class TestHelper
     {
-        enum tenor_rule
+        public enum tenor_rule
         {
             date_no_cal,
             date_act_cal,

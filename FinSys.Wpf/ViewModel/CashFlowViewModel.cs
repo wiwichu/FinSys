@@ -31,9 +31,18 @@ namespace FinSys.Wpf.ViewModel
                 return;
             }
             cashFlows = cashFlowList;
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            CashFlows = cashFlows;
         }
 
         private ObservableCollection<CashFlow> cashFlows = new ObservableCollection<CashFlow>();
+        /// <summary>
+        /// 
+        /// </summary>
         public ObservableCollection<CashFlow> CashFlows
         {
             get
@@ -43,6 +52,9 @@ namespace FinSys.Wpf.ViewModel
             set
             {
                 cashFlows = value;
+                double flows = cashFlows.Sum((c) => c.Amount);
+                TotalCashflows = cashFlows.Sum((c) => c.Amount);
+                PresentValue = cashFlows.Sum((c) => c.PresentValue);
                 OnPropertyChanged();
             }
         }
@@ -58,9 +70,34 @@ namespace FinSys.Wpf.ViewModel
                 if (selectedCashFlow != value)
                 {
                     selectedCashFlow = value;
-                    //ChangeClass(selectedCashFlow);
                     OnPropertyChanged();
                 }
+            }
+        }
+        private double presentValue;
+        public double PresentValue
+        {
+            get
+            {
+                return presentValue;
+            }
+            set
+            {
+                presentValue = value;
+                OnPropertyChanged();
+            }
+        }
+        private double totalCashflows;
+        public double TotalCashflows
+        {
+            get
+            {
+                return totalCashflows;
+            }
+            set
+            {
+                totalCashflows = value;
+                OnPropertyChanged();
             }
         }
 
