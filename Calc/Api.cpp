@@ -756,6 +756,22 @@ int  getDefaultDatesAndData(InstrumentStruct &instrument, CalculationsStruct &ca
 
 	return return_success;
 }
+int  priceCashFlows(CashFlowsStruct &cashFlowsStruct,
+	int yieldMth,
+	int frequency,
+	int dayCount,
+	DateStruct &valueDate,
+	RateCurveStruct &rateCurve
+	)
+{
+	for (int i = 0; i < cashFlowsStruct.size; i++)
+	{
+		//CashFlowStruct cfs = cashFlowsStruct.cashFlows[i];
+		cashFlowsStruct.cashFlows[i].presentValue = 
+			cashFlowsStruct.cashFlows[i].amount*.75;
+	}
+	return return_success;
+}
 int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &calculations,CashFlowsStruct &cashFlowsStruct, int adjustRule)
 {
 	Py_Front pyfront;
@@ -957,6 +973,14 @@ int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &ca
 			cf[i].adjustedYear = date_hold.date.centuries*100 + date_hold.date.years;
 			cf[i].adjustedMonth = date_hold.date.months;
 			cf[i].adjustedDay = date_hold.date.days;
+			if (calculations.calculatePrice)
+			{
+				cf[i].discountRate = calculations.yieldIn;
+			}
+			else
+			{
+				cf[i].discountRate = calculations.yieldOut;
+			}
 			i++;
 	}
 	cashFlowsStruct.size = i;

@@ -76,6 +76,7 @@
     <Compile Include="Model\Instrument.cs" />
     <Compile Include="Model\InstrumentClass.cs" />
     <Compile Include="Model\Portfolio.cs" />
+    <Compile Include="Model\RateCurve.cs" />
     <Compile Include="Services\CalculatorRepository.cs" />
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\ICalculatorRepository.cs" />

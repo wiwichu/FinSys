@@ -205,7 +205,8 @@ namespace FinSys.Wpf.ViewModel
                     AdjustedDate = c.AdjustedDate,
                     Amount = c.Amount,
                     PresentValue = c.PresentValue,
-                    ScheduledDate = c.ScheduledDate
+                    ScheduledDate = c.ScheduledDate,
+                    DiscountRate = c.DiscountRate
                 }));
         }
 

@@ -4,12 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FinSys.Wpf.View"
+        Title="Cash Flows" Height="600" Width="900"
              mc:Ignorable="d" 
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid>
@@ -52,9 +53,12 @@
                     Binding="{Binding AdjustedDate , Mode=TwoWay, TargetNullValue={x:Static sys:DateTime.Now}, StringFormat=d}"
                     IsReadOnly="True"
                     />
-
-
-            </DataGrid.Columns>
+                    <DataGridTextColumn
+                    Header="Discount Rate"
+                    Width="Auto"
+                    Binding="{Binding DiscountRate, Mode=TwoWay}"
+                    />
+                </DataGrid.Columns>
         </DataGrid>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -68,6 +72,54 @@
                 <TextBlock Text="Present Value: " x:Name="lblPresentValue" Margin="5" Grid.Column="2" Grid.Row="1" />
                 <TextBlock  x:Name="lblPreviousValueResult" Text="{Binding PresentValue, StringFormat='#0.00'}" Margin="5" Grid.Column="3" Grid.Row="1" />
             </Grid>
+         </Grid>
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+               <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Value Date: " x:Name="lblValueDate" Margin="5" Grid.Row="0"/>
+            <DatePicker x:Name="dpValueDate" Margin="5" Grid.Column="1" Grid.Row="0" 
+				SelectedDate="{Binding ValueDate, Mode=TwoWay, TargetNullValue={x:Static sys:DateTime.Now}}" />
+            <TextBlock Text="Yield Method: " x:Name="lblYieldMethod" Margin="5" Grid.Column="0" Grid.Row="1" />
+                <ComboBox x:Name="cbYieldMethod" SelectedIndex="0"
+				Grid.Column="1" Grid.Row="1"
+				Margin="5"
+				ItemsSource="{Binding YieldMethod}"
+				SelectedItem="{Binding SelectedYieldMethod}"
+				IsSynchronizedWithCurrentItem="True"
+                />
+                <TextBlock Text="Yield Day Count: " x:Name="lblYieldDayCount" Margin="5" Grid.Column="0" Grid.Row="2" />
+                <ComboBox x:Name="cbYieldDayCount" SelectedIndex="0"
+				Grid.Column="1" Grid.Row="2"
+				Margin="5"
+				ItemsSource="{Binding YieldDayCount}"
+				SelectedItem="{Binding SelectedYieldDayCount}"
+				IsSynchronizedWithCurrentItem="True"
+                />
+                <TextBlock Text="Yield Frequency: " x:Name="lblYieldFrequency" Margin="5" Grid.Column="0" Grid.Row="3" />
+                <ComboBox x:Name="cbYieldFrequency" SelectedIndex="0"
+				Grid.Column="1" Grid.Row="3"
+				Margin="5"
+				ItemsSource="{Binding YieldFrequency}"
+				SelectedItem="{Binding SelectedYieldFrequency}"
+				IsSynchronizedWithCurrentItem="True"
+                />
+            <Button Content="Present Values" Command="{Binding CalculateCommand}" Grid.Row="4" Grid.Column="0" Margin="5,5,5,0" />
+
         </Grid>
     </Grid>
 </Window>

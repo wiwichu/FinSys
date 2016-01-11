@@ -12,12 +12,27 @@ typedef struct CashFlowStruct
 	int adjustedYear;
 	int adjustedMonth;
 	int adjustedDay;
+	double discountRate;
 } CashFlowStruct;
 typedef struct CashFlowsStruct
 {
 	CashFlowStruct *cashFlows;
 	int size;
 } CashFlowsStruct;
+
+typedef struct RateStruct
+{
+	int year;
+	int month;
+	int day;
+	double rate;
+
+} RateStruct;
+typedef struct RateCurveStruct
+{
+	RateStruct *cashFlows;
+	int size;
+} RateCurveStruct;
 typedef struct DateStruct
 {
 	int year;
@@ -81,6 +96,13 @@ extern "C" __declspec(dllexport) int  getNewCashFlows(CashFlowsStruct &cashFlows
 extern "C" __declspec(dllexport) int  tenor(DateStruct &startDate, DateStruct &endDate, int dayCountRule, int &tenor);
 extern "C" __declspec(dllexport) int  intCalc(DateStruct &startDate, DateStruct &endDate, int dayCountRule, int &days, double &dayCountFraction);
 extern "C" __declspec(dllexport) int  forecast(DateStruct &startDate, DateStruct &endDate, int dayCountRule, int months, int days);
+extern "C" __declspec(dllexport) int  priceCashFlows(CashFlowsStruct &cashFlowsStruct, 
+	int yieldMth,
+	int frequency,
+	int dayCount,
+	DateStruct &valueDate,
+	RateCurveStruct &rateCurve
+	);
 
 
 int preProc(InstrumentStruct &instrument, CalculationsStruct &calculations,Py_Front &pyfront);

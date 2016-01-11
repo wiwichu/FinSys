@@ -20,5 +20,6 @@ namespace FinSys.Wpf.Services
         Task<List<string>> GetYieldMethodsAsync();
         Task<KeyValuePair<Instrument, Calculations>> CalculateAsync(Instrument instrument, Calculations calculations);
         Task<DateTime> Forecast(DateTime startDate, DateTime endDate, int dayCountRule, int months, int days);
+        Task<List<CashFlow>> PriceCashFlows(List<CashFlow> cashFlows, string yieldMth, string frequency, string dayCount, DateTime valueDate, List<RateCurve> rateCurve);
     }
 }

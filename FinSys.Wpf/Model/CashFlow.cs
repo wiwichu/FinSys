@@ -62,5 +62,18 @@ namespace FinSys.Wpf.Model
                 OnPropertyChanged();
             }
         }
+        private double discountRate;
+        public double DiscountRate
+        {
+            get
+            {
+                return discountRate;
+            }
+            set
+            {
+                discountRate = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }

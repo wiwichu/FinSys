@@ -40,7 +40,13 @@ namespace FinSys.Wpf.Services
         private static extern IntPtr getHolidayAdjust(out int size);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int forecast(DateDescr startDate, DateDescr endDate, int dayCountRule, int months, int days);
-
+        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern int priceCashFlows(CashFlowsDescr cashFlowsStruct,
+            int yieldMth,
+            int frequency,
+            int dayCount,
+            DateDescr valueDate,
+            RateCurveDescr rateCurve );
 
         private List<string> classes = new List<string>();
         private List<string> dayCounts = new List<string>();
@@ -539,7 +545,8 @@ namespace FinSys.Wpf.Services
                         Amount = cashFlowDescr.amount,
                         AdjustedDate = new DateTime(cashFlowDescr.adjustedYear, cashFlowDescr.adjustedMonth, cashFlowDescr.adjustedDay),
                         PresentValue = cashFlowDescr.presentValue,
-                        ScheduledDate = new DateTime(cashFlowDescr.year, cashFlowDescr.month, cashFlowDescr.day)
+                        ScheduledDate = new DateTime(cashFlowDescr.year, cashFlowDescr.month, cashFlowDescr.day),
+                        DiscountRate = cashFlowDescr.discountRate
                     };
                     cashFlowsResult.Add(cf);
                     cashFlowsOut.Add(cashFlowDescr);
@@ -549,29 +556,6 @@ namespace FinSys.Wpf.Services
 
                 Instrument newInstr = makeInstrument(instr);
                 Calculations newCalcs = makeCalculations(calcs);
-                //newCalcs.Cashflows = cashFlowsResult.OrderBy((c) => c.ScheduledDate).ToList();
-                //////////////
-                //newCalcs.Cashflows =
-                //cashFlowsResult
-                //.OrderBy((c) => c.ScheduledDate).GroupBy((c) => new
-                //{
-                //    c.ScheduledDate,
-                //    c.AdjustedDate
-                //},
-                //(c) => c.Amount,
-                //(groupKey, totals) => new
-                //{
-                //    Key = groupKey,
-                //    TotalAmount = totals.Sum()
-                //}
-                //).Select((cf) => new CashFlow
-                //{
-                //    Amount = cf.TotalAmount,
-                //    ScheduledDate = cf.Key.ScheduledDate,
-                //    PresentValue = cf.TotalAmount,
-                //    AdjustedDate = cf.Key.AdjustedDate
-                //})
-                //.ToList();
                 newCalcs.Cashflows =
                 cashFlowsResult
                 .OrderBy((c) => c.ScheduledDate).GroupBy((c) => new
@@ -585,7 +569,8 @@ namespace FinSys.Wpf.Services
                     Amount = cf.Sum(r=> r.Amount),
                     ScheduledDate = cf.Key.ScheduledDate,
                     PresentValue = cf.Sum(r => r.PresentValue),
-                    AdjustedDate = cf.Key.AdjustedDate
+                    AdjustedDate = cf.Key.AdjustedDate,
+                    DiscountRate = cf.Sum(r=> r.DiscountRate)
                 })
                 .ToList();
                 return new KeyValuePair<Instrument, Calculations>(newInstr, newCalcs);
@@ -647,6 +632,86 @@ namespace FinSys.Wpf.Services
             })
             .ConfigureAwait(false) //necessary on UI Thread
             ;
+            return result;
+        }
+
+        public async Task<List<CashFlow>> PriceCashFlows(List<CashFlow> cashFlows, 
+            string yieldMth, 
+            string frequency, 
+            string dayCount, 
+            DateTime valueDate, 
+            List<RateCurve> rateCurve)
+        {
+            List<CashFlow> result = await Task.Run(() =>
+            {
+                List<CashFlow> cashFlowsResult = new List<CashFlow>();
+                int ym = yieldMethods.IndexOf(yieldMth);
+                int yf = payFreqs.IndexOf(frequency);
+                int ydc = dayCounts.IndexOf(dayCount);
+                CashFlowsDescr cashFlowsDescr = new CashFlowsDescr();
+                List<CashFlowDescr> cfList = cashFlows.Select((cf) =>
+                    new CashFlowDescr
+                    {
+                        adjustedDay = cf.AdjustedDate.Day,
+                        adjustedMonth = cf.AdjustedDate.Month,
+                        adjustedYear = cf.AdjustedDate.Year,
+                        amount = cf.Amount,
+                        presentValue = cf.PresentValue,
+                        day = cf.ScheduledDate.Day,
+                        month = cf.ScheduledDate.Month,
+                        year = cf.ScheduledDate.Year,
+                        discountRate = cf.DiscountRate
+                    }
+                ).ToList() ;
+                CashFlowDescr[] cfArray = cfList.ToArray();
+                cashFlowsDescr.size = cfList.Count;
+                cashFlowsDescr.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) * cfArray.Length);
+                IntPtr buffer = new IntPtr(cashFlowsDescr.cashFlows.ToInt64());
+                for (int i = 0; i < cfArray.Length; i++)
+                {
+                    Marshal.StructureToPtr(cfArray[i], buffer, true);
+                    buffer = new IntPtr(buffer.ToInt64() + Marshal.SizeOf(typeof(CashFlowDescr)));
+                }
+                DateDescr vDate = new DateDescr
+                {
+                    year = valueDate.Year,
+                    month = valueDate.Month,
+                    day = valueDate.Day
+                };
+
+                int status = priceCashFlows(cashFlowsDescr,ym,yf, ydc,vDate
+           // RateCurveDescr rateCurve
+            ,null);
+                if (status != 0)
+                {
+                    StringBuilder statusText = new StringBuilder(200);
+                    int textSize;
+                    status = getStatusText(status, statusText, out textSize);
+                    throw new InvalidOperationException(statusText.ToString());
+                }
+                var structSize = Marshal.SizeOf(typeof(CashFlowDescr));
+                for (int i = 0; i < cashFlowsDescr.size; i++)
+                {
+                    CashFlowDescr cashFlowDescr = (CashFlowDescr)Marshal.PtrToStructure(cashFlowsDescr.cashFlows,
+                        typeof(CashFlowDescr));
+                    CashFlow cf = new CashFlow
+                    {
+                        Amount = cashFlowDescr.amount,
+                        AdjustedDate = new DateTime(cashFlowDescr.adjustedYear, cashFlowDescr.adjustedMonth, cashFlowDescr.adjustedDay),
+                        PresentValue = cashFlowDescr.presentValue,
+                        ScheduledDate = new DateTime(cashFlowDescr.year, cashFlowDescr.month, cashFlowDescr.day),
+                        DiscountRate = cashFlowDescr.discountRate
+                    };
+                    cashFlowsResult.Add(cf);
+                    //cashFlowsOut.Add(cashFlowDescr);
+                    //cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
+                    cashFlowsDescr.cashFlows = (IntPtr)(cashFlowsDescr.cashFlows.ToInt32() + structSize);
+                }
+
+                return cashFlowsResult;
+            })
+             .ConfigureAwait(false) //necessary on UI Thread
+             ;
             return result;
         }
     }
@@ -743,11 +808,26 @@ internal class CashFlowDescr
     public int adjustedYear;
     public int adjustedMonth;
     public int adjustedDay;
+    public double discountRate;
 };
 [StructLayout(LayoutKind.Sequential)]
 internal class CashFlowsDescr
 {
     public IntPtr cashFlows; //CashFlowStruct Array
+    public int size;
+};
+[StructLayout(LayoutKind.Sequential)]
+internal class RateDescr
+{
+    public int year;
+    public int month;
+    public int day;
+    public double rate;
+ };
+[StructLayout(LayoutKind.Sequential)]
+internal class RateCurveDescr
+{
+    public IntPtr rates; //RateStruct Array
     public int size;
 };
 
