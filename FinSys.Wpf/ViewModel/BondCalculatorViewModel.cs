@@ -880,7 +880,7 @@ namespace FinSys.Wpf.ViewModel
 
         private void OpenCashFlow(object obj)
         {
-            var cfm = new CashFlowViewModel(cashFlows);
+            var cfm = new CashFlowViewModel(cashFlows,ValueDate);
             dialogService.ShowDialog(DialogService.DIALOG.CASHFLOWVIEW, cfm);
         }
 

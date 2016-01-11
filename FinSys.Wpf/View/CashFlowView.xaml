@@ -70,7 +70,7 @@
                 <TextBlock Text="Total Cashflows: " x:Name="lblTotalCashflows" Margin="5" Grid.Column="0" Grid.Row="1" />
                 <TextBlock  x:Name="lblTotalCashflowsResult" Text="{Binding TotalCashflows, StringFormat='#0.00############'}" Margin="5" Grid.Column="1" Grid.Row="1" />
                 <TextBlock Text="Present Value: " x:Name="lblPresentValue" Margin="5" Grid.Column="2" Grid.Row="1" />
-                <TextBlock  x:Name="lblPreviousValueResult" Text="{Binding PresentValue, StringFormat='#0.00'}" Margin="5" Grid.Column="3" Grid.Row="1" />
+                <TextBlock  x:Name="lblPreviousValueResult" Text="{Binding PresentValue, StringFormat='#0.00############'}" Margin="5" Grid.Column="3" Grid.Row="1" />
             </Grid>
          </Grid>
         <Grid Grid.Column="1">

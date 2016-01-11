@@ -29,7 +29,7 @@ namespace FinSys.Wpf.ViewModel
             ValueDate = DateTime.Today;
             this.CashFlows = new ObservableCollection<CashFlow>();
         }
-        public CashFlowViewModel(ObservableCollection<CashFlow> cashFlowList)
+        public CashFlowViewModel(ObservableCollection<CashFlow> cashFlowList,DateTime valueDateArg)
         {
             if (DesignerProperties.GetIsInDesignMode(new System.Windows.DependencyObject()))
             {
@@ -39,7 +39,7 @@ namespace FinSys.Wpf.ViewModel
             this.YieldFrequency = new ObservableCollection<string>();
             this.YieldMethod = new ObservableCollection<string>();
             this.RateCurves = new ObservableCollection<RateCurve>();
-            ValueDate = DateTime.Today;
+            ValueDate = valueDateArg;
             cashFlows = cashFlowList;
             Initialize();
         }
