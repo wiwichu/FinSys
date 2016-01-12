@@ -46,13 +46,15 @@ namespace FinSys.Wpf.Services
             int frequency,
             int dayCount,
             DateDescr valueDate,
-            RateCurveDescr rateCurve );
+            RateCurveDescr rateCurve,
+            int interpolation);
 
         private List<string> classes = new List<string>();
         private List<string> dayCounts = new List<string>();
         private List<string> payFreqs = new List<string>();
         private List<string> yieldMethods = new List<string>();
         private List<string> holidayAdjusts = new List<string>();
+        private List<string> interpolationMethods = new List<string>();
         public CalculatorRepository()
         {
             classes = new List<string>( GetInstrumentClassesAsync().Result.Select((ic)=>ic.Name));
@@ -60,6 +62,7 @@ namespace FinSys.Wpf.Services
             payFreqs = GetPayFreqsAsync().Result;
             yieldMethods = GetYieldMethodsAsync().Result;
             holidayAdjusts = GetHolidayAdjustAsync().Result;
+            interpolationMethods = GetInterpolationMethodsAsync().Result;
         }
 
         public async Task<List<string>> GetDayCountsAsync()
@@ -428,6 +431,21 @@ namespace FinSys.Wpf.Services
             return result;
         }
 
+        public async Task<List<string>> GetInterpolationMethodsAsync()
+        {
+            List<string> result = await Task.Run(() =>
+            {
+                List<string> interpolationmethods = new List<string>();
+                interpolationmethods.Add("Linear");
+                interpolationmethods.Add("Continuous");
+                return interpolationmethods;
+            })
+             .ConfigureAwait(false) //necessary on UI Thread
+             ;
+            return result;
+        }
+
+
         public async Task<KeyValuePair<Instrument, Calculations>> GetInstrumentDefaultsAsync(Instrument instrument, Calculations calculations)
         {
             KeyValuePair<Instrument, Calculations> result = await Task.Run(() =>
@@ -692,13 +710,15 @@ namespace FinSys.Wpf.Services
             string frequency, 
             string dayCount, 
             DateTime valueDate, 
-            List<RateCurve> rateCurve)
+            List<RateCurve> rateCurve,
+            string interpolation)
         {
             List<CashFlow> result = await Task.Run(() =>
             {
                 int ym = yieldMethods.IndexOf(yieldMth);
                 int yf = payFreqs.IndexOf(frequency);
                 int ydc = dayCounts.IndexOf(dayCount);
+                int itp = interpolationMethods.IndexOf(interpolation); 
                 List<CashFlow> cashFlowsResult = new List<CashFlow>();
                 CashFlowsDescr cashFlowsDescr = makeCashFlows(cashFlows);
                 RateCurveDescr rateCurveDescr = makeRateCurve(rateCurve);
@@ -709,7 +729,7 @@ namespace FinSys.Wpf.Services
                     day = valueDate.Day
                 };
 
-                int status = priceCashFlows(cashFlowsDescr,ym,yf, ydc,vDate,rateCurveDescr);
+                int status = priceCashFlows(cashFlowsDescr,ym,yf, ydc,vDate,rateCurveDescr,itp);
                 if (status != 0)
                 {
                     StringBuilder statusText = new StringBuilder(200);
@@ -742,6 +762,11 @@ namespace FinSys.Wpf.Services
              ;
             return result;
         }
+    }
+    enum CurveInterpolation
+    {
+        Linear,
+        Continuous
     }
     enum tenor_rule
     {

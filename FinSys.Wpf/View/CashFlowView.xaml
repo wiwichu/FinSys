@@ -24,19 +24,25 @@
                   ItemsSource="{Binding CashFlows}"
                   Margin="10">
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Scheduled Date">
+                    <DataGridTextColumn
+                    Header="Scheduled Date"
+                    Width="Auto"
+                    Binding="{Binding ScheduledDate , Mode=TwoWay, TargetNullValue={x:Static sys:DateTime.Now}, StringFormat=d}"
+                    IsReadOnly="True"
+                    />
+                    <DataGridTemplateColumn Header="Adjusted Date">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding ScheduledDate,StringFormat=d}" />
+                            <TextBlock Text="{Binding AdjustedDate,StringFormat=d}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <DatePicker SelectedDate="{Binding ScheduledDate , Mode=TwoWay, TargetNullValue={x:Static sys:DateTime.Now},StringFormat=d}" />
+                            <DatePicker SelectedDate="{Binding AdjustedDate , Mode=TwoWay, TargetNullValue={x:Static sys:DateTime.Now},StringFormat=d}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn
+                     <DataGridTextColumn
                     Header="Amount"
                     Width="Auto"
                     Binding="{Binding Amount, Mode=TwoWay}"
@@ -45,12 +51,6 @@
                     Header="Present Value"
                     Width="Auto"
                     Binding="{Binding PresentValue, Mode=TwoWay}"
-                    IsReadOnly="True"
-                    />
-                <DataGridTextColumn
-                    Header="Adjusted Date"
-                    Width="Auto"
-                    Binding="{Binding AdjustedDate , Mode=TwoWay, TargetNullValue={x:Static sys:DateTime.Now}, StringFormat=d}"
                     IsReadOnly="True"
                     />
                     <DataGridTextColumn
@@ -114,7 +114,15 @@
 				SelectedItem="{Binding SelectedYieldFrequency}"
 				IsSynchronizedWithCurrentItem="True"
                 />
-            <Button Content="Present Values" Command="{Binding CalculateCommand}" Grid.Row="4" Grid.Column="0" Margin="5,5,5,0" />
+            <TextBlock Text="Interpolation: " x:Name="lblInterpolation" Margin="5" Grid.Column="0" Grid.Row="4" />
+            <ComboBox x:Name="cbInterpolation" SelectedIndex="0"
+				Grid.Column="1" Grid.Row="4"
+				Margin="5"
+				ItemsSource="{Binding Interpolation}"
+				SelectedItem="{Binding SelectedInterpolation}"
+				IsSynchronizedWithCurrentItem="True"
+                />
+            <Button Content="Present Values" Command="{Binding CalculateCommand}" Grid.Row="5" Grid.Column="0" Margin="5,5,5,0" />
             <DataGrid x:Name="rateCurveDataGrid" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2"
                   AutoGenerateColumns="False"
                   EnableRowVirtualization="True"

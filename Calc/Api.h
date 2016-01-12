@@ -79,6 +79,12 @@ typedef struct CalculationsStruct
 	double pvbpConvexityAdjusted;
 } CalculationsStruct;
 
+enum CurveInterpolation
+{
+	Linear,
+	Continuous
+};
+
 extern "C" __declspec(dllexport) char**  getclassdescriptions(int& size);
 extern "C" __declspec(dllexport) char**  getHolidayAdjust(int& size);
 extern "C" __declspec(dllexport) char**  getdaycounts(int& size);
@@ -101,7 +107,8 @@ extern "C" __declspec(dllexport) int  priceCashFlows(CashFlowsStruct &cashFlowsS
 	int frequency,
 	int dayCount,
 	DateStruct &valueDate,
-	RateCurveStruct &rateCurve
+	RateCurveStruct &rateCurve,
+	int interpolation
 	);
 
 

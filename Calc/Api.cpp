@@ -777,7 +777,8 @@ int  priceCashFlows(CashFlowsStruct &cashFlowsStruct,
 	int frequency,
 	int dayCount,
 	DateStruct &valueDate,
-	RateCurveStruct &rateCurve
+	RateCurveStruct &rateCurve,
+	int interpolation
 	)
 {
 	for (int i = 0; i < cashFlowsStruct.size; i++)
@@ -872,43 +873,11 @@ int  priceCashFlows(CashFlowsStruct &cashFlowsStruct,
 		{
 			return result;
 		}
-		//instr->endOfMonthPay = true;
-		//instr->maturityDate->day = cashFlowsStruct.cashFlows[i].adjustedDay;
-		//instr->maturityDate->year = cashFlowsStruct.cashFlows[i].adjustedYear;
-		//instr->maturityDate->month = cashFlowsStruct.cashFlows[i].adjustedMonth;
-		//instr->intDayCount = dayCount;
-		//instr->intPayFreq = frequency;
-		//instr->interestRate = 0;
 		instr->firstPayDate = instr->maturityDate;
-		//instr->holidayAdjust = 0;
 		instr->issueDate->day = valueDate.day;
 		instr->issueDate->month = valueDate.month;
 		instr->issueDate->year = valueDate.year;
 		instr->nextToLastPayDate = instr->issueDate;
-		//instr->instrumentClass = instr_bund_class;
-		//calcs->valueDate = &valueDate;
-		//calcs->yieldDayCount = dayCount;
-		//calcs->yieldFreq = frequency;
-		//calcs->yieldMethod = yieldMth;
-		//calcs->yieldIn = cashFlowsStruct.cashFlows[i].discountRate;
-		//calcs->calculatePrice = py_price_from_yield_calc_what;
-		//calcs->convexity = 0;
-		//calcs->duration = 0;
-		//calcs->exCoupDays = 0;
-		//calcs->interest = 0;
-		//calcs->interestDays = 0;
-		//calcs->isExCoup = ex_coup_no;
-		//calcs->exCoupDays = 0;
-		//calcs->modifiedDuration = 0;
-		//calcs->nextPayDate = instr->maturityDate;
-		//calcs->prepayModel = 0;
-		//calcs->previousPayDate = instr->maturityDate;
-		//calcs->priceIn = 0;
-		//calcs->priceOut = 0;
-		//calcs->pvbp = 0;
-		//calcs->pvbpConvexityAdjusted = 0;
-		//calcs->serviceFee = 0;
-		//calcs->yieldOut = 0;
 
 		result = calculate(*instr, *calcs);
 		if (result != return_success)
@@ -916,9 +885,6 @@ int  priceCashFlows(CashFlowsStruct &cashFlowsStruct,
 			return result;
 		}
 		cashFlowsStruct.cashFlows[i].presentValue = cashFlowsStruct.cashFlows[i].amount*calcs->priceOut;
-		//CashFlowStruct cfs = cashFlowsStruct.cashFlows[i];
-		//cashFlowsStruct.cashFlows[i].presentValue = 
-		//	cashFlowsStruct.cashFlows[i].amount*.75;
 		delete instr;
 		delete calcs;
 	}

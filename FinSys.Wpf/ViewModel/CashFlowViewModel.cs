@@ -112,6 +112,11 @@ namespace FinSys.Wpf.ViewModel
             {
                 SelectedYieldMethod = yieldMethod[(int)yield_method.py_ty_yield_meth];
             }
+            Interpolation = new ObservableCollection<string>(RepositoryFactory.Calculator.GetInterpolationMethodsAsync().Result);
+            if (Interpolation.Count > 0)
+            {
+                SelectedInterpolation = interpolation[(int)CurveInterpolation.Linear];
+            }
             CalculateCommand = new RelayCommand(Calculate, CanCalculate);
             BuildCurve();
         }
@@ -143,14 +148,15 @@ namespace FinSys.Wpf.ViewModel
         {
             try
             {
-
+                
                 List<CashFlow> result = await RepositoryFactory.Calculator.PriceCashFlows(
                     CashFlows.ToList(),
                     (string)selectedYieldMethod,
                     (string)selectedYieldFrequency,
                     (string)selectedYieldDayCount,
                     valueDate,
-                    rateCurves.ToList()
+                    rateCurves.ToList(),
+                    (string)selectedInterpolation
                     );
 
                 CashFlows = new ObservableCollection<CashFlow>( result);
@@ -226,6 +232,39 @@ namespace FinSys.Wpf.ViewModel
                 if (selectedRateCurve != value)
                 {
                     selectedRateCurve = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private ObservableCollection<string> interpolation = new ObservableCollection<string>();
+        /// <summary>
+        /// 
+        /// </summary>
+        public ObservableCollection<string> Interpolation
+        {
+            get
+            {
+                return interpolation;
+            }
+            set
+            {
+                interpolation = value;
+                OnPropertyChanged();
+            }
+        }
+        object selectedInterpolation;
+        public object SelectedInterpolation
+        {
+            get
+            {
+                return selectedInterpolation;
+            }
+            set
+            {
+                if (selectedInterpolation != value)
+                {
+                    selectedInterpolation = value;
                     OnPropertyChanged();
                 }
             }
