@@ -85,11 +85,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="7*"/>
             </Grid.RowDefinitions>
             <TextBlock Text="Value Date: " x:Name="lblValueDate" Margin="5" Grid.Row="0"/>
             <DatePicker x:Name="dpValueDate" Margin="5" Grid.Column="1" Grid.Row="0" 
@@ -119,7 +115,31 @@
 				IsSynchronizedWithCurrentItem="True"
                 />
             <Button Content="Present Values" Command="{Binding CalculateCommand}" Grid.Row="4" Grid.Column="0" Margin="5,5,5,0" />
-
+            <DataGrid x:Name="rateCurveDataGrid" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2"
+                  AutoGenerateColumns="False"
+                  EnableRowVirtualization="True"
+                  ItemsSource="{Binding RateCurves}"
+                  Margin="10">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Rate Date">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding RateDate,StringFormat=d}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding RateDate , Mode=TwoWay, TargetNullValue={x:Static sys:DateTime.Now},StringFormat=d}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn
+                    Header="Rate"
+                    Width="Auto"
+                    Binding="{Binding Rate, Mode=TwoWay}"
+                    />
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
     </Grid>
 </Window>

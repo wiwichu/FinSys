@@ -113,6 +113,25 @@ namespace FinSys.Wpf.ViewModel
                 SelectedYieldMethod = yieldMethod[(int)yield_method.py_ty_yield_meth];
             }
             CalculateCommand = new RelayCommand(Calculate, CanCalculate);
+            BuildCurve();
+        }
+
+        private void BuildCurve()
+        {
+            DateTime date = ValueDate;
+            double rate = 0.0;
+            RateCurves.Add(new RateCurve { RateDate = ValueDate.AddDays(1), Rate = rate+=.02 });
+            RateCurves.Add(new RateCurve { RateDate = ValueDate.AddMonths(1), Rate = rate += .02 });
+            RateCurves.Add(new RateCurve { RateDate = ValueDate.AddMonths(3), Rate = rate += .02 });
+            RateCurves.Add(new RateCurve { RateDate = ValueDate.AddMonths(6), Rate = rate += .02 });
+            RateCurves.Add(new RateCurve { RateDate = ValueDate.AddMonths(12), Rate = rate += .02 });
+            RateCurves.Add(new RateCurve { RateDate = ValueDate.AddMonths(18), Rate = rate += .02 });
+            RateCurves.Add(new RateCurve { RateDate = ValueDate.AddMonths(24), Rate = rate += .02 });
+
+            for (int i = 3;i<=30;i++)
+            {
+                RateCurves.Add(new RateCurve { RateDate = ValueDate.AddMonths(i*12), Rate = rate += .02 });
+            }
         }
 
         private bool CanCalculate(object obj)

@@ -635,6 +635,58 @@ namespace FinSys.Wpf.Services
             return result;
         }
 
+        internal CashFlowsDescr makeCashFlows(List<CashFlow> cashFlows)
+        {
+            CashFlowsDescr cashFlowsDescr = new CashFlowsDescr();
+            List<CashFlowDescr> cfList = cashFlows.Select((cf) =>
+                new CashFlowDescr
+                {
+                    adjustedDay = cf.AdjustedDate.Day,
+                    adjustedMonth = cf.AdjustedDate.Month,
+                    adjustedYear = cf.AdjustedDate.Year,
+                    amount = cf.Amount,
+                    presentValue = cf.PresentValue,
+                    day = cf.ScheduledDate.Day,
+                    month = cf.ScheduledDate.Month,
+                    year = cf.ScheduledDate.Year,
+                    discountRate = cf.DiscountRate
+                }
+            ).ToList();
+            CashFlowDescr[] cfArray = cfList.ToArray();
+            cashFlowsDescr.size = cfList.Count;
+            cashFlowsDescr.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) * cfArray.Length);
+            IntPtr buffer = new IntPtr(cashFlowsDescr.cashFlows.ToInt64());
+            for (int i = 0; i < cfArray.Length; i++)
+            {
+                Marshal.StructureToPtr(cfArray[i], buffer, true);
+                buffer = new IntPtr(buffer.ToInt64() + Marshal.SizeOf(typeof(CashFlowDescr)));
+            }
+            return cashFlowsDescr;
+        }
+
+        internal RateCurveDescr makeRateCurve(List<RateCurve> rateCurve)
+        {
+            RateCurveDescr rateCurveDescr = new RateCurveDescr();
+            List<RateDescr> rcList = rateCurve.Select((rc) =>
+                new RateDescr
+                {
+                    rate = rc.Rate,
+                    day = rc.RateDate.Day,
+                    month = rc.RateDate.Month,
+                    year = rc.RateDate.Year
+                }
+            ).ToList();
+            RateDescr[] rcArray = rcList.ToArray();
+            rateCurveDescr.size = rcList.Count;
+            rateCurveDescr.rates = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(RateDescr)) * rcArray.Length);
+            IntPtr buffer = new IntPtr(rateCurveDescr.rates.ToInt64());
+            for (int i = 0; i < rcArray.Length; i++)
+            {
+                Marshal.StructureToPtr(rcArray[i], buffer, true);
+                buffer = new IntPtr(buffer.ToInt64() + Marshal.SizeOf(typeof(RateDescr)));
+            }
+            return rateCurveDescr;
+        }
         public async Task<List<CashFlow>> PriceCashFlows(List<CashFlow> cashFlows, 
             string yieldMth, 
             string frequency, 
@@ -644,34 +696,12 @@ namespace FinSys.Wpf.Services
         {
             List<CashFlow> result = await Task.Run(() =>
             {
-                List<CashFlow> cashFlowsResult = new List<CashFlow>();
                 int ym = yieldMethods.IndexOf(yieldMth);
                 int yf = payFreqs.IndexOf(frequency);
                 int ydc = dayCounts.IndexOf(dayCount);
-                CashFlowsDescr cashFlowsDescr = new CashFlowsDescr();
-                List<CashFlowDescr> cfList = cashFlows.Select((cf) =>
-                    new CashFlowDescr
-                    {
-                        adjustedDay = cf.AdjustedDate.Day,
-                        adjustedMonth = cf.AdjustedDate.Month,
-                        adjustedYear = cf.AdjustedDate.Year,
-                        amount = cf.Amount,
-                        presentValue = cf.PresentValue,
-                        day = cf.ScheduledDate.Day,
-                        month = cf.ScheduledDate.Month,
-                        year = cf.ScheduledDate.Year,
-                        discountRate = cf.DiscountRate
-                    }
-                ).ToList() ;
-                CashFlowDescr[] cfArray = cfList.ToArray();
-                cashFlowsDescr.size = cfList.Count;
-                cashFlowsDescr.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) * cfArray.Length);
-                IntPtr buffer = new IntPtr(cashFlowsDescr.cashFlows.ToInt64());
-                for (int i = 0; i < cfArray.Length; i++)
-                {
-                    Marshal.StructureToPtr(cfArray[i], buffer, true);
-                    buffer = new IntPtr(buffer.ToInt64() + Marshal.SizeOf(typeof(CashFlowDescr)));
-                }
+                List<CashFlow> cashFlowsResult = new List<CashFlow>();
+                CashFlowsDescr cashFlowsDescr = makeCashFlows(cashFlows);
+                RateCurveDescr rateCurveDescr = makeRateCurve(rateCurve);
                 DateDescr vDate = new DateDescr
                 {
                     year = valueDate.Year,
@@ -679,9 +709,7 @@ namespace FinSys.Wpf.Services
                     day = valueDate.Day
                 };
 
-                int status = priceCashFlows(cashFlowsDescr,ym,yf, ydc,vDate
-           // RateCurveDescr rateCurve
-            ,null);
+                int status = priceCashFlows(cashFlowsDescr,ym,yf, ydc,vDate,rateCurveDescr);
                 if (status != 0)
                 {
                     StringBuilder statusText = new StringBuilder(200);
