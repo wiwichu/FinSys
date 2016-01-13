@@ -125,17 +125,17 @@ namespace FinSys.Wpf.ViewModel
         {
             DateTime date = ValueDate;
             double rate = 0.0;
-            RateCurves.Add(new RateCurve { RateDate = ValueDate.AddDays(1), Rate = rate+=.02 });
-            RateCurves.Add(new RateCurve { RateDate = ValueDate.AddMonths(1), Rate = rate += .02 });
-            RateCurves.Add(new RateCurve { RateDate = ValueDate.AddMonths(3), Rate = rate += .02 });
-            RateCurves.Add(new RateCurve { RateDate = ValueDate.AddMonths(6), Rate = rate += .02 });
-            RateCurves.Add(new RateCurve { RateDate = ValueDate.AddMonths(12), Rate = rate += .02 });
-            RateCurves.Add(new RateCurve { RateDate = ValueDate.AddMonths(18), Rate = rate += .02 });
-            RateCurves.Add(new RateCurve { RateDate = ValueDate.AddMonths(24), Rate = rate += .02 });
+            RateCurves.Add(new RateCurve { RateDate = ValueDate.AddDays(1), Rate = rate+=.002 });
+            RateCurves.Add(new RateCurve { RateDate = ValueDate.AddMonths(1), Rate = rate += .002 });
+            RateCurves.Add(new RateCurve { RateDate = ValueDate.AddMonths(3), Rate = rate += .002 });
+            RateCurves.Add(new RateCurve { RateDate = ValueDate.AddMonths(6), Rate = rate += .002 });
+            RateCurves.Add(new RateCurve { RateDate = ValueDate.AddMonths(12), Rate = rate += .002 });
+            RateCurves.Add(new RateCurve { RateDate = ValueDate.AddMonths(18), Rate = rate += .002 });
+            RateCurves.Add(new RateCurve { RateDate = ValueDate.AddMonths(24), Rate = rate += .002 });
 
             for (int i = 3;i<=30;i++)
             {
-                RateCurves.Add(new RateCurve { RateDate = ValueDate.AddMonths(i*12), Rate = rate += .02 });
+                RateCurves.Add(new RateCurve { RateDate = ValueDate.AddMonths(i*12), Rate = rate += .002 });
             }
         }
 
@@ -148,14 +148,19 @@ namespace FinSys.Wpf.ViewModel
         {
             try
             {
+                ObservableCollection<RateCurve> rcArg = new ObservableCollection<RateCurve>();
+                if (UseCurve)
+                {
+                    rcArg = rateCurves;
+                }
                 
                 List<CashFlow> result = await RepositoryFactory.Calculator.PriceCashFlows(
-                    CashFlows.ToList(),
+                    CashFlows.OrderBy((cf)=>cf.AdjustedDate).ToList(),
                     (string)selectedYieldMethod,
                     (string)selectedYieldFrequency,
                     (string)selectedYieldDayCount,
                     valueDate,
-                    rateCurves.ToList(),
+                    rcArg.OrderBy((rc)=>rc.RateDate).ToList(),
                     (string)selectedInterpolation
                     );
 
@@ -165,6 +170,19 @@ namespace FinSys.Wpf.ViewModel
             {
                 dialogService.ShowMessageBox(ex.Message);
                 return;
+            }
+        }
+        private bool useCurve;
+        public bool UseCurve
+        {
+            get
+            {
+                return useCurve;
+            }
+            set
+            {
+                useCurve = value;
+                OnPropertyChanged();
             }
         }
 

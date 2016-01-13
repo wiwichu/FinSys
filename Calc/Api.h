@@ -30,7 +30,7 @@ typedef struct RateStruct
 } RateStruct;
 typedef struct RateCurveStruct
 {
-	RateStruct *cashFlows;
+	RateStruct *rates;
 	int size;
 } RateCurveStruct;
 typedef struct DateStruct
@@ -114,5 +114,4 @@ extern "C" __declspec(dllexport) int  priceCashFlows(CashFlowsStruct &cashFlowsS
 
 int preProc(InstrumentStruct &instrument, CalculationsStruct &calculations,Py_Front &pyfront);
 int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_Front &pyfront);
-void newInstrumentStruct(InstrumentStruct &instrument);
-void newCalculationsStruct(CalculationsStruct &calculations);
+double RateFromCurve(DateStruct baseDate, RateCurveStruct curve,int interpolationMethod, int dayCount);

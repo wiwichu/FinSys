@@ -756,21 +756,114 @@ int  getDefaultDatesAndData(InstrumentStruct &instrument, CalculationsStruct &ca
 
 	return return_success;
 }
-void newInstrumentStruct(InstrumentStruct &instrument)
+double RateFromCurve(DateStruct baseDate, RateCurveStruct curve,int interpolationMethod, int dayCount)
 {
-		int					intDayCount;
-		int					intPayFreq;
-		DateStruct			*maturityDate;
-		DateStruct			*issueDate;
-		DateStruct			*firstPayDate;
-		DateStruct			*nextToLastPayDate;
-		bool				endOfMonthPay;
-		double				interestRate;
-		int					holidayAdjust;
-}
-void newCalculationsStruct(CalculationsStruct &calculations)
-{
+	Date_Funcs::date_union calcDate;
+	calcDate.date.days = baseDate.day;
+	calcDate.date.months = baseDate.month;
+	calcDate.date.years = baseDate.year%100;
+	calcDate.date.centuries = baseDate.year / 100;
+	//find boundaries
+	RateStruct lowRate = curve.rates[0];
+	RateStruct highRate = curve.rates[0];
+	double rate = 0;
+	int calcLowCmp = -1;
+	int calcHighCmp = 1;
+	for (int i = 0; calcLowCmp < 0 && calcHighCmp >0 && i < curve.size;i++)
+	{
+		RateStruct thisRate = curve.rates[i];
+		Date_Funcs::date_union thisDate;
+		thisDate.date.days = thisRate.day;
+		thisDate.date.months = thisRate.month;
+		thisDate.date.years = thisRate.year%100;
+		thisDate.date.centuries = thisRate.year / 100;
+		Date_Funcs::date_union lowDate;
+		lowDate.date.days = lowRate.day;
+		lowDate.date.months = lowRate.month;
+		lowDate.date.years = lowRate.year % 100;
+		lowDate.date.centuries = lowRate.year / 100;
+		Date_Funcs::date_union highDate;
+		highDate.date.days = highRate.day;
+		highDate.date.months = highRate.month;
+		highDate.date.years = highRate.year % 100;
+		highDate.date.centuries = highRate.year / 100;
 
+		int thisLowCmp = Date_Funcs::datecmp(thisDate.date_string, lowDate.date_string);
+		int calcLowCmp = Date_Funcs::datecmp(calcDate.date_string, lowDate.date_string);
+		int calcThisCmp = Date_Funcs::datecmp(calcDate.date_string,thisDate.date_string);
+
+		if (calcLowCmp >= 0)
+		{
+			if (calcThisCmp >= 0)
+			{
+				if (thisLowCmp >= 0)
+				{
+					lowRate = thisRate;
+					lowDate = thisDate;
+				}
+			}
+		}
+		int highLowCmp = Date_Funcs::datecmp(highDate.date_string, lowDate.date_string);
+		if (highLowCmp < 0)
+		{
+			highDate = lowDate;
+			highRate = lowRate;
+		}
+		int thisHighCmp = Date_Funcs::datecmp(thisDate.date_string, highDate.date_string);
+		int calcHighCmp = Date_Funcs::datecmp(calcDate.date_string, highDate.date_string);
+		if (calcHighCmp <= 0)
+		{
+			if (calcThisCmp <= 0)
+			{
+				if (thisHighCmp <= 0)
+				{
+					highDate = thisDate;
+					highRate = thisRate;
+				}
+			}
+		}
+		else
+		{
+			highDate = thisDate;
+			highRate = thisRate;
+		}
+	}
+	Date_Funcs::date_union startDate;
+	startDate.date.centuries = lowRate.year / 100;
+	startDate.date.years = lowRate.year % 100;
+	startDate.date.months = lowRate.month;
+	startDate.date.days = lowRate.day;
+	Date_Funcs::date_union endDate;
+	endDate.date.centuries = highRate.year / 100;
+	endDate.date.years = highRate.year % 100;
+	endDate.date.months = highRate.month;
+	endDate.date.days = highRate.day;
+
+	int startCalcCmp = Date_Funcs::datecmp(startDate.date_string, calcDate.date_string);
+	int endCalcCmp = Date_Funcs::datecmp(endDate.date_string, calcDate.date_string);
+	int endStartCmp = Date_Funcs::datecmp(endDate.date_string, startDate.date_string);
+
+	if (startCalcCmp == 0 || endStartCmp == 0)
+	{
+		rate = lowRate.rate;
+	}
+	else if (endCalcCmp == 0)
+	{
+		rate = highRate.rate;
+	}
+	else
+	{
+		long wholeDays = 0;
+		Py_Front::tenor(startDate, endDate, dayCount, &wholeDays);
+		long partDays = 0;
+		Py_Front::tenor(startDate, calcDate, dayCount, &partDays);
+		if (interpolationMethod == Linear)
+		{
+			double perFact = (double)partDays / wholeDays;
+			rate = lowRate.rate + (highRate.rate - lowRate.rate)*perFact;
+		}
+	}
+	return rate;
 }
 int  priceCashFlows(CashFlowsStruct &cashFlowsStruct,
 	int yieldMth,
@@ -805,7 +898,13 @@ int  priceCashFlows(CashFlowsStruct &cashFlowsStruct,
 		calcs->yieldDayCount = dayCount;
 		calcs->yieldFreq = frequency;
 		calcs->yieldMethod = yieldMth;
-		calcs->yieldIn = cashFlowsStruct.cashFlows[i].discountRate;
+		double rate = cashFlowsStruct.cashFlows[i].discountRate;
+		if (rateCurve.size > 0)
+		{
+			rate = RateFromCurve(*instr->maturityDate, rateCurve, interpolation,dayCount);
+			cashFlowsStruct.cashFlows[i].discountRate = rate;
+		}
+		calcs->yieldIn = rate;
 		calcs->calculatePrice = py_price_from_yield_calc_what;
 		calcs->convexity = 0;
 		calcs->duration = 0;
