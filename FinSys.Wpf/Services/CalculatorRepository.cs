@@ -437,7 +437,7 @@ namespace FinSys.Wpf.Services
             {
                 List<string> interpolationmethods = new List<string>();
                 interpolationmethods.Add("Linear");
-                interpolationmethods.Add("Continuous");
+                //interpolationmethods.Add("Continuous");
                 return interpolationmethods;
             })
              .ConfigureAwait(false) //necessary on UI Thread
