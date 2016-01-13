@@ -39,7 +39,11 @@ typedef struct DateStruct
 	int month;
 	int day;
 } DateStruct;
-
+typedef struct DatesStruct
+{
+	DateStruct *dates;
+	int size;
+} DatesStruct;
 typedef struct InstrumentStruct
 {
 	int					instrumentClass;
@@ -95,8 +99,8 @@ extern "C" __declspec(dllexport) int  getStatusText(int status, char* text, int 
 extern "C" __declspec(dllexport) int  getDefaultDates(InstrumentStruct &instrument, DateStruct &valueDate);
 extern "C" __declspec(dllexport) int  getDefaultDatesAndData(InstrumentStruct &instrument, CalculationsStruct &calculations);
 extern "C" __declspec(dllexport) char**  getyieldmethods(int& size);
-extern "C" __declspec(dllexport) int  calculate(InstrumentStruct &instrument, CalculationsStruct &calculations);
-extern "C" __declspec(dllexport) int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &calculations,CashFlowsStruct &cashFlowsStruct, int adjustRule);
+extern "C" __declspec(dllexport) int  calculate(InstrumentStruct &instrument, CalculationsStruct &calculations, DatesStruct &holidays);
+extern "C" __declspec(dllexport) int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &calculations,CashFlowsStruct &cashFlowsStruct, int adjustRule, DatesStruct &holidays);
 extern "C" __declspec(dllexport) int  getCashFlows(CashFlowsStruct &cashFlowsStruct, int adjustRule);
 extern "C" __declspec(dllexport) int  getNewCashFlows(CashFlowsStruct &cashFlowsStruct, int adjustRule);
 extern "C" __declspec(dllexport) int  tenor(DateStruct &startDate, DateStruct &endDate, int dayCountRule, int &tenor);

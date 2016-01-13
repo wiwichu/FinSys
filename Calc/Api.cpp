@@ -977,8 +977,9 @@ int  priceCashFlows(CashFlowsStruct &cashFlowsStruct,
 		instr->issueDate->month = valueDate.month;
 		instr->issueDate->year = valueDate.year;
 		instr->nextToLastPayDate = instr->issueDate;
-
-		result = calculate(*instr, *calcs);
+		DatesStruct *holidays = new DatesStruct();
+		holidays->size = 0;
+		result = calculate(*instr, *calcs, *holidays);
 		if (result != return_success)
 		{
 			return result;
@@ -989,7 +990,7 @@ int  priceCashFlows(CashFlowsStruct &cashFlowsStruct,
 	}
 	return return_success;
 }
-int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &calculations,CashFlowsStruct &cashFlowsStruct, int adjustRule)
+int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &calculations,CashFlowsStruct &cashFlowsStruct, int adjustRule, DatesStruct &holidays)
 {
 	Py_Front pyfront;
 	int result = preProc(instrument, calculations, pyfront);
@@ -1205,7 +1206,7 @@ int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &ca
 	return return_success;
 }
 
-int  calculate(InstrumentStruct &instrument, CalculationsStruct &calculations)
+int  calculate(InstrumentStruct &instrument, CalculationsStruct &calculations, DatesStruct &holidays)
 {
 	Py_Front pyfront;
 	int result = preProc(instrument, calculations, pyfront);

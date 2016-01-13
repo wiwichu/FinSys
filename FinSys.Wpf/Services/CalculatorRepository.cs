@@ -29,13 +29,13 @@ namespace FinSys.Wpf.Services
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr getyieldmethods(out int size);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
-        private static extern int calculate(InstrumentDescr instrument, CalculationsDescr calculations);
+        private static extern int calculate(InstrumentDescr instrument, CalculationsDescr calculations, DatesDescr holidays);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int getInstrumentDefaultsAndData(InstrumentDescr instrument, CalculationsDescr calculations);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int getCashFlows( CashFlowsDescr cashFlows, ref int size);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
-        private static extern int calculateWithCashFlows(InstrumentDescr instrument, CalculationsDescr calculations, CashFlowsDescr cashFlows, int dateAdjustRule);
+        private static extern int calculateWithCashFlows(InstrumentDescr instrument, CalculationsDescr calculations, CashFlowsDescr cashFlows, int dateAdjustRule, DatesDescr holidays);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr getHolidayAdjust(out int size);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -516,7 +516,9 @@ namespace FinSys.Wpf.Services
                 //cashFlows.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) );
                 int dateAdjust = holidayAdjusts.IndexOf(calculations.PayHolidayAdjust);
                 //int status = calculate(instr, calcs);
-                int status = calculateWithCashFlows(instr, calcs, cashFlows,dateAdjust);
+                DatesDescr holidays = new DatesDescr();
+                holidays.size = 0;
+                int status = calculateWithCashFlows(instr, calcs, cashFlows,dateAdjust,holidays);
                 if (status != 0)
                 {
                     StringBuilder statusText = new StringBuilder(200);
@@ -976,6 +978,12 @@ public class DateDescr
     public int year;
     public int month;
     public int day;
+};
+[StructLayout(LayoutKind.Sequential)]
+public class DatesDescr
+{
+    public IntPtr dates;
+       public int size;
 };
 public class InstrumentClass
 {

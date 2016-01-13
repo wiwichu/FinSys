@@ -202,7 +202,12 @@ namespace CalcTests
         public int month;
         public int day;
     };
-    public class InstrumentClass
+    [StructLayout(LayoutKind.Sequential)]
+    public class DatesDescr
+    {
+        public IntPtr dates;
+        public int size;
+    }; public class InstrumentClass
     {
         public string Name { get; set; }
     }
