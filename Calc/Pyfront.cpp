@@ -4971,6 +4971,11 @@ unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setyieldmeth(int yieldmeth_numb
 	strcpy(yield_meth_names[yieldmeth_number], yieldmethparm);
 	return return_state;
 }
+unsigned long _FAR_FUNC _EX_IN_FUNC		Py_Front::getHolidays(set<string> &holidays)
+{
+	holidays = holiSet;
+	return return_success;
+}
 unsigned long _FAR_FUNC _EX_IN_FUNC		Py_Front::setHolidays(Py_Front::HOLIDAY* pHolidayArray, int size)
 {
 	return_state = return_success;
@@ -4979,15 +4984,15 @@ unsigned long _FAR_FUNC _EX_IN_FUNC		Py_Front::setHolidays(Py_Front::HOLIDAY* pH
 	{
 		HOLIDAY holiday = pHolidayArray[i];
 		string holString = to_string(holiday.year);
-		if (holiday.month < 10)
-		{
-			holString.append("0");
-		}
+		//if (holiday.month < 10)
+		//{
+		//	holString.append("0");
+		//}
 		holString.append(to_string(holiday.month));
-		if (holiday.day < 10)
-		{
-			holString.append("0");
-		}
+		//if (holiday.day < 10)
+		//{
+		//	holString.append("0");
+		//}
 		holString.append(to_string(holiday.day));
 		holiSet.insert(holString);
 	}

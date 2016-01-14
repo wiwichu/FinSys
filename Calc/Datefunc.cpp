@@ -1819,8 +1819,8 @@ unsigned long Date_Funcs::findhol(date_union in_date
 	char _years[20];
 	char _months[20];
 	char _days[20];
-
-	itoa(in_date.date.years,_years,10);
+	int fullYears = in_date.date.years + in_date.date.centuries * 100;
+	itoa(fullYears,_years,10);
 	itoa(in_date.date.months,_months,10);
 	itoa(in_date.date.days,_days,10);
 	string _date(_years);

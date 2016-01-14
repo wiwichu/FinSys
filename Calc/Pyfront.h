@@ -512,6 +512,7 @@ typedef struct _HOLIDAY
 	int day;
 } HOLIDAY;
 
+unsigned long _FAR_FUNC _EX_IN_FUNC		getHolidays(set<string> &holidays);
 unsigned long _FAR_FUNC _EX_IN_FUNC		setHolidays(HOLIDAY* pHolidayArray, int size);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   setyieldmeth(char yieldmethparm [yield_names_len]);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   getyieldmeth(int yieldmeth_number,

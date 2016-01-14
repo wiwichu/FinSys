@@ -1023,10 +1023,19 @@ int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &ca
 	}
 
 	pyfront.setHolidays(pyHolidays, holidays.size);
+
 	if (result != return_success)
 	{
 		return result;
 	}
+	set<string> holiSet;
+	pyfront.getHolidays(holiSet);
+
+	if (result != return_success)
+	{
+		return result;
+	}
+
 	result = pyfront.proc_def_dates();
 	if (result != return_success)
 	{
@@ -1197,7 +1206,6 @@ int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &ca
 			cf[i].day = _it_vector_pay_struc->pay_date.date.days;
 			Date_Funcs::date_union date_hold = _it_vector_pay_struc->pay_date;
 			int holi_chan = 0;
-			const set<string> holiSet;
 			result = Date_Funcs::adj_date(&date_hold,
 					adj_date_non_to_bus,
 					adjustRule,
