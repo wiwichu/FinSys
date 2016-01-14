@@ -10,6 +10,30 @@ namespace CalcTests
 
     public class TestHelper
     {
+        internal static DatesDescr makeDates(IEnumerable<DateTime> dates)
+        {
+            DatesDescr datesDescr = new DatesDescr();
+            List<DateDescr> dList = dates.Select((d) =>
+                new DateDescr
+                {
+                    day = d.Day,
+                    month = d.Month,
+                    year = d.Year
+                }
+            ).ToList();
+            DateDescr[] dArray = dList.ToArray();
+            datesDescr.size = dList.Count;
+            datesDescr.dates = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)) * dArray.Length);
+            IntPtr buffer = new IntPtr(datesDescr.dates.ToInt64());
+            for (int i = 0; i < dArray.Length; i++)
+            {
+                Marshal.StructureToPtr(dArray[i], buffer, true);
+                buffer = new IntPtr(buffer.ToInt64() + Marshal.SizeOf(typeof(DateDescr)));
+            }
+            return datesDescr;
+        }
+
+
         public enum tenor_rule
         {
             date_no_cal,

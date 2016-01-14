@@ -662,7 +662,7 @@ namespace FinSys.Wpf.Services
             for (int i = 0; i < dArray.Length; i++)
             {
                 Marshal.StructureToPtr(dArray[i], buffer, true);
-                buffer = new IntPtr(buffer.ToInt64() + Marshal.SizeOf(typeof(RateDescr)));
+                buffer = new IntPtr(buffer.ToInt64() + Marshal.SizeOf(typeof(DateDescr)));
             }
             return datesDescr;
         }

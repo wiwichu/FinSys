@@ -1652,6 +1652,87 @@ namespace CalcTests
             GC.KeepAlive(calculations);
 
         }
+        [TestMethod]
+        public void Gilt_Old_Holidays_1()
+        {
+            InstrumentDescr instrument = new InstrumentDescr();
+            CalculationsDescr calculations = new CalculationsDescr();
+            instrument.instrumentClass = (int)TestHelper.instr_class_descs.instr_gilt_class_desc;
+
+            DateDescr matDate = new DateDescr { year = 1987, month = 2, day = 24 };
+            DateDescr valueDate = new DateDescr { year = 1986, month = 7, day = 3 };
+
+            instrument.maturityDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
+            calculations.valueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
+
+
+            int status = getInstrumentDefaultsAndData(instrument, calculations);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            instrument.intDayCount = (int)TestHelper.day_counts.date_act_365_day_count;
+            calculations.yieldDayCount = (int)TestHelper.day_counts.date_act_365_day_count;
+            Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
+            Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
+            List<DateTime> dates = new List<DateTime>();
+            dates.Add(new DateTime(1986, 8, 25));
+            DatesDescr holidays = TestHelper.makeDates(dates);
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            double result = .0763802;
+            calculations.priceIn = .968125;
+            calculations.calculatePrice = 0;
+            instrument.interestRate = 0.025;
+            CashFlowsDescr cashFlows = new CashFlowsDescr();
+            int dateAdjust = (int)TestHelper.DateAdjustRule.event_sched_next_holiday_adj;
+            status = calculateWithCashFlows(instrument, calculations, cashFlows, dateAdjust, holidays);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            TestContext.WriteLine("");
+
+            var structSize = Marshal.SizeOf(typeof(CashFlowDescr));
+            var cashFlowsOut = new List<CashFlowDescr>();
+            var cashFlowOut = cashFlows.cashFlows;
+
+            for (int i = 0; i < cashFlows.size; i++)
+            {
+                cashFlowsOut.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
+                    typeof(CashFlowDescr)));
+                cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
+            }
+            TestContext.WriteLine("");
+            TestContext.WriteLine("After CALL:");
+            TestContext.WriteLine("");
+
+            foreach (CashFlowDescr cfd in cashFlowsOut)
+            {
+                TestContext.WriteLine("Date: {0}.{1}.{2} Amount: {3} AdjDate: {4}.{5}.{6} ", cfd.year, cfd.month, cfd.day, cfd.amount, cfd.adjustedYear, cfd.adjustedMonth, cfd.adjustedDay);
+            }
+            Assert.IsTrue(Math.Abs(result - calculations.yieldOut) < .0000005);
+            Assert.AreEqual(cashFlowsOut[0].adjustedDay, 26);
+            Assert.AreEqual(cashFlowsOut[0].adjustedMonth, 8);
+            Assert.AreEqual(cashFlowsOut[0].adjustedYear, 1986);
+            GC.KeepAlive(instrument);
+            GC.KeepAlive(calculations);
+
+        }
 
         [TestMethod]
         public void UKCD_Cashflows_NextDayHolidayAdjust_1()
