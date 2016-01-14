@@ -81,6 +81,9 @@ namespace FinSys.Wpf.ViewModel
             {
                 SelectedInstrumentClass = instrumentClasses[0];
             }
+            Holidays = new ObservableCollection<Holiday>();
+            //Holidays.Add(new Holiday());
+
         }
         public ICommand CalculateCommand
         {
@@ -362,6 +365,21 @@ namespace FinSys.Wpf.ViewModel
         {
             dialogService.ShowDialog(DialogService.DIALOG.CALCULATORVIEW, this);
         }
+
+        private ObservableCollection<Holiday> holidays = new ObservableCollection<Holiday>();
+        public ObservableCollection<Holiday> Holidays
+        {
+            get
+            {
+                return holidays;
+            }
+            set
+            {
+                holidays = value;
+                OnPropertyChanged();
+            }
+        }
+
         private ObservableCollection<InstrumentClass> instrumentClasses = new ObservableCollection<InstrumentClass>();
         public ObservableCollection<InstrumentClass> InstrumentClasses
         {
@@ -548,6 +566,7 @@ namespace FinSys.Wpf.ViewModel
                 OnPropertyChanged();
             }
         }
+
         private bool endOfMonthPay;
         public bool EndOfMonthPay
         {

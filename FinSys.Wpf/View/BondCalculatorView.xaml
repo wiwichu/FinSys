@@ -103,6 +103,28 @@
 				SelectedItem="{Binding SelectedPayHolidayAdjust}"
 				IsSynchronizedWithCurrentItem="True"
                 />
+            <TextBlock Text="Holidays: " x:Name="lblHolidays" Margin="5" Grid.Column="5" Grid.Row="3" />
+            <DataGrid x:Name="holidaysGrid"
+                  AutoGenerateColumns="False"
+                  EnableRowVirtualization="True"
+                  ItemsSource="{Binding Holidays}"
+                  Margin="5" Grid.Column="5" Grid.Row="4" Grid.RowSpan="4"
+                      CanUserAddRows="True">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Holiday Date">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding HolidayDate,StringFormat=d}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding HolidayDate , Mode=TwoWay, TargetNullValue={x:Static sys:DateTime.Now},StringFormat=d}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
             <TextBlock Text="Pay Frequency: " x:Name="lblPayFrequency" Margin="5" Grid.Column="2" Grid.Row="2" />
             <ComboBox x:Name="cbPayFrequency" SelectedIndex="0"
 				Grid.Column="3" Grid.Row="2"

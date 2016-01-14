@@ -998,6 +998,17 @@ int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &ca
 	{
 		return result;
 	}
+	Py_Front::HOLIDAY pyHolidays[100];
+	for (int i = 0; i < holidays.size && i < 100; i++)
+	{
+		Py_Front::HOLIDAY hol;
+		hol.day = holidays.dates[i].day;
+		hol.month = holidays.dates[i].month;
+		hol.year = holidays.dates[i].year;
+		pyHolidays[i] = hol;
+	}
+
+	pyfront.setHolidays(pyHolidays, holidays.size);
 	result = pyfront.proc_def_dates();
 	if (result != return_success)
 	{
@@ -1214,6 +1225,18 @@ int  calculate(InstrumentStruct &instrument, CalculationsStruct &calculations, D
 	{
 		return result;
 	}
+	Py_Front::HOLIDAY pyHolidays[100];
+	for (int i = 0; i < holidays.size && i < 100; i++)
+	{
+		Py_Front::HOLIDAY hol;
+		hol.day = holidays.dates[i].day;
+		hol.month = holidays.dates[i].month;
+		hol.year = holidays.dates[i].year;
+		pyHolidays[i] = hol;
+	}
+
+	pyfront.setHolidays(pyHolidays, holidays.size);
+
 	result = pyfront.proc_def_dates();
 	if (result != return_success)
 	{
