@@ -23,9 +23,7 @@ namespace FinSys.Wpf.Services
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int getInstrumentDefaults(InstrumentDescr instrument);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
-        private static extern int getDefaultDates(InstrumentDescr instrument, DateDescr valueDate);
-        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
-        private static extern int getDefaultDatesAndData(InstrumentDescr instrument, CalculationsDescr calculations);
+        private static extern int getDefaultDatesAndData(InstrumentDescr instrument, CalculationsDescr calculations, DatesDescr holidays);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr getyieldmethods(out int size);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -348,13 +346,14 @@ namespace FinSys.Wpf.Services
             return calculations;
         }
 
-        public async Task<KeyValuePair<Instrument, Calculations>> GetDefaultDatesAsync(Instrument instrument, Calculations calculations)
+        public async Task<KeyValuePair<Instrument, Calculations>> GetDefaultDatesAsync(Instrument instrument, Calculations calculations,IEnumerable<Holiday>holidays)
         {
             KeyValuePair<Instrument, Calculations> result = await Task.Run(() =>
             {
                 InstrumentDescr instr = makeInstrumentDescr(instrument);
                 CalculationsDescr calcs = makeCalculationsDescr(calculations);
-                int status = getDefaultDatesAndData(instr, calcs);
+                DatesDescr holidayList = makeDates(holidays);
+                int status = getDefaultDatesAndData(instr, calcs,holidayList);
                 if (status != 0)
                 {
                     StringBuilder statusText = new StringBuilder(200);
@@ -371,42 +370,6 @@ namespace FinSys.Wpf.Services
                 ;
             return result;
     }
-
-
-    public async Task<Instrument> GetDefaultDatesAsync(Instrument instrument, DateTime valueDate)
-        {
-            try
-            {
-                Instrument result = await Task.Run(() =>
-                {
-                    InstrumentDescr instr = makeInstrumentDescr(instrument);
-                    DateDescr valDate = new DateDescr
-                    {
-                        year = valueDate.Year,
-                        month = valueDate.Month,
-                        day = valueDate.Day
-                    };
-                    int status = getDefaultDates(instr, valDate);
-                    if (status != 0)
-                    {
-                        StringBuilder statusText = new StringBuilder(200);
-                        int textSize;
-                        status = getStatusText(status, statusText, out textSize);
-                        throw new InvalidOperationException(statusText.ToString());
-                    }
-                    Instrument newInstr = makeInstrument(instr);
-                    GC.KeepAlive(instr);
-                    return newInstr;
-                })
-                .ConfigureAwait(false) //necessary on UI Thread
-                ;
-                return result;
-            }
-            catch(InvalidOperationException)
-            {
-                throw;
-            }
-        }
 
  
         public async Task<List<string>> GetYieldMethodsAsync()
@@ -506,19 +469,17 @@ namespace FinSys.Wpf.Services
                 ;
             return result;
         }
-        public async Task<KeyValuePair<Instrument, Calculations>> CalculateAsync(Instrument instrument, Calculations calculations)
+        public async Task<KeyValuePair<Instrument, Calculations>> CalculateAsync(Instrument instrument, Calculations calculations,IEnumerable<Holiday>holidays)
         {
             KeyValuePair<Instrument, Calculations> result = await Task.Run(() =>
             {
                 InstrumentDescr instr = makeInstrumentDescr(instrument);
                 CalculationsDescr calcs = makeCalculationsDescr(calculations);
                 CashFlowsDescr cashFlows = new CashFlowsDescr();
-                //cashFlows.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) );
                 int dateAdjust = holidayAdjusts.IndexOf(calculations.PayHolidayAdjust);
-                //int status = calculate(instr, calcs);
-                DatesDescr holidays = new DatesDescr();
-                holidays.size = 0;
-                int status = calculateWithCashFlows(instr, calcs, cashFlows,dateAdjust,holidays);
+                DatesDescr holidayList = makeDates(holidays);
+                
+                int status = calculateWithCashFlows(instr, calcs, cashFlows,dateAdjust,holidayList);
                 if (status != 0)
                 {
                     StringBuilder statusText = new StringBuilder(200);
@@ -682,6 +643,28 @@ namespace FinSys.Wpf.Services
                 buffer = new IntPtr(buffer.ToInt64() + Marshal.SizeOf(typeof(CashFlowDescr)));
             }
             return cashFlowsDescr;
+        }
+        internal DatesDescr makeDates(IEnumerable<Holiday> dates)
+        {
+            DatesDescr datesDescr= new DatesDescr();
+            List<DateDescr> dList = dates.Select((d) =>
+                new DateDescr
+                {
+                    day = d.HolidayDate.Day,
+                    month = d.HolidayDate.Month,
+                    year = d.HolidayDate.Year
+                }
+            ).ToList();
+            DateDescr[] dArray = dList.ToArray();
+            datesDescr.size = dList.Count;
+            datesDescr.dates = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)) * dArray.Length);
+            IntPtr buffer = new IntPtr(datesDescr.dates.ToInt64());
+            for (int i = 0; i < dArray.Length; i++)
+            {
+                Marshal.StructureToPtr(dArray[i], buffer, true);
+                buffer = new IntPtr(buffer.ToInt64() + Marshal.SizeOf(typeof(RateDescr)));
+            }
+            return datesDescr;
         }
 
         internal RateCurveDescr makeRateCurve(List<RateCurve> rateCurve)

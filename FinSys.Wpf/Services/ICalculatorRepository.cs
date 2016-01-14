@@ -15,11 +15,10 @@ namespace FinSys.Wpf.Services
         Task<List<string>> GetHolidayAdjustAsync();
         Task<List<string>> GetPayFreqsAsync();
         Task<KeyValuePair<Instrument, Calculations>> GetInstrumentDefaultsAsync(Instrument instrument, Calculations calcs);
-        Task<Instrument> GetDefaultDatesAsync(Instrument instrument, DateTime valueDate);
-        Task<KeyValuePair<Instrument,Calculations>> GetDefaultDatesAsync(Instrument instrument, Calculations calculations);
+        Task<KeyValuePair<Instrument,Calculations>> GetDefaultDatesAsync(Instrument instrument, Calculations calculations,IEnumerable<Holiday> holidays);
         Task<List<string>> GetYieldMethodsAsync();
         Task<List<string>> GetInterpolationMethodsAsync();
-        Task<KeyValuePair<Instrument, Calculations>> CalculateAsync(Instrument instrument, Calculations calculations);
+        Task<KeyValuePair<Instrument, Calculations>> CalculateAsync(Instrument instrument, Calculations calculations,IEnumerable<Holiday> holidays);
         Task<DateTime> Forecast(DateTime startDate, DateTime endDate, int dayCountRule, int months, int days);
         Task<List<CashFlow>> PriceCashFlows(List<CashFlow> cashFlows, 
             string yieldMth, 

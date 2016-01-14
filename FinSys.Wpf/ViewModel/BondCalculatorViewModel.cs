@@ -168,7 +168,7 @@ namespace FinSys.Wpf.ViewModel
             KeyValuePair<Instrument, Calculations> kvp = new KeyValuePair<Instrument, Calculations>(instr, calcs);
             try
             {
-                kvp = await RepositoryFactory.Calculator.CalculateAsync(instrument, calculations);
+                kvp = await RepositoryFactory.Calculator.CalculateAsync(instrument, calculations,Holidays);
             }
             catch (InvalidOperationException ex)
             {
@@ -259,7 +259,7 @@ namespace FinSys.Wpf.ViewModel
             try
             {
                 //instr = await RepositoryFactory.Calculator.GetDefaultDatesAsync(instrument, ValueDate);
-                kvp = await RepositoryFactory.Calculator.GetDefaultDatesAsync(instrument, calculations);
+                kvp = await RepositoryFactory.Calculator.GetDefaultDatesAsync(instrument, calculations,Holidays);
             }
             catch (InvalidOperationException ex)
             {

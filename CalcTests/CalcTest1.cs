@@ -23,9 +23,7 @@ namespace CalcTests
         [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Debug/calc.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int getInstrumentDefaults(InstrumentDescr instrument);
         [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Debug/calc.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int getDefaultDates(InstrumentDescr instrument, DateDescr valueDate);
-        [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Debug/calc.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int getDefaultDatesAndData(InstrumentDescr instrument, CalculationsDescr calculations);
+        public static extern int getDefaultDatesAndData(InstrumentDescr instrument, CalculationsDescr calculations, DatesDescr holidays);
         [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Debug/calc.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr getyieldmethods(out int size);
         [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Debug/calc.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -184,7 +182,9 @@ namespace CalcTests
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
             calculations.yieldMethod = (int)TestHelper.yield_method.py_mmdisc_yield_meth;
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -195,8 +195,6 @@ namespace CalcTests
             double result = 0.0161;
             calculations.priceIn = 0.99593;
             calculations.calculatePrice = 0;
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations,holidays);
             if (status != 0)
             {
@@ -236,7 +234,9 @@ namespace CalcTests
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
             calculations.yieldMethod = (int)TestHelper.yield_method.py_mmdisc_yield_meth;
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -247,8 +247,6 @@ namespace CalcTests
             double result = 0.0497;
             calculations.priceIn = 0.97501194;
             calculations.calculatePrice = 0;
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -289,7 +287,9 @@ namespace CalcTests
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
             calculations.yieldMethod = (int)TestHelper.yield_method.py_mmdisc_yield_meth;
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -300,8 +300,6 @@ namespace CalcTests
             double result = 0.99593;
             calculations.yieldIn = 0.01610;
             calculations.calculatePrice = 1;
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations,holidays);
             if (status != 0)
             {
@@ -342,7 +340,9 @@ namespace CalcTests
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
             calculations.yieldMethod = (int)TestHelper.yield_method.py_mmdisc_yield_meth;
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -353,8 +353,6 @@ namespace CalcTests
             double result = 0.97501194;
             calculations.yieldIn = 0.0497;
             calculations.calculatePrice = 1;
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -393,7 +391,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -407,8 +407,6 @@ namespace CalcTests
             calculations.yieldDayCount = (int)TestHelper.day_counts.date_act_365_day_count;
             calculations.yieldFreq = (int)TestHelper.frequency.frequency_annually;
             calculations.calculatePrice = 0;
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -448,7 +446,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -466,8 +466,6 @@ namespace CalcTests
             calculations.yieldDayCount = (int)TestHelper.day_counts.date_act_365_day_count;
             calculations.yieldFreq = (int)TestHelper.frequency.frequency_annually;
             calculations.calculatePrice = 1;
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -506,7 +504,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -520,8 +520,6 @@ namespace CalcTests
             calculations.yieldDayCount = (int)TestHelper.day_counts.date_NL_365_day_count;
             calculations.yieldFreq = (int)TestHelper.frequency.frequency_semiannually;
             calculations.calculatePrice = 0;
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -560,7 +558,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -574,8 +574,6 @@ namespace CalcTests
             calculations.yieldDayCount = (int)TestHelper.day_counts.date_NL_365_day_count;
             calculations.yieldFreq = (int)TestHelper.frequency.frequency_semiannually;
             calculations.calculatePrice = 1;
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -615,7 +613,9 @@ namespace CalcTests
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
             calculations.yieldMethod = (int)TestHelper.yield_method.py_mmdisc_yield_meth;
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -627,8 +627,6 @@ namespace CalcTests
             calculations.priceIn = 0.97501194;
             calculations.calculatePrice = 0;
             calculations.yieldMethod = (int)TestHelper.yield_method.py_mm_yield_meth;
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -668,7 +666,9 @@ namespace CalcTests
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
             calculations.yieldMethod = (int)TestHelper.yield_method.py_mmdisc_yield_meth;
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -680,8 +680,6 @@ namespace CalcTests
             calculations.yieldIn = 0.0510;
             calculations.calculatePrice = 1;
             calculations.yieldMethod = (int)TestHelper.yield_method.py_mm_yield_meth;
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -720,7 +718,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -735,8 +735,6 @@ namespace CalcTests
             calculations.yieldDayCount = (int)TestHelper.day_counts.date_act_365_day_count;
             calculations.yieldMethod = (int)TestHelper.yield_method.py_moos_yield_meth;
             instrument.interestRate = 0.07;
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -775,7 +773,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -790,8 +790,6 @@ namespace CalcTests
             calculations.yieldDayCount = (int)TestHelper.day_counts.date_act_365_day_count;
             calculations.yieldMethod = (int)TestHelper.yield_method.py_moos_yield_meth;
             instrument.interestRate = 0.07;
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -830,7 +828,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -845,8 +845,6 @@ namespace CalcTests
             calculations.yieldDayCount = (int)TestHelper.day_counts.date_act_365_day_count;
             calculations.yieldMethod = (int)TestHelper.yield_method.py_aibd_yield_meth;
             instrument.interestRate = 0.07;
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -885,7 +883,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -900,8 +900,6 @@ namespace CalcTests
             calculations.yieldDayCount = (int)TestHelper.day_counts.date_act_365_day_count;
             calculations.yieldMethod = (int)TestHelper.yield_method.py_aibd_yield_meth;
             instrument.interestRate = 0.07;
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -942,7 +940,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -955,8 +955,6 @@ namespace CalcTests
             calculations.calculatePrice = 1;
             calculations.yieldMethod = (int)TestHelper.yield_method.py_aibd_yield_meth;
             instrument.interestRate = 0.07;
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -997,7 +995,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -1010,7 +1010,6 @@ namespace CalcTests
             calculations.calculatePrice = 0;
             calculations.yieldMethod = (int)TestHelper.yield_method.py_aibd_yield_meth;
             instrument.interestRate = 0.07;
-            DatesDescr holidays = new DatesDescr();
             holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
@@ -1052,7 +1051,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -1065,7 +1066,6 @@ namespace CalcTests
             calculations.calculatePrice = 1;
             calculations.yieldMethod = (int)TestHelper.yield_method.py_ustr_yield_meth;
             instrument.interestRate = 0.05;
-            DatesDescr holidays = new DatesDescr();
             holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
@@ -1106,7 +1106,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -1119,7 +1121,6 @@ namespace CalcTests
             calculations.calculatePrice = 1;
             //calculations.yieldMethod = (int)TestHelper.yield_method.py_ustr_yield_meth;
             instrument.interestRate = 0.1025;
-            DatesDescr holidays = new DatesDescr();
             holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
@@ -1160,7 +1161,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -1173,8 +1176,6 @@ namespace CalcTests
             calculations.calculatePrice = 0;
             //calculations.yieldMethod = (int)TestHelper.yield_method.py_ustr_yield_meth;
             instrument.interestRate = 0.1025;
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -1213,7 +1214,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -1226,8 +1229,6 @@ namespace CalcTests
             calculations.calculatePrice = 0;
             calculations.yieldMethod = (int)TestHelper.yield_method.py_ustr_yield_meth;
             instrument.interestRate = 0.05;
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -1267,7 +1268,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -1280,8 +1283,6 @@ namespace CalcTests
             calculations.calculatePrice = 1;
             calculations.yieldMethod = (int)TestHelper.yield_method.py_ustr_yield_meth;
             instrument.interestRate = 0.05;
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -1320,7 +1321,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -1333,8 +1336,6 @@ namespace CalcTests
             calculations.calculatePrice = 0;
             calculations.yieldMethod = (int)TestHelper.yield_method.py_ustr_yield_meth;
             instrument.interestRate = 0.05;
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -1374,7 +1375,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -1387,8 +1390,6 @@ namespace CalcTests
             calculations.calculatePrice = 1;
             calculations.yieldMethod = (int)TestHelper.yield_method.py_ustr_yield_meth;
             instrument.interestRate = 0.05;
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -1427,7 +1428,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -1440,8 +1443,6 @@ namespace CalcTests
             calculations.calculatePrice = 0;
             calculations.yieldMethod = (int)TestHelper.yield_method.py_ustr_yield_meth;
             instrument.interestRate = 0.05;
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -1485,7 +1486,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -1504,8 +1507,6 @@ namespace CalcTests
             Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
             instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -1549,7 +1550,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -1568,8 +1571,6 @@ namespace CalcTests
             Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
             instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -1613,7 +1614,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -1636,8 +1639,6 @@ namespace CalcTests
             Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
             instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -1686,7 +1687,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -1713,8 +1716,6 @@ namespace CalcTests
             //cashFlows.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) );
             int dateAdjust = instrument.holidayAdjust;
             //int status = calculate(instr, calcs);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculateWithCashFlows(instrument, calculations, cashFlows, dateAdjust, holidays);
             if (status != 0)
             {
@@ -1784,7 +1785,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -1811,8 +1814,6 @@ namespace CalcTests
             //cashFlows.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) );
             int dateAdjust = instrument.holidayAdjust;
             //int status = calculate(instr, calcs);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculateWithCashFlows(instrument, calculations, cashFlows, dateAdjust, holidays);
             if (status != 0)
             {
@@ -1882,7 +1883,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -1909,8 +1912,6 @@ namespace CalcTests
             //cashFlows.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) );
             int dateAdjust = instrument.holidayAdjust;
             //int status = calculate(instr, calcs);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculateWithCashFlows(instrument, calculations, cashFlows, dateAdjust, holidays);
             if (status != 0)
             {
@@ -1980,7 +1981,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -2007,8 +2010,6 @@ namespace CalcTests
             //cashFlows.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) );
             int dateAdjust = instrument.holidayAdjust;
             //int status = calculate(instr, calcs);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculateWithCashFlows(instrument, calculations, cashFlows, dateAdjust, holidays);
             if (status != 0)
             {
@@ -2078,7 +2079,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -2105,8 +2108,6 @@ namespace CalcTests
             //cashFlows.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) );
             int dateAdjust = instrument.holidayAdjust;
             //int status = calculate(instr, calcs);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculateWithCashFlows(instrument, calculations, cashFlows, dateAdjust, holidays);
             if (status != 0)
             {
@@ -2176,7 +2177,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -2203,8 +2206,6 @@ namespace CalcTests
             //cashFlows.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) );
             int dateAdjust = instrument.holidayAdjust;
             //int status = calculate(instr, calcs);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculateWithCashFlows(instrument, calculations, cashFlows, dateAdjust, holidays);
             if (status != 0)
             {
@@ -2274,7 +2275,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -2301,8 +2304,6 @@ namespace CalcTests
             //cashFlows.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) );
             int dateAdjust = (int)TestHelper.DateAdjustRule.event_sched_next_holiday_adj;
             //int status = calculate(instr, calcs);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculateWithCashFlows(instrument, calculations, cashFlows, dateAdjust, holidays);
             if (status != 0)
             {
@@ -2367,7 +2368,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -2382,8 +2385,6 @@ namespace CalcTests
             CashFlowsDescr cashFlows = new CashFlowsDescr();
             int dateAdjust = instrument.holidayAdjust;
             //int status = calculate(instr, calcs);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculateWithCashFlows(instrument, calculations, cashFlows, dateAdjust, holidays);
             if (status != 0)
             {
@@ -2446,7 +2447,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -2461,8 +2464,6 @@ namespace CalcTests
             CashFlowsDescr cashFlows = new CashFlowsDescr();
             int dateAdjust = instrument.holidayAdjust;
             //int status = calculate(instr, calcs);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculateWithCashFlows(instrument, calculations, cashFlows, dateAdjust, holidays);
             if (status != 0)
             {
@@ -2532,7 +2533,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -2559,8 +2562,6 @@ namespace CalcTests
             //cashFlows.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) );
             int dateAdjust = instrument.holidayAdjust;
             //int status = calculate(instr, calcs);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations,holidays);
             if (status != 0)
             {
@@ -2610,7 +2611,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -2633,8 +2636,6 @@ namespace CalcTests
             Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
             instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -2679,7 +2680,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -2698,8 +2701,6 @@ namespace CalcTests
             Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
             instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -2743,7 +2744,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -2762,8 +2765,6 @@ namespace CalcTests
             Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
             instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -2807,7 +2808,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -2826,8 +2829,6 @@ namespace CalcTests
             Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
             instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -2871,7 +2872,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -2891,8 +2894,6 @@ namespace CalcTests
             Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
             instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -2937,7 +2938,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -2956,8 +2959,6 @@ namespace CalcTests
             Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
             instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -3002,7 +3003,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -3023,8 +3026,6 @@ namespace CalcTests
             //           Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
             instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -3069,7 +3070,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -3090,8 +3093,6 @@ namespace CalcTests
             //           Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
             instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -3136,7 +3137,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -3157,8 +3160,6 @@ namespace CalcTests
             //           Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
             instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -3204,7 +3205,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -3225,8 +3228,6 @@ namespace CalcTests
             //           Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
             instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -3273,7 +3274,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -3292,8 +3295,6 @@ namespace CalcTests
             //           Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
             instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -3340,7 +3341,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -3359,8 +3362,6 @@ namespace CalcTests
             //           Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
             instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -3407,7 +3408,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -3426,8 +3429,6 @@ namespace CalcTests
             //           Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
             instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -3474,7 +3475,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -3493,8 +3496,6 @@ namespace CalcTests
             //           Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
             instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -3541,7 +3542,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -3560,8 +3563,6 @@ namespace CalcTests
             //           Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
             instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -3608,7 +3609,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -3627,8 +3630,6 @@ namespace CalcTests
             //           Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
             instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -3669,7 +3670,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -3683,8 +3686,6 @@ namespace CalcTests
             calculations.calculatePrice = 1;
             calculations.yieldMethod = (int)TestHelper.yield_method.py_ustr_yield_meth;
             instrument.interestRate = 0.06;
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -3724,7 +3725,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -3739,8 +3742,6 @@ namespace CalcTests
             calculations.calculatePrice = 1;
             calculations.yieldMethod = (int)TestHelper.yield_method.py_ustr_yield_meth;
             instrument.interestRate = 0.061;
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
@@ -3781,7 +3782,9 @@ namespace CalcTests
 
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            status = getDefaultDatesAndData(instrument, calculations);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -3798,8 +3801,6 @@ namespace CalcTests
             calculations.calculatePrice = 1;
             calculations.yieldMethod = (int)TestHelper.yield_method.py_ustr_yield_meth;
             instrument.interestRate = 0.08;
-            DatesDescr holidays = new DatesDescr();
-            holidays.size = 0;
             status = calculate(instrument, calculations, holidays);
             if (status != 0)
             {
