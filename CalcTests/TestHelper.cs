@@ -152,6 +152,7 @@ namespace CalcTests
         public int adjustedYear;
         public int adjustedMonth;
         public int adjustedDay;
+        public double discountRate;
     };
     [StructLayout(LayoutKind.Sequential)]
     internal class CashFlowsDescr

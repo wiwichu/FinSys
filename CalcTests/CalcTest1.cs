@@ -1705,8 +1705,7 @@ namespace CalcTests
                 status = getStatusText(status, statusText, out textSize);
                 throw new InvalidOperationException(statusText.ToString());
             }
-            TestContext.WriteLine("");
-
+     
             var structSize = Marshal.SizeOf(typeof(CashFlowDescr));
             var cashFlowsOut = new List<CashFlowDescr>();
             var cashFlowOut = cashFlows.cashFlows;
@@ -1729,8 +1728,9 @@ namespace CalcTests
             Assert.AreEqual(cashFlowsOut[0].adjustedDay, 26);
             Assert.AreEqual(cashFlowsOut[0].adjustedMonth, 8);
             Assert.AreEqual(cashFlowsOut[0].adjustedYear, 1986);
-            GC.KeepAlive(instrument);
-            GC.KeepAlive(calculations);
+            //GC.KeepAlive(instrument);
+            //GC.KeepAlive(calculations);
+            //GC.KeepAlive(cashFlows);
 
         }
 
