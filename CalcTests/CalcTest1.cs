@@ -3908,7 +3908,6 @@ namespace CalcTests
             GC.KeepAlive(calculations);
 
         }
-
         [TestMethod]
         public void QuickUSTBillCalcFromPrice_1()
         {
@@ -3919,6 +3918,36 @@ namespace CalcTests
             double discountResult = 0.0497;
             double mmyResult = 0.0510;
             double price = 0.97501194;
+            double discount = 0;
+            double mmYield = 0;
+            double beYield = 0;
+            int status = USTBillCalcFromPrice(
+                valueDate,
+                maturityDate,
+                price,
+                out discount,
+                out mmYield,
+                out beYield);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            Assert.IsTrue(Math.Abs(beResult - beYield) < .00005);
+            Assert.IsTrue(Math.Abs(mmyResult - mmYield) < .00005);
+            Assert.IsTrue(Math.Abs(discountResult - discount) < .00005);
+        }
+
+        [TestMethod]
+        public void QuickUSTBillCalcFromPrice_2()
+        {
+            DateDescr maturityDate = new DateDescr { year = 2008, month = 12, day = 24 };
+            DateDescr valueDate = new DateDescr { year = 2007, month = 12, day = 27 };
+
+            double beResult = 0.0394;
+            double price = 0.96202;
             double discount = 0;
             double mmYield = 0;
             double beYield = 0;
@@ -3937,8 +3966,6 @@ namespace CalcTests
                 throw new InvalidOperationException(statusText.ToString());
             }
             Assert.IsTrue(Math.Abs(beResult - beYield) < .00005);
-            Assert.IsTrue(Math.Abs(mmyResult - mmYield) < .00005);
-            Assert.IsTrue(Math.Abs(discountResult - discount) < .00005);
         }
         [TestMethod]
         public void QuickUSTBillCalcFromMMYield_1()
@@ -4003,6 +4030,33 @@ namespace CalcTests
             double priceDiff = priceResult - price;
             Assert.IsTrue(Math.Abs(priceResult - price) < .00005);
             Assert.IsTrue(Math.Abs(discountResult - discount) < .00005);
+        }
+        [TestMethod]
+        public void QuickUSTBillCalcFromBEYield_2()
+        {
+            DateDescr maturityDate = new DateDescr { year = 2008, month = 12, day = 24 };
+            DateDescr valueDate = new DateDescr { year = 2007, month = 12, day = 27 };
+
+            double beYield = 0.0394;
+            double priceResult = 0.96202;
+            double discount = 0;
+            double mmYield = 0;
+            double price = 0;
+            int status = USTBillCalcFromBEYield(
+                valueDate,
+                maturityDate,
+                beYield,
+                 out price,
+               out mmYield,
+                out discount);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            Assert.IsTrue(Math.Abs(priceResult - price) < .00005);
         }
         [TestMethod]
         public void QuickUSTBillCalcFromDiscount_1()
