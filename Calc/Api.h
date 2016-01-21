@@ -121,3 +121,5 @@ int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_
 double RateFromCurve(DateStruct baseDate, RateCurveStruct curve,int interpolationMethod, int dayCount);
 extern "C" __declspec(dllexport) int  USTBillCalcFromPrice(DateStruct &valueDate, DateStruct &maturityDate, 
 	double price,double &discount,double &mmYield,double &beYield);
+extern "C" __declspec(dllexport) int  USTBillCalcFromMMYield(DateStruct &valueDate, DateStruct &maturityDate,
+	double mmYield, double &price, double &discount, double &beYield);

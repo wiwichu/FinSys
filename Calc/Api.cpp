@@ -1264,13 +1264,6 @@ int  USTBillCalcFromPrice(DateStruct &valueDate, DateStruct &maturityDate,
 	instrument.instrumentClass = instr_usdsc_class;
 	instrument.holidayAdjust = event_sched_same_holiday_adj;
 	calculations.calculatePrice = py_yield_from_price_calc_what;
-	//calculations.convexity = 0;
-	//calculations.duration = 0;
-	//calculations.exCoupDays = 0;
-	//calculations.interest = 0;
-	//calculations.interestDays = 0;
-	//calculations.isExCoup = false;
-	//calculations.modifiedDuration = 0;
 	calculations.previousPayDate = null;
 	calculations.nextPayDate = null;
 	calculations.priceIn = price;
@@ -1351,6 +1344,111 @@ int  USTBillCalcFromPrice(DateStruct &valueDate, DateStruct &maturityDate,
 
 	return return_success;
 }
+int  USTBillCalcFromMMYield(DateStruct &valueDate, DateStruct &maturityDate,
+	double mmYield, double &price, double &discount, double &beYield)
+{
+	InstrumentStruct instrument;
+	CalculationsStruct calculations;
+	instrument.intDayCount = noValue;
+	instrument.firstPayDate = null;
+	instrument.interestRate = 0;
+	instrument.intPayFreq = noValue;
+	instrument.issueDate = null;
+	instrument.nextToLastPayDate = null;
+	instrument.maturityDate = new DateStruct();
+	instrument.maturityDate->day = maturityDate.day;
+	instrument.maturityDate->month = maturityDate.month;
+	instrument.maturityDate->year = maturityDate.year;
+	calculations.valueDate = new DateStruct();
+	calculations.valueDate->day = valueDate.day;
+	calculations.valueDate->month = valueDate.month;
+	calculations.valueDate->year = valueDate.year;
+	instrument.instrumentClass = instr_usdsc_class;
+	instrument.holidayAdjust = event_sched_same_holiday_adj;
+	calculations.calculatePrice = py_yield_from_price_calc_what;
+	calculations.previousPayDate = null;
+	calculations.nextPayDate = null;
+	calculations.yieldIn = mmYield;
+	calculations.yieldDayCount = noValue;
+	calculations.yieldFreq = noValue;
+	calculations.yieldMethod = noValue;
+	int result = getInstrumentDefaultsAndData(instrument, calculations);
+	if (result != return_success)
+	{
+		return result;
+	}
+	instrument.maturityDate = new DateStruct();
+	instrument.maturityDate->day = maturityDate.day;
+	instrument.maturityDate->month = maturityDate.month;
+	instrument.maturityDate->year = maturityDate.year;
+	calculations.valueDate = new DateStruct();
+	calculations.valueDate->day = valueDate.day;
+	calculations.valueDate->month = valueDate.month;
+	calculations.valueDate->year = valueDate.year;
+
+	DatesStruct holidays;
+	holidays.size = 0;
+	result = getDefaultDatesAndData(instrument, calculations, holidays);
+	if (result != return_success)
+	{
+		return result;
+	}
+	calculations.yieldIn = mmYield;
+	calculations.calculatePrice = 1;
+	calculations.yieldMethod = py_mm_yield_meth;
+	result = calculate(instrument, calculations, holidays);
+	if (result != return_success)
+	{
+		return result;
+	}
+	price = calculations.priceOut;
+	calculations.priceIn = price;
+	calculations.calculatePrice = 0;
+	calculations.yieldMethod = py_mmdisc_yield_meth;
+	result = calculate(instrument, calculations, holidays);
+	if (result != return_success)
+	{
+		return result;
+	}
+	discount = calculations.yieldOut;
+
+	Date_Funcs::date_union date1;
+	date1.date.centuries = valueDate.year / 100;
+	date1.date.years = valueDate.year % 100;
+	date1.date.months = valueDate.month;
+	date1.date.days = valueDate.day;
+	Date_Funcs::date_union date2;
+	date2.date.centuries = maturityDate.year / 100;
+	date2.date.years = maturityDate.year % 100;
+	date2.date.months = maturityDate.month;
+	date2.date.days = maturityDate.day;
+	long days = 0;
+	result = Py_Front::tenor(date1, date2, date_act_cal, &days);
+	if (result != return_success)
+	{
+		return result;
+	}
+	calculations.yieldMethod = py_mm_yield_meth;
+	calculations.yieldDayCount = date_NL_365_day_count;
+	calculations.yieldFreq = frequency_semiannually_idx;
+	if (days <= 182)
+	{
+		calculations.yieldMethod = py_ustr_yield_meth;
+		calculations.yieldDayCount = date_act_365_day_count;
+		calculations.yieldFreq = frequency_annually_idx;
+
+	}
+	result = calculate(instrument, calculations, holidays);
+	if (result != return_success)
+	{
+		return result;
+	}
+	beYield = calculations.yieldOut;
+
+
+	return return_success;
+}
+
 
 int  calculate(InstrumentStruct &instrument, CalculationsStruct &calculations, DatesStruct &holidays)
 {
