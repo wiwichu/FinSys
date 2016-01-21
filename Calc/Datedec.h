@@ -304,6 +304,11 @@ const char frequency_monthly = 1;
 const char frequency_quarterly = 3;
 const char frequency_semiannually = 6;
 
+const char frequency_annually_idx = 0;
+const char frequency_monthly_idx = 1;
+const char frequency_quarterly_idx = 2;
+const char frequency_semiannually_idx = 3;
+
 const char frequency_list[freq_count] =
 	{
 		frequency_annually

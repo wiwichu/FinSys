@@ -44,6 +44,9 @@ namespace CalcTests
         private static extern IntPtr getHolidayAdjust(out int size);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int forecast(DateDescr startDate, DateDescr endDate, int dayCountRule, int months, int days);
+        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern int USTBillCalcFromPrice(DateDescr valueDate, DateDescr maturityDate,
+            double price, out double discount, out double mmYield, out double beYield);
         public TestContext TestContext { get; set; }
         [TestMethod]
         public void GetCashFlows_1()
@@ -458,9 +461,6 @@ namespace CalcTests
             }
             double result = 0.978172;
             calculations.yieldIn = 0.045;
-            calculations.yieldMethod = (int)TestHelper.yield_method.py_mm_yield_meth;
-            calculations.yieldDayCount = (int)TestHelper.day_counts.date_act_act_day_count;
-            calculations.yieldFreq = (int)TestHelper.frequency.frequency_semiannually;
 
             calculations.yieldMethod = (int)TestHelper.yield_method.py_ustr_yield_meth;
             calculations.yieldDayCount = (int)TestHelper.day_counts.date_act_365_day_count;
@@ -3900,6 +3900,37 @@ namespace CalcTests
 
         }
 
+        [TestMethod]
+        public void QuickUSTBillCalcFromPrice_1()
+        {
+            DateDescr maturityDate = new DateDescr { year = 2003, month = 3, day = 31 };
+            DateDescr valueDate = new DateDescr { year = 2002, month = 10, day = 1 };
+
+            double beResult = 0.0517;
+            double discountResult = 0.0497;
+            double mmyResult = 0.0510;
+            double price = 0.97501194;
+            double discount = 0;
+            double mmYield = 0;
+            double beYield = 0;
+            int status = USTBillCalcFromPrice(
+                valueDate, 
+                maturityDate,
+                price, 
+                out discount, 
+                out mmYield, 
+                out beYield);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            Assert.IsTrue(Math.Abs(beResult - beYield) < .00005);
+            Assert.IsTrue(Math.Abs(mmyResult - mmYield) < .00005);
+            Assert.IsTrue(Math.Abs(discountResult - discount) < .00005);
+        }
 
     }
 }
