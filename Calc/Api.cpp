@@ -1344,6 +1344,115 @@ int  USTBillCalcFromPrice(DateStruct &valueDate, DateStruct &maturityDate,
 
 	return return_success;
 }
+int  USTBillCalcFromBEYield(DateStruct &valueDate, DateStruct &maturityDate,
+	double beYield, double &price, double &mmYield, double &discount)
+{
+	InstrumentStruct instrument;
+	CalculationsStruct calculations;
+	instrument.intDayCount = noValue;
+	instrument.firstPayDate = null;
+	instrument.interestRate = 0;
+	instrument.intPayFreq = noValue;
+	instrument.issueDate = null;
+	instrument.nextToLastPayDate = null;
+	instrument.maturityDate = new DateStruct();
+	instrument.maturityDate->day = maturityDate.day;
+	instrument.maturityDate->month = maturityDate.month;
+	instrument.maturityDate->year = maturityDate.year;
+	calculations.valueDate = new DateStruct();
+	calculations.valueDate->day = valueDate.day;
+	calculations.valueDate->month = valueDate.month;
+	calculations.valueDate->year = valueDate.year;
+	instrument.instrumentClass = instr_usdsc_class;
+	instrument.holidayAdjust = event_sched_same_holiday_adj;
+	calculations.calculatePrice = py_yield_from_price_calc_what;
+	calculations.previousPayDate = null;
+	calculations.nextPayDate = null;
+	calculations.yieldIn = beYield;
+	calculations.yieldDayCount = noValue;
+	calculations.yieldFreq = noValue;
+	calculations.yieldMethod = noValue;
+	int result = getInstrumentDefaultsAndData(instrument, calculations);
+	if (result != return_success)
+	{
+		return result;
+	}
+	instrument.maturityDate = new DateStruct();
+	instrument.maturityDate->day = maturityDate.day;
+	instrument.maturityDate->month = maturityDate.month;
+	instrument.maturityDate->year = maturityDate.year;
+	calculations.valueDate = new DateStruct();
+	calculations.valueDate->day = valueDate.day;
+	calculations.valueDate->month = valueDate.month;
+	calculations.valueDate->year = valueDate.year;
+
+	DatesStruct holidays;
+	holidays.size = 0;
+	result = getDefaultDatesAndData(instrument, calculations, holidays);
+	if (result != return_success)
+	{
+		return result;
+	}
+
+	Date_Funcs::date_union date1;
+	date1.date.centuries = valueDate.year / 100;
+	date1.date.years = valueDate.year % 100;
+	date1.date.months = valueDate.month;
+	date1.date.days = valueDate.day;
+	Date_Funcs::date_union date2;
+	date2.date.centuries = maturityDate.year / 100;
+	date2.date.years = maturityDate.year % 100;
+	date2.date.months = maturityDate.month;
+	date2.date.days = maturityDate.day;
+	long days = 0;
+	result = Py_Front::tenor(date1, date2, date_act_cal, &days);
+	if (result != return_success)
+	{
+		return result;
+	}
+	int yieldDayCountHold = calculations.yieldDayCount;
+	int yieldFreqHold = calculations.yieldFreq;
+	calculations.yieldMethod = py_mm_yield_meth;
+	calculations.yieldDayCount = date_NL_365_day_count;
+	calculations.yieldFreq = frequency_semiannually_idx;
+	if (days <= 182)
+	{
+		calculations.yieldMethod = py_ustr_yield_meth;
+		calculations.yieldDayCount = date_act_365_day_count;
+		calculations.yieldFreq = frequency_annually_idx;
+
+	}
+	calculations.yieldIn = beYield;
+	calculations.calculatePrice = 1;
+	result = calculate(instrument, calculations, holidays);
+	if (result != return_success)
+	{
+		return result;
+	}
+	price = calculations.priceOut;
+	calculations.yieldDayCount = yieldDayCountHold;
+	calculations.yieldFreq = yieldFreqHold;
+	calculations.priceIn = price;
+	calculations.calculatePrice = 0;
+	calculations.yieldMethod = py_mm_yield_meth;
+	result = calculate(instrument, calculations, holidays);
+	if (result != return_success)
+	{
+		return result;
+	}
+	mmYield = calculations.yieldOut;
+
+	calculations.yieldMethod = py_mmdisc_yield_meth;
+	result = calculate(instrument, calculations, holidays);
+	if (result != return_success)
+	{
+		return result;
+	}
+	discount = calculations.yieldOut;
+
+	return return_success;
+}
+
 int  USTBillCalcFromDiscount(DateStruct &valueDate, DateStruct &maturityDate,
 	double discount, double &price, double &mmYield, double &beYield)
 {
