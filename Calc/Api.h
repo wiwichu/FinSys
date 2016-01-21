@@ -123,3 +123,5 @@ extern "C" __declspec(dllexport) int  USTBillCalcFromPrice(DateStruct &valueDate
 	double price,double &discount,double &mmYield,double &beYield);
 extern "C" __declspec(dllexport) int  USTBillCalcFromMMYield(DateStruct &valueDate, DateStruct &maturityDate,
 	double mmYield, double &price, double &discount, double &beYield);
+extern "C" __declspec(dllexport) int  USTBillCalcFromDiscount(DateStruct &valueDate, DateStruct &maturityDate,
+	double discount, double &price, double &mmYield, double &beYield);
