@@ -46,6 +46,18 @@ namespace FinSys.Calculator.Services
             DateDescr valueDate,
             RateCurveDescr rateCurve,
             int interpolation);
+        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern int USTBillCalcFromPrice(DateDescr valueDate, DateDescr maturityDate,
+            double price, out double discount, out double mmYield, out double beYield);
+        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern int USTBillCalcFromMMYield(DateDescr valueDate, DateDescr maturityDate,
+           double mmYield, out double price, out double discount, out double beYield);
+        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern int USTBillCalcFromDiscount(DateDescr valueDate, DateDescr maturityDate,
+            double mmYield, out double price, out double discount, out double beYield);
+        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern int USTBillCalcFromBEYield(DateDescr valueDate, DateDescr maturityDate,
+            double beYield, out double price, out double mmYield, out double discount);
 
         private List<string> classes = new List<string>();
         private List<string> dayCounts = new List<string>();
