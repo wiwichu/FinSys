@@ -9,10 +9,11 @@ namespace FinSys.Controllers.Web
     public class AppController : Controller
     {
         private IMailService _mailService;
-
-        public AppController(IMailService service)
+        private ICalculatorRepository _calculatorRepository;
+        public AppController(IMailService service, ICalculatorRepository calculatorRepository)
         {
             _mailService = service;
+            _calculatorRepository = calculatorRepository;
         }
         public IActionResult Index()
         {

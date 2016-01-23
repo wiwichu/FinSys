@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Builder;
+﻿using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Http;
 using Microsoft.Extensions.DependencyInjection;
 using FinSys.Calculator.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.PlatformAbstractions;
+using Newtonsoft.Json.Serialization;
+using Microsoft.Extensions.Logging;
 
 namespace FinSys.Calculator
 {
@@ -28,7 +25,14 @@ namespace FinSys.Calculator
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(opt=>
+                {
+                    opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+                });
+            services.AddLogging();
+            services.AddScoped<ICalculatorRepository, CalculatorRepository>();
 #if DEBUG
             services.AddScoped<IMailService, DebugMailService>();
 #else
@@ -37,8 +41,9 @@ namespace FinSys.Calculator
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app,ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddDebug(LogLevel.Information);
             app.UseStaticFiles();
             app.UseMvc(config =>
             {
