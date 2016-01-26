@@ -8,7 +8,7 @@
 #include <strsafe.h>
 
 Py_Front::Py_Front()
-	:interest(0)
+	:interest(0), interest_days(0)
 {
 	//scr_meth = scr_meth_general;
 }
@@ -2935,6 +2935,7 @@ unsigned long  FAR _export	Py_Front::freq_count_init_py()
 unsigned long FAR _export	Py_Front::action_init_screen_py()
 {
 	interest = 0;
+	interest_days = 0;
 	instr_class_init();
 	init_fra_holiday();
 	freq_count_init_py();

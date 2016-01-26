@@ -148,6 +148,7 @@
             <TextBlock Text="Interest Days: " x:Name="lblInterestDays" Margin="5" Grid.Column="2" Grid.Row="6" />
             <TextBlock TextAlignment="Right" Text="{Binding InterestDays, StringFormat='#0'}" Grid.Column="3" Grid.Row="6"  Margin="5"/>
             <CheckBox x:Name="cbExCoup"  Content="Ex-Coupon" IsChecked="{Binding IsExCoup, Mode=TwoWay}" Margin="5" Grid.Row="7" Grid.Column="2" />
+            <CheckBox x:Name="cbTradeFlat"  Content="Trade Flat" IsChecked="{Binding TradeFlat, Mode=TwoWay}" Margin="5" Grid.Row="7" Grid.Column="3" />
             <GroupBox Header="Calculate" Grid.Column="2" Grid.Row="8" >
                 <StackPanel Orientation="Horizontal" >
                  <!--   <RadioButton Content="Yield" IsChecked="True"  Grid.Column="2" Grid.Row="7" /> -->

@@ -146,6 +146,7 @@ namespace FinSys.Wpf.ViewModel
                 Interest = 0,
                 ExCoupDays = 0,
                 IsExCoup = IsExCoup,
+                TradeFlat = TradeFlat,
                 NextPayDate = maturityDate,
                 PrepayModel = 0,
                 PreviousPayDate = issueDate,
@@ -237,6 +238,7 @@ namespace FinSys.Wpf.ViewModel
                 Interest = 0,
                 ExCoupDays = 0,
                 IsExCoup = isExCoup,
+                TradeFlat = tradeFlat,
                 NextPayDate = maturityDate,
                 PrepayModel = 0,
                 PreviousPayDate = issueDate,
@@ -313,6 +315,7 @@ namespace FinSys.Wpf.ViewModel
                 Interest = 0,
                 ExCoupDays = 0,
                 IsExCoup = isExCoup,
+                TradeFlat = tradeFlat,
                 NextPayDate = maturityDate,
                 PrepayModel = 0,
                 PreviousPayDate = issueDate,
@@ -590,6 +593,19 @@ namespace FinSys.Wpf.ViewModel
             set
             {
                 isExCoup = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool tradeFlat;
+        public bool TradeFlat
+        {
+            get
+            {
+                return tradeFlat;
+            }
+            set
+            {
+                tradeFlat = value;
                 OnPropertyChanged();
             }
         }

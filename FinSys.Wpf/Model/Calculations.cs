@@ -191,6 +191,19 @@ namespace FinSys.Wpf.Model
                 OnPropertyChanged();
             }
         }
+        private bool tradeFlat;
+        public bool TradeFlat
+        {
+            get
+            {
+                return tradeFlat;
+            }
+            set
+            {
+                tradeFlat = value;
+                OnPropertyChanged();
+            }
+        }
         private bool isExCoup;
         public bool IsExCoup
         {
