@@ -177,7 +177,8 @@ unsigned long 	_PYFUNCS py_calc(instr in_instr_parm, date_union py_date_parm,
 			pay_struc  pay_array_a[],
 			redemps_struc  part_pay_array_a[],
 			redemps_struc even_redemps[],
-			vector<pay_struc> &cashflows
+			vector<pay_struc> &cashflows,
+			char trade_flat_parm
 			
 			)
 
@@ -251,6 +252,7 @@ long double convexity = 0;
 long double pvbp = 0;
 
 char ex_coup = 0;
+char trade_flat = 0;
 char py_cal_num = 0;
 char py_cal_den = 0;
 char py_day_count = 0;
@@ -297,6 +299,7 @@ date_union prev_date;
 	in_yield = *in_yield_parm;
 	out_yield = *out_yield_parm;
 	ex_coup = ex_coup_parm;
+	trade_flat = trade_flat_parm;
 	holi_chan = holi_chan_parm;
 	event_chan = event_chan_parm;
 	py_date = py_date_parm;
@@ -1148,6 +1151,7 @@ py_calc_end:
 	*in_yield_parm = in_yield;
 	*out_yield_parm = out_yield;
 	ex_coup_parm = ex_coup;
+	trade_flat_parm = trade_flat;
 	holi_chan_parm = holi_chan;
 	event_chan_parm = event_chan;
 	py_date_parm = py_date;

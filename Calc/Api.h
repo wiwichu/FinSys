@@ -81,6 +81,7 @@ typedef struct CalculationsStruct
 	int yieldMethod;
 	double modifiedDuration;
 	double pvbpConvexityAdjusted;
+	bool tradeFlat;
 } CalculationsStruct;
 
 enum CurveInterpolation

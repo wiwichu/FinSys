@@ -23,7 +23,7 @@ accrued interest and number of days of interest for that date.
 	Usage:  unsigned long	intcalc(instr in_instr, date_union in_date_parm,
 					long double *interest, int *int_days,
 					unsigned int holi_chan,
-					unsigned char ex_coup_ind,
+					unsigned char ex_coup_ind,unsigned char trade_flat_ind,
 					unsigned char total_per,
 					*long double nom_adj,
 					*long double sett_to_first_fact_parm,
@@ -117,6 +117,7 @@ accrued interest and number of days of interest for that date.
 		, long *int_days
 		,unsigned int holi_chan
 		, char ex_coup_ind
+		, char trade_flat_ind
 		,char total_per
 		, long double *nom_adj
 		,long double *sett_to_first_fact_parm
@@ -133,6 +134,7 @@ accrued interest and number of days of interest for that date.
 	#include "locals.h"
 	booleans ex_coup = isfalse; /*{ ex_coup is true if the base date falls
 				in the ex-coupon period.}*/
+	booleans trade_flat = isfalse; 
 	booleans part_pay = isfalse; /*{ part_pay is true if partial payments
 				occur in this period.}*/
 	int	cmp_first_per = 0;	/*{ cmp_first_per is used for first period
@@ -295,6 +297,7 @@ accrued interest and number of days of interest for that date.
 				, &int_daysParm
 				, holi_chan
 				, ex_coup_ind
+				, trade_flat_ind
 				, total_per
 				, &nom_adjParm
 				, &sett_to_first_factParm
@@ -352,6 +355,7 @@ accrued interest and number of days of interest for that date.
 			, int_days
 			, holi_chan
 			, ex_coup_ind
+			, trade_flat_ind
 			, total_per
 			, nom_adj
 			, sett_to_first_fact_parm
@@ -365,8 +369,6 @@ accrued interest and number of days of interest for that date.
 		{
 			return return_status;
 		}
-
-
 		delete inst;
 		return return_success;
 	}
@@ -463,6 +465,7 @@ accrued interest and number of days of interest for that date.
 			, int_days
 			, holi_chan
 			, ex_coup_ind
+			, trade_flat_ind
 			, total_per
 			, nom_adj
 			, sett_to_first_fact_parm
@@ -557,6 +560,24 @@ accrued interest and number of days of interest for that date.
 			break;
 		 }
 	}
+
+	switch (trade_flat_ind)
+	{
+	case trade_flat_yes:
+	{
+
+		trade_flat = istrue;
+		break;
+
+	}
+	default:
+
+	{
+		trade_flat = isfalse;
+		break;
+	}
+	}
+
 
 	if ( ex_coup)
 	{

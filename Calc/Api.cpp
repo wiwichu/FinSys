@@ -239,6 +239,22 @@ int preProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_F
 	{
 		return result;
 	}
+
+	int tradeflat = trade_flat_no;
+	if (calculations.tradeFlat)
+	{
+		tradeflat = trade_flat_yes;
+	}
+	result = pyfront.settradeflat(tradeflat_names[tradeflat]);
+	if (result != return_success)
+	{
+		return result;
+	}
+	result = pyfront.proc_tradeflat();
+	if (result != return_success)
+	{
+		return result;
+	}
 	int eom = monthend_no;
 	if (instrument.endOfMonthPay)
 	{
@@ -471,6 +487,13 @@ int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_
 	instrument.nextToLastPayDate->month = penultDateOut.date.months;
 	instrument.nextToLastPayDate->year = penultDateOut.date.centuries * 100 + penultDateOut.date.years;
 
+	char tradeflatOut = 0;
+	result = pyfront.gettradeflat(tradeflatOut);
+	if (result != return_success)
+	{
+		return result;
+	}
+	calculations.tradeFlat = tradeflatOut;
 	char excoupOut = 0;
 	result = pyfront.getexcoup(excoupOut);
 	if (result != return_success)
@@ -926,6 +949,7 @@ int  priceCashFlows(CashFlowsStruct &cashFlowsStruct,
 		calcs->exCoupDays = 0;
 		calcs->interest = 0;
 		calcs->interestDays = 0;
+		calcs->tradeFlat = trade_flat_no;
 		calcs->isExCoup = ex_coup_no;
 		calcs->exCoupDays = 0;
 		calcs->modifiedDuration = 0;
@@ -970,6 +994,7 @@ int  priceCashFlows(CashFlowsStruct &cashFlowsStruct,
 		calcs->exCoupDays = 0;
 		calcs->interest = 0;
 		calcs->interestDays = 0;
+		calcs->tradeFlat = trade_flat_no;
 		calcs->isExCoup = ex_coup_no;
 		calcs->exCoupDays = 0;
 		calcs->modifiedDuration = 0;
@@ -1135,10 +1160,13 @@ int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &ca
 		return result;
 	}
 
-	result = pyfront.calc_int();
-	if (result != return_success)
+	if (!calculations.tradeFlat)
 	{
-		return result;
+		result = pyfront.calc_int();
+		if (result != return_success)
+		{
+			return result;
+		}
 	}
 	result = pyfront.calc_py();
 	if (result != return_success)
@@ -1783,11 +1811,13 @@ int  calculate(InstrumentStruct &instrument, CalculationsStruct &calculations, D
 	{
 		return result;
 	}
-
-	result = pyfront.calc_int();
-	if (result != return_success)
+	if (!calculations.tradeFlat)
 	{
-		return result;
+		result = pyfront.calc_int();
+		if (result != return_success)
+		{
+			return result;
+		}
 	}
 	result = pyfront.calc_py();
 	if (result != return_success)

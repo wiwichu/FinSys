@@ -2046,7 +2046,8 @@ unsigned long _RATECURVE  RCBootDisc(date_union ValueDate,
 					pay_array_a,
 					part_pay_array_a,
 					even_redemps,
-					cashFlows
+					cashFlows,
+					0
 				);
 
 				if (return_state)
@@ -2172,7 +2173,8 @@ unsigned long _RATECURVE  RCBootDisc(date_union ValueDate,
 											&dummy_long, 
 											dummy_ui, 
 											isfalse,
-											int_yes_total_per,
+						isfalse,
+						int_yes_total_per,
 											&dummy_ld, 
 											&dummy_ld, 
 											int_no_redemp_adj,

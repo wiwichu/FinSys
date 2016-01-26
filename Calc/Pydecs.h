@@ -239,7 +239,8 @@ bool justCoups;
 			pay_struc  pay_array_a[],
 			redemps_struc * part_pay_array_a,
 			redemps_struc even_redemps[],
-			vector<pay_struc> &cashflows
+			vector<pay_struc> &cashflows,
+			char trade_flat
 			 );
 
   /*{py_calc accepts .

@@ -8,6 +8,7 @@
 #include <strsafe.h>
 
 Py_Front::Py_Front()
+	:interest(0)
 {
 	//scr_meth = scr_meth_general;
 }
@@ -286,6 +287,18 @@ unsigned long  FAR _export	Py_Front::action_proc_excoup()
 	}
 	return return_success;
 }
+unsigned long  FAR _export	Py_Front::action_proc_tradeflat()
+{
+	current_tradeflat = trade_flat_no;
+	if (strcmp(current_tradeflat_name,
+		tradeflat_names[trade_flat_yes]) == 0)
+	{
+
+		current_tradeflat = trade_flat_yes;
+
+	}
+	return return_success;
+}
 unsigned long FAR _export	 Py_Front::action_init_frn()
 {
 	in_instr.instr_class = instr_float_class;
@@ -459,6 +472,11 @@ unsigned long FAR _export Py_Front::set_current()
 	strcpy(current_yield_days_name, day_count_names[current_day_count]);
 
 	current_monthend = monthend_yes;
+
+
+	current_tradeflat = trade_flat_no;
+	strcpy(current_tradeflat_name,
+		tradeflat_names[current_tradeflat]);
 
 	current_excoup = ex_coup_no;
 
@@ -1868,26 +1886,21 @@ unsigned long FAR _export	Py_Front::proc_def_dates_py()
 
 	if (ex_coup)
 	{
-
 		strcpy(current_excoup_name,
 			excoup_names[ex_coup_yes]);
-
-		//				 current_excoup = (char)ex_coup_yes;
-
 	}
 	else
 	{
-
-
 		strcpy(current_excoup_name,
 			excoup_names[ex_coup_no]);
-
-		//				 current_excoup = (char)ex_coup_no;
-
 	}
-
-
 	action_proc_excoup();
+
+	trade_flat = isfalse;
+	strcpy(current_tradeflat_name,
+		tradeflat_names[trade_flat_no]);
+	action_proc_tradeflat();
+
 	if (in_instr.instr_class == instr_cashflow_class)
 	{
 
@@ -2782,6 +2795,7 @@ unsigned long FAR _export	Py_Front::calc_int_py()
 			dummy_ui,
 			//						ex_coup_auto,
 			current_excoup,
+			current_tradeflat,
 			int_no_total_per,
 			&nominal_adjust,
 			&dummy_long_double,
@@ -2811,6 +2825,7 @@ unsigned long FAR _export	Py_Front::calc_int_py()
 				&interest_days,
 				dummy_ui,
 				current_excoup,
+				current_tradeflat,
 				int_yes_total_per,
 				&nominal_adjust,
 				&dummy_long_double,
@@ -2879,7 +2894,8 @@ unsigned long FAR _export	Py_Front::calc_py_py()
 			, pay_array_a,
 			part_pay_array_a,
 			even_redemps,
-			cashFlows
+			cashFlows,
+			0
 			);
 
 		if (return_state)
@@ -2918,6 +2934,7 @@ unsigned long  FAR _export	Py_Front::freq_count_init_py()
 
 unsigned long FAR _export	Py_Front::action_init_screen_py()
 {
+	interest = 0;
 	instr_class_init();
 	init_fra_holiday();
 	freq_count_init_py();
@@ -4299,6 +4316,13 @@ unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::proc_excoup()
 
 }
 
+unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::proc_tradeflat()
+{
+	return action_proc_tradeflat();
+	//action = py_action_proc_excoup;
+	//return pyproc45();
+
+}
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::proc_class_desc()
 {
 	return proc_class_desc_py();
@@ -4586,6 +4610,18 @@ unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::getexcoup(char &excoup)
 	excoup = current_excoup;
 	return return_state;
 }
+unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::gettradeflat(char tradeflat_name_str[tradeflat_name_length])
+{
+	return_state = return_success;
+	strcpy(tradeflat_name_str, current_tradeflat_name);
+	return return_state;
+}
+unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::gettradeflat(char &tradeflat)
+{
+	return_state = return_success;
+	tradeflat = current_tradeflat;
+	return return_state;
+}
 
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setsimpcomp (char simp_comp_str[simp_comp_names_len])
 {
@@ -4603,7 +4639,14 @@ unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::setexcoup(char excoup_name_str [
 	return return_state;
 
 }
+unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::settradeflat(char tradeflat_name_str[tradeflat_name_length])
+{
 
+	return_state = return_success;
+	strcpy(current_tradeflat_name, tradeflat_name_str);
+	return return_state;
+
+}
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getexcoupchoice(int element_count,char excoup_name_str[excoup_name_length])
 {
 

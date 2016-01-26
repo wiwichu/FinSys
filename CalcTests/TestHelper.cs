@@ -219,6 +219,7 @@ namespace CalcTests
         public int yieldMethod;
         public double modifiedDuration;
         public double pvbpConvexityAdjusted;
+        public int tradeflat;
     };
     [StructLayout(LayoutKind.Sequential)]
     public class DateDescr

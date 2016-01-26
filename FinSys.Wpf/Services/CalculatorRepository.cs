@@ -264,6 +264,7 @@ namespace FinSys.Wpf.Services
             CalculationsDescr calculations = new CalculationsDescr
             {
                 isExCoup = calcs.IsExCoup ? 1:0,
+                tradeflat = calcs.TradeFlat ? 1 : 0,
                 priceIn = calcs.PriceIn,
                 yieldIn = calcs.YieldIn,
                 serviceFee = calcs.ServiceFee,
@@ -329,6 +330,7 @@ namespace FinSys.Wpf.Services
                 Convexity = calcs.convexity,
                 ExCoupDays = calcs.exCoupDays,
                 IsExCoup = (calcs.isExCoup == 1),
+                TradeFlat = (calcs.tradeflat == 1),
                 PriceIn = calcs.priceIn,
                 PriceOut = calcs.priceOut,
                 YieldIn = calcs.yieldIn,
@@ -451,6 +453,7 @@ namespace FinSys.Wpf.Services
                 {
                     ExCoupDays = calcs.exCoupDays,
                     IsExCoup = (calcs.isExCoup == 1),
+                    TradeFlat = (calcs.tradeflat == 1),
                     PrepayModel = calcs.prepayModel
                    // ,YieldDayCount = calcs.yieldDayCount == InstrumentDescr.date_last_day_count ?
                    ,YieldDayCount = calcs.yieldDayCount == InstrumentDescr.noValue ?
@@ -954,6 +957,7 @@ public class CalculationsDescr
     public int yieldMethod;
     public double modifiedDuration;
     public double pvbpConvexityAdjusted;
+    public int tradeflat;
 };
 [StructLayout(LayoutKind.Sequential)]
 public class DateDescr
@@ -1013,6 +1017,7 @@ public class Calculations
     public double PvbpConvexityAdjusted { get; set; }
     public IEnumerable<CashFlow> Cashflows {get;set;}
     public string PayHolidayAdjust { get; set; }
+    public bool TradeFlat { get; set; }
 }
 
 

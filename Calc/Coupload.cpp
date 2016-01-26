@@ -287,7 +287,7 @@ date_union base_date;
 			  pay_array_a[*coup_count + 1].pay_date.date.days;
 
 			return_status = intcalc(*in_instr, date_hold, &dummy_double,
-				&int_days, holi_chan, isfalse,int_no_total_per,
+				&int_days, holi_chan, isfalse, isfalse, int_no_total_per,
 				nom_adj_int_calc, sett_2_first_fact, int_no_redemp_adj,
 				event_chan
 //				, holi_parm
@@ -494,7 +494,7 @@ date_union base_date;
 		 }
 
 		 return_status = intcalc(*in_instr, base_date, &interest,
-				&int_days, holi_chan, isfalse,
+				&int_days, holi_chan, isfalse, isfalse,
 				int_yes_total_per, nom_adj_int_calc,
 				&dummy_double, int_no_redemp_adj,
 				event_chan
@@ -514,7 +514,7 @@ date_union base_date;
 		 {
 
 			return_status = intcalc(*in_instr, py_date, &dummy_double,
-				&int_days, holi_chan, isfalse,int_no_total_per,
+				&int_days, holi_chan, isfalse, isfalse, int_no_total_per,
 				nom_adj_int_calc, sett_2_first_fact, int_no_redemp_adj,
 				event_chan
 //				, holi_parm

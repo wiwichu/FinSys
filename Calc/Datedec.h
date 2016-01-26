@@ -350,7 +350,15 @@ char *const	monthend_no_name = "No";
 
 char *const monthend_names[monthend_count] = {monthend_yes_name,monthend_no_name};
 
-/*{ ex_coup_xxx is used to indicate whether a date is ex-coupon.}*/
+/*{ trade_flat_xxx is used to indicate whether price is flat (no accrued interest).}*/
+const	unsigned char	trade_flat_no = 0;
+/*{ trade_flat_no means the price is not flat.}*/
+const	unsigned char	trade_flat_yes = 1;
+/*{ trade_flat_yes means the price is flat.}*/
+const int tradeflat_count = 2;
+const int tradeflat_names_len = 4;
+
+char *const tradeflat_names[tradeflat_count] = { "No","Yes" };
 
 const	unsigned char	ex_coup_no	= 0;
 /*{ ex_coup_no means the date is not ex-coupon.}*/

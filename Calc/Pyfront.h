@@ -383,6 +383,7 @@ const	char	py_max_cashflow	= max_cashflow;
 
 const	int	date_str_size	= 11;
 const	int	excoup_name_length = excoup_names_len;
+const	int	tradeflat_name_length = tradeflat_names_len;
 
 class CALC_API _EX_IN_CLASS _FAR_CLASS Py_Front 
 :public Py_Funcs, public cholicodeproc 
@@ -402,6 +403,7 @@ unsigned long  _FAR_FUNC _EX_IN_FUNC   init_screen	();
 unsigned long  _FAR_FUNC _EX_IN_FUNC   proc_pay_freq	();
 unsigned long  _FAR_FUNC _EX_IN_FUNC   proc_monthend	();
 unsigned long  _FAR_FUNC _EX_IN_FUNC   proc_excoup	();
+unsigned long  _FAR_FUNC _EX_IN_FUNC   proc_tradeflat();
 unsigned long  _FAR_FUNC _EX_IN_FUNC   proc_class_desc	();
 unsigned long  _FAR_FUNC _EX_IN_FUNC   proc_day_count	();
 unsigned long  _FAR_FUNC _EX_IN_FUNC   proc_yield_meth	();
@@ -443,6 +445,9 @@ unsigned long  _FAR_FUNC _EX_IN_FUNC   setfirstdate(	char first_date_str[date_st
 unsigned long  _FAR_FUNC _EX_IN_FUNC   getexcoup (char excoup_name_str[excoup_name_length]);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   getexcoup(char &excoup);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   setexcoup (char excoup_name_str[excoup_name_length]);
+unsigned long  _FAR_FUNC _EX_IN_FUNC   gettradeflat(char tradeflat_name_str[tradeflat_name_length]);
+unsigned long  _FAR_FUNC _EX_IN_FUNC   gettradeflat(char &tradeflat);
+unsigned long  _FAR_FUNC _EX_IN_FUNC   settradeflat(char tradeflat_name_str[tradeflat_name_length]);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   getexcoupchoice(int element_count, char excoup_name_str[excoup_name_length]);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   getcalcwhat(char *current_calc_what);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   setcalcwhat(char current_calc_what);
@@ -631,6 +636,7 @@ unsigned long action_sink_fund_mat();
 unsigned long action_proc_monthend();
 unsigned long proc_sink_fund_mat();
 unsigned long action_proc_excoup();
+unsigned long action_proc_tradeflat();
 unsigned long action_init_frn();
 unsigned long set_rerate();
 unsigned long instr_class_init();
@@ -811,11 +817,13 @@ set<string> holiSet;
  double work_double;
 // boolean ex_coup;
  booleans ex_coup;
+ booleans trade_flat;
  date_union  mat_date;
  date_union  val_date;
  date_union  penult_date;
  date_union  issue_date;
  date_union  first_date;
+ char current_tradeflat_name[tradeflat_names_len];
  char current_excoup_name [excoup_names_len];
  char excoup_choice [excoup_count] [excoup_names_len];
  char  calc_what;
@@ -869,7 +877,8 @@ set<string> holiSet;
 // Instrument::pay_struc	part_pays_sched[max_part_pays];
    pay_struc	part_pays_sched[max_part_pays];
  char current_excoup;
-// char holidays_code [holiday_code_length];
+ char current_tradeflat;
+ // char holidays_code [holiday_code_length];
 // holidays_struct holi_parm [max_holidays]; //Must be changed.
  py_rate_parm rerate_sched;
 

@@ -1662,6 +1662,75 @@ namespace CalcTests
 
         }
         [TestMethod]
+        public void TBondFlatPriceFromYtmOddFirstAndLastCoupon_1()
+        {
+            InstrumentDescr instrument = new InstrumentDescr();
+            CalculationsDescr calculations = new CalculationsDescr();
+            instrument.instrumentClass = (int)TestHelper.instr_class_descs.instr_ustbo_class_desc;
+
+            DateDescr matDate = new DateDescr { year = 2001, month = 10, day = 1 };
+            DateDescr valueDate = new DateDescr { year = 2000, month = 1, day = 12 };
+            DateDescr issueDate = new DateDescr { year = 2000, month = 1, day = 1 };
+            DateDescr firstPayDate = new DateDescr { year = 2000, month = 1, day = 15 };
+            DateDescr preLastPayDate = new DateDescr { year = 2000, month = 4, day = 15 };
+
+            instrument.maturityDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
+            instrument.issueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
+            calculations.valueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
+            int status = getInstrumentDefaultsAndData(instrument, calculations);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+
+            Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
+            Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            double result = 0.958172634;
+            calculations.yieldIn = 0.0659;
+            calculations.calculatePrice = 1;
+            calculations.tradeflat = 1;
+            calculations.yieldMethod = (int)TestHelper.yield_method.py_aibd_yield_meth;
+            instrument.interestRate = 0.04;
+            instrument.intPayFreq = (int)TestHelper.frequency.frequency_quarterly;
+            instrument.intDayCount = (int)TestHelper.day_counts.date_30_360US_day_count;
+            calculations.yieldDayCount = (int)TestHelper.day_counts.date_30_360US_day_count;
+            calculations.yieldFreq = (int)TestHelper.frequency.frequency_semiannually;
+            instrument.nextToLastPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(preLastPayDate, instrument.nextToLastPayDate, false);
+            instrument.issueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
+            instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
+            status = calculate(instrument, calculations, holidays);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            Assert.IsTrue(Math.Abs(result - calculations.priceOut) < .0005);
+            GC.KeepAlive(instrument);
+            GC.KeepAlive(calculations);
+
+        }
+        [TestMethod]
         public void Gilt_Old_Holidays_1()
         {
             InstrumentDescr instrument = new InstrumentDescr();
@@ -2739,6 +2808,75 @@ namespace CalcTests
             GC.KeepAlive(calculations);
 
         }
+        [TestMethod]
+        public void TBondYtmFromFlatPriceOddFirstAndLastCoupon_1()
+        {
+            InstrumentDescr instrument = new InstrumentDescr();
+            CalculationsDescr calculations = new CalculationsDescr();
+            instrument.instrumentClass = (int)TestHelper.instr_class_descs.instr_ustbo_class_desc;
+
+            DateDescr matDate = new DateDescr { year = 2001, month = 10, day = 1 };
+            DateDescr valueDate = new DateDescr { year = 2000, month = 1, day = 12 };
+            DateDescr issueDate = new DateDescr { year = 2000, month = 1, day = 1 };
+            DateDescr firstPayDate = new DateDescr { year = 2000, month = 1, day = 15 };
+            DateDescr preLastPayDate = new DateDescr { year = 2000, month = 4, day = 15 };
+
+            instrument.maturityDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
+            instrument.issueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
+            calculations.valueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
+            int status = getInstrumentDefaultsAndData(instrument, calculations);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+
+            Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
+            Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            double result = .0659;
+            calculations.priceIn = 0.9582;
+            calculations.calculatePrice = 0;
+            calculations.tradeflat = 1;
+            calculations.yieldMethod = (int)TestHelper.yield_method.py_aibd_yield_meth;
+            instrument.interestRate = 0.04;
+            instrument.intPayFreq = (int)TestHelper.frequency.frequency_quarterly;
+            instrument.intDayCount = (int)TestHelper.day_counts.date_30_360US_day_count;
+            calculations.yieldDayCount = (int)TestHelper.day_counts.date_30_360US_day_count;
+            calculations.yieldFreq = (int)TestHelper.frequency.frequency_semiannually;
+            instrument.nextToLastPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(preLastPayDate, instrument.nextToLastPayDate, false);
+            instrument.issueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
+            instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
+            status = calculate(instrument, calculations, holidays);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            Assert.IsTrue(Math.Abs(result - calculations.yieldOut) < .0005);
+            GC.KeepAlive(instrument);
+            GC.KeepAlive(calculations);
+
+        }
 
         [TestMethod]
         public void TBondPriceFromYtmLongFirstCoupon_1()
@@ -3104,6 +3242,74 @@ namespace CalcTests
                 throw new InvalidOperationException(statusText.ToString());
             }
             double result = 0.9883315770;
+            calculations.yieldIn = 0.055;
+            calculations.calculatePrice = 1;
+            calculations.yieldMethod = (int)TestHelper.yield_method.py_aibd_yield_meth;
+            instrument.interestRate = 0.05;
+            DateDescr firstPayDate = new DateDescr { year = 2004, month = 3, day = 10 };
+            DateDescr preLastPayDate = new DateDescr { year = 2008, month = 9, day = 10 };
+            instrument.nextToLastPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(preLastPayDate, instrument.nextToLastPayDate, false);
+            //            instrument.issueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            //           Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
+            instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
+            status = calculate(instrument, calculations, holidays);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            Assert.IsTrue(Math.Abs(result - calculations.priceOut) < .000000005);
+            GC.KeepAlive(instrument);
+            GC.KeepAlive(calculations);
+
+        }
+        [TestMethod]
+        public void BondFlatPriceFromYtmLongLastCoupon_1()
+        {
+            InstrumentDescr instrument = new InstrumentDescr();
+            CalculationsDescr calculations = new CalculationsDescr();
+            instrument.instrumentClass = (int)TestHelper.instr_class_descs.instr_euro_class_desc;
+
+            DateDescr matDate = new DateDescr { year = 2009, month = 3, day = 20 };
+            DateDescr valueDate = new DateDescr { year = 2006, month = 9, day = 10 };
+            //            DateDescr issueDate = new DateDescr { year = 2000, month = 1, day = 1 };
+
+            instrument.maturityDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
+            calculations.valueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
+            int status = getInstrumentDefaultsAndData(instrument, calculations);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+
+            instrument.intDayCount = (int)TestHelper.day_counts.date_30_360US_day_count;
+            instrument.intPayFreq = (int)TestHelper.frequency.frequency_semiannually;
+            calculations.yieldDayCount = (int)TestHelper.day_counts.date_30_360US_day_count;
+            calculations.yieldFreq = (int)TestHelper.frequency.frequency_semiannually;
+
+            Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
+            Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            double result = 0.9883315770;
+            calculations.tradeflat = 1;
             calculations.yieldIn = 0.055;
             calculations.calculatePrice = 1;
             calculations.yieldMethod = (int)TestHelper.yield_method.py_aibd_yield_meth;

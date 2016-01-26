@@ -1,4 +1,5 @@
 ﻿using FinSys.Calculator.Models;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,7 +66,8 @@ namespace FinSys.Calculator.Services
         private List<string> yieldMethods = new List<string>();
         private List<string> holidayAdjusts = new List<string>();
         private List<string> interpolationMethods = new List<string>();
-        public CalculatorRepository()
+        private ILogger<CalculatorRepository> _logger;
+        public CalculatorRepository(ILogger<CalculatorRepository> logger)
         {
             classes = new List<string>(GetInstrumentClassesAsync().Result.Select((ic) => ic.Name));
             dayCounts = GetDayCountsAsync().Result;
@@ -73,6 +75,7 @@ namespace FinSys.Calculator.Services
             yieldMethods = GetYieldMethodsAsync().Result;
             holidayAdjusts = GetHolidayAdjustAsync().Result;
             interpolationMethods = GetInterpolationMethodsAsync().Result;
+            _logger = logger;
         }
 
         public async Task<List<string>> GetDayCountsAsync()
@@ -163,6 +166,12 @@ namespace FinSys.Calculator.Services
             catch (InvalidOperationException)
             {
                 throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Could not get instrument defaults", ex);
+                throw;
+
             }
         }
 
@@ -361,6 +370,8 @@ namespace FinSys.Calculator.Services
 
         public async Task<KeyValuePair<Instrument, Calculations>> GetDefaultDatesAsync(Instrument instrument, Calculations calculations, IEnumerable<Holiday> holidays)
         {
+            try
+            { 
             KeyValuePair<Instrument, Calculations> result = await Task.Run(() =>
             {
                 InstrumentDescr instr = makeInstrumentDescr(instrument);
@@ -382,6 +393,17 @@ namespace FinSys.Calculator.Services
                 .ConfigureAwait(false) //necessary on UI Thread
                 ;
             return result;
+            }
+            catch (InvalidOperationException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Could not get default dates", ex);
+                throw;
+
+            }
         }
 
 
@@ -424,16 +446,12 @@ namespace FinSys.Calculator.Services
 
         public async Task<KeyValuePair<Instrument, Calculations>> GetInstrumentDefaultsAsync(Instrument instrument, Calculations calculations)
         {
+            try
+            { 
             KeyValuePair<Instrument, Calculations> result = await Task.Run(() =>
             {
                 InstrumentDescr instr = makeInstrumentDescr(instrument);
                 CalculationsDescr calcs = makeCalculationsDescr(calculations);
-                //calcs.yieldDayCount = InstrumentDescr.date_last_day_count;
-                //calcs.yieldFreq = InstrumentDescr.freq_count;
-                //calcs.yieldMethod = CalculationsDescr.py_last_yield_meth;
-                //instr.holidayAdjust = (int)InstrumentDescr.DateAdjustRule.event_sched_no_holiday_adj;
-                //instr.intDayCount = InstrumentDescr.date_last_day_count;
-                //instr.intPayFreq = InstrumentDescr.freq_count;
                 calcs.yieldDayCount = InstrumentDescr.noValue;
                 calcs.yieldFreq = InstrumentDescr.noValue;
                 calcs.yieldMethod = InstrumentDescr.noValue;
@@ -482,9 +500,22 @@ namespace FinSys.Calculator.Services
                 .ConfigureAwait(false) //necessary on UI Thread
                 ;
             return result;
+            }
+            catch (InvalidOperationException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Could not get instrument defaults", ex);
+                throw;
+
+            }
         }
         public async Task<KeyValuePair<Instrument, Calculations>> CalculateAsync(Instrument instrument, Calculations calculations, IEnumerable<Holiday> holidays)
         {
+            try
+            { 
             KeyValuePair<Instrument, Calculations> result = await Task.Run(() =>
             {
                 InstrumentDescr instr = makeInstrumentDescr(instrument);
@@ -573,6 +604,18 @@ namespace FinSys.Calculator.Services
                 .ConfigureAwait(false) //necessary on UI Thread
                 ;
             return result;
+            }
+            catch (InvalidOperationException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error calculating", ex);
+                throw;
+
+            }
+
         }
 
         public async Task<List<string>> GetHolidayAdjustAsync()
@@ -599,6 +642,8 @@ namespace FinSys.Calculator.Services
 
         public async Task<DateTime> Forecast(DateTime startDate, DateTime endDate, int dayCountRule, int months, int days)
         {
+            try
+            { 
             DateTime result = await Task.Run(() =>
             {
                 DateDescr dateIn = new DateDescr
@@ -628,6 +673,17 @@ namespace FinSys.Calculator.Services
             .ConfigureAwait(false) //necessary on UI Thread
             ;
             return result;
+            }
+            catch (InvalidOperationException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error forecasting", ex);
+                throw;
+
+            }
         }
 
         internal CashFlowsDescr makeCashFlows(List<CashFlow> cashFlows)
@@ -704,7 +760,7 @@ namespace FinSys.Calculator.Services
             }
             return rateCurveDescr;
         }
-        public async Task<List<CashFlow>> PriceCashFlows(List<CashFlow> cashFlows,
+        public async Task<List<CashFlow>> PriceCashFlowsAsync(List<CashFlow> cashFlows,
             string yieldMth,
             string frequency,
             string dayCount,
@@ -712,6 +768,8 @@ namespace FinSys.Calculator.Services
             List<RateCurve> rateCurve,
             string interpolation)
         {
+            try
+            { 
             List<CashFlow> result = await Task.Run(() =>
             {
                 int ym = yieldMethods.IndexOf(yieldMth);
@@ -760,6 +818,18 @@ namespace FinSys.Calculator.Services
              .ConfigureAwait(false) //necessary on UI Thread
              ;
             return result;
+            }
+            catch (InvalidOperationException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error pricing cashflows", ex);
+                throw;
+
+            }
+
         }
     }
     enum CurveInterpolation
@@ -968,6 +1038,7 @@ public class CalculationsDescr
     public int yieldMethod;
     public double modifiedDuration;
     public double pvbpConvexityAdjusted;
+    public int tradeflat;
 };
 [StructLayout(LayoutKind.Sequential)]
 public class DateDescr
