@@ -10,12 +10,14 @@
 </head>
 <body>
     <div id="sidebar">
-        <img src="~/img/menupicture.jpg" alt="Menu" class="menuimg" />
-        <span id="menuname">Menu</span>
+       <!-- <img src="~/img/menupicture.jpg" alt="Menu" class="menuimg" /> -->
+        <span id="menuname">Calculators</span>
         <ul class="nav">
             <li class="active"><a asp-controller="App" asp-action="Index">Home</a></li>
             <li><a asp-controller="App" asp-action="About">About</a></li>
             <li><a asp-controller="App" asp-action="Contact">Contact</a></li>
+            <li><a asp-controller="App" asp-action="CustomCalc">Custom Calcs</a></li>
+            <li><a asp-controller="App" asp-action="USTBill">USTBill</a></li>
         </ul>
     </div>
     <div id="wrapper">
@@ -45,8 +47,7 @@
             </div>
         </nav>
         <div id="main" class="container-fluid">
-
-            <div>
+           <div>
                 @RenderBody()
             </div>
         </div>

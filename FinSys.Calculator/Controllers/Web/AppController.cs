@@ -27,6 +27,14 @@ namespace FinSys.Controllers.Web
         {
             return View();
         }
+        public IActionResult USTBill()
+        {
+            return View();
+        }
+        public IActionResult CustomCalc()
+        {
+            return View();
+        }
         [HttpPost]
         public IActionResult Contact(ContactViewModel model)
         {
