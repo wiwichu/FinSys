@@ -20,9 +20,18 @@ namespace FinSys.Calculator.Controllers.Api
             
             var instrumentClasses = await _repository.GetInstrumentClassesAsync();
             var dayCounts = await _repository.GetDayCountsAsync();
+            var holidayAdjust = await _repository.GetHolidayAdjustAsync();
+            var interpolationMethods = await _repository.GetInterpolationMethodsAsync();
+            var payFrequency = await _repository.GetPayFreqsAsync();
+            var yieldMethods = await _repository.GetYieldMethodsAsync();
+            
             IDictionary<string,IEnumerable<object>> staticData = new Dictionary<string, IEnumerable<object>>();
             staticData.Add("instrumentClasses",instrumentClasses);
             staticData.Add("dayCounts",dayCounts);
+            staticData.Add("holidayAdjust",holidayAdjust);
+            staticData.Add("interpolationMethods", interpolationMethods);
+            staticData.Add("payFrequency", payFrequency);
+            staticData.Add("yieldMethods", yieldMethods);
 
             return Json(staticData);
         }
