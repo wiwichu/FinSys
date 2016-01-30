@@ -11,7 +11,7 @@
 
 char** getclassdescriptions(int& size)
 {
-	size = instr_last_class;
+	size = instr_last_class-3;//exclude MBS,Float,Cashflow
 	return (char**)instr_class_descs;
 }
 char** getdaycounts(int& size)
