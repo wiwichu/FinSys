@@ -75,7 +75,6 @@
     <Compile Include="Model\CashFlow.cs" />
     <Compile Include="Model\Holiday.cs" />
     <Compile Include="Model\Instrument.cs" />
-    <Compile Include="Model\InstrumentClass.cs" />
     <Compile Include="Model\Portfolio.cs" />
     <Compile Include="Model\RateCurve.cs" />
     <Compile Include="Services\CalculatorRepository.cs" />

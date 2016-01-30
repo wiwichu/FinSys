@@ -22,7 +22,7 @@ namespace FinSys.Wpf.ViewModel
             {
                 return;
             }
-            this.InstrumentClasses = new ObservableCollection<InstrumentClass>();
+            this.InstrumentClasses = new ObservableCollection<string>();
             this.DayCounts = new ObservableCollection<string>();
             this.PayFreqs = new ObservableCollection<string>();
             this.YieldDayCount = new ObservableCollection<string>();
@@ -75,7 +75,7 @@ namespace FinSys.Wpf.ViewModel
             if (YieldMethod.Count > 0)
             {
                 SelectedYieldMethod = yieldMethod[0];
-            }           InstrumentClasses = new ObservableCollection<InstrumentClass>(RepositoryFactory.Calculator.GetInstrumentClassesAsync().Result.Where((c) => c.Name != "MBS"));
+            }           InstrumentClasses = new ObservableCollection<string>(RepositoryFactory.Calculator.GetInstrumentClassesAsync().Result.Where((c) => c != "MBS"));
  
             if (instrumentClasses.Count>0)
             {
@@ -123,11 +123,10 @@ namespace FinSys.Wpf.ViewModel
 
         private async void Calculate(object obj)
         {
-            InstrumentClass ic = SelectedInstrumentClass as InstrumentClass;
             Instrument instrument = new Instrument
             {
                 Name = "Instrument1",
-                Class = ic,
+                Class = (string)SelectedInstrumentClass,
                 IntDayCount = (string)SelectedDayCount,
                 IntPayFreq = (string)SelectedPayFreq,
                 MaturityDate = maturityDate,
@@ -216,11 +215,10 @@ namespace FinSys.Wpf.ViewModel
 
         private async void DefaultDates(object obj)
         {
-            InstrumentClass ic = SelectedInstrumentClass as InstrumentClass;
             Instrument instrument = new Instrument
             {
                 Name = "Instrument1",
-                Class = ic,
+                Class = (string)SelectedInstrumentClass,
                 IntDayCount = (string)SelectedDayCount,
                 IntPayFreq = (string)SelectedPayFreq,
                 MaturityDate = maturityDate,
@@ -293,11 +291,10 @@ namespace FinSys.Wpf.ViewModel
 
         private async void ChangeClass(object obj)
         {
-            InstrumentClass ic = SelectedInstrumentClass as InstrumentClass;
             Instrument instrument = new Instrument
             {
                 Name = "Instrument1",
-                Class = ic,
+                Class = (string)SelectedInstrumentClass,
                 IntDayCount = (string)SelectedDayCount,
                 IntPayFreq = (string)SelectedPayFreq,
                 MaturityDate = maturityDate,
@@ -383,8 +380,8 @@ namespace FinSys.Wpf.ViewModel
             }
         }
 
-        private ObservableCollection<InstrumentClass> instrumentClasses = new ObservableCollection<InstrumentClass>();
-        public ObservableCollection<InstrumentClass> InstrumentClasses
+        private ObservableCollection<string> instrumentClasses = new ObservableCollection<string>();
+        public ObservableCollection<string> InstrumentClasses
         {
             get
             {

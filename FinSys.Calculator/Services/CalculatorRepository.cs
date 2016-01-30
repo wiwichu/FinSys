@@ -69,7 +69,7 @@ namespace FinSys.Calculator.Services
         private ILogger<CalculatorRepository> _logger;
         public CalculatorRepository(ILogger<CalculatorRepository> logger)
         {
-            classes = new List<string>(GetInstrumentClassesAsync().Result.Select((ic) => ic.Name));
+            classes = GetInstrumentClassesAsync().Result;
             dayCounts = GetDayCountsAsync().Result;
             payFreqs = GetPayFreqsAsync().Result;
             yieldMethods = GetYieldMethodsAsync().Result;
@@ -100,11 +100,11 @@ namespace FinSys.Calculator.Services
             return result;
         }
 
-        public async Task<List<InstrumentClass>> GetInstrumentClassesAsync()
+        public async Task<List<string>> GetInstrumentClassesAsync()
         {
-            List<InstrumentClass> result = await Task.Run(() =>
+            List<string> result = await Task.Run(() =>
             {
-                List<InstrumentClass> instrumentClasses = new List<InstrumentClass>();
+                List<string> instrumentClasses = new List<string>();
                 int size;
                 IntPtr ptr = getclassdescriptions(out size);
                 IntPtr strPtr;
@@ -113,11 +113,7 @@ namespace FinSys.Calculator.Services
                     Console.WriteLine("i = " + i);
                     strPtr = Marshal.ReadIntPtr(ptr);
                     string description = Marshal.PtrToStringAnsi(strPtr);
-                    InstrumentClass ic = new InstrumentClass
-                    {
-                        Name = description
-                    };
-                    instrumentClasses.Add(ic);
+                    instrumentClasses.Add(description);
                     ptr += Marshal.SizeOf(typeof(IntPtr));
                 }
                 return instrumentClasses;
@@ -216,10 +212,7 @@ namespace FinSys.Calculator.Services
                 IntDayCount = dayCounts[instr.intDayCount],
                 IntPayFreq = payFreqs[instr.intPayFreq],
                 HolidayAdjust = holidayAdjusts[instr.holidayAdjust],
-                Class = new InstrumentClass
-                {
-                    Name = classes[instr.instrumentClass]
-                },
+                Class = classes[instr.instrumentClass],
                 MaturityDate = new DateTime(matDate.year, matDate.month, matDate.day),
                 IssueDate = new DateTime(issDate.year, issDate.month, issDate.day),
                 FirstPayDate = new DateTime(fpDate.year, fpDate.month, fpDate.day),
@@ -233,7 +226,7 @@ namespace FinSys.Calculator.Services
         private InstrumentDescr makeInstrumentDescr(Instrument instrument)
         {
             Instrument ins = instrument;
-            int insClassNum = classes.IndexOf(ins.Class.Name);
+            int insClassNum = classes.IndexOf(ins.Class);
             int insDayCount = dayCounts.IndexOf(ins.IntDayCount);
             int insPayFreq = payFreqs.IndexOf(ins.IntPayFreq);
             int insHolidayAdjust = holidayAdjusts.IndexOf(ins.HolidayAdjust);
@@ -473,10 +466,7 @@ namespace FinSys.Calculator.Services
                     IntDayCount = dayCounts[instr.intDayCount],
                     IntPayFreq = payFreqs[instr.intPayFreq],
                     HolidayAdjust = holidayAdjusts[instr.holidayAdjust],
-                    Class = new InstrumentClass
-                    {
-                        Name = classes[instr.instrumentClass]
-                    }
+                    Class = classes[instr.instrumentClass]
                 };
                 Calculations newCalcs = new Calculations
                 {

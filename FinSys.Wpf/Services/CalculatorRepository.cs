@@ -55,7 +55,7 @@ namespace FinSys.Wpf.Services
         private List<string> interpolationMethods = new List<string>();
         public CalculatorRepository()
         {
-            classes = new List<string>( GetInstrumentClassesAsync().Result.Select((ic)=>ic.Name));
+            classes = GetInstrumentClassesAsync().Result;
             dayCounts = GetDayCountsAsync().Result;
             payFreqs = GetPayFreqsAsync().Result;
             yieldMethods = GetYieldMethodsAsync().Result;
@@ -85,11 +85,11 @@ namespace FinSys.Wpf.Services
             return result;
         }
 
-        public async Task<List<InstrumentClass>> GetInstrumentClassesAsync()
+        public async Task<List<string>> GetInstrumentClassesAsync()
         {
-            List<InstrumentClass> result = await Task.Run(() =>
+            List<string> result = await Task.Run(() =>
             {
-                List<InstrumentClass> instrumentClasses = new List<InstrumentClass>();
+                List<string> instrumentClasses = new List<string>();
                 int size;
                 IntPtr ptr = getclassdescriptions(out size);
                 IntPtr strPtr;
@@ -98,11 +98,7 @@ namespace FinSys.Wpf.Services
                     Console.WriteLine("i = " + i);
                     strPtr = Marshal.ReadIntPtr(ptr);
                     string description = Marshal.PtrToStringAnsi(strPtr);
-                    InstrumentClass ic = new InstrumentClass
-                    {
-                        Name=description
-                    };
-                    instrumentClasses.Add(ic);
+                    instrumentClasses.Add(description);
                     ptr += Marshal.SizeOf(typeof(IntPtr));
                 }
                 return instrumentClasses;
@@ -190,14 +186,11 @@ namespace FinSys.Wpf.Services
             ntlDate = Marshal.PtrToStructure<DateDescr>(instr.nextToLastPayDate);
             Instrument newInstr = new Instrument
             {
-                EndOfMonthPay = (instr.endOfMonthPay==1),
+                EndOfMonthPay = (instr.endOfMonthPay == 1),
                 IntDayCount = dayCounts[instr.intDayCount],
                 IntPayFreq = payFreqs[instr.intPayFreq],
                 HolidayAdjust = holidayAdjusts[instr.holidayAdjust],
-                Class = new InstrumentClass
-                {
-                    Name = classes[instr.instrumentClass]
-                },
+                Class = classes[instr.instrumentClass],
                 MaturityDate = new DateTime(matDate.year, matDate.month, matDate.day),
                 IssueDate = new DateTime(issDate.year, issDate.month, issDate.day),
                 FirstPayDate = new DateTime(fpDate.year, fpDate.month, fpDate.day),
@@ -211,7 +204,7 @@ namespace FinSys.Wpf.Services
         private InstrumentDescr makeInstrumentDescr(Instrument instrument)
         {
             Instrument ins = instrument;
-            int insClassNum = classes.IndexOf(ins.Class.Name);
+            int insClassNum = classes.IndexOf(ins.Class);
             int insDayCount = dayCounts.IndexOf(ins.IntDayCount);
             int insPayFreq = payFreqs.IndexOf(ins.IntPayFreq);
             int insHolidayAdjust = holidayAdjusts.IndexOf(ins.HolidayAdjust);
@@ -444,10 +437,7 @@ namespace FinSys.Wpf.Services
                     IntDayCount = dayCounts[instr.intDayCount],
                     IntPayFreq = payFreqs[instr.intPayFreq],
                     HolidayAdjust = holidayAdjusts[instr.holidayAdjust],
-                    Class = new InstrumentClass
-                    {
-                        Name = classes[instr.instrumentClass]
-                    }
+                    Class = classes[instr.instrumentClass]
                 };
                 Calculations newCalcs = new Calculations
                 {
@@ -972,14 +962,11 @@ public class DatesDescr
     public IntPtr dates;
        public int size;
 };
-public class InstrumentClass
-{
-    public string Name { get; set; }
-}
+
 public class Instrument
 {
     public string Name { get; set; }
-    public InstrumentClass Class { get; set; }
+    public string Class { get; set; }
     public string IntDayCount { get; set; }
     public string IntPayFreq { get; set; }
     public DateTime MaturityDate { get; set; }

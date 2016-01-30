@@ -8,7 +8,7 @@ namespace FinSys.Calculator.Services
 {
     public interface ICalculatorRepository
     {
-        Task<List<InstrumentClass>> GetInstrumentClassesAsync();
+        Task<List<string>> GetInstrumentClassesAsync();
         Task<List<string>> GetDayCountsAsync();
         Task<List<string>> GetHolidayAdjustAsync();
         Task<List<string>> GetPayFreqsAsync();

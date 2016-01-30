@@ -233,14 +233,11 @@ namespace CalcTests
     {
         public IntPtr dates;
         public int size;
-    }; public class InstrumentClass
-    {
-        public string Name { get; set; }
-    }
+    };
     public class Instrument
     {
         public string Name { get; set; }
-        public InstrumentClass Class { get; set; }
+        public string Class { get; set; }
         public string IntDayCount { get; set; }
         public string IntPayFreq { get; set; }
         public DateTime MaturityDate { get; set; }

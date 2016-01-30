@@ -22,8 +22,8 @@ namespace FinSys.Wpf.Model
                 OnPropertyChanged();
             }
         }
-        private InstrumentClass instrumentClass;
-        public InstrumentClass Class
+        private string instrumentClass;
+        public string Class
         {
             get
             {

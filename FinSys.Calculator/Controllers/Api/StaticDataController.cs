@@ -21,7 +21,7 @@ namespace FinSys.Calculator.Controllers.Api
             var instrumentClasses = await _repository.GetInstrumentClassesAsync();
             var dayCounts = await _repository.GetDayCountsAsync();
             IDictionary<string,IEnumerable<object>> staticData = new Dictionary<string, IEnumerable<object>>();
-            staticData.Add("instrumentClasses",instrumentClasses.Select((c)=>c.Name));
+            staticData.Add("instrumentClasses",instrumentClasses);
             staticData.Add("dayCounts",dayCounts);
 
             return Json(staticData);
