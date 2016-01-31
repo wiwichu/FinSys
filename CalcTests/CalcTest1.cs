@@ -49,7 +49,8 @@ namespace CalcTests
             double price, out double discount, out double mmYield, out double beYield);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int USTBillCalcFromMMYield(DateDescr valueDate, DateDescr maturityDate,
-           double mmYield, out double price, out double discount,  out double beYield);
+           double mmYield, out double price, out double discount,  out double beYield,
+               out double duration, out double modifiedDuration,out double convexity, out double pvbp, out double pvbpConvexityAdjusted);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int USTBillCalcFromDiscount(DateDescr valueDate, DateDescr maturityDate,
             double mmYield, out double price, out double discount, out double beYield);
@@ -4186,13 +4187,24 @@ namespace CalcTests
             double discount = 0;
             double beYield = 0;
             double price = 0;
+            double duration;
+            double modifiedDuration;
+            double convexity;
+            double pvbp;
+            double pvbpConvexityAdjusted;
+
             int status = USTBillCalcFromMMYield(
                 valueDate,
                 maturityDate,
                 mmYield,
                  out price,
                out discount,
-                out beYield);
+                out beYield,
+                out duration,
+                out modifiedDuration, 
+                out convexity, 
+                out pvbp, 
+                out pvbpConvexityAdjusted);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);

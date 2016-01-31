@@ -52,7 +52,8 @@ namespace FinSys.Calculator.Services
             double price, out double discount, out double mmYield, out double beYield);
         [DllImport("calc", CallingConvention = CallingConvention.Cdecl)]
         private static extern int USTBillCalcFromMMYield(DateDescr valueDate, DateDescr maturityDate,
-           double mmYield, out double price, out double discount, out double beYield);
+           double mmYield, out double price, out double discount, out double beYield,
+               out double duration, out double modifiedDuration, out double convexity, out double pvbp, out double pvbpConvexityAdjusted);
         [DllImport("calc", CallingConvention = CallingConvention.Cdecl)]
         private static extern int USTBillCalcFromDiscount(DateDescr valueDate, DateDescr maturityDate,
             double mmYield, out double price, out double discount, out double beYield);

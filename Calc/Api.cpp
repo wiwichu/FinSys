@@ -32,7 +32,7 @@ char** getpayfreqs(int& size)
 
 char**  getyieldmethods(int& size)
 {
-	size = py_last_yield_meth;
+	size = py_last_yield_meth - 1;//Skip MBS
 	return (char**)yield_meth_names;
 }
 
@@ -1588,7 +1588,8 @@ int  USTBillCalcFromDiscount(DateStruct &valueDate, DateStruct &maturityDate,
 }
 
 int  USTBillCalcFromMMYield(DateStruct &valueDate, DateStruct &maturityDate,
-	double mmYield, double &price, double &discount, double &beYield)
+	double mmYield, double &price, double &discount, double &beYield,
+	double &duration, double &modifiedDuration, double &convexity, double &pvbp, double &pvbpConvexityAdjusted)
 {
 	InstrumentStruct instrument;
 	CalculationsStruct calculations;
@@ -1687,7 +1688,11 @@ int  USTBillCalcFromMMYield(DateStruct &valueDate, DateStruct &maturityDate,
 		return result;
 	}
 	beYield = calculations.yieldOut;
-
+	duration = calculations.duration;
+	modifiedDuration = calculations.modifiedDuration;
+	convexity = calculations.convexity;
+	pvbp = calculations.pvbp;
+	pvbpConvexityAdjusted = calculations.pvbpConvexityAdjusted;
 
 	return return_success;
 }

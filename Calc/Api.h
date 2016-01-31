@@ -123,7 +123,8 @@ double RateFromCurve(DateStruct baseDate, RateCurveStruct curve,int interpolatio
 extern "C" __declspec(dllexport) int  USTBillCalcFromPrice(DateStruct &valueDate, DateStruct &maturityDate, 
 	double price,double &discount,double &mmYield,double &beYield);
 extern "C" __declspec(dllexport) int  USTBillCalcFromMMYield(DateStruct &valueDate, DateStruct &maturityDate,
-	double mmYield, double &price, double &discount, double &beYield);
+	double mmYield, double &price, double &discount, double &beYield,
+	double &duration, double &modifiedDuration, double &convexity, double &pvbp, double &pvbpConvexityAdjusted);
 extern "C" __declspec(dllexport) int  USTBillCalcFromDiscount(DateStruct &valueDate, DateStruct &maturityDate,
 	double discount, double &price, double &mmYield, double &beYield);
 extern "C" __declspec(dllexport) int  USTBillCalcFromBEYield(DateStruct &valueDate, DateStruct &maturityDate,
