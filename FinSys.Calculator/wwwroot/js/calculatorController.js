@@ -6,25 +6,30 @@
     angular.module("app-calculator")
     .controller("calculatorController", calculatorController);
 
-    function calculatorController() {
+    function calculatorController($http) {
 
         var vm = this;
-
-        vm.instrumentClass = [{
-            name: "German Bund",
-            created: new Date()
-        },
-        {
-            name: "US Discount",
-            created: new Date()
+        vm.errorMessage = "";
+        vm.staticData = [];
+        vm.instrumentClass = [];
+        vm.selectedInstrumentClass = "";
+        vm.isBusy = true;
+        $http.get("/api/staticdata")
+            .then(function (response) {
+                vm.instrumentClass = response.data.instrumentClasses;
+                //vm.selectedInstrumentClass = response.data.instrumentClasses[0];
+            }, function (error) {
+                vm.errorMessage = "Failed to load data: " + error;
+            })
+        .finally(function () {
+            vm.isBusy = false;
+        });
+        vm.instrumentClassChanged = function () {
+            alert("Selected Instrument: " + vm.selectedInstrumentClass);
         }
-,
-        {
-            name: "US TBond",
-            created: new Date()
+        vm.instrumentClassSelected = function (selectedItem) {
+            alert("Selected Instrument: " + selectedItem);
         }
-        ];
-           
-
     }
+
 })();
