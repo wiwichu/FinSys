@@ -2,6 +2,9 @@
 (function () {
 
     "use strict";
-    angular.module("app-calculator", []);
+    angular.module("app-calculator", [
+        "ngRoute",
+        "ui.bootstrap"
+    ]);
 
 })();

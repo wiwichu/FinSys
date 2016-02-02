@@ -4,7 +4,20 @@
     "use strict";
 
     angular.module("app-calculator")
-    .controller("calculatorController", calculatorController);
+    .controller("calculatorController", calculatorController)
+    .controller('DatePickerController', DatePickerController);
+    
+    DatePickerController.$inject = ['$scope'];
+ 
+    function DatePickerController($scope) {
+        $scope.open = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+ 
+            $scope.opened = true;
+        };
+        $scope.ReleaseDate = new Date();
+    }
 
     function calculatorController($http) {
 
@@ -13,11 +26,11 @@
         vm.staticData = [];
         vm.instrumentClass = [];
         vm.selectedInstrumentClass = "";
+        vm.opened = false;
         vm.isBusy = true;
         $http.get("/api/staticdata")
             .then(function (response) {
                 vm.instrumentClass = response.data.instrumentClasses;
-                //vm.selectedInstrumentClass = response.data.instrumentClasses[0];
             }, function (error) {
                 vm.errorMessage = "Failed to load data: " + error;
             })
@@ -30,6 +43,50 @@
         vm.instrumentClassSelected = function (selectedItem) {
             alert("Selected Instrument: " + selectedItem);
         }
-    }
+        ///////////////////// datepicker ///////////////////////
+              vm.datepickers = {
+        maturityDate: false,
+        valueDate: false
+      }
+      vm.maturityDate = new Date();
+      vm.valueDate = new Date();
 
+      vm.showWeeks = true;
+      vm.toggleWeeks = function () {
+        vm.showWeeks = ! vm.showWeeks;
+      };
+
+      vm.clear = function () {
+        vm.maturityDate = null;
+      };
+
+      // Disable weekend selection
+      vm.disabled = function(date, mode) {
+        return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+      };
+
+      vm.toggleMin = function() {
+        vm.minDate = ( vm.minDate ) ? null : new Date();
+      };
+      vm.toggleMin();
+
+      vm.open = function($event, which) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        $timeout(function () { vm.datepickers[which] = true; });
+      };
+
+      vm.dateOptions = {
+        'year-format': "'yy'",
+        'starting-day': 1
+      };
+
+      vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'shortDate'];
+      vm.format = vm.formats[0];
+        /////////////////////////////////
+      vm.openVD = function () {
+          $timeout(function () {  vm.opened = true;  });
+      };
+     }
 })();

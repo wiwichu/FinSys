@@ -10,7 +10,8 @@
     "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final",
     "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",
     "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final",
-    "AutoMapper": "4.1.1"
+    "AutoMapper": "4.1.1",
+    "Angular.UI.Bootstrap": "1.1.1"
   },
 
   "commands": {
