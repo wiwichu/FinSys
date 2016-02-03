@@ -47,6 +47,9 @@
         vm.instrumentClassSelected = function (selectedItem) {
             alert("Selected Instrument: " + selectedItem);
         }
+        vm.calcUSTBill = function (selectedItem) {
+            alert("Calculation USTBill");
+        }
         ///////////////////// datepicker ///////////////////////
               vm.datepickers = {
         maturityDate: false,
