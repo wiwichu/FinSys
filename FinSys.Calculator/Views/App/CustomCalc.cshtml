@@ -59,7 +59,7 @@
                     <input id="maturityDate" type="text" class="form-control" uib-datepicker-popup="{{format}}"
                            name="maturityDate" ng-model="vm.maturityDate" is-open="vm.datepickers.maturityDate"
                            datepicker-options="dateOptions" ng-required="true"
-                           close-text="Close" ng-focus="vm.datepickers.maturityDate=true" />
+                           close-text="Close" />
                     <span class="input-group-btn">
                         <button class="btn btn-default" ng-click="vm.open($event,'maturityDate')" ng-focus="vm.datepickers.maturityDate=true">
                             <i class="fa fa-calendar"></i>
@@ -73,7 +73,7 @@
                     <input id="valueDate" type="text" class="form-control" uib-datepicker-popup="{{format}}"
                            name="valueDate" ng-model="vm.valueDate" is-open="vm.datepickers.valueDate"
                            datepicker-options="dateOptions" ng-required="true"
-                           close-text="Close" ng-focus="vm.datepickers.valueDate=true" />
+                           close-text="Close" />
                     <span class="input-group-btn">
                         <button class="btn btn-default" ng-click="vm.open($event,'valueDate')" ng-focus="vm.datepickers.valueDate=true">
                             <i class="fa fa-calendar"></i>
