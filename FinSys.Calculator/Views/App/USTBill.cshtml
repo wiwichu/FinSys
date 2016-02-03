@@ -16,24 +16,24 @@
     <div class="row" ng-app="app-calculator" ng-controller="calculatorController as vm">
         <div class="text-danger text-center" ng-show="vm.errorMessage">{{ vm.errorMessage}}</div>
         <div class="text-center" ng-show="vm.isBusy"><i class="fa fa-spinner fa-spin"></i> Loading... </div>
-        <div class="col-md-2">
-            <form novalidate name="USTBillForm">
-                <div class="form-group">
+        <form novalidate name="USTBillForm">
+            <div class="col-md-2">
+                <div class="form-group ">
                     <div class="input-group">
-                         <label for="maturityDate"> Maturity Date</label>
+                        <label for="maturityDate"> Maturity Date</label>
                         <span class="input-group-btn">
                             <button class="btn btn-info btn-xs">
                                 <i class="fa fa-question-circle"></i>
                             </button>
                         </span>
                     </div>
-                    <div class="input-group">
+                    <div class="input-group input-group-sm">
                         <input id="maturityDate" type="text" class="form-control" uib-datepicker-popup="{{format}}"
                                name="maturityDate" ng-model="vm.maturityDate" is-open="vm.datepickers.maturityDate"
-                               datepicker-options="dateOptions" ng-required="true" 
+                               datepicker-options="dateOptions" ng-required="true"
                                close-text="Close" />
                         <span class="input-group-btn">
-                            <button class="btn btn-default" ng-click="vm.open($event,'maturityDate')" ng-focus="vm.datepickers.maturityDate=true">
+                            <button class="btn btn-xs" ng-click="vm.open($event,'maturityDate')" ng-focus="vm.datepickers.maturityDate=true">
                                 <i class="fa fa-calendar"></i>
                             </button>
                         </span>
@@ -48,14 +48,14 @@
                                 <i class="fa fa-question-circle"></i>
                             </button>
                         </span>
-                     </div>
-                    <div class="input-group">
+                    </div>
+                    <div class="input-group input-group-sm">
                         <input id="valueDate" type="text" class="form-control" uib-datepicker-popup="{{format}}"
                                name="valueDate" ng-model="vm.valueDate" is-open="vm.datepickers.valueDate"
                                datepicker-options="dateOptions" ng-required="true"
                                close-text="Close" />
                         <span class="input-group-btn">
-                            <button class="btn btn-default" ng-click="vm.open($event,'valueDate')" ng-focus="vm.datepickers.valueDate=true">
+                            <button class="btn btn-xs" ng-click="vm.open($event,'valueDate')" ng-focus="vm.datepickers.valueDate=true">
                                 <i class="fa fa-calendar"></i>
                             </button>
                         </span>
@@ -63,9 +63,46 @@
                     <span class="text-danger" ng-show="USTBillForm.valueDate.$error.required">Required</span>
                 </div>
 
-                <div>
-                    <input type="submit" value="Calculate" class="btn btn-success" ng-disabled="USTBillForm.$invalid"/>
+                <label for="calcRadio">Calculate From:</label>
+                 <div class="form-group" ng-init="vm.calcChoice='price'">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="calcChoice" value="price" ng-model="vm.calcChoice">
+                            Price
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="calcChoice" value="discount" ng-model="vm.calcChoice">
+                            Discount
+                        </label>
+                    </div>
+                     <div class="radio">
+                         <label>
+                             <input type="radio" name="calcChoice" value="be" ng-model="vm.calcChoice">
+                             Bond Equivalent
+                         </label>
+                     </div>
+                     <div class="radio">
+                         <label>
+                             <input type="radio" name="calcChoice" value="mmYield" ng-model="vm.calcChoice">
+                             MM Yield
+                         </label>
+                     </div>
                 </div>
+                <div>
+                    <input type="submit" value="Calculate" class="btn btn-success" ng-disabled="USTBillForm.$invalid" />
+                </div>
+               </div>
+            <span>
+
+
+
+
+
+            </span>
+
+
+
             </form>
-        </div>
-    </div>
+</div>

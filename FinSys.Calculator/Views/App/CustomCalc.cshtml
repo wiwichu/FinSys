@@ -16,20 +16,20 @@
 <div class="row" ng-app="app-calculator" ng-controller="calculatorController as vm" >
     <div class="text-danger text-center" ng-show="vm.errorMessage">{{ vm.errorMessage}}</div>
     <div class="text-center" ng-show="vm.isBusy"><i class="fa fa-spinner fa-spin"></i> Loading... </div>
-    <div class="col-md-2">
-        <form>
+    <form>
+        <div class="col-md-2">
             <div class="form-group">
                 <label for="instrumentClassSelect">Instrument Class</label>
                 <select class="form-control" name="instrumentClassSelect" id="instrumentClassSelect"
                         ng-options="iClass for iClass in vm.instrumentClass"
-                        ng-model="vm.selectedInstrumentClass"                         
+                        ng-model="vm.selectedInstrumentClass"
                         ng-change="vm.instrumentClassChanged()">
                     <option value="" ng-if=!vm.selectedInstrumentClass>Select...</option>
                 </select>
                 <!--
                 <select  class="form-control"  name="instrumentClassSelect" id="instrumentClassSelect">
-                   <option ng-repeat="iClass in vm.instrumentClass" value="{{iClass}}" 
-                         >{{iClass}}</option> 
+                   <option ng-repeat="iClass in vm.instrumentClass" value="{{iClass}}"
+                         >{{iClass}}</option>
                 </select>
                     -->
             </div>
@@ -49,10 +49,8 @@
                 <label>Payment Date Adjust</label>
                 <input class="form-control" />
             </div>
-        </form>
-    </div>
-    <div class="col-md-2">
-        <form>
+        </div>
+        <div class="col-md-2">
             <div class="form-group">
                 <label for="maturityDate">Maturity Date</label>
                 <div class="input-group">
@@ -85,6 +83,6 @@
             <div>
                 <input type="submit" value="Calculate" class="btn btn-success" />
             </div>
+        </div>
         </form>
-    </div>
 </div>
