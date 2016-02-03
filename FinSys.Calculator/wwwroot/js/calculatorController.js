@@ -31,6 +31,10 @@
         $http.get("/api/staticdata")
             .then(function (response) {
                 vm.instrumentClass = response.data.instrumentClasses;
+                if (response.data.instrumentClasses != null && response.data.instrumentClasses[0] != null)
+                {
+                    vm.selectedInstrumentClass = response.data.instrumentClasses[0];
+                }
             }, function (error) {
                 vm.errorMessage = "Failed to load data: " + error;
             })

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace FinSys.Calculator.Controllers.Api
 {
+    [Route("api/staticdata")]
     public class StaticDataController : Controller
     {
         private ICalculatorRepository _repository;
@@ -14,7 +15,7 @@ namespace FinSys.Calculator.Controllers.Api
         {
             _repository = repository;
         }
-        [HttpGet("api/staticdata")]
+        [HttpGet("")]
         public async Task<JsonResult> Get()
         {
             
