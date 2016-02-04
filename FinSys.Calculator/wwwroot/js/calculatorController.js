@@ -28,6 +28,8 @@
         vm.selectedInstrumentClass = "";
         vm.opened = false;
         vm.isBusy = true;
+        vm.price = 0.00;
+        vm.discount = 0.00;
         $http.get("/api/staticdata")
             .then(function (response) {
                 vm.instrumentClass = response.data.instrumentClasses;

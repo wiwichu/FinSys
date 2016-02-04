@@ -13,7 +13,7 @@
         <h2>USTBill Calculator</h2>
     </div>
 </div>
-<div class="row" ng-app="app-calculator" ng-controller="calculatorController as vm">
+<div class="row" ng-app="app-calculator" ng-controller="calculatorController as vm" >
     <div class="text-danger text-center" ng-show="vm.errorMessage">{{ vm.errorMessage}}</div>
     <div class="text-center" ng-show="vm.isBusy"><i class="fa fa-spinner fa-spin"></i> Loading... </div>
     <form novalidate name="USTBillForm" ng-submit="vm.calcUSTBill()">
@@ -93,12 +93,17 @@
         </div>
         <div class="col-md-2">
             <div class="form-group">
-                <label for="price">Price</label>
-                <input class="form-control" id="price" />
+                <div class="input-group">
+                    <label for="price">Price</label>
+                    <input type="text" class="form-control" id="price" name="price"
+                           ng-model="vm.price" ng-required="true" ng-pattern="/^\d{0,20}(\.\d{1,20})?$/" />
+                </div>
+                <span class="text-danger" ng-show="USTBillForm.price.$error.required">Required</span>
+                <span class="text-danger" ng-show="USTBillForm.price.$error.pattern">Not a valid Number</span>
             </div>
             <div class="form-group">
                 <label for="discount">Discount</label>
-                <input class="form-control" id="discount" />
+                <input class="form-control" id="discount" ng-model="vm.price" />
             </div>
             <div class="form-group">
                 <label for="be">Bond Equivalent</label>
@@ -126,7 +131,7 @@
         <div class="col-md-2">
             <div class="form-group">
                 <label for="pvbp">PVBP</label>
-                <input class="form-control" id="pvbp" />
+                <input class="form-control" id="pvbp"/>
             </div>
             <div class="form-group">
                 <label for="cvxPvbp">Convexity Adjusted PVBP</label>
