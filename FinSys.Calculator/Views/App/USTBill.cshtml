@@ -14,10 +14,10 @@
     </div>
 </div>
 <div class="row" ng-app="app-calculator" ng-controller="calculatorController as vm" >
-    <div class="text-danger text-center" ng-show="vm.errorMessage">{{ vm.errorMessage}}</div>
+    <div class="text-danger text-center" ng-cloak ng-show="vm.errorMessage">{{ vm.errorMessage}}</div>
     <div class="text-center" ng-show="vm.isBusy"><i class="fa fa-spinner fa-spin"></i> Loading... </div>
     <form novalidate name="USTBillForm">
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div class="form-group ">
                 <div class="input-group">
                     <label for="maturityDate"> Maturity Date</label>
@@ -38,7 +38,7 @@
                         </button>
                     </span>
                 </div>
-                <span class="text-danger" ng-show="USTBillForm.maturityDate.$error.required">Required</span>
+                <span class="text-danger" ng-cloak ng-show="USTBillForm.maturityDate.$error.required">Required</span>
             </div>
             <div class="form-group">
                 <div class="input-group">
@@ -60,7 +60,7 @@
                         </button>
                     </span>
                 </div>
-                <span class="text-danger" ng-show="USTBillForm.valueDate.$error.required">Required</span>
+                <span class="text-danger" ng-cloak ng-show="USTBillForm.valueDate.$error.required">Required</span>
             </div>
 
             <label for="calcRadio">Calculate From:</label>
@@ -91,39 +91,39 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div class="form-group">
                 <div class="input-group">
                     <label for="price">Price (Par=100)</label>
                     <input type="text" class="form-control" id="price" name="price"
                            ng-model="vm.price" ng-required="true" ng-pattern="/^\d{0,20}(\.\d{1,20})?$/" />
                 </div>
-                <span class="text-danger" ng-show="USTBillForm.price.$error.required">Required</span>
-                <span class="text-danger" ng-show="USTBillForm.price.$error.pattern">Invalid Number</span>
+                <span class="text-danger" ng-cloak ng-show="USTBillForm.price.$error.required">Required</span>
+                <span class="text-danger" ng-cloak ng-show="USTBillForm.price.$error.pattern">Invalid Number</span>
             </div>
             <div class="form-group">
                 <label for="discount">Discount</label>
                 <input type="text" class="form-control" id="discount" name="discount" ng-model="vm.discount" 
                         ng-required="true" ng-pattern="/^\d{0,20}(\.\d{1,20})?$/"/>
             </div>
-            <span class="text-danger" ng-show="USTBillForm.discount.$error.required">Required</span>
-            <span class="text-danger" ng-show="USTBillForm.discount.$error.pattern">Invalid Number</span>
+            <span class="text-danger" ng-cloak ng-show="USTBillForm.discount.$error.required">Required</span>
+            <span class="text-danger" ng-cloak ng-show="USTBillForm.discount.$error.pattern">Invalid Number</span>
             <div class="form-group">
                 <label for="be">Bond Equivalent</label>
                 <input type="text"  class="form-control" id="be"  name="be" ng-model="vm.be" 
                         ng-required="true" ng-pattern="/^\d{0,20}(\.\d{1,20})?$/"/>
             </div>
-            <span class="text-danger" ng-show="USTBillForm.be.$error.required">Required</span>
-            <span class="text-danger" ng-show="USTBillForm.be.$error.pattern">Invalid Number</span>
+            <span class="text-danger" ng-cloak ng-show="USTBillForm.be.$error.required">Required</span>
+            <span class="text-danger" ng-cloak ng-show="USTBillForm.be.$error.pattern">Invalid Number</span>
             <div class="form-group">
                 <label for="mmYield">MM Yield</label>
                 <input type="text"  class="form-control" id="mmYield"  name="mmYield" ng-model="vm.mmYield" 
                         ng-required="true" ng-pattern="/^\d{0,20}(\.\d{1,20})?$/"/>
             </div>
-            <span class="text-danger" ng-show="USTBillForm.mmYield.$error.required">Required</span>
-            <span class="text-danger" ng-show="USTBillForm.mmYield.$error.pattern">Invalid Number</span>
+            <span class="text-danger" ng-cloak ng-show="USTBillForm.mmYield.$error.required">Required</span>
+            <span class="text-danger" ng-cloak ng-show="USTBillForm.mmYield.$error.pattern">Invalid Number</span>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div class="form-group">
                 <label for="duration">Duration</label>
                 <input class="form-control" id="duration" readonly ng-model="vm.duration"/>
@@ -137,7 +137,7 @@
                 <input class="form-control" id="convexity"  readonly ng-model="vm.convexity"/>
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div class="form-group">
                 <label for="pvbp">PVBP</label>
                 <input class="form-control" id="pvbp"  readonly ng-model="vm.pvbp"/>
