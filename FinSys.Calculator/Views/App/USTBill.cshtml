@@ -16,7 +16,7 @@
 <div class="row" ng-app="app-calculator" ng-controller="calculatorController as vm" >
     <div class="text-danger text-center" ng-show="vm.errorMessage">{{ vm.errorMessage}}</div>
     <div class="text-center" ng-show="vm.isBusy"><i class="fa fa-spinner fa-spin"></i> Loading... </div>
-    <form novalidate name="USTBillForm" ng-submit="vm.calcUSTBill()">
+    <form novalidate name="USTBillForm">
         <div class="col-md-2">
             <div class="form-group ">
                 <div class="input-group">
@@ -94,50 +94,60 @@
         <div class="col-md-2">
             <div class="form-group">
                 <div class="input-group">
-                    <label for="price">Price</label>
+                    <label for="price">Price (Par=100)</label>
                     <input type="text" class="form-control" id="price" name="price"
                            ng-model="vm.price" ng-required="true" ng-pattern="/^\d{0,20}(\.\d{1,20})?$/" />
                 </div>
                 <span class="text-danger" ng-show="USTBillForm.price.$error.required">Required</span>
-                <span class="text-danger" ng-show="USTBillForm.price.$error.pattern">Not a valid Number</span>
+                <span class="text-danger" ng-show="USTBillForm.price.$error.pattern">Invalid Number</span>
             </div>
             <div class="form-group">
                 <label for="discount">Discount</label>
-                <input class="form-control" id="discount" ng-model="vm.price" />
+                <input type="text" class="form-control" id="discount" name="discount" ng-model="vm.discount" 
+                        ng-required="true" ng-pattern="/^\d{0,20}(\.\d{1,20})?$/"/>
             </div>
+            <span class="text-danger" ng-show="USTBillForm.discount.$error.required">Required</span>
+            <span class="text-danger" ng-show="USTBillForm.discount.$error.pattern">Invalid Number</span>
             <div class="form-group">
                 <label for="be">Bond Equivalent</label>
-                <input class="form-control" id="be" />
+                <input type="text"  class="form-control" id="be"  name="be" ng-model="vm.be" 
+                        ng-required="true" ng-pattern="/^\d{0,20}(\.\d{1,20})?$/"/>
             </div>
+            <span class="text-danger" ng-show="USTBillForm.be.$error.required">Required</span>
+            <span class="text-danger" ng-show="USTBillForm.be.$error.pattern">Invalid Number</span>
             <div class="form-group">
                 <label for="mmYield">MM Yield</label>
-                <input class="form-control" id="mmYield" />
+                <input type="text"  class="form-control" id="mmYield"  name="mmYield" ng-model="vm.mmYield" 
+                        ng-required="true" ng-pattern="/^\d{0,20}(\.\d{1,20})?$/"/>
             </div>
+            <span class="text-danger" ng-show="USTBillForm.mmYield.$error.required">Required</span>
+            <span class="text-danger" ng-show="USTBillForm.mmYield.$error.pattern">Invalid Number</span>
         </div>
         <div class="col-md-2">
             <div class="form-group">
                 <label for="duration">Duration</label>
-                <input class="form-control" id="duration" />
+                <input class="form-control" id="duration" readonly ng-model="vm.duration"/>
             </div>
             <div class="form-group">
                 <label for="modDuration">Modified Duration</label>
-                <input class="form-control" id="modDuration" />
+                <input class="form-control" id="modDuration" readonly ng-model="vm.modDuration" />
             </div>
             <div class="form-group">
                 <label for="convexity">Convexity</label>
-                <input class="form-control" id="convexity" />
+                <input class="form-control" id="convexity"  readonly ng-model="vm.convexity"/>
             </div>
         </div>
         <div class="col-md-2">
             <div class="form-group">
                 <label for="pvbp">PVBP</label>
-                <input class="form-control" id="pvbp"/>
+                <input class="form-control" id="pvbp"  readonly ng-model="vm.pvbp"/>
             </div>
             <div class="form-group">
                 <label for="cvxPvbp">Convexity Adjusted PVBP</label>
-                <input class="form-control" id="cvxPvbp" />
+                <input class="form-control" id="cvxPvbp"  readonly ng-model="vm.cvxPvbp"/>
             </div>
-            <input type="submit" value="Calculate" class="btn btn-success btn-large" ng-disabled="USTBillForm.$invalid" />
+            <input type="submit" value="Calculate" class="btn btn-success btn-large"
+                    ng-click="vm.calcUSTBill()" ng-disabled="USTBillForm.$invalid" />
         </div>
     </form>
 

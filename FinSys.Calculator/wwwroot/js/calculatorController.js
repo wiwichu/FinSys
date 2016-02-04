@@ -30,6 +30,13 @@
         vm.isBusy = true;
         vm.price = 0.00;
         vm.discount = 0.00;
+        vm.be = 0.00;
+        vm.mmYield = 0.00;
+        vm.duration = 0.00;
+        vm.modDuration = 0.00;
+        vm.convexity = 0.00;
+        vm.pvbp = 0.00;
+        vm.cvxPvbp = 0.00;
         $http.get("/api/staticdata")
             .then(function (response) {
                 vm.instrumentClass = response.data.instrumentClasses;
