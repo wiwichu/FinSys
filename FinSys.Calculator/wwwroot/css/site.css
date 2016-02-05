@@ -86,3 +86,6 @@ input[type=text], input[type=password], textarea {
         -webkit-transition: margin-left ease .25s;
         transition: margin-left ease .25s;
     }
+    #childpage {
+    margin-bottom: 125px;
+}
