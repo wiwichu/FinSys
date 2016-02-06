@@ -1414,8 +1414,6 @@ int  USTBillCalcFromPriceWithCashFlows(DateStruct &valueDate, DateStruct &maturi
 	calculations.valueDate->month = valueDate.month;
 	calculations.valueDate->year = valueDate.year;
 
-	DatesStruct holidays;
-	holidays.size = 0;
 	result = getDefaultDatesAndData(instrument, calculations, holidays);
 	if (result != return_success)
 	{

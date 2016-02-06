@@ -4131,13 +4131,17 @@ namespace CalcTests
             double discount = 0;
             double mmYield = 0;
             double beYield = 0;
-            int status = USTBillCalcFromPrice(
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            CashFlowsDescr cashFlows = new CashFlowsDescr();
+            int dateAdjust = (int)TestHelper.DateAdjustRule.event_sched_next_holiday_adj;
+            int status = USTBillCalcFromPriceWithCashFlows(
                 valueDate,
                 maturityDate,
                 price,
                 out discount,
                 out mmYield,
-                out beYield);
+                out beYield, cashFlows, dateAdjust, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -4145,6 +4149,30 @@ namespace CalcTests
                 status = getStatusText(status, statusText, out textSize);
                 throw new InvalidOperationException(statusText.ToString());
             }
+            TestContext.WriteLine("");
+
+            var structSize = Marshal.SizeOf(typeof(CashFlowDescr));
+            var cashFlowsOut = new List<CashFlowDescr>();
+            var cashFlowOut = cashFlows.cashFlows;
+
+            for (int i = 0; i < cashFlows.size; i++)
+            {
+                cashFlowsOut.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
+                    typeof(CashFlowDescr)));
+                cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
+            }
+            TestContext.WriteLine("");
+            TestContext.WriteLine("After CALL:");
+            TestContext.WriteLine("");
+
+            foreach (CashFlowDescr cfd in cashFlowsOut)
+            {
+                TestContext.WriteLine("Date: {0}.{1}.{2} Amount: {3} AdjDate: {4}.{5}.{6} ", cfd.year, cfd.month, cfd.day, cfd.amount, cfd.adjustedYear, cfd.adjustedMonth, cfd.adjustedDay);
+            }
+            Assert.AreEqual(cashFlowsOut[0].day, 31);
+            Assert.AreEqual(cashFlowsOut[0].month, 3);
+            Assert.AreEqual(cashFlowsOut[0].year, 2003);
+
             Assert.IsTrue(Math.Abs(beResult - beYield) < .00005);
             Assert.IsTrue(Math.Abs(mmyResult - mmYield) < .00005);
             Assert.IsTrue(Math.Abs(discountResult - discount) < .00005);
