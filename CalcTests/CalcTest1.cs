@@ -48,6 +48,9 @@ namespace CalcTests
         private static extern int USTBillCalcFromPrice(DateDescr valueDate, DateDescr maturityDate,
             double price, out double discount, out double mmYield, out double beYield);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern int USTBillCalcFromPriceWithCashFlows(DateDescr valueDate, DateDescr maturityDate,
+            double price, out double discount, out double mmYield, out double beYield, CashFlowsDescr cashFlows, int dateAdjustRule, DatesDescr holidays);
+        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int USTBillCalcFromMMYield(DateDescr valueDate, DateDescr maturityDate,
            double mmYield, out double price, out double discount,  out double beYield,
                out double duration, out double modifiedDuration,out double convexity, out double pvbp, out double pvbpConvexityAdjusted);

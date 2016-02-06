@@ -19,7 +19,7 @@
         $scope.ReleaseDate = new Date();
     }
 
-    function calculatorController($http) {
+    function calculatorController($http,$location) {
 
         var vm = this;
         vm.errorMessage = "";
@@ -37,7 +37,16 @@
         vm.convexity = 0.00;
         vm.pvbp = 0.00;
         vm.cvxPvbp = 0.00;
-        $http.get("/api/staticdata")
+        vm.api = "/api/staticdata";
+        vm.protocol = $location.protocol() + "://";
+        vm.host = $location.host();
+        vm.port = $location.port();
+        if (vm.port)
+        {
+            vm.port = ":" + vm.port;
+        }
+        vm.apiPath = vm.protocol + vm.host + vm.port + vm.api;
+        $http.get(vm.api)
             .then(function (response) {
                 vm.instrumentClass = response.data.instrumentClasses;
                 if (response.data.instrumentClasses != null && response.data.instrumentClasses[0] != null)
@@ -58,6 +67,9 @@
         }
         vm.calcUSTBill = function (selectedItem) {
             alert("Calculation USTBill");
+        }
+        vm.getApi = function () {
+            alert(vm.apiPath);
         }
         ///////////////////// datepicker ///////////////////////
               vm.datepickers = {
