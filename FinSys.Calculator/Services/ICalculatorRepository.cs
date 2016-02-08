@@ -25,5 +25,6 @@ namespace FinSys.Calculator.Services
             DateTime valueDate,
             List<RateCurve> rateCurve,
             string interpolation);
+        Task<USTBillResult> USTBillCalcAsync(USTBill usTbill);
     }
 }

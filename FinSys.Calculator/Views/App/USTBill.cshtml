@@ -52,21 +52,21 @@
             </div>
             <div class="form-group">
                 <label for="discount">Discount</label>
-                <input type="text" class="form-control" id="discount" name="discount" ng-model="vm.discount"
+                <input type="text" class="form-control" id="discount" name="discount" ng-model="vm.ustbill.discount"
                        ng-required="true" ng-pattern="/^\d{0,20}(\.\d{1,20})?$/" />
             </div>
             <span class="text-danger" ng-cloak ng-show="USTBillForm.discount.$error.required">Required</span>
             <span class="text-danger" ng-cloak ng-show="USTBillForm.discount.$error.pattern">Invalid Number</span>
             <div class="form-group">
                 <label for="be">Bond Equivalent</label>
-                <input type="text" class="form-control" id="be" name="be" ng-model="vm.be"
+                <input type="text" class="form-control" id="be" name="be" ng-model="vm.ustbill.be"
                        ng-required="true" ng-pattern="/^\d{0,20}(\.\d{1,20})?$/" />
             </div>
             <span class="text-danger" ng-cloak ng-show="USTBillForm.be.$error.required">Required</span>
             <span class="text-danger" ng-cloak ng-show="USTBillForm.be.$error.pattern">Invalid Number</span>
             <div class="form-group">
                 <label for="mmYield">MM Yield</label>
-                <input type="text" class="form-control" id="mmYield" name="mmYield" ng-model="vm.mmYield"
+                <input type="text" class="form-control" id="mmYield" name="mmYield" ng-model="vm.ustbill.mmYield"
                        ng-required="true" ng-pattern="/^\d{0,20}(\.\d{1,20})?$/" />
             </div>
             <span class="text-danger" ng-cloak ng-show="USTBillForm.mmYield.$error.required">Required</span>
@@ -98,35 +98,35 @@
                 <span class="text-danger" ng-cloak ng-show="!USTBillForm.valueDate.$valid">Enter a Valid Date</span>
             </div>
             <label for="calcRadio">Calculate From:</label>
-            <div class="form-group" ng-init="vm.calcChoice='price'">
+            <div class="form-group" ng-init="vm.ustbill.calcfrom='price'">
                 <div class="radio ">
                     <label>
-                        <input type="radio" name="calcChoice" value="price" ng-model="vm.calcChoice">
+                        <input type="radio" name="calcchoice" value="price" ng-model="vm.ustbill.calcfrom">
                         Price
                     </label>
                 </div>
                 <div class="radio">
                     <label>
-                        <input type="radio" name="calcChoice" value="discount" ng-model="vm.calcChoice">
+                        <input type="radio" name="calcChoice" value="discount" ng-model="vm.ustbill.calcfrom">
                         Discount
                     </label>
                 </div>
                 <div class="radio">
                     <label>
-                        <input type="radio" name="calcChoice" value="be" ng-model="vm.calcChoice">
+                        <input type="radio" name="calcChoice" value="be" ng-model="vm.ustbillcalcfrom">
                         Bond Equivalent
                     </label>
                 </div>
                 <div class="radio">
                     <label>
-                        <input type="radio" name="calcChoice" value="mmYield" ng-model="vm.calcChoice">
+                        <input type="radio" name="calcChoice" value="mmYield" ng-model="vm.ustbill.calcfrom">
                         MM Yield
                     </label>
                 </div>
             </div>
             <div class="form-group">
                 <label class="checkbox-inline">
-                    <input type="checkbox" name="includeCashflows" ng-model="vm.includeCashflows"> Include Cashflows
+                    <input type="checkbox" name="includeCashflows" ng-model="vm.ustbill.includeCashflows"> Include Cashflows
                 </label>
             </div>
             <div class="row">

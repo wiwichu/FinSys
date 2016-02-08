@@ -1,4 +1,5 @@
-﻿using FinSys.Calculator.Models;
+﻿using AutoMapper;
+using FinSys.Calculator.Models;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,9 @@ namespace FinSys.Calculator.Services
         [DllImport("calc", CallingConvention = CallingConvention.Cdecl)]
         private static extern int USTBillCalcFromPrice(DateDescr valueDate, DateDescr maturityDate,
             double price, out double discount, out double mmYield, out double beYield);
+        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern int USTBillCalcFromPriceWithCashFlows(DateDescr valueDate, DateDescr maturityDate,
+            double price, out double discount, out double mmYield, out double beYield, CashFlowsDescr cashFlows, int dateAdjustRule, DatesDescr holidays);
         [DllImport("calc", CallingConvention = CallingConvention.Cdecl)]
         private static extern int USTBillCalcFromMMYield(DateDescr valueDate, DateDescr maturityDate,
            double mmYield, out double price, out double discount, out double beYield,
@@ -821,6 +825,180 @@ namespace FinSys.Calculator.Services
 
             }
 
+        }
+
+        public async Task<USTBillResult> USTBillCalcAsync(USTBill usTbill)
+        {
+            try
+            {
+                USTBillResult result = await Task.Run(() =>
+                {
+                    DateDescr maturityDate = Mapper.Map<DateDescr>(usTbill.MaturityDate);
+                    DateDescr valueDate = Mapper.Map<DateDescr>(usTbill.ValueDate);
+
+                    double price = usTbill.CalcSource;
+                    double discount = usTbill.CalcSource;
+                    double mmYield = usTbill.CalcSource;
+                    double beYield = usTbill.CalcSource;
+                    double duration=0;
+                    double modifiedDuration=0;
+                    double convexity=0;
+                    double pvbp=0;
+                    double pvbpConvexityAdjusted=0;
+                    DatesDescr holidays = new DatesDescr();
+                    holidays.size = 0;
+                    CashFlowsDescr cashFlows = null;
+                    int dateAdjust = (int)InstrumentDescr.DateAdjustRule.event_sched_next_holiday_adj;
+                    int status = 0;
+                    switch (usTbill.CalcFrom)
+                    {
+                        case USTBill.CALCULATEFROM.BONDEQUIVALENT:
+                            status = USTBillCalcFromBEYield(
+                                valueDate,
+                                maturityDate,
+                                beYield,
+                                 out price,
+                               out mmYield,
+                                out discount);
+                            break;
+                        case USTBill.CALCULATEFROM.DISCOUNT:
+                            status = USTBillCalcFromDiscount(
+                                valueDate,
+                                maturityDate,
+                                discount,
+                                 out price,
+                               out mmYield,
+                                out beYield);
+                            break;
+                        case USTBill.CALCULATEFROM.MMYIELD:
+                            status = USTBillCalcFromMMYield(
+                                valueDate,
+                                maturityDate,
+                                mmYield,
+                                 out price,
+                               out discount,
+                                out beYield,
+                                out duration,
+                                out modifiedDuration,
+                                out convexity,
+                                out pvbp,
+                                out pvbpConvexityAdjusted);
+                            break;
+                        case USTBill.CALCULATEFROM.PRICE:
+                            if (usTbill.IncludeCashFlows)
+                            {
+                                cashFlows = new CashFlowsDescr();
+                                status = USTBillCalcFromPriceWithCashFlows(
+                                    valueDate,
+                                    maturityDate,
+                                    price,
+                                    out discount,
+                                    out mmYield,
+                                    out beYield, cashFlows, dateAdjust, holidays);
+                            }
+                            else
+                            {
+                                status = USTBillCalcFromPrice(
+                                    valueDate,
+                                    maturityDate,
+                                    price,
+                                    out discount,
+                                    out mmYield,
+                                    out beYield);
+                            }
+                            break;
+                        default:
+                            throw new ArgumentException("Invalid CalcFrom Argument.");
+                    };
+                    if (status != 0)
+                    {
+                        StringBuilder statusText = new StringBuilder(200);
+                        int textSize;
+                        status = getStatusText(status, statusText, out textSize);
+                        throw new InvalidOperationException(statusText.ToString());
+                    }
+                    //Make sure volatility has been calculated
+                    if (usTbill.CalcFrom != USTBill.CALCULATEFROM.MMYIELD)
+                    {
+                        status = USTBillCalcFromMMYield(
+                            valueDate,
+                            maturityDate,
+                            mmYield,
+                            out price,
+                            out discount,
+                            out beYield,
+                            out duration,
+                            out modifiedDuration,
+                            out convexity,
+                            out pvbp,
+                            out pvbpConvexityAdjusted);
+                    }
+                    if (status != 0)
+                    {
+                        StringBuilder statusText = new StringBuilder(200);
+                        int textSize;
+                        status = getStatusText(status, statusText, out textSize);
+                        throw new InvalidOperationException(statusText.ToString());
+                    }
+                    USTBillResult ustbResult = new USTBillResult();
+                    ustbResult.BondEquivalent = beYield;
+                    ustbResult.Convexity = convexity;
+                    ustbResult.ConvexityAdjustedPvbp = pvbpConvexityAdjusted;
+                    ustbResult.Discount = discount;
+                    ustbResult.Duration = duration;
+                    ustbResult.MMYield = mmYield;
+                    ustbResult.ModifiedDuration = modifiedDuration;
+                    ustbResult.Price = price;
+                    ustbResult.Pvbp = pvbp;
+                    //Make sure cashflows have been calculated
+                    if (usTbill.IncludeCashFlows )
+                    {
+                        if (cashFlows == null)
+                        {
+                            cashFlows = new CashFlowsDescr();
+                            status = USTBillCalcFromPriceWithCashFlows(
+                                valueDate,
+                                maturityDate,
+                                price,
+                                out discount,
+                                out mmYield,
+                                out beYield, cashFlows, dateAdjust, holidays);
+                            if (status != 0)
+                            {
+                                StringBuilder statusText = new StringBuilder(200);
+                                int textSize;
+                                status = getStatusText(status, statusText, out textSize);
+                                throw new InvalidOperationException(statusText.ToString());
+                            }
+                        }
+                        var structSize = Marshal.SizeOf(typeof(CashFlowDescr));
+                        var cashFlowsOut = new List<CashFlowDescr>();
+                        var cashFlowOut = cashFlows.cashFlows;
+
+                        for (int i = 0; i < cashFlows.size; i++)
+                        {
+                            cashFlowsOut.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
+                                typeof(CashFlowDescr)));
+                            cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
+                        }
+                        ustbResult.CashFlows = Mapper.Map<IEnumerable<CashFlow>>(cashFlowsOut);
+                    }
+
+                    return ustbResult;
+                })
+                .ConfigureAwait(false) //necessary on UI Thread
+                ;
+                return result;
+            }
+            catch (InvalidOperationException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error Calculating USTBill", ex);
+                throw;
+            }
         }
     }
     enum CurveInterpolation

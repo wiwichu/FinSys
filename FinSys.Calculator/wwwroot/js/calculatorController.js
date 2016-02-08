@@ -37,6 +37,7 @@
         vm.convexity = 0.00;
         vm.pvbp = 0.00;
         vm.cvxPvbp = 0.00;
+        vm.ustbill = {};
         vm.api = "/api/staticdata";
         vm.protocol = $location.protocol() + "://";
         vm.host = $location.host();
@@ -66,7 +67,57 @@
             alert("Selected Instrument: " + selectedItem);
         }
         vm.calcUSTBill = function (selectedItem) {
-            alert("Calculation USTBill");
+            vm.isBusy = true;
+            vm.errorMessage = "";
+            vm.api = "/api/calculator/ustbill";
+            vm.protocol = $location.protocol() + "://";
+            vm.host = $location.host();
+            vm.port = $location.port();
+            if (vm.port) {
+                vm.port = ":" + vm.port;
+            }
+            vm.apiPath = vm.protocol + vm.host + vm.port + vm.api;
+            vm.ustbill.maturityDate = vm.maturityDate;
+            vm.ustbill.valueDate = vm.valueDate;
+            switch (vm.ustbill.calcfrom)
+            {
+                case 'price':
+                    vm.ustbill.calcsource = vm.price;
+                    break;
+                case 'discount':
+                    vm.ustbill.calcsource = vm.discount;
+                    break;
+                case 'be':
+                    vm.ustbill.calcsource = vm.be;
+                    break;
+                case 'mmyield':
+                    vm.ustbill.calcsource = vm.mmYield;
+                    break;
+                default:
+                    vm.errorMessage = "Invalid Calculation Choice";
+                    return;
+                    break;
+            }
+            $http.post(vm.apiPath, vm.ustbill)
+            .then(function (response) {
+                vm.ustbill.be = response.data.be;
+                vm.convexity = response.data.convexity;
+                vm.cvxPvbp = response.data.cvxPvbp;
+                vm.ustbill.discount = response.data.discount;
+                vm.duration = response.data.duration;
+                vm.ustbill.mmYield = response.data.mmYield;
+                vm.modDuration = response.data.modDuration;
+                vm.price = response.data.price;
+                vm.pvbp = response.data.pvbp;
+            },
+            function (err) {
+                vm.errorMessage = "Calculation Failed: " +err;
+            })
+            .finally(function () {
+                vm.isBusy = false;
+            });
+
+            //alert("Calculation USTBill");
         }
         vm.getApi = function () {
             alert(vm.apiPath);

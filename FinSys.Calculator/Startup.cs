@@ -6,6 +6,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.PlatformAbstractions;
 using Newtonsoft.Json.Serialization;
 using Microsoft.Extensions.Logging;
+using AutoMapper;
+using FinSys.Calculator.Models;
+using FinSys.Calculator.ViewModels;
+using System;
 
 namespace FinSys.Calculator
 {
@@ -45,6 +49,14 @@ namespace FinSys.Calculator
         {
             loggerFactory.AddDebug(LogLevel.Information);
             app.UseStaticFiles();
+            Mapper.Initialize(config =>
+            {
+                config.CreateMap<USTBill, USTBillViewModel>().ReverseMap();
+                config.CreateMap<USTBillResult, USTBillResultViewModel>().ReverseMap();
+                config.CreateMap<CashFlow, CashFlowDescr>().ReverseMap();
+                config.CreateMap<CashFlow, CashFlowViewModel>().ReverseMap();
+                config.CreateMap<DateTime, DateDescr>().ReverseMap();
+            });
             app.UseMvc(config =>
             {
                 config.MapRoute(
