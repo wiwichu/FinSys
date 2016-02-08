@@ -925,7 +925,7 @@ int  priceCashFlows(CashFlowsStruct &cashFlowsStruct,
 		instr->intPayFreq = frequency;
 		instr->interestRate = 0;
 		instr->firstPayDate = new DateStruct();
-		instr->holidayAdjust = 0;
+		instr->holidayAdjust = event_sched_same_holiday_adj;
 		instr->issueDate = new DateStruct();
 		instr->nextToLastPayDate = new DateStruct;
 		instr->instrumentClass = instr_bund_class;
@@ -976,7 +976,7 @@ int  priceCashFlows(CashFlowsStruct &cashFlowsStruct,
 		instr->intPayFreq = frequency;
 		instr->interestRate = 0;
 		instr->firstPayDate = new DateStruct();
-		instr->holidayAdjust = 0;
+		instr->holidayAdjust = event_sched_same_holiday_adj;
 		instr->issueDate = new DateStruct();
 		instr->nextToLastPayDate = new DateStruct;
 		instr->instrumentClass = instr_bund_class;
@@ -1013,11 +1013,11 @@ int  priceCashFlows(CashFlowsStruct &cashFlowsStruct,
 		{
 			return result;
 		}
-		instr->firstPayDate = instr->maturityDate;
-		instr->issueDate->day = valueDate.day;
-		instr->issueDate->month = valueDate.month;
-		instr->issueDate->year = valueDate.year;
-		instr->nextToLastPayDate = instr->issueDate;
+		//instr->firstPayDate = instr->maturityDate;
+		//instr->issueDate->day = valueDate.day;
+		//instr->issueDate->month = valueDate.month;
+		//instr->issueDate->year = valueDate.year;
+		//instr->nextToLastPayDate = instr->issueDate;
 		result = calculate(*instr, *calcs, holidays);
 		if (result != return_success)
 		{

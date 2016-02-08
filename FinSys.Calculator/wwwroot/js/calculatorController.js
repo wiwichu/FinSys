@@ -111,8 +111,8 @@
                 vm.modDuration = response.data.modifiedDuration;
                 vm.price = response.data.price;
                 vm.pvbp = response.data.pvbp;
-                vm.requestJson = JSON.stringify(vm.ustbill);
-                vm.responseJson = JSON.stringify(response.data);
+                vm.requestJson = JSON.stringify(vm.ustbill,null,2);
+                vm.responseJson = JSON.stringify(response.data,null,2);
             },
             function (err) {
                 vm.errorMessage = "Calculation Failed: " +err;

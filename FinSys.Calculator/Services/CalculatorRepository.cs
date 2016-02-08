@@ -974,14 +974,21 @@ namespace FinSys.Calculator.Services
                         var structSize = Marshal.SizeOf(typeof(CashFlowDescr));
                         var cashFlowsOut = new List<CashFlowDescr>();
                         var cashFlowOut = cashFlows.cashFlows;
-
+                        IList<CashFlow> newCf = new List<CashFlow>();
                         for (int i = 0; i < cashFlows.size; i++)
                         {
-                            cashFlowsOut.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
-                                typeof(CashFlowDescr)));
+                            CashFlowDescr cfd = (CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
+                                typeof(CashFlowDescr));
+                            cashFlowsOut.Add(cfd);
+                            CashFlow cf = Mapper.Map<CashFlow>(cfd);
+                            DateTime adt = new DateTime(cfd.adjustedYear, cfd.adjustedMonth, cfd.adjustedDay);
+                            cf.AdjustedDate = adt;
+                            DateTime sdt = new DateTime(cfd.year, cfd.month, cfd.day);
+                            cf.ScheduledDate = sdt;
+                            newCf.Add(cf);
                             cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
                         }
-                        ustbResult.CashFlows = Mapper.Map<IEnumerable<CashFlow>>(cashFlowsOut);
+                        ustbResult.CashFlows = newCf;
                     }
 
                     return ustbResult;
