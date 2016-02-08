@@ -63,14 +63,9 @@ namespace FinSys.Calculator.Controllers.Api
                     ustb.CalcSource /= 100;
                     USTBillResultViewModel result = Mapper.Map < USTBillResultViewModel > (await _repository.USTBillCalcAsync(ustb));
                     result.BondEquivalent *= 100;
-                    result.Convexity *= 100;
-                    result.ConvexityAdjustedPvbp *= 100;
                     result.Discount *= 100;
-                    result.Duration *= 100;
                     result.MMYield *= 100;
-                    result.ModifiedDuration *= 100;
                     result.Price *= 100;
-                    result.Pvbp *= 100;
                     return new JsonResult(result);
                 }
             }

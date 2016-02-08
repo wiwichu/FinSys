@@ -13,9 +13,9 @@ namespace FinSys.Calculator.ViewModels
             "Price","Discount","BondEquivalent","MMYield"
         };
         [Required]
-        public DateTime MaturityDate { get; set; } = DateTime.Now.AddYears(1);
+        public DateTime MaturityDate { get; set; }
         [Required]
-        public DateTime ValueDate { get; set; } = DateTime.Now;
+        public DateTime ValueDate { get; set; }
         [Required]
         public string CalcFrom { get; set; }
         [Required]

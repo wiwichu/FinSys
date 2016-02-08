@@ -1744,6 +1744,11 @@ int  USTBillCalcFromMMYield(DateStruct &valueDate, DateStruct &maturityDate,
 	{
 		return result;
 	}
+	duration = calculations.duration;
+	modifiedDuration = calculations.modifiedDuration;
+	convexity = calculations.convexity;
+	pvbp = calculations.pvbp;
+	pvbpConvexityAdjusted = calculations.pvbpConvexityAdjusted;
 	price = calculations.priceOut;
 	calculations.priceIn = price;
 	calculations.calculatePrice = 0;
@@ -1787,11 +1792,6 @@ int  USTBillCalcFromMMYield(DateStruct &valueDate, DateStruct &maturityDate,
 		return result;
 	}
 	beYield = calculations.yieldOut;
-	duration = calculations.duration;
-	modifiedDuration = calculations.modifiedDuration;
-	convexity = calculations.convexity;
-	pvbp = calculations.pvbp;
-	pvbpConvexityAdjusted = calculations.pvbpConvexityAdjusted;
 
 	return return_success;
 }

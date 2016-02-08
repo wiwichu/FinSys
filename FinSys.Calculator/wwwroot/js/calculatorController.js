@@ -29,15 +29,15 @@
         vm.opened = false;
         vm.isBusy = true;
         vm.price = 0.00;
-        vm.discount = 0.00;
-        vm.be = 0.00;
-        vm.mmYield = 0.00;
         vm.duration = 0.00;
         vm.modDuration = 0.00;
         vm.convexity = 0.00;
         vm.pvbp = 0.00;
         vm.cvxPvbp = 0.00;
         vm.ustbill = {};
+        vm.ustbill.discount = 0.00;
+        vm.ustbill.be = 0.00;
+        vm.ustbill.mmYield = 0.00;
         vm.api = "/api/staticdata";
         vm.protocol = $location.protocol() + "://";
         vm.host = $location.host();
@@ -100,13 +100,13 @@
             }
             $http.post(vm.apiPath, vm.ustbill)
             .then(function (response) {
-                vm.ustbill.be = response.data.be;
+                vm.ustbill.be = response.data.bondEquivalent;
                 vm.convexity = response.data.convexity;
-                vm.cvxPvbp = response.data.cvxPvbp;
+                vm.cvxPvbp = response.data.convexityAdjustedPvbp;
                 vm.ustbill.discount = response.data.discount;
                 vm.duration = response.data.duration;
                 vm.ustbill.mmYield = response.data.mmYield;
-                vm.modDuration = response.data.modDuration;
+                vm.modDuration = response.data.modifiedDuration;
                 vm.price = response.data.price;
                 vm.pvbp = response.data.pvbp;
             },
