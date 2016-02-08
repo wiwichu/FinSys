@@ -95,9 +95,11 @@
                     break;
                 default:
                     vm.errorMessage = "Invalid Calculation Choice";
-                    return;
+                    return; 
                     break;
             }
+            vm.requestJson = "";
+            vm.responseJson = "";
             $http.post(vm.apiPath, vm.ustbill)
             .then(function (response) {
                 vm.ustbill.be = response.data.bondEquivalent;
@@ -109,6 +111,8 @@
                 vm.modDuration = response.data.modifiedDuration;
                 vm.price = response.data.price;
                 vm.pvbp = response.data.pvbp;
+                vm.requestJson = JSON.stringify(vm.ustbill);
+                vm.responseJson = JSON.stringify(response.data);
             },
             function (err) {
                 vm.errorMessage = "Calculation Failed: " +err;
@@ -121,6 +125,8 @@
         }
         vm.getApi = function () {
             alert(vm.apiPath);
+            alert(vm.requestJson);
+            alert(vm.responseJson);
         }
         ///////////////////// datepicker ///////////////////////
               vm.datepickers = {
