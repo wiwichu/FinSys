@@ -1267,6 +1267,8 @@ int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &ca
 			i++;
 	}
 	cashFlowsStruct.size = i;
+	RateCurveStruct rcs;
+	priceCashFlows(cashFlowsStruct, calculations.yieldMethod, calculations.yieldFreq, calculations.yieldDayCount, *calculations.valueDate, rcs, Linear);
 
 	return return_success;
 }
@@ -1429,7 +1431,7 @@ int  USTBillCalcFromPriceWithCashFlows(DateStruct &valueDate, DateStruct &maturi
 	}
 	discount = calculations.yieldOut;
 	calculations.yieldMethod = py_mm_yield_meth;
-	result = calculate(instrument, calculations, holidays);
+	result = calculateWithCashFlows(instrument, calculations, cashFlowsStruct, adjustRule, holidays);
 	if (result != return_success)
 	{
 		return result;
@@ -1462,7 +1464,7 @@ int  USTBillCalcFromPriceWithCashFlows(DateStruct &valueDate, DateStruct &maturi
 		calculations.yieldFreq = frequency_annually_idx;
 
 	}
-	result = calculateWithCashFlows(instrument, calculations, cashFlowsStruct, adjustRule, holidays);
+	result = calculate(instrument, calculations, holidays);
 	if (result != return_success)
 	{
 		return result;

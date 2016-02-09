@@ -913,6 +913,9 @@ namespace FinSys.Wpf.ViewModel
         private void OpenCashFlow(object obj)
         {
             var cfm = new CashFlowViewModel(cashFlows,ValueDate);
+            cfm.SelectedYieldMethod = SelectedYieldMethod;
+            cfm.SelectedYieldFrequency = SelectedYieldFrequency;
+            cfm.SelectedYieldDayCount = SelectedDayCount;
             dialogService.ShowDialog(DialogService.DIALOG.CASHFLOWVIEW, cfm);
         }
 
