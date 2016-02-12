@@ -118,7 +118,7 @@
                 vm.responseJson = JSON.stringify(response.data,null,2);
             },
             function (err) {
-                vm.errorMessage = "Calculation Failed: " +err;
+                vm.errorMessage = "Calculation Failed: " +  err.data;
             })
             .finally(function () {
                 vm.isBusy = false;
@@ -138,24 +138,15 @@
             var options = {
                 templateUrl: "/templates/apiDialog.html",
                 controller: function () {
-                    //this.api = api;
                     this.api = {
                         apiPath: vm.apiPath,
                         requestJson: vm.requestJson,
                         responseJson: vm.responseJson
-                        //apiPath: "apiPath",
-                        //requestJson: "requestJson",
-                        //responseJson: "responseJson"
                     };
-                    this.test = "test";
                 },
                 controllerAs: "model"
             };
             $uibModal.open(options);
-
-            //alert(vm.apiPath);
-            //alert(vm.requestJson);
-            //alert(vm.responseJson);
         }
         ///////////////////// datepicker ///////////////////////
               vm.datepickers = {

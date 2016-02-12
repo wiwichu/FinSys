@@ -72,7 +72,7 @@ namespace FinSys.Calculator.Controllers.Api
             catch (Exception ex)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json(new { Message = ex.Message });
+                return Json(ex.Message);
             }
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             return Json(new { Message = "Failed", ModelState = ModelState });
