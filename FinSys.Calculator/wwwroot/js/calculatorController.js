@@ -19,7 +19,10 @@
         $scope.ReleaseDate = new Date();
     }
 
-    function calculatorController($http,$location) {
+    function calculatorController($http, $location
+        //, apiDialog
+        , $uibModal
+        ) {
 
         var vm = this;
         vm.errorMessage = "";
@@ -123,10 +126,36 @@
 
             //alert("Calculation USTBill");
         }
+
+        var api = {
+            apiPath: vm.apiPath,
+            requestJson: vm.requestJson,
+            responseJson: vm.responseJson
+        };
+        var that = this;
         vm.getApi = function () {
-            alert(vm.apiPath);
-            alert(vm.requestJson);
-            alert(vm.responseJson);
+
+            var options = {
+                templateUrl: "/templates/apiDialog.html",
+                controller: function () {
+                    //this.api = api;
+                    this.api = {
+                        apiPath: vm.apiPath,
+                        requestJson: vm.requestJson,
+                        responseJson: vm.responseJson
+                        //apiPath: "apiPath",
+                        //requestJson: "requestJson",
+                        //responseJson: "responseJson"
+                    };
+                    this.test = "test";
+                },
+                controllerAs: "model"
+            };
+            $uibModal.open(options);
+
+            //alert(vm.apiPath);
+            //alert(vm.requestJson);
+            //alert(vm.responseJson);
         }
         ///////////////////// datepicker ///////////////////////
               vm.datepickers = {
