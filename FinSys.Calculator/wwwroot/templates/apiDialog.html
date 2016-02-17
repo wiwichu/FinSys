@@ -1,4 +1,5 @@
-﻿<div class="modal-header">
+﻿<link rel="stylesheet" href="~/css/site.css" />
+<div class="modal-header">
     <h3 class="modal-title">HTTP POST API</h3>
 </div>
 <div class="modal-body">
@@ -8,13 +9,13 @@
     </div>
     <div class="form-group">
         <label for="requestJson">Request JSON</label>
-        <input class="form-control" id="requestJson" readonly ng-model="model.api.requestJson" />
+        <textarea rows="3" class="form-control" id="requestJson" readonly ng-model="model.api.requestJson" />
     </div>
     <div class="form-group">
         <label for="responseJson">RESPONSE JSON</label>
-        <input class="form-control" id="responseJson" readonly ng-model="model.api.responseJson" />
+        <textarea rows="3" class="form-control" id="responseJson" readonly ng-model="model.api.responseJson" />
     </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="$close()">Close</button>
+    <button class="btn btn-success" ng-click="$close()">Close</button>
 </div>

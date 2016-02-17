@@ -47,7 +47,15 @@ input[type=text], input[type=password], textarea {
         .menu li.active {
             font-weight: bold;
         }
-
+.modal-header{
+    background:#ddf5eb
+}
+.modal-body{
+    background:#ddf5eb
+}
+.modal-footer{
+    background:#ddf5eb
+}
 #sidebar {
     background: #2a2c36;
     color: #eee;
