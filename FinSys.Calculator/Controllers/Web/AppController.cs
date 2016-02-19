@@ -35,6 +35,10 @@ namespace FinSys.Controllers.Web
         {
             return View();
         }
+        public IActionResult CashFlows()
+        {
+            return View();
+        }
         [HttpPost]
         public IActionResult Contact(ContactViewModel model)
         {
