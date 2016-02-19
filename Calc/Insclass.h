@@ -99,7 +99,7 @@ char	*const	instr_goj_class_desc	= "Japan Gov";
 
 char	*const	instr_ustbo_class_desc	= "US TBond";
 
-char	*const	instr_usdsc_class_desc	= "US Discount ";
+char	*const	instr_usdsc_class_desc	= "US Discount";
 
 char	*const	instr_gilt_class_desc	= "UK Gilt";
 
