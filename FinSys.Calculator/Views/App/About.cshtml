@@ -9,7 +9,11 @@
     <script src="~/js/calculatorController.js"></script>
 }
 <h2>About FinSys</h2>
-<div class="row" ng-app="app-calculator" >
+
+<div class="row" ng-app="app-calculator">
+    <div ng-view></div>
+</div>
+@*<div class="row" ng-app="app-calculator" >
     <div class="form-group">
         <label for="Release">Release Date</label>
         <p class="input-group" ng-controller="DatePickerController">
@@ -28,4 +32,4 @@
         </p>
     </div>
 
-</div>
+</div>*@

@@ -5,20 +5,8 @@
 
     angular.module("app-calculator")
     .controller("calculatorController", calculatorController)
-    .controller('DatePickerController', DatePickerController);
+    ;
     
-    DatePickerController.$inject = ['$scope'];
- 
-    function DatePickerController($scope) {
-        $scope.open = function ($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
- 
-            $scope.opened = true;
-        };
-        $scope.ReleaseDate = new Date();
-    }
-
     function calculatorController($http, $location
         //, apiDialog
         , $uibModal
@@ -68,6 +56,10 @@
         }
         vm.instrumentClassSelected = function (selectedItem) {
             alert("Selected Instrument: " + selectedItem);
+        }
+        vm.goToCashFlows = function()
+        {
+
         }
         vm.calcUSTBill = function (selectedItem) {
             vm.isBusy = true;

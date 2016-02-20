@@ -4,16 +4,24 @@
     "use strict";
     angular.module("app-calculator", [
         "ngRoute",
-        "ui.bootstrap"
+        "ui.bootstrap",
+        "ui.grid",
+        "ui.grid.importer"
     ])
     .config(function ($routeProvider) {
         $routeProvider.when("/", {
-            controller: "calculatorController",
-            controllerAs: "vm",
+            templateUrl: "/views/homeView.html"
+        });
+        $routeProvider.when("/about", {
             templateUrl: "/views/custCalcView.html"
         });
+        //$routeProvider.when("/CustomCalc", {
+        //    controller: "calculatorController",
+        //    controllerAs: "vm",
+        //    templateUrl: "/views/custCalcView.html"
+        //});
 
-        $routeProvider.otherwise({ redirectTo: "/" });
+        //$routeProvider.otherwise({ redirectTo: "/" });
     });
 
 })();
