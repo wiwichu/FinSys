@@ -10,10 +10,10 @@
     ])
     .config(function ($routeProvider) {
         $routeProvider.when("/", {
-            templateUrl: "/views/homeView.html"
+            templateUrl: "/views/calculatorsView.html"
         });
-        $routeProvider.when("/about", {
-            templateUrl: "/views/custCalcView.html"
+        $routeProvider.when("/USTBill", {
+            templateUrl: "/views/usTBillView.html"
         });
         //$routeProvider.when("/CustomCalc", {
         //    controller: "calculatorController",
@@ -21,7 +21,7 @@
         //    templateUrl: "/views/custCalcView.html"
         //});
 
-        //$routeProvider.otherwise({ redirectTo: "/" });
+        $routeProvider.otherwise({ redirectTo: "/" });
     });
 
 })();

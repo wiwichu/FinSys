@@ -7,7 +7,7 @@
     .controller("calculatorController", calculatorController)
     ;
     
-    function calculatorController($http, $location
+    function calculatorController($http, $location,$window
         //, apiDialog
         , $uibModal
         ) {
@@ -59,7 +59,7 @@
         }
         vm.goToCashFlows = function()
         {
-
+            $window.location.href = '/App/CashFlows';
         }
         vm.calcUSTBill = function (selectedItem) {
             vm.isBusy = true;

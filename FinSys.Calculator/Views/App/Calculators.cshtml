@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Calculators Page";
+}
+@section Scripts {
+    <script src="~/lib/angular/angular.min.js"></script>
+    <script src="~/lib/angular-route/angular-route.min.js"></script>
+    <script src="~/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="~/lib/angular-ui-grid/ui-grid.min.js"></script>
+    <script src="~/js/app-calculator.js"></script>
+    <script src="~/js/calculatorController.js"></script>
+}
+
+<div class="row" ng-app="app-calculator">
+    <div ng-view></div>
+</div>
+@*<div class="row" ng-app="app-calculator" >
+    <div class="form-group">
+        <label for="Release">Release Date</label>
+        <p class="input-group" ng-controller="DatePickerController">
+            <input type="text"
+                   class="form-control"
+                   uib-datepicker-popup="yyyy/MM/dd"
+                   ng-model="ReleaseDate"
+                   is-open="opened" />
+            <span class="input-group-btn">
+                <button type="button"
+                        class="btn btn-default"
+                        ng-click="open($event)">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+            </span>
+        </p>
+    </div>
+
+</div>*@

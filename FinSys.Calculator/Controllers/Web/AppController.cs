@@ -19,6 +19,10 @@ namespace FinSys.Controllers.Web
         {
             return View();
         }
+        public IActionResult Calculators()
+        {
+            return View();
+        }
         public IActionResult About()
         {
             return View();

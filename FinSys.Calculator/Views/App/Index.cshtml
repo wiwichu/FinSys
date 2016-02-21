@@ -1,11 +1,17 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+@section Scripts {
+    <script src="~/lib/angular/angular.min.js"></script>
+    <script src="~/lib/angular-route/angular-route.min.js"></script>
+    <script src="~/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="~/js/app-calculator.js"></script>
+}
 <div class="row" ng-app="app-calculator">
     <h1>Welcome to FinSys Calculator</h1>
     <div class="col-md-12">
         <p>This app allows you to perform financial calculations.</p>
-        <a asp-controller="App" asp-action="CustomCalc" class="btn btn-lg btn-success">Custom Calculator</a>
+        <a asp-controller="App" asp-action="Calculators" class="btn btn-lg btn-success">Calculators</a>
     </div>
     @*<div ng-view></div>*@
 </div>
