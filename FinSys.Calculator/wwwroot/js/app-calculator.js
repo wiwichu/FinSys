@@ -13,7 +13,14 @@
             templateUrl: "/views/calculatorsView.html"
         });
         $routeProvider.when("/USTBill", {
+            controller: "calculatorController",
+            controllerAs: "vm",
             templateUrl: "/views/usTBillView.html"
+        });
+        $routeProvider.when("/CashFlows", {
+            controller: "cashflowsController",
+            controllerAs: "vm",
+            templateUrl: "/views/cashFlowsView.html"
         });
         //$routeProvider.when("/CustomCalc", {
         //    controller: "calculatorController",

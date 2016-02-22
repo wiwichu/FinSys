@@ -7,7 +7,7 @@
     .controller("cashflowsController", cashflowsController)
     ;
     
-    function cashflowsController($http, $location
+    function cashflowsController($http, $location,$rootScope
         ) {
 
         var vm = this;
@@ -17,8 +17,11 @@
         vm.selectedInstrumentClass = "";
         vm.opened = false;
         vm.isBusy = true;
-        vm.isBusy = false;
         vm.cashFlows = [];
+        if ($rootScope.cfData != null) {
+            vm.cashFlows = $rootScope.cfData;
+        }
+        $rootScope.cfData = null;
         vm.gridOptions = {
             data: 'vm.cashFlows',
             enableGridMenu: true,
@@ -31,8 +34,10 @@
             ],
             importerDataAddCallback: function(grid,newObjects)
             {
+                vm.cashFlows = [];
                 vm.cashFlows = vm.cashFlows.concat(newObjects);
             }
         };
+        vm.isBusy = false;
     }
 })();

@@ -1,9 +1,12 @@
 ﻿<div class="row">
-    <div class="col-md-4 col-md-offset-4">
+    <div class="col-md-4">
+        <a href="#/" class="btn btn-sm btn-primary"><i class="fa fa-angle-left"></i>Calculators</a>
+    </div>
+   <div class="col-md-4">
         <h2>USTBill Calculator</h2>
     </div>
 </div>
-<div class="row" ng-app="app-calculator" ng-controller="calculatorController as vm">
+<div class="row" ng-app="app-calculator">
     <div class="text-danger text-center" ng-cloak ng-show="vm.errorMessage">{{ vm.errorMessage}}</div>
     <div class="text-center" ng-show="vm.isBusy"><i class="fa fa-spinner fa-spin"></i> Loading... </div>
     <form novalidate name="USTBillForm">
@@ -132,8 +135,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <input type="submit" value="Cashflows" class="btn btn-success btn-default form-control"
-                               ng-click="vm.goToCashFlows()" ng-disabled="USTBillForm.$invalid" />
+                        <a href="#/CashFlows" class="btn btn-success btn-default form-control" ng-disabled="USTBillForm.$invalid">CashFlows</a>
                     </div>
                 </div>
                 <div class="col-md-6">

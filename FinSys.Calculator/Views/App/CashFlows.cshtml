@@ -10,27 +10,6 @@
     <script src="~/js/app-calculator.js"></script>
     <script src="~/js/cashflowsController.js"></script>
 }
-<div class="row">
-    <div class="col-md-4 col-md-offset-4">
-        <h2>Cash Flows</h2>
-    </div>
-</div>
-<div class="row" ng-app="app-calculator" ng-controller="cashflowsController as vm">
-    <div class="text-danger text-center" ng-cloak ng-show="vm.errorMessage">{{ vm.errorMessage}}</div>
-    <div class="text-center" ng-show="vm.isBusy"><i class="fa fa-spinner fa-spin"></i> Loading... </div>
-    <div class="col-md-8">
-        <form novalidate name="CashFlowsForm">
-            <div class="form-group ">
-                <div class="input-group">
-                    <label for="cashFlows">Enter Or Import Cash Flows</label>
-                    <span class="input-group-btn">
-                        <button class="btn btn-info btn-xs">
-                            <i class="fa fa-question-circle"></i>
-                        </button>
-                    </span>
-                </div>
-                <div ui-grid="vm.gridOptions" ui-grid-importer ></div>
-            </div>
-        </form>
-    </div>
+<div class="row" ng-app="app-calculator">
+    <div ng-view></div>
 </div>

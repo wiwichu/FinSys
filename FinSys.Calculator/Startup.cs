@@ -30,11 +30,12 @@ namespace FinSys.Calculator
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc()
-                .AddJsonOptions(opt=>
+                .AddJsonOptions(opt =>
                 {
                     opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
-                });
+                })
+                ;
             services.AddLogging();
             services.AddScoped<ICalculatorRepository, CalculatorRepository>();
 #if DEBUG

@@ -7,7 +7,7 @@
     .controller("calculatorController", calculatorController)
     ;
     
-    function calculatorController($http, $location,$window
+    function calculatorController($http, $location,$window, $rootScope
         //, apiDialog
         , $uibModal
         ) {
@@ -33,6 +33,7 @@
         vm.protocol = $location.protocol() + "://";
         vm.host = $location.host();
         vm.port = $location.port();
+        vm.cashFlows = [];
         if (vm.port)
         {
             vm.port = ":" + vm.port;
@@ -59,6 +60,7 @@
         }
         vm.goToCashFlows = function()
         {
+            $rootScope.cfData = vm.cashFlows;
             $window.location.href = '/App/CashFlows';
         }
         vm.calcUSTBill = function (selectedItem) {
@@ -107,7 +109,9 @@
                 vm.price = response.data.price;
                 vm.pvbp = response.data.pvbp;
                 vm.requestJson = JSON.stringify(vm.ustbill,null,2);
-                vm.responseJson = JSON.stringify(response.data,null,2);
+                vm.responseJson = JSON.stringify(response.data, null, 2);
+                vm.cashFlows = response.data.cashFlows;
+                $rootScope.cfData = vm.cashFlows;
             },
             function (err) {
                 vm.errorMessage = "Calculation Failed: " +  err.data;
