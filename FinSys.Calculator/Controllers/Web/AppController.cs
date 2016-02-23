@@ -20,6 +20,11 @@ namespace FinSys.Controllers.Web
             //return View();
             return Redirect(Url.Content("/App/Calculators#/"));
         }
+        public IActionResult Back()
+        {
+            var back = Request.Headers["Referer"];
+            return Redirect(back);
+        }
         public IActionResult Calculators()
         {
             return View();

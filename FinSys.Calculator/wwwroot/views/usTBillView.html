@@ -1,9 +1,6 @@
 ﻿<div ng-app="app-calculator" class="col-md-12">
     <div class="col-md-12">
         <div class="col-md-4">
-            <a href="#/" class="btn btn-sm btn-primary"><i class="fa fa-angle-left"></i>Calculators</a>
-        </div>
-        <div class="col-md-4">
             <h2>USTBill Calculator</h2>
         </div>
     </div>
@@ -135,12 +132,12 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <a href="#/CashFlows" class="btn btn-success btn-default form-control" ng-disabled="USTBillForm.$invalid">CashFlows</a>
+                        <a href="#/CashFlows" class="btn btn-primary btn-default form-control" ng-disabled="USTBillForm.$invalid">CashFlows</a>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <input type="submit" value="API" class="btn btn-success btn-default form-control"
+                        <input type="submit" value="API" class="btn btn-primary btn-default form-control"
                                ng-click="vm.getApi()" ng-disabled="USTBillForm.$invalid" />
                     </div>
                 </div>

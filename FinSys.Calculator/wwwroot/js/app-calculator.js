@@ -16,7 +16,7 @@
             templateUrl: "/views/calculatorsView.html"
         });
         $routeProvider.when("/USTBill", {
-            controller: "calculatorController",
+            controller: "ustbillController",
             controllerAs: "vm",
             templateUrl: "/views/usTBillView.html"
         });
