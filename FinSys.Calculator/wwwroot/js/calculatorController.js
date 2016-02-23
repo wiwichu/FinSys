@@ -111,7 +111,10 @@
                 vm.requestJson = JSON.stringify(vm.ustbill,null,2);
                 vm.responseJson = JSON.stringify(response.data, null, 2);
                 vm.cashFlows = response.data.cashFlows;
-                $rootScope.cfData = vm.cashFlows;
+                vm.cfData= {
+                            cashFlows : vm.cashFlows,
+                            valueDate: vm.valueDate};
+                $rootScope.cfData = vm.cfData;
             },
             function (err) {
                 vm.errorMessage = "Calculation Failed: " +  err.data;

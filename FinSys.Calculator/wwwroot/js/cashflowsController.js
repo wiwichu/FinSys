@@ -19,7 +19,8 @@
         vm.isBusy = true;
         vm.cashFlows = [];
         if ($rootScope.cfData != null) {
-            vm.cashFlows = $rootScope.cfData;
+            vm.cashFlows = $rootScope.cfData.cashFlows;
+            vm.valueDate = $rootScope.cfData.valueDate;
         }
         $rootScope.cfData = null;
         vm.gridOptions = {
@@ -43,8 +44,9 @@
             ],
             importerDataAddCallback: function (grid, newObjects)
             {
-                vm.cashFlows = [];
-                vm.cashFlows = vm.cashFlows.concat(newObjects);
+                //vm.cashFlows = [];
+                //vm.cashFlows = vm.cashFlows.concat(newObjects);
+                vm.cashFlows = newObjects;
             },
             onRegisterApi: function (gridApi) {
                 $scope.gridApi = gridApi;
