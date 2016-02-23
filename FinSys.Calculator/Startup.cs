@@ -63,7 +63,7 @@ namespace FinSys.Calculator
                 config.MapRoute(
                     name: "Default",
                     template: "{controller}/{action}/{id?}",
-                    defaults: new {controller="App",action="Index"}
+                    defaults: new {controller="App",action= "Index" }
                     );
             });
         }

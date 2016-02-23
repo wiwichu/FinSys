@@ -17,7 +17,8 @@ namespace FinSys.Controllers.Web
         }
         public IActionResult Index()
         {
-            return View();
+            //return View();
+            return Redirect(Url.Content("/App/Calculators#/"));
         }
         public IActionResult Calculators()
         {
