@@ -22,6 +22,9 @@
             vm.cashFlows = $rootScope.cfData.cashFlows;
             vm.valueDate = $rootScope.cfData.valueDate;
         }
+        else {
+            vm.valueDate = new Date();
+        }
         $rootScope.cfData = null;
         vm.gridOptions = {
             data: 'vm.cashFlows',
@@ -55,5 +58,41 @@
             }
         };
         vm.isBusy = false;
+        ///////////////////// datepicker ///////////////////////
+        vm.datepickers = {
+             valueDate: false
+        }
+        //vm.valueDate = new Date();
+
+        vm.showWeeks = true;
+        vm.toggleWeeks = function () {
+            vm.showWeeks = !vm.showWeeks;
+        };
+
+        // Disable weekend selection
+        vm.disabled = function (date, mode) {
+            return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
+        };
+
+        vm.toggleMin = function () {
+            vm.minDate = (vm.minDate) ? null : new Date();
+        };
+        vm.toggleMin();
+
+        vm.open = function ($event, which) {
+            $event.preventDefault();
+            $event.stopPropagation();
+
+            $timeout(function () { vm.datepickers[which] = true; });
+        };
+
+        vm.dateOptions = {
+            'year-format': "'yy'",
+            'starting-day': 1
+        };
+
+        vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'shortDate'];
+        vm.format = vm.formats[0];
+        /////////////////////////////////
     }
 })();

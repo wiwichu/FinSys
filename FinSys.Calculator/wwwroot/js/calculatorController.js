@@ -113,7 +113,8 @@
                 vm.cashFlows = response.data.cashFlows;
                 vm.cfData= {
                             cashFlows : vm.cashFlows,
-                            valueDate: vm.valueDate};
+                            valueDate: vm.ustbill.valueDate
+                };
                 $rootScope.cfData = vm.cfData;
             },
             function (err) {
