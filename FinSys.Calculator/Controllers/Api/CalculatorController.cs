@@ -66,7 +66,8 @@ namespace FinSys.Calculator.Controllers.Api
                     result.Discount *= 100;
                     result.MMYield *= 100;
                     result.Price *= 100;
-                    return new JsonResult(result);
+                    JsonResult jResult = new JsonResult(result);
+                    return jResult; 
                 }
             }
             catch (Exception ex)

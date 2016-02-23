@@ -6,7 +6,10 @@
         "ngRoute",
         "ui.bootstrap",
         "ui.grid",
-        "ui.grid.importer"
+        "ui.grid.importer",
+        'ui.grid.selection',
+        "ui.grid.exporter",
+        "ui.grid.edit"
     ])
     .config(function ($routeProvider) {
         $routeProvider.when("/", {
