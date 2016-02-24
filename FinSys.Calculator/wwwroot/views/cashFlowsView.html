@@ -1,0 +1,113 @@
+﻿<div  class="col-md-12" ng-app="app-calculator" >
+    <div class="col-md-12 col-md-offset-4" >
+        <div class="col-md-4 ">
+            <h2>Cash Flows</h2>
+        </div>
+    </div>    <div class="text-danger text-center" ng-cloak ng-show="vm.errorMessage">{{ vm.errorMessage}}</div>
+    <div class="text-center" ng-show="vm.isBusy"><i class="fa fa-spinner fa-spin"></i> Loading... </div>
+    <form novalidate name="CashFlowsForm">
+        <div class="col-md-8">
+            <div class="form-group ">
+                <div class="input-group">
+                    <label for="cashFlows">Enter Or Import Cash Flows. Date Format: YYYY-MM-DD</label>
+                    <span class="input-group-btn">
+                        <button class="btn btn-info btn-xs">
+                            <i class="fa fa-question-circle"></i>
+                        </button>
+                    </span>
+                </div>
+                <div ui-grid="vm.gridOptions" ui-grid-selection ui-grid-importer ui-grid-exporter ui-grid-edit></div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <label for="valueDate">Value Date </label>
+                            <span class="input-group-btn">
+                                <button class="btn btn-info btn-xs">
+                                    <i class="fa fa-question-circle"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="input-group input-group-sm">
+                            <input id="valueDate" type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                                   name="valueDate" ng-model="vm.valueDate" is-open="vm.datepickers.valueDate"
+                                   datepicker-options="dateOptions" ng-required="true"
+                                   close-text="Close" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-xs" ng-click="vm.open($event,'valueDate')" ng-focus="vm.datepickers.valueDate=true">
+                                    <i class="fa fa-calendar"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <span class="text-danger" ng-cloak ng-show="CashFlowsForm.valueDate.$error.required">Required</span>
+                        <span class="text-danger" ng-cloak ng-show="!CashFlowsForm.valueDate.$valid">Enter a Valid Date</span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Present Values" class="btn btn-success btn-large form-control"
+                               ng-click="vm.getPresentValues()" ng-disabled="CashFlowsForm.$invalid" />
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" name="useCurve" ng-model="vm.useCurve" data-toggle="collapse" data-target="#curve"> Use Curve
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="API" class="btn btn-primary btn-default form-control"
+                               ng-click="vm.getApi()" ng-disabled="USTBillForm.$invalid" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <label for="yieldMethodSelect">Yield Method</label>
+                            <span class="input-group-btn"> 
+                                <button class="btn btn-info btn-xs">
+                                    <i class="fa fa-question-circle"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <select class="form-control" name="yieldMethodSelect" id="yieldMethodSelect"
+                                ng-options="iClass for iClass in vm.yieldMethod"
+                                ng-model="vm.selectedYieldMethod"
+                                ng-change="vm.yieldMethodChanged()">
+                            <option value="" ng-if=!vm.selectedYieldMethod>Select...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="yieldMethodSelect">Day Count</label>
+                        <select class="form-control" name="dayCountSelect" id="dayCountSelect"
+                                ng-options="iClass for iClass in vm.dayCount"
+                                ng-model="vm.selectedDayCount"
+                                ng-change="vm.dayCountChanged()">
+                            <option value="" ng-if=!vm.selectedDayCount>Select...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="compoundFrequencySelect">Compound Frequency</label>
+                        <select class="form-control" name="compoundFrequencySelect" id="compoundFrequencySelect"
+                                ng-options="iClass for iClass in vm.compoundFrequency"
+                                ng-model="vm.selectedCompoundFrequency"
+                                ng-change="vm.dayCountChanged()">
+                            <option value="" ng-if=!vm.selectedCompoundFrequency>Select...</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="curve" class="collapse">
+                    <label for="interpolationMethodSelect">Interpolation Method</label>
+                    <select class="form-control" name="interpolationMethodSelect" id="interpolationMethodSelect"
+                            ng-options="iClass for iClass in vm.interpolationMethod"
+                            ng-model="vm.selectedInterpolationMethod"
+                            ng-change="vm.interpolationMethodChanged()">
+                        <option value="" ng-if=!vm.selectedInterpolationMethod>Select...</option>
+                    </select>
+                    <div ui-grid ui-grid-selection ui-grid-importer ui-grid-exporter ui-grid-edit></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
