@@ -12,9 +12,6 @@
 
         var vm = this;
         vm.errorMessage = "";
-        vm.staticData = [];
-        vm.instrumentClass = [];
-        vm.selectedInstrumentClass = "";
         vm.opened = false;
         vm.isBusy = true;
         vm.cashFlows = [];
@@ -58,6 +55,68 @@
             }
         };
         vm.isBusy = false;
+        vm.api = "/api/staticdata";
+        vm.protocol = $location.protocol() + "://";
+        vm.host = $location.host();
+        vm.port = $location.port();
+        vm.cashFlows = [];
+        if (vm.port) {
+            vm.port = ":" + vm.port;
+        }
+        vm.apiPath = vm.protocol + vm.host + vm.port + vm.api;
+        vm.staticData = [];
+        vm.selectedYieldMethod = "";
+        vm.selectedDayCount = "";
+        vm.selectedCompoundFrequency = "";
+        vm.selectedInterpolationMethod = "";
+        $http.get(vm.api)
+            .then(function (response) {
+                vm.yieldMethod = response.data.yieldMethods;
+                if (vm.yieldMethod != null && vm.yieldMethod[0] != null) {
+                    vm.selectedYieldMethod = vm.yieldMethod[0];
+                }
+                vm.dayCount = response.data.dayCounts;
+                if (vm.dayCount != null && vm.dayCount[0] != null) {
+                    vm.selectedDayCount = vm.dayCount[0];
+                }
+                vm.compoundFrequency = response.data.payFrequency;
+                if (vm.compoundFrequency != null && vm.compoundFrequency[0] != null) {
+                    vm.selectedCompoundFrequency = vm.compoundFrequency[0];
+                }
+                vm.interpolationMethod = response.data.interpolationMethods;
+                if (vm.interpolationMethod != null && vm.interpolationMethod[0] != null) {
+                    vm.selectedInterpolationMethod = vm.interpolationMethod[0];
+                }
+            }, function (error) {
+                vm.errorMessage = "Failed to load data: " + error;
+            })
+        .finally(function () {
+            vm.isBusy = false;
+        });
+        vm.yieldMethodChanged = function () {
+            alert("Selected Yield Method: " + vm.selectedYieldMethod);
+        }
+        vm.yieldMethodSelected = function (selectedItem) {
+            alert("Selected Yield Method: " + selectedItem);
+        }
+        vm.dayCountChanged = function () {
+            alert("Selected Day Count: " + vm.selectedDayCount);
+        }
+        vm.dayCountSelected = function (selectedItem) {
+            alert("Selected Day Count: " + selectedItem);
+        }
+        vm.payFrequencyChanged = function () {
+            alert("Selected Pay Frequency: " + vm.selectedPayFrequency);
+        }
+        vm.payFrequencySelected = function (selectedItem) {
+            alert("Selected Pay Frequency: " + selectedItem);
+        }
+        vm.interpolationMethodChanged = function () {
+            alert("Selected Interpolation Method: " + vm.selectedInterpolationMethod);
+        }
+        vm.interpolationMethodSelected = function (selectedItem) {
+            alert("Selected Interpolation Method: " + selectedItem);
+        }
         ///////////////////// datepicker ///////////////////////
         vm.datepickers = {
              valueDate: false
