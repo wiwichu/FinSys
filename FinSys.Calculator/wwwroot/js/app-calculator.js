@@ -9,7 +9,9 @@
         "ui.grid.importer",
         'ui.grid.selection',
         "ui.grid.exporter",
-        "ui.grid.edit"
+        "ui.grid.edit",
+        "ui.grid.resizeColumns",
+        "ui.grid.autoResize"
     ])
     .config(function ($routeProvider) {
         $routeProvider.when("/", {

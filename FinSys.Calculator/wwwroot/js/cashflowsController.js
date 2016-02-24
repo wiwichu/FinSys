@@ -15,6 +15,7 @@
         vm.opened = false;
         vm.isBusy = true;
         vm.cashFlows = [];
+        vm.curveData = [];
         if ($rootScope.cfData != null) {
             vm.cashFlows = $rootScope.cfData.cashFlows;
             vm.valueDate = $rootScope.cfData.valueDate;
@@ -23,10 +24,10 @@
             vm.valueDate = new Date();
         }
         $rootScope.cfData = null;
-        vm.gridOptions = {
+        vm.cfGridOptions = {
             data: 'vm.cashFlows',
             enableSelectAll: true,
-            exporterCsvFilename: 'myFile.csv', enableGridMenu: true,
+            exporterCsvFilename: 'cashFlows.csv', enableGridMenu: true,
             exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
             enablePaginationControls: true,
             enableRowSelection: true,
@@ -36,17 +37,40 @@
             paginationPageSize: 25, showGridFooter: true,
             showColumnFooter: true,
             columnDefs: [
-                { name: 'Scheduled Date', field: 'scheduledDate', type: 'date', cellFilter: 'date:"yyyy-MM-dd"', footerCellFilter: 'date', aggregationType: uiGridConstants.aggregationTypes.max },
-                { name: 'Adjusted Date', field: 'adjustedDate', type: 'date', cellFilter: 'date:"yyyy-MM-dd"', footerCellFilter: 'date', aggregationType: uiGridConstants.aggregationTypes.max },
+                { name: 'Scheduled Date', field: 'scheduledDate', type: 'date', cellFilter: 'date:"yyyy-MM-dd"', footerCellFilter: 'date' },
+                { name: 'Adjusted Date', field: 'adjustedDate', type: 'date', cellFilter: 'date:"yyyy-MM-dd"', footerCellFilter: 'date' },
                 { name: 'Amount', field: 'amount',type: 'number', aggregationType: uiGridConstants.aggregationTypes.sum },
                 { name: 'Present Value', field: 'presentValue', type: 'number',enableCellEdit: false, aggregationType: uiGridConstants.aggregationTypes.sum },
                 {name: 'Discount Rate',field:'discountRate',type: 'number'}
             ],
             importerDataAddCallback: function (grid, newObjects)
             {
-                //vm.cashFlows = [];
-                //vm.cashFlows = vm.cashFlows.concat(newObjects);
                 vm.cashFlows = newObjects;
+            },
+            onRegisterApi: function (gridApi) {
+                $scope.gridApi = gridApi;
+                var cellTemplate = 'ui-grid/selectionRowHeader';   // you could use your own template here
+                $scope.gridApi.core.addRowHeaderColumn({ name: 'rowHeaderCol', displayName: '', width: 30, cellTemplate: cellTemplate });
+            }
+        };
+        vm.curveGridOptions = {
+            data: 'vm.curveData',
+            enableSelectAll: true,
+            exporterCsvFilename: 'curve.csv', enableGridMenu: true,
+            exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
+            enablePaginationControls: true,
+            enableRowSelection: true,
+            enableRowHeaderSelection: true,
+            selectionRowHeaderWidth: 35,
+            multiSelect: true,
+            paginationPageSize: 25, showGridFooter: true,
+            showColumnFooter: true,
+            columnDefs: [
+                { name: 'Date', field: 'date', type: 'date', cellFilter: 'date:"yyyy-MM-dd"' },
+                { name: 'Rate', field: 'rate', type: 'number' }
+            ],
+            importerDataAddCallback: function (grid, newObjects) {
+                vm.curveData = newObjects;
             },
             onRegisterApi: function (gridApi) {
                 $scope.gridApi = gridApi;
