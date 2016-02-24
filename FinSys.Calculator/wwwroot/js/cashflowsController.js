@@ -48,10 +48,15 @@
                 vm.cashFlows = newObjects;
             },
             onRegisterApi: function (gridApi) {
-                $scope.gridApi = gridApi;
+                vm.cfGridApi = gridApi;
                 var cellTemplate = 'ui-grid/selectionRowHeader';   // you could use your own template here
-                $scope.gridApi.core.addRowHeaderColumn({ name: 'rowHeaderCol', displayName: '', width: 30, cellTemplate: cellTemplate });
+                vm.cfGridApi.core.addRowHeaderColumn({ name: 'rowHeaderCol', displayName: '', width: 30, cellTemplate: cellTemplate });
             }
+        };
+        vm.deleteSelectedCf = function () {
+            angular.forEach(vm.cfGridApi.selection.getSelectedRows(), function (data, index) {
+                vm.cashFlows.splice(vm.cashFlows.lastIndexOf(data), 1);
+            });
         };
         vm.curveGridOptions = {
             data: 'vm.curveData',
@@ -73,10 +78,15 @@
                 vm.curveData = newObjects;
             },
             onRegisterApi: function (gridApi) {
-                $scope.gridApi = gridApi;
+                vm.curveGridApi = gridApi;
                 var cellTemplate = 'ui-grid/selectionRowHeader';   // you could use your own template here
-                $scope.gridApi.core.addRowHeaderColumn({ name: 'rowHeaderCol', displayName: '', width: 30, cellTemplate: cellTemplate });
+                vm.curveGridApi.core.addRowHeaderColumn({ name: 'rowHeaderCol', displayName: '', width: 30, cellTemplate: cellTemplate });
             }
+        };
+        vm.deleteSelectedCurve = function () {
+            angular.forEach(vm.curveGridApi.selection.getSelectedRows(), function (data, index) {
+                vm.curveData.splice(vm.curveData.lastIndexOf(data), 1);
+            });
         };
         vm.isBusy = false;
         vm.api = "/api/staticdata";
