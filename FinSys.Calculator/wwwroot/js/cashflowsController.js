@@ -117,6 +117,8 @@
         vm.interpolationMethodSelected = function (selectedItem) {
             alert("Selected Interpolation Method: " + selectedItem);
         }
+        vm.useCurve = function () {
+        };
         ///////////////////// datepicker ///////////////////////
         vm.datepickers = {
              valueDate: false
