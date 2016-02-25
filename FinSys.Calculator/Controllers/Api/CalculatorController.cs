@@ -78,6 +78,27 @@ namespace FinSys.Calculator.Controllers.Api
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             return Json(new { Message = "Failed", ModelState = ModelState });
         }
+        [HttpPost("cashflows")]
+        public async Task<JsonResult> Post([FromBody]CashFlowPricingViewModel vm)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var cf = Mapper.Map<CashFlowPricing>(vm);
+                    CashFlowViewModel result = Mapper.Map<CashFlowViewModel>(await _repository.PriceCashFlowsAsync(cf));
+                    JsonResult jResult = new JsonResult(result);
+                    return jResult;
+                }
+            }
+            catch (Exception ex)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(ex.Message);
+            }
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json(new { Message = "Failed", ModelState = ModelState });
+        }
 
         // PUT api/values/5
         [HttpPut("{id}")]
