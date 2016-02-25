@@ -56,6 +56,7 @@ namespace FinSys.Calculator
                 config.CreateMap<USTBillResult, USTBillResultViewModel>().ReverseMap();
                 config.CreateMap<CashFlow, CashFlowDescr>().ReverseMap();
                 config.CreateMap<CashFlow, CashFlowViewModel>().ReverseMap();
+                config.CreateMap<CashFlowPricing, CashFlowPricingViewModel>().ReverseMap();
                 config.CreateMap<DateTime, DateDescr>().ReverseMap();
             });
             app.UseMvc(config =>

@@ -755,30 +755,31 @@ namespace FinSys.Calculator.Services
             }
             return rateCurveDescr;
         }
-        public async Task<List<CashFlow>> PriceCashFlowsAsync(List<CashFlow> cashFlows,
-            string yieldMth,
-            string frequency,
-            string dayCount,
-            DateTime valueDate,
-            List<RateCurve> rateCurve,
-            string interpolation)
+        public async Task<List<CashFlow>> PriceCashFlowsAsync(CashFlowPricing cfp
+            )
         {
             try
             { 
             List<CashFlow> result = await Task.Run(() =>
             {
-                int ym = yieldMethods.IndexOf(yieldMth);
-                int yf = payFreqs.IndexOf(frequency);
-                int ydc = dayCounts.IndexOf(dayCount);
-                int itp = interpolationMethods.IndexOf(interpolation);
+                List<RateCurve> rateCurve = cfp.RateCurve.ToList();
+                if (!cfp.PriceFromCurve)
+                {
+                    rateCurve.Clear();
+                }
+
+                int ym = yieldMethods.IndexOf(cfp.YieldMethod);
+                int yf = payFreqs.IndexOf(cfp.DiscountFrequency);
+                int ydc = dayCounts.IndexOf(cfp.DayCount);
+                int itp = interpolationMethods.IndexOf(cfp.Interpolation);
                 List<CashFlow> cashFlowsResult = new List<CashFlow>();
-                CashFlowsDescr cashFlowsDescr = makeCashFlows(cashFlows);
+                CashFlowsDescr cashFlowsDescr = makeCashFlows(cfp.CashFlows.ToList());
                 RateCurveDescr rateCurveDescr = makeRateCurve(rateCurve);
                 DateDescr vDate = new DateDescr
                 {
-                    year = valueDate.Year,
-                    month = valueDate.Month,
-                    day = valueDate.Day
+                    year = cfp.ValueDate.Year,
+                    month = cfp.ValueDate.Month,
+                    day = cfp.ValueDate.Day
                 };
 
                 int status = priceCashFlows(cashFlowsDescr, ym, yf, ydc, vDate, rateCurveDescr, itp);

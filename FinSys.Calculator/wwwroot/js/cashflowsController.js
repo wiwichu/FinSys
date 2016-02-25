@@ -49,9 +49,16 @@
             },
             onRegisterApi: function (gridApi) {
                 vm.cfGridApi = gridApi;
-                var cellTemplate = 'ui-grid/selectionRowHeader';   // you could use your own template here
-                vm.cfGridApi.core.addRowHeaderColumn({ name: 'rowHeaderCol', displayName: '', width: 30, cellTemplate: cellTemplate });
             }
+        };
+        vm.addCf = function () {
+            vm.cashFlows.push({
+                "Scheduled Date": new Date(),
+                "Adjusted Date": new Date(),
+                "Amount": 0,
+                "Present Value": 0,
+                "Discount Rate": 0
+            });
         };
         vm.deleteSelectedCf = function () {
             angular.forEach(vm.cfGridApi.selection.getSelectedRows(), function (data, index) {
@@ -79,9 +86,13 @@
             },
             onRegisterApi: function (gridApi) {
                 vm.curveGridApi = gridApi;
-                var cellTemplate = 'ui-grid/selectionRowHeader';   // you could use your own template here
-                vm.curveGridApi.core.addRowHeaderColumn({ name: 'rowHeaderCol', displayName: '', width: 30, cellTemplate: cellTemplate });
-            }
+             }
+        };
+        vm.addCurve = function () {
+            vm.curveData.push({
+                "Date": new Date(),
+                "Rate": 0
+            });
         };
         vm.deleteSelectedCurve = function () {
             angular.forEach(vm.curveGridApi.selection.getSelectedRows(), function (data, index) {
