@@ -33,6 +33,7 @@
         vm.host = $location.host();
         vm.port = $location.port();
         vm.cashFlows = [];
+        $rootScope.cfData = null;
         if (vm.port)
         {
             vm.port = ":" + vm.port;
@@ -71,8 +72,17 @@
         }
         vm.goToCashFlows = function()
         {
-            //$rootScope.cfData = vm.cashFlows;
-            $window.location.href = '/App/CashFlows';
+            if (vm.cashFlows && vm.cashFlows.length>0) {
+                vm.cfData = {
+                    yieldmethod: vm.selectedYieldMethod,
+                    daycount: vm.selectedDayCount,
+                    frequency: vm.selectedCompoundFrequency,
+                    cashFlows: vm.cashFlows,
+                    valueDate: vm.ustbill.valueDate
+                };
+                $rootScope.cfData = vm.cfData;
+            }
+            $window.location.href = '#/CashFlows';
         }
         vm.calcUSTBill = function (selectedItem) {
             vm.isBusy = true;
@@ -122,15 +132,7 @@
                 vm.requestJson = JSON.stringify(vm.ustbill,null,2);
                 vm.responseJson = JSON.stringify(response.data, null, 2);
                 vm.cashFlows = response.data.cashFlows;
-                vm.cfData= {
-                    yieldmethod:    vm.selectedYieldMethod,
-                    daycount: vm.selectedDayCount,
-                    frequency: vm.selectedCompoundFrequency,
-                    cashFlows : vm.cashFlows,
-                    valueDate: vm.ustbill.valueDate
-                };
-                $rootScope.cfData = vm.cfData;
-            },
+             },
             function (err) {
                 vm.errorMessage = "Calculation Failed: " +  err.data;
             })
