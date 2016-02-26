@@ -155,10 +155,10 @@
         vm.dayCountSelected = function (selectedItem) {
             alert("Selected Day Count: " + selectedItem);
         }
-        vm.payFrequencyChanged = function () {
-            alert("Selected Pay Frequency: " + vm.selectedPayFrequency);
+        vm.compoundFrequencyChanged = function () {
+            alert("Selected Pay Frequency: " + vm.selectedCompoundFrequency);
         }
-        vm.payFrequencySelected = function (selectedItem) {
+        vm.compoundFrequencySelected = function (selectedItem) {
             alert("Selected Pay Frequency: " + selectedItem);
         }
         vm.interpolationMethodChanged = function () {
@@ -167,10 +167,21 @@
         vm.interpolationMethodSelected = function (selectedItem) {
             alert("Selected Interpolation Method: " + selectedItem);
         }
-        vm.cashflowsPricing = {};
         vm.getPresentValues = function () {
+            vm.cashflowsPricing =
+                {
+                    CashFlows: vm.cashFlows,
+                    Yieldmethod: vm.selectedYieldMethod,
+                    DiscountFrequency: vm.selectedCompoundFrequency,
+                    DayCount: vm.selectedDayCount,
+                    ValueDate: vm.valueDate,
+                    RateCurve: vm.curveData,
+                    Interpolation: vm.selectedInterpolationMethod,
+                    PriceFromCurve: vm.useCurve
+                };
             $http.post(vm.apiPath, vm.cashflowsPricing)
            .then(function (response) {
+               vm.cashFlows = response.data;
                vm.requestJson = JSON.stringify(vm.cashflowsPricing, null, 2);
                vm.responseJson = JSON.stringify(response.data, null, 2);
            },

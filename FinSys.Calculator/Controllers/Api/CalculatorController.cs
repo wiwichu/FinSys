@@ -86,7 +86,8 @@ namespace FinSys.Calculator.Controllers.Api
                 if (ModelState.IsValid)
                 {
                     var cf = Mapper.Map<CashFlowPricing>(vm);
-                    CashFlowViewModel result = Mapper.Map<CashFlowViewModel>(await _repository.PriceCashFlowsAsync(cf));
+                    var cfOut = await _repository.PriceCashFlowsAsync(cf);
+                    IEnumerable<CashFlowViewModel> result = Mapper.Map<IEnumerable<CashFlowViewModel>>(cfOut);
                     JsonResult jResult = new JsonResult(result);
                     return jResult;
                 }

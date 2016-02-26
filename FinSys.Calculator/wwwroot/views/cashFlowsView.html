@@ -100,7 +100,7 @@
                         <select class="form-control" name="compoundFrequencySelect" id="compoundFrequencySelect"
                                 ng-options="iClass for iClass in vm.compoundFrequency"
                                 ng-model="vm.selectedCompoundFrequency"
-                                ng-change="vm.dayCountChanged()">
+                                ng-change="vm.compoundFrequencyChanged()">
                             <option value="" ng-if=!vm.selectedCompoundFrequency>Select...</option>
                         </select>
                     </div>

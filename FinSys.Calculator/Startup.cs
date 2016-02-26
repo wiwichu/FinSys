@@ -58,6 +58,7 @@ namespace FinSys.Calculator
                 config.CreateMap<CashFlow, CashFlowViewModel>().ReverseMap();
                 config.CreateMap<CashFlowPricing, CashFlowPricingViewModel>().ReverseMap();
                 config.CreateMap<DateTime, DateDescr>().ReverseMap();
+                config.CreateMap<RateCurve, RateCurveViewModel>().ReverseMap();
             });
             app.UseMvc(config =>
             {
