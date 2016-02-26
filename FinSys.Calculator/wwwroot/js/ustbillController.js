@@ -45,6 +45,18 @@
                 {
                     vm.selectedInstrumentClass = response.data.instrumentClasses[0];
                 }
+                vm.yieldMethod = response.data.yieldMethods;
+                if (vm.yieldMethod != null && vm.yieldMethod[0] != null) {
+                    vm.selectedYieldMethod = vm.yieldMethod[2];
+                }
+                vm.dayCount = response.data.dayCounts;
+                if (vm.dayCount != null && vm.dayCount[0] != null) {
+                    vm.selectedDayCount = vm.dayCount[2];
+                }
+                vm.compoundFrequency = response.data.payFrequency;
+                if (vm.compoundFrequency != null && vm.compoundFrequency[0] != null) {
+                    vm.selectedCompoundFrequency = vm.compoundFrequency[0];
+                }
             }, function (error) {
                 vm.errorMessage = "Failed to load data: " + error;
             })
@@ -59,7 +71,7 @@
         }
         vm.goToCashFlows = function()
         {
-            $rootScope.cfData = vm.cashFlows;
+            //$rootScope.cfData = vm.cashFlows;
             $window.location.href = '/App/CashFlows';
         }
         vm.calcUSTBill = function (selectedItem) {
@@ -111,8 +123,11 @@
                 vm.responseJson = JSON.stringify(response.data, null, 2);
                 vm.cashFlows = response.data.cashFlows;
                 vm.cfData= {
-                            cashFlows : vm.cashFlows,
-                            valueDate: vm.ustbill.valueDate
+                    yieldmethod:    vm.selectedYieldMethod,
+                    daycount: vm.selectedDayCount,
+                    frequency: vm.selectedCompoundFrequency,
+                    cashFlows : vm.cashFlows,
+                    valueDate: vm.ustbill.valueDate
                 };
                 $rootScope.cfData = vm.cfData;
             },

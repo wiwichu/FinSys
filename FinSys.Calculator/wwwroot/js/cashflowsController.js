@@ -7,7 +7,7 @@
     .controller("cashflowsController", cashflowsController)
     ;
     
-    function cashflowsController($http, $location, $rootScope, uiGridConstants
+    function cashflowsController($http, $location, $rootScope, uiGridConstants,$uibModal
         ) {
 
         var vm = this;
@@ -16,14 +16,6 @@
         vm.isBusy = true;
         vm.cashFlows = [];
         vm.curveData = [];
-        if ($rootScope.cfData != null) {
-            vm.cashFlows = $rootScope.cfData.cashFlows;
-            vm.valueDate = $rootScope.cfData.valueDate;
-        }
-        else {
-            vm.valueDate = new Date();
-        }
-        $rootScope.cfData = null;
         vm.cfGridOptions = {
             data: 'vm.cashFlows',
             enableSelectAll: true,
@@ -104,11 +96,11 @@
         vm.protocol = $location.protocol() + "://";
         vm.host = $location.host();
         vm.port = $location.port();
-        vm.cashFlows = [];
         if (vm.port) {
             vm.port = ":" + vm.port;
         }
         vm.apiPath = vm.protocol + vm.host + vm.port + vm.api;
+        vm.cashFlows = [];
         vm.staticData = [];
         vm.selectedYieldMethod = "";
         vm.selectedDayCount = "";
@@ -136,7 +128,20 @@
                 vm.errorMessage = "Failed to load data: " + error;
             })
         .finally(function () {
+            if ($rootScope.cfData != null) {
+                vm.cashFlows = $rootScope.cfData.cashFlows;
+                vm.valueDate = $rootScope.cfData.valueDate;
+                vm.selectedYieldMethod = $rootScope.cfData.yieldmethod;
+                vm.selectedDayCount = $rootScope.cfData.daycount;
+                vm.selectedCompoundFrequency = $rootScope.cfData.frequency;
+            }
+            else {
+                vm.valueDate = new Date();
+            }
+            $rootScope.cfData = null;
             vm.isBusy = false;
+            vm.api = "/api/calculator/cashflows";
+            vm.apiPath = vm.protocol + vm.host + vm.port + vm.api;
         });
         vm.yieldMethodChanged = function () {
             alert("Selected Yield Method: " + vm.selectedYieldMethod);
@@ -162,8 +167,43 @@
         vm.interpolationMethodSelected = function (selectedItem) {
             alert("Selected Interpolation Method: " + selectedItem);
         }
-        vm.useCurve = function () {
+        vm.cashflowsPricing = {};
+        vm.getPresentValues = function () {
+            $http.post(vm.apiPath, vm.cashflowsPricing)
+           .then(function (response) {
+               vm.requestJson = JSON.stringify(vm.cashflowsPricing, null, 2);
+               vm.responseJson = JSON.stringify(response.data, null, 2);
+           },
+           function (err) {
+               vm.errorMessage = "Calculation Failed: " + err.data;
+           })
+           .finally(function () {
+               vm.isBusy = false;
+           });
+
         };
+
+        var api = {
+            apiPath: vm.apiPath,
+            requestJson: vm.requestJson,
+            responseJson: vm.responseJson
+        };
+        var that = this;
+        vm.getApi = function () {
+
+            var options = {
+                templateUrl: "/templates/apiDialog.html",
+                controller: function () {
+                    this.api = {
+                        apiPath: vm.apiPath,
+                        requestJson: vm.requestJson,
+                        responseJson: vm.responseJson
+                    };
+                },
+                controllerAs: "model"
+            };
+            $uibModal.open(options);
+        }
         ///////////////////// datepicker ///////////////////////
         vm.datepickers = {
              valueDate: false
