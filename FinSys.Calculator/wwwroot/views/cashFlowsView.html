@@ -83,7 +83,6 @@
                         <select class="form-control" name="yieldMethodSelect" id="yieldMethodSelect"
                                 ng-options="iClass for iClass in vm.yieldMethod"
                                 ng-model="vm.selectedYieldMethod"
-                                ng-change="vm.yieldMethodChanged()">
                             <option value="" ng-if=!vm.selectedYieldMethod>Select...</option>
                         </select>
                     </div>
@@ -92,7 +91,6 @@
                         <select class="form-control" name="dayCountSelect" id="dayCountSelect"
                                 ng-options="iClass for iClass in vm.dayCount"
                                 ng-model="vm.selectedDayCount"
-                                ng-change="vm.dayCountChanged()">
                             <option value="" ng-if=!vm.selectedDayCount>Select...</option>
                         </select>
                     </div>
@@ -101,7 +99,6 @@
                         <select class="form-control" name="compoundFrequencySelect" id="compoundFrequencySelect"
                                 ng-options="iClass for iClass in vm.compoundFrequency"
                                 ng-model="vm.selectedCompoundFrequency"
-                                ng-change="vm.compoundFrequencyChanged()">
                             <option value="" ng-if=!vm.selectedCompoundFrequency>Select...</option>
                         </select>
                     </div>
@@ -113,7 +110,6 @@
                     <select class="form-control" name="interpolationMethodSelect" id="interpolationMethodSelect"
                             ng-options="iClass for iClass in vm.interpolationMethod"
                             ng-model="vm.selectedInterpolationMethod"
-                            ng-change="vm.interpolationMethodChanged()">
                         <option value="" ng-if=!vm.selectedInterpolationMethod>Select...</option>
                     </select>
                     <div class="input-group">

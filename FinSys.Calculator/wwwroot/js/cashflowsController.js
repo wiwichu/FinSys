@@ -143,30 +143,6 @@
             vm.api = "/api/calculator/cashflows";
             vm.apiPath = vm.protocol + vm.host + vm.port + vm.api;
         });
-        vm.yieldMethodChanged = function () {
-            alert("Selected Yield Method: " + vm.selectedYieldMethod);
-        }
-        vm.yieldMethodSelected = function (selectedItem) {
-            alert("Selected Yield Method: " + selectedItem);
-        }
-        vm.dayCountChanged = function () {
-            alert("Selected Day Count: " + vm.selectedDayCount);
-        }
-        vm.dayCountSelected = function (selectedItem) {
-            alert("Selected Day Count: " + selectedItem);
-        }
-        vm.compoundFrequencyChanged = function () {
-            alert("Selected Pay Frequency: " + vm.selectedCompoundFrequency);
-        }
-        vm.compoundFrequencySelected = function (selectedItem) {
-            alert("Selected Pay Frequency: " + selectedItem);
-        }
-        vm.interpolationMethodChanged = function () {
-            alert("Selected Interpolation Method: " + vm.selectedInterpolationMethod);
-        }
-        vm.interpolationMethodSelected = function (selectedItem) {
-            alert("Selected Interpolation Method: " + selectedItem);
-        }
         vm.getPresentValues = function () {
             vm.cashflowsPricing =
                 {
