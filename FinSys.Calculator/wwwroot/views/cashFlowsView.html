@@ -1,9 +1,10 @@
-﻿<div  class="col-md-12" ng-app="app-calculator" >
-    <div class="col-md-12 col-md-offset-4" >
+﻿<div class="col-md-12" ng-app="app-calculator">
+    <div class="col-md-12 col-md-offset-4">
         <div class="col-md-4 ">
             <h2>Cash Flows</h2>
         </div>
-    </div>    <div class="text-danger text-center" ng-cloak ng-show="vm.errorMessage">{{ vm.errorMessage}}</div>
+    </div>
+    <div class="text-danger text-center" ng-cloak ng-show="vm.errorMessage">{{ vm.errorMessage}}</div>
     <div class="text-center" ng-show="vm.isBusy"><i class="fa fa-spinner fa-spin"></i> Loading... </div>
     <form novalidate name="CashFlowsForm">
         <div class="col-md-8">
@@ -20,7 +21,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="input-group" >
+                        <div class="input-group">
                             <input type="submit" value="Add Row" class="btn btn-primary btn-sm" ng-click="vm.addCf()" />
                             <input type="submit" value="Delete Selected" class="btn btn-primary btn-sm" ng-click="vm.deleteSelectedCf()" />
                         </div>

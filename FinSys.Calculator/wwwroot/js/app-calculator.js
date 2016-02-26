@@ -27,6 +27,11 @@
             controllerAs: "vm",
             templateUrl: "/views/cashFlowsView.html"
         });
+        $routeProvider.when("/CustomCalc", {
+            controller: "calculatorController",
+            controllerAs: "vm",
+            templateUrl: "/views/custCalcView.html"
+        });
         $routeProvider.when("/About", {
             controller: "cashflowsController",
             controllerAs: "vm",
