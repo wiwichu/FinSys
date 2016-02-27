@@ -1,6 +1,6 @@
 ﻿<div class="col-md-12" ng-app="app-calculator">
-    <div class="col-md-12 col-md-offset-4">
-        <div class="col-md-4 ">
+    <div class="col-md-12 ">
+        <div class="col-md-4 col-md-offset-4">
             <h2>Cash Flows</h2>
         </div>
     </div>
@@ -82,15 +82,15 @@
                         </div>
                         <select class="form-control" name="yieldMethodSelect" id="yieldMethodSelect"
                                 ng-options="iClass for iClass in vm.yieldMethod"
-                                ng-model="vm.selectedYieldMethod"
-                            <option value="" ng-if=!vm.selectedYieldMethod>Select...</option>
+                                ng-model="vm.selectedYieldMethod">
+                            <option value="" ng-if=!vm.selectedYieldMethod>Select...</option>>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="yieldMethodSelect">Day Count</label>
                         <select class="form-control" name="dayCountSelect" id="dayCountSelect"
                                 ng-options="iClass for iClass in vm.dayCount"
-                                ng-model="vm.selectedDayCount"
+                                ng-model="vm.selectedDayCount">
                             <option value="" ng-if=!vm.selectedDayCount>Select...</option>
                         </select>
                     </div>
@@ -98,7 +98,7 @@
                         <label for="compoundFrequencySelect">Compound Frequency</label>
                         <select class="form-control" name="compoundFrequencySelect" id="compoundFrequencySelect"
                                 ng-options="iClass for iClass in vm.compoundFrequency"
-                                ng-model="vm.selectedCompoundFrequency"
+                                ng-model="vm.selectedCompoundFrequency">
                             <option value="" ng-if=!vm.selectedCompoundFrequency>Select...</option>
                         </select>
                     </div>
@@ -109,7 +109,7 @@
                     <label for="interpolationMethodSelect">Interpolation Method</label>
                     <select class="form-control" name="interpolationMethodSelect" id="interpolationMethodSelect"
                             ng-options="iClass for iClass in vm.interpolationMethod"
-                            ng-model="vm.selectedInterpolationMethod"
+                            ng-model="vm.selectedInterpolationMethod">
                         <option value="" ng-if=!vm.selectedInterpolationMethod>Select...</option>
                     </select>
                     <div class="input-group">
