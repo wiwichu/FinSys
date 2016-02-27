@@ -965,6 +965,11 @@ int  priceCashFlows(CashFlowsStruct &cashFlowsStruct,
 		int result = getInstrumentDefaultsAndData(*instr, *calcs);
 		if (result != return_success)
 		{
+			if (result == return_err_val_gt_mat)
+			{
+				cashFlowsStruct.cashFlows[i].presentValue = cashFlowsStruct.cashFlows[i].amount*calcs->priceOut;
+				continue;
+			}
 			return result;
 		}
 		instr->endOfMonthPay = true;
