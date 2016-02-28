@@ -20,6 +20,11 @@
         vm.opened = false;
         vm.isBusy = true;
         vm.price = 0.00;
+        vm.yield = 0.00;
+        vm.interestRate = 0.00;
+        vm.interest = 0.00;
+        vm.dirtyPrice = 0.00;
+        vm.interestDays = 0;
         vm.duration = 0.00;
         vm.modDuration = 0.00;
         vm.convexity = 0.00;
@@ -34,6 +39,7 @@
         vm.host = $location.host();
         vm.port = $location.port();
         vm.cashFlows = [];
+        vm.holidays = [];
         if (vm.port)
         {
             vm.port = ":" + vm.port;
@@ -52,15 +58,15 @@
                     $rootScope.staticData = response.data;
                     vm.init();
                 }, function (error) {
-                    vm.isBusy = false;
                     //loghere
                 })
             .finally(function () {
-                //?
+                vm.isBusy = false;
             });
         }
         else {
             vm.init();
+            vm.isBusy = false;
         }
         vm.instrumentClassChanged = function () {
             alert("Selected Instrument: " + vm.selectedInstrumentClass);
@@ -68,7 +74,39 @@
         vm.instrumentClassSelected = function (selectedItem) {
             alert("Selected Instrument: " + selectedItem);
         }
-        vm.goToCashFlows = function()
+        vm.holidayGridOptions = {
+            data: 'vm.holidays',
+            enableSelectAll: true,
+            exporterCsvFilename: 'holidays.csv', enableGridMenu: true,
+            exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
+            enablePaginationControls: true,
+            enableRowSelection: true,
+            enableRowHeaderSelection: true,
+            selectionRowHeaderWidth: 35,
+            multiSelect: true,
+            paginationPageSize: 25, showGridFooter: true,
+            showColumnFooter: true,
+            columnDefs: [
+                { name: 'Holiday Date', field: 'holidayDate', type: 'date', cellFilter: 'date:"yyyy-MM-dd"', footerCellFilter: 'date' },
+            ],
+            importerDataAddCallback: function (grid, newObjects) {
+                vm.holidays = newObjects;
+            },
+            onRegisterApi: function (gridApi) {
+                vm.holidayGridApi = gridApi;
+            }
+        };
+        vm.addHolidays = function () {
+            vm.holidays.push({
+                "Holiday Date": new Date()
+            });
+        };
+        vm.deleteSelectedHolidays = function () {
+            angular.forEach(vm.holidayGridApi.selection.getSelectedRows(), function (data, index) {
+                vm.holidayss.splice(vm.holidayss.lastIndexOf(data), 1);
+            });
+        };
+        vm.goToCashFlows = function ()
         {
             $rootScope.cfData = vm.cashFlows;
             $window.location.href = '/App/CashFlows';
@@ -161,9 +199,13 @@
         ///////////////////// datepicker ///////////////////////
               vm.datepickers = {
         maturityDate: false,
+        previousPay: false,
+        nextPay: false,
         valueDate: false
       }
       vm.maturityDate = new Date();
+      vm.previousPay = new Date();
+      vm.nextPay = new Date();
       vm.valueDate = new Date();
 
       vm.showWeeks = true;

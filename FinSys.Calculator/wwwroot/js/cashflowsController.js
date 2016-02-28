@@ -162,11 +162,11 @@
                 })
             .finally(function () {
                 vm.isBusy = false;
-                //?
             });
         }
         else {
             vm.init();
+            vm.isBusy = false;
         }
         //$http.get(vm.api)
         //    .then(function (response) {

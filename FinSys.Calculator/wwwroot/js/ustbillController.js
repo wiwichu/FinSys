@@ -81,37 +81,12 @@
                 })
             .finally(function () {
                 vm.isBusy = false;
-                //?
             });
         }
         else {
             vm.init();
+            vm.isBusy = false;
         }
-        //$http.get(vm.api)
-        //    .then(function (response) {
-        //        vm.instrumentClass = response.data.instrumentClasses;
-        //        if (response.data.instrumentClasses != null && response.data.instrumentClasses[0] != null)
-        //        {
-        //            vm.selectedInstrumentClass = response.data.instrumentClasses[0];
-        //        }
-        //        vm.yieldMethod = response.data.yieldMethods;
-        //        if (vm.yieldMethod != null && vm.yieldMethod[0] != null) {
-        //            vm.selectedYieldMethod = vm.yieldMethod[2];
-        //        }
-        //        vm.dayCount = response.data.dayCounts;
-        //        if (vm.dayCount != null && vm.dayCount[0] != null) {
-        //            vm.selectedDayCount = vm.dayCount[2];
-        //        }
-        //        vm.compoundFrequency = response.data.payFrequency;
-        //        if (vm.compoundFrequency != null && vm.compoundFrequency[0] != null) {
-        //            vm.selectedCompoundFrequency = vm.compoundFrequency[0];
-        //        }
-        //    }, function (error) {
-        //        vm.errorMessage = "Failed to load data: " + error;
-        //    })
-        //.finally(function () {
-        //    vm.isBusy = false;
-        //});
         vm.instrumentClassChanged = function () {
             alert("Selected Instrument: " + vm.selectedInstrumentClass);
         }
