@@ -13,7 +13,6 @@
 
         var vm = this;
         vm.errorMessage = "";
-        vm.staticData = [];
         vm.instrumentClass = [];
         vm.selectedInstrumentClass = "";
         vm.opened = false;
@@ -28,42 +27,91 @@
         vm.ustbill.discount = 0.00;
         vm.ustbill.be = 0.00;
         vm.ustbill.mmYield = 0.00;
-        vm.api = "/api/staticdata";
+        $rootScope.cfData = null;
+        //vm.api = "/api/staticdata";
         vm.protocol = $location.protocol() + "://";
         vm.host = $location.host();
         vm.port = $location.port();
         vm.cashFlows = [];
-        $rootScope.cfData = null;
+        vm.staticData = [];
         if (vm.port)
         {
             vm.port = ":" + vm.port;
         }
+        vm.init = function () {
+            try {
+                if ($rootScope.staticData) {
+                    vm.instrumentClass = $rootScope.staticData.instrumentClasses;
+                    if ($rootScope.staticData.instrumentClasses != null && $rootScope.staticData.instrumentClasses[0] != null) {
+                        vm.selectedInstrumentClass = $rootScope.staticData.instrumentClasses[0];
+                    }
+                    vm.yieldMethod = $rootScope.staticData.yieldMethods;
+                    if (vm.yieldMethod != null && vm.yieldMethod[0] != null) {
+                        vm.selectedYieldMethod = vm.yieldMethod[2];
+                    }
+                    vm.dayCount = $rootScope.staticData.dayCounts;
+                    if (vm.dayCount != null && vm.dayCount[0] != null) {
+                        vm.selectedDayCount = vm.dayCount[2];
+                    }
+                    vm.compoundFrequency = $rootScope.staticData.payFrequency;
+                    if (vm.compoundFrequency != null && vm.compoundFrequency[0] != null) {
+                        vm.selectedCompoundFrequency = vm.compoundFrequency[0];
+                    }
+                }
+                else {
+                    vm.errorMessage = "Failed to load data: Static Data not Initialized.";
+                }
+            }
+            catch (exception) {
+                vm.errorMessage = "Failed to load data: " + exception;
+            }
+            finally {
+                vm.isBusy = false;
+            }
+        }
         vm.apiPath = vm.protocol + vm.host + vm.port + vm.api;
-        $http.get(vm.api)
-            .then(function (response) {
-                vm.instrumentClass = response.data.instrumentClasses;
-                if (response.data.instrumentClasses != null && response.data.instrumentClasses[0] != null)
-                {
-                    vm.selectedInstrumentClass = response.data.instrumentClasses[0];
-                }
-                vm.yieldMethod = response.data.yieldMethods;
-                if (vm.yieldMethod != null && vm.yieldMethod[0] != null) {
-                    vm.selectedYieldMethod = vm.yieldMethod[2];
-                }
-                vm.dayCount = response.data.dayCounts;
-                if (vm.dayCount != null && vm.dayCount[0] != null) {
-                    vm.selectedDayCount = vm.dayCount[2];
-                }
-                vm.compoundFrequency = response.data.payFrequency;
-                if (vm.compoundFrequency != null && vm.compoundFrequency[0] != null) {
-                    vm.selectedCompoundFrequency = vm.compoundFrequency[0];
-                }
-            }, function (error) {
-                vm.errorMessage = "Failed to load data: " + error;
-            })
-        .finally(function () {
-            vm.isBusy = false;
-        });
+        if (!$rootScope.staticData) {
+            vm.api = "/api/staticdata";
+            $http.get(vm.api)
+                .then(function (response) {
+                    $rootScope.staticData = response.data;
+                    vm.init();
+                }, function (error) {
+                    //loghere
+                })
+            .finally(function () {
+                vm.isBusy = false;
+                //?
+            });
+        }
+        else {
+            vm.init();
+        }
+        //$http.get(vm.api)
+        //    .then(function (response) {
+        //        vm.instrumentClass = response.data.instrumentClasses;
+        //        if (response.data.instrumentClasses != null && response.data.instrumentClasses[0] != null)
+        //        {
+        //            vm.selectedInstrumentClass = response.data.instrumentClasses[0];
+        //        }
+        //        vm.yieldMethod = response.data.yieldMethods;
+        //        if (vm.yieldMethod != null && vm.yieldMethod[0] != null) {
+        //            vm.selectedYieldMethod = vm.yieldMethod[2];
+        //        }
+        //        vm.dayCount = response.data.dayCounts;
+        //        if (vm.dayCount != null && vm.dayCount[0] != null) {
+        //            vm.selectedDayCount = vm.dayCount[2];
+        //        }
+        //        vm.compoundFrequency = response.data.payFrequency;
+        //        if (vm.compoundFrequency != null && vm.compoundFrequency[0] != null) {
+        //            vm.selectedCompoundFrequency = vm.compoundFrequency[0];
+        //        }
+        //    }, function (error) {
+        //        vm.errorMessage = "Failed to load data: " + error;
+        //    })
+        //.finally(function () {
+        //    vm.isBusy = false;
+        //});
         vm.instrumentClassChanged = function () {
             alert("Selected Instrument: " + vm.selectedInstrumentClass);
         }

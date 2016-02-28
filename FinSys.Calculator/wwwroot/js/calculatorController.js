@@ -38,20 +38,30 @@
         {
             vm.port = ":" + vm.port;
         }
+        vm.init = function () {
+            vm.instrumentClass = $rootScope.staticData.instrumentClasses;
+            if ($rootScope.staticData.instrumentClasses != null && $rootScope.staticData.instrumentClasses[0] != null) {
+                vm.selectedInstrumentClass = $rootScope.staticData.instrumentClasses[0];
+            }
+        }
         vm.apiPath = vm.protocol + vm.host + vm.port + vm.api;
-        $http.get(vm.api)
-            .then(function (response) {
-                vm.instrumentClass = response.data.instrumentClasses;
-                if (response.data.instrumentClasses != null && response.data.instrumentClasses[0] != null)
-                {
-                    vm.selectedInstrumentClass = response.data.instrumentClasses[0];
-                }
-            }, function (error) {
-                vm.errorMessage = "Failed to load data: " + error;
-            })
-        .finally(function () {
-            vm.isBusy = false;
-        });
+        if (!$rootScope.staticData) {
+            vm.api = "/api/staticdata";
+            $http.get(vm.api)
+                .then(function (response) {
+                    $rootScope.staticData = response.data;
+                    vm.init();
+                }, function (error) {
+                    vm.isBusy = false;
+                    //loghere
+                })
+            .finally(function () {
+                //?
+            });
+        }
+        else {
+            vm.init();
+        }
         vm.instrumentClassChanged = function () {
             alert("Selected Instrument: " + vm.selectedInstrumentClass);
         }
