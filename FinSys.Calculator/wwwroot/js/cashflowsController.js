@@ -16,6 +16,11 @@
         vm.isBusy = true;
         vm.cashFlows = [];
         vm.curveData = [];
+        vm.staticData = [];
+        vm.selectedYieldMethod = "";
+        vm.selectedDayCount = "";
+        vm.selectedCompoundFrequency = "";
+        vm.selectedInterpolationMethod = "";
         vm.cfGridOptions = {
             data: 'vm.cashFlows',
             enableSelectAll: true,
@@ -70,7 +75,7 @@
             paginationPageSize: 25, showGridFooter: true,
             showColumnFooter: true,
             columnDefs: [
-                { name: 'Date', field: 'date', type: 'date', cellFilter: 'date:"yyyy-MM-dd"' },
+                { name: 'RateDate', field: 'rateDate', type: 'date', cellFilter: 'date:"yyyy-MM-dd"' },
                 { name: 'Rate', field: 'rate', type: 'number' }
             ],
             importerDataAddCallback: function (grid, newObjects) {
@@ -82,7 +87,7 @@
         };
         vm.addCurve = function () {
             vm.curveData.push({
-                "Date": new Date(),
+                "RateDate": new Date(),
                 "Rate": 0
             });
         };
@@ -100,12 +105,6 @@
             vm.port = ":" + vm.port;
         }
         vm.apiPath = vm.protocol + vm.host + vm.port + vm.api;
-        vm.cashFlows = [];
-        vm.staticData = [];
-        vm.selectedYieldMethod = "";
-        vm.selectedDayCount = "";
-        vm.selectedCompoundFrequency = "";
-        vm.selectedInterpolationMethod = "";
         $http.get(vm.api)
             .then(function (response) {
                 vm.yieldMethod = response.data.yieldMethods;
