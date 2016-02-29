@@ -80,10 +80,6 @@
                 <input type="submit" value="Calculate" class="btn btn-success form-control" />
             </div>
             <div class="form-group">
-                <input type="submit" value="CashFlows" ng-click="vm.goToCashFlows()"
-                       class="btn btn-primary form-control" ng-disabled="CustCalcForm.$invalid || !vm.cashFlows || vm.cashFlows.length==0" />
-            </div>
-            <div class="form-group">
                 <input type="submit" value="API" class="btn btn-primary form-control"
                        ng-click="vm.getApi()" ng-disabled="CustCalcForm.$invalid || !vm.responseJson" />
             </div>
@@ -131,6 +127,11 @@
                     <input type="checkbox" name="tradeFlat" ng-model="vm.tradeFlat"> Trade Flat
                 </label>
             </div>
+            <div class="form-group">
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="includeCashflows" ng-model="vm.includeCashflows"> Include Cashflows
+                </label>
+            </div>
         </div>
         <div class="col-md-2">
             <div class="form-group">
@@ -165,43 +166,148 @@
                 <div class="input-group">
                     <label for="price">Interest Days</label>
                     <input type="text" class="form-control" id="interestDays" name="interestDays" readonly
-                           ng-model="vm.interestDays"  ng-pattern="/^\d{0,20}(\.\d{1,20})?$/" />
+                           ng-model="vm.interestDays" ng-pattern="/^\d{0,20}(\.\d{1,20})?$/" />
                 </div>
             </div>
-            <div class="form-group ">
-                <div class="input-group">
-                    <label for="cashFlows">Holidays:YYYY-MM-DD</label>
-                    <span class="input-group-btn">
-                        <button class="btn btn-info btn-xs">
-                            <i class="fa fa-question-circle"></i>
-                        </button>
-                    </span>
+            <div class="form-group">
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="useHolidays" ng-model="vm.useHolidays" data-toggle="collapse" data-target="#holidays"> Use Holidays
+                </label>
+            </div>
+            <div id="holidays" class="collapse">
+                <div class="form-group ">
+                    <div class="input-group">
+                        <label for="cashFlows">Holidays:YYYY-MM-DD</label>
+                        <span class="input-group-btn">
+                            <button class="btn btn-info btn-xs">
+                                <i class="fa fa-question-circle"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="input-group">
+                        <button class="btn btn-primary btn-sm" ng-click="vm.addHolidays()">Add</button>
+                        <button class="btn btn-primary btn-sm" ng-click="vm.deleteSelectedHolidays()">Delete <i class="fa fa-check"></i></button>
+                    </div>
+                    <div ui-grid="vm.holidayGridOptions" ui-grid-resize-columns ui-grid-selection ui-grid-importer ui-grid-exporter ui-grid-edit></div>
                 </div>
-                <div class="input-group">
-                    <button class="btn btn-primary btn-sm" ng-click="vm.addHolidays()" >Add</button>
-                    <button class="btn btn-primary btn-sm" ng-click="vm.deleteSelectedHolidays()" >Delete <i class="fa fa-check"></i></button>
-                </div>
-                <div ui-grid="vm.holidayGridOptions" ui-grid-resize-columns ui-grid-selection ui-grid-importer ui-grid-exporter ui-grid-edit></div>
             </div>
         </div>
         <div class="col-md-2">
             <div class="form-group">
-                <label>Day Count</label>
-
-
-                <input class="form-control" />
+                <label for="duration">Duration</label>
+                <input class="form-control" id="duration" readonly ng-model="vm.duration" />
             </div>
             <div class="form-group">
-                <label>Pay Frequency</label>
-                <input class="form-control" />
+                <label for="modDuration">Modified Duration</label>
+                <input class="form-control" id="modDuration" readonly ng-model="vm.modDuration" />
             </div>
             <div class="form-group">
-                <label>Calculation Date Adjust</label>
-                <input class="form-control" />
+                <label for="convexity">Convexity</label>
+                <input class="form-control" id="convexity" readonly ng-model="vm.convexity" />
             </div>
             <div class="form-group">
-                <label>Payment Date Adjust</label>
-                <input class="form-control" />
+                <label for="pvbp">PVBP</label>
+                <input class="form-control" id="pvbp" readonly ng-model="vm.pvbp" />
+            </div>
+            <div class="form-group">
+                <label for="cvxPvbp">Convexity Adjusted PVBP</label>
+                <input class="form-control" id="cvxPvbp" readonly ng-model="vm.cvxPvbp" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="CashFlows" ng-click="vm.goToCashFlows()"
+                       class="btn btn-primary form-control" ng-disabled="CustCalcForm.$invalid || !vm.cashFlows || vm.cashFlows.length==0" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="useDefaults" ng-model="vm.useDefaults" data-toggle="collapse" data-target="#defaults"> Override Defaults
+                </label>
+            </div>
+            <div id="defaults" class="collapse">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="dayCountSelect">Yield Day Count</label>
+                        <select class="form-control" name="dayCountSelect" id="dayCountSelect"
+                                ng-options="iClass for iClass in vm.dayCount"
+                                ng-model="vm.selectedDayCount">
+                            <option value="" ng-if=!vm.selectedDayCount>Select...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="payFrequencySelect">Pay Frequency</label>
+                        <select class="form-control" name="payFrequencySelect" id="payFrequencySelect"
+                                ng-options="iClass for iClass in vm.payFrequency"
+                                ng-model="vm.selectedPayFrequency">
+                            <option value="" ng-if=!vm.payFrequency>Select...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <label for="calcDateAdjust">Calc Date Adjust</label>
+                            <span class="input-group-btn">
+                                <button class="btn btn-info btn-xs">
+                                    <i class="fa fa-question-circle"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <select class="form-control" name="calcDateSelect" id="calcDateSelect"
+                                ng-options="iClass for iClass in vm.calcDateAdjust"
+                                ng-model="vm.selectedCalcDateAdjust">
+                            <option value="" ng-if=!vm.selectedCalcDateAdjust>Select...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="payDateAdjust">Pay Date Adjust</label>
+                        <select class="form-control" name="payDateSelect" id="payDateSelect"
+                                ng-options="iClass for iClass in vm.payDateAdjust"
+                                ng-model="vm.selectedPayDateAdjust">
+                            <option value="" ng-if=!vm.selectedPayDateAdjust>Select...</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="yieldDayCountSelect">Yield Day Count</label>
+                            <select class="form-control" name="yieldDayCountSelect" id="yieldDayCountSelect"
+                                    ng-options="iClass for iClass in vm.yieldDayCount"
+                                    ng-model="vm.selectedYieldDayCount">
+                                <option value="" ng-if=!vm.selectedYieldDayCount>Select...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="compoundFrequencySelect">Compound Frequency</label>
+                            <select class="form-control" name="compoundFrequencySelect" id="compoundFrequencySelect"
+                                    ng-options="iClass for iClass in vm.compoundFrequency"
+                                    ng-model="vm.selectedCompoundFrequency">
+                                <option value="" ng-if=!vm.selectedCompoundFrequency>Select...</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="yieldMethodSelect">Yield Method</label>
+                            <span class="input-group-btn">
+                                <button class="btn btn-info btn-xs">
+                                    <i class="fa fa-question-circle"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" name="yieldMethodSelect" id="yieldMethodSelect"
+                                    ng-options="iClass for iClass in vm.yieldMethod"
+                                    ng-model="vm.selectedYieldMethod">
+                                <option value="" ng-if=!vm.selectedYieldMethod>Select...</option>>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Set Dates" class="btn btn-primary form-control" ng-click="vm.setDates()" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Reset Defaults" class="btn btn-primary form-control"
+                                   ng-click="vm.setDefaults()" />
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </form>

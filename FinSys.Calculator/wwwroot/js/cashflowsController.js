@@ -168,43 +168,6 @@
             vm.init();
             vm.isBusy = false;
         }
-        //$http.get(vm.api)
-        //    .then(function (response) {
-        //        vm.yieldMethod = response.data.yieldMethods;
-        //        if (vm.yieldMethod != null && vm.yieldMethod[0] != null) {
-        //            vm.selectedYieldMethod = vm.yieldMethod[0];
-        //        }
-        //        vm.dayCount = response.data.dayCounts;
-        //        if (vm.dayCount != null && vm.dayCount[0] != null) {
-        //            vm.selectedDayCount = vm.dayCount[0];
-        //        }
-        //        vm.compoundFrequency = response.data.payFrequency;
-        //        if (vm.compoundFrequency != null && vm.compoundFrequency[0] != null) {
-        //            vm.selectedCompoundFrequency = vm.compoundFrequency[0];
-        //        }
-        //        vm.interpolationMethod = response.data.interpolationMethods;
-        //        if (vm.interpolationMethod != null && vm.interpolationMethod[0] != null) {
-        //            vm.selectedInterpolationMethod = vm.interpolationMethod[0];
-        //        }
-        //    }, function (error) {
-        //        vm.errorMessage = "Failed to load data: " + error;
-        //    })
-        //.finally(function () {
-        //    if ($rootScope.cfData != null) {
-        //        vm.cashFlows = $rootScope.cfData.cashFlows;
-        //        vm.valueDate = $rootScope.cfData.valueDate;
-        //        vm.selectedYieldMethod = $rootScope.cfData.yieldmethod;
-        //        vm.selectedDayCount = $rootScope.cfData.daycount;
-        //        vm.selectedCompoundFrequency = $rootScope.cfData.frequency;
-        //    }
-        //    else {
-        //        vm.valueDate = new Date();
-        //    }
-        //    $rootScope.cfData = null;
-        //    vm.isBusy = false;
-        //    vm.api = "/api/calculator/cashflows";
-        //    vm.apiPath = vm.protocol + vm.host + vm.port + vm.api;
-        //});
         vm.getPresentValues = function () {
             vm.cashflowsPricing =
                 {
