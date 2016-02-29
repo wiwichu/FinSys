@@ -260,11 +260,17 @@
         maturityDate: false,
         previousPay: false,
         nextPay: false,
+        issueDate: false,
+        firstPayDate: false,
+        nextToLastDate: false,
         valueDate: false
       }
       vm.maturityDate = new Date();
       vm.previousPay = new Date();
       vm.nextPay = new Date();
+      vm.issueDate = new Date();
+      vm.firstPayDate = new Date();
+      vm.nextToLastDate = new Date();
       vm.valueDate = new Date();
 
       vm.showWeeks = true;

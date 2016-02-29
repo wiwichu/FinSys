@@ -227,7 +227,7 @@
             <div id="defaults" class="collapse">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="dayCountSelect">Yield Day Count</label>
+                        <label for="dayCountSelect">Day Count</label>
                         <select class="form-control" name="dayCountSelect" id="dayCountSelect"
                                 ng-options="iClass for iClass in vm.dayCount"
                                 ng-model="vm.selectedDayCount">
@@ -265,6 +265,13 @@
                             <option value="" ng-if=!vm.selectedPayDateAdjust>Select...</option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <input type="submit" value="Set Dates" class="btn btn-primary form-control" ng-click="vm.setDates()" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Reset Defaults" class="btn btn-primary form-control"
+                               ng-click="vm.setDefaults()" />
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
@@ -300,11 +307,52 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Set Dates" class="btn btn-primary form-control" ng-click="vm.setDates()" />
+                            <label for="issueDate">Issue Date</label>
+                            <div class="input-group">
+                                <input id="issueDate" type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                                       name="issueDate" ng-model="vm.issueDate" is-open="vm.datepickers.issueDate"
+                                       datepicker-options="dateOptions" ng-required="true"
+                                       close-text="Close" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" ng-click="vm.open($event,'issueDate')" ng-focus="vm.datepickers.issueDate=true">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <span class="text-danger" ng-cloak ng-show="CustCalcForm.issueDate.$error.required">Required</span>
+                            <span class="text-danger" ng-cloak ng-show="!CustCalcForm.issueDate.$valid">Enter a Valid Date</span>
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Reset Defaults" class="btn btn-primary form-control"
-                                   ng-click="vm.setDefaults()" />
+                            <label for="firstPayDate">First Pay Date</label>
+                            <div class="input-group">
+                                <input id="firstPayDate" type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                                       name="firstPayDate" ng-model="vm.firstPayDate" is-open="vm.datepickers.firstPayDate"
+                                       datepicker-options="dateOptions" ng-required="true"
+                                       close-text="Close" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" ng-click="vm.open($event,'firstPayDate')" ng-focus="vm.datepickers.firstPayDate=true">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <span class="text-danger" ng-cloak ng-show="CustCalcForm.firstPayDate.$error.required">Required</span>
+                            <span class="text-danger" ng-cloak ng-show="!CustCalcForm.firstPayDate.$valid">Enter a Valid Date</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="nextToLastDate">Next To Last Date</label>
+                            <div class="input-group">
+                                <input id="nextToLastDate" type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                                       name="nextToLastDate" ng-model="vm.nextToLastDate" is-open="vm.datepickers.nextToLastDate"
+                                       datepicker-options="dateOptions" ng-required="true"
+                                       close-text="Close" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" ng-click="vm.open($event,'firstPayDate')" ng-focus="vm.datepickers.nextToLastDate=true">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <span class="text-danger" ng-cloak ng-show="CustCalcForm.firstPayDate.$error.required">Required</span>
+                            <span class="text-danger" ng-cloak ng-show="!CustCalcForm.firstPayDate.$valid">Enter a Valid Date</span>
                         </div>
                     </div>
                 </div>
