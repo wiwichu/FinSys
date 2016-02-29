@@ -78,6 +78,46 @@ namespace FinSys.Calculator.Controllers.Api
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             return Json(new { Message = "Failed", ModelState = ModelState });
         }
+        [HttpPost("instrumentdefaults")]
+        public async Task<JsonResult> Post([FromBody]InstrumentClassViewModel vm)
+        {
+            try
+            {
+                Instrument instr = new Instrument
+                {
+                    Class = vm.Class,
+                    IssueDate = DateTime.Now.AddYears(-1),
+                    NextToLastPayDate = DateTime.Now,
+                    MaturityDate=DateTime.Now.AddYears(1),
+                    FirstPayDate=DateTime.Now
+                };
+                Calculations calc = new Calculations
+                {
+                    ValueDate=DateTime.Now
+                };
+                var res = await _repository.GetInstrumentDefaultsAsync(instr, calc);
+                Instrument instrResult = res.Key;
+                Calculations calcResult = res.Value;
+
+                InstrumentDefaultsViewModel result = new InstrumentDefaultsViewModel
+                {
+                    PayFreq=instrResult.IntPayFreq,
+                    HolidayAdjust=instrResult.HolidayAdjust,
+                    DayCount=instrResult.IntDayCount,
+                    EndOfMonthPay=instrResult.EndOfMonthPay,
+                    YieldDayCount=calcResult.YieldDayCount,
+                    YieldFrequency=calcResult.YieldFreq,
+                    YieldMethod=calcResult.YieldMethod
+                };
+                JsonResult jResult = new JsonResult(result);
+                return jResult;
+            }
+            catch (Exception ex)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(ex.Message);
+            }
+        }
         [HttpPost("cashflows")]
         public async Task<JsonResult> Post([FromBody]CashFlowPricingViewModel vm)
         {

@@ -127,8 +127,31 @@
             vm.init();
             vm.isBusy = false;
         }
+        vm.instrumentclass = {};
         vm.instrumentClassChanged = function () {
-            alert("Selected Instrument: " + vm.selectedInstrumentClass);
+            //alert("Selected Instrument: " + vm.selectedInstrumentClass);
+            vm.isBusy = true;
+            vm.api = "/api/calculator/instrumentdefaults";
+            vm.apiPath = vm.protocol + vm.host + vm.port + vm.api;
+            vm.instrumentclass.Class=vm.selectedInstrumentClass;
+            $http.post(vm.apiPath, vm.instrumentclass)
+            .then(function (response) {
+                vm.selectedCalcDateAdjust = response.data.holidayAdjust;
+                vm.selectedCompoundFrequency = response.data.yieldFrequency;
+                vm.selectedDayCount = response.data.dayCount;
+                vm.selectedPayDateAdjust = response.data.holidayAdjust;
+                vm.selectedPayFrequency = response.data.payFreq;
+                vm.selectedYieldDayCount = response.data.yieldDayCount;
+                vm.selectedYieldMethod = response.data.yieldMethod;
+                vm.endOfMonth = response.data.endOfMonth;
+            },
+            function (err) {
+                vm.errorMessage = "Calculation Failed: " + err.data;
+            })
+            .finally(function () {
+                vm.isBusy = false;
+            });
+
         }
         vm.instrumentClassSelected = function (selectedItem) {
             alert("Selected Instrument: " + selectedItem);
@@ -204,33 +227,6 @@
             }
             vm.requestJson = "";
             vm.responseJson = "";
-            $http.post(vm.apiPath, vm.ustbill)
-            .then(function (response) {
-                vm.ustbill.be = response.data.bondEquivalent;
-                vm.convexity = response.data.convexity;
-                vm.cvxPvbp = response.data.convexityAdjustedPvbp;
-                vm.ustbill.discount = response.data.discount;
-                vm.duration = response.data.duration;
-                vm.ustbill.mmYield = response.data.mmYield;
-                vm.modDuration = response.data.modifiedDuration;
-                vm.price = response.data.price;
-                vm.pvbp = response.data.pvbp;
-                vm.requestJson = JSON.stringify(vm.ustbill,null,2);
-                vm.responseJson = JSON.stringify(response.data, null, 2);
-                vm.cashFlows = response.data.cashFlows;
-                vm.cfData= {
-                            cashFlows : vm.cashFlows,
-                            valueDate: vm.ustbill.valueDate
-                };
-                $rootScope.cfData = vm.cfData;
-            },
-            function (err) {
-                vm.errorMessage = "Calculation Failed: " +  err.data;
-            })
-            .finally(function () {
-                vm.isBusy = false;
-            });
-
             //alert("Calculation USTBill");
         }
 
