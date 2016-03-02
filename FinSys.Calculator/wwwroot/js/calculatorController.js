@@ -169,10 +169,10 @@
             vm.defaultDates.Holidays = vm.holidays;
             $http.post(vm.apiPath, vm.defaultDates)
             .then(function (response) {
-                vm.maturityDate = response.data.maturityDate;
-                vm.issueDate = response.data.issueDate;
-                vm.firstPayDate = response.data.firstPayDate;
-                vm.nextToLastDate = response.data.nextToLastPayDate;
+                vm.maturityDate = new Date(response.data.maturityDate);
+                vm.issueDate = new Date(response.data.issueDate);
+                vm.firstPayDate = new Date(response.data.firstPayDate);
+                vm.nextToLastDate = new Date(response.data.nextToLastPayDate);
             },
             function (err) {
                 vm.errorMessage = "Calculation Failed: " + err.data;
@@ -255,16 +255,17 @@
         nextToLastDate: false,
         valueDate: false
       }
-              vm.maturityDate = new Date();
+              vm.now = new Date();
+              vm.valueDate = new Date(vm.now.getFullYear(), vm.now.getMonth(), vm.now.getDate(), 0, 0, 0, 0);
+              vm.maturityDate = new Date(vm.now.getFullYear(), vm.now.getMonth(), vm.now.getDate(), 0, 0, 0, 0);
               vm.maturityDate.setFullYear(vm.maturityDate.getFullYear() + 1);
-      vm.previousPay = new Date();
-      vm.nextPay = vm.maturityDate;
-      vm.issueDate = new Date();
+      vm.previousPay = new Date(vm.now.getFullYear(), vm.now.getMonth(), vm.now.getDate(), 0, 0, 0, 0);
+      vm.nextPay = new Date(vm.maturityDate.getFullYear(), vm.now.getMonth(), vm.now.getDate(), 0, 0, 0, 0);
+      vm.issueDate = new Date(vm.now.getFullYear(), vm.now.getMonth(), vm.now.getDate(), 0, 0, 0, 0);
       vm.issueDate.setFullYear(vm.issueDate.getFullYear() - 3);
-      vm.firstPayDate = new Date();
+      vm.firstPayDate = new Date(vm.now.getFullYear(), vm.now.getMonth(), vm.now.getDate(), 0, 0, 0, 0);
       vm.firstPayDate.setFullYear(vm.firstPayDate.getFullYear() - 2);
-      vm.nextToLastDate = new Date();
-      vm.valueDate = new Date();
+      vm.nextToLastDate = new Date(vm.now.getFullYear(), vm.now.getMonth(), vm.now.getDate(), 0, 0, 0, 0);
 
       vm.showWeeks = true;
       vm.toggleWeeks = function () {
