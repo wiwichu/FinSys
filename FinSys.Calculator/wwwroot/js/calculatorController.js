@@ -46,7 +46,32 @@
         {
             vm.port = ":" + vm.port;
         }
-         vm.init = function () {
+        vm.instrumentClassChanged = function () {
+            //alert("Selected Instrument: " + vm.selectedInstrumentClass);
+            vm.isBusy = true;
+            vm.api = "/api/calculator/instrumentdefaults";
+            vm.apiPath = vm.protocol + vm.host + vm.port + vm.api;
+            vm.instrumentclass.Class = vm.selectedInstrumentClass;
+            $http.post(vm.apiPath, vm.instrumentclass)
+            .then(function (response) {
+                vm.selectedCalcDateAdjust = response.data.holidayAdjust;
+                vm.selectedCompoundFrequency = response.data.yieldFrequency;
+                vm.selectedDayCount = response.data.dayCount;
+                vm.selectedPayDateAdjust = response.data.holidayAdjust;
+                vm.selectedPayFrequency = response.data.payFreq;
+                vm.selectedYieldDayCount = response.data.yieldDayCount;
+                vm.selectedYieldMethod = response.data.yieldMethod;
+                vm.endOfMonth = response.data.endOfMonth;
+            },
+            function (err) {
+                vm.errorMessage = "Calculation Failed: " + err.data;
+            })
+            .finally(function () {
+                vm.isBusy = false;
+            });
+
+        }
+        vm.init = function () {
             try {
                 if ($rootScope.staticData) {
                     vm.instrumentClass = $rootScope.staticData.instrumentClasses;
@@ -130,31 +155,6 @@
         vm.setDefaults = function () {
             vm.instrumentClassChanged();
         }
-        vm.instrumentClassChanged = function () {
-            //alert("Selected Instrument: " + vm.selectedInstrumentClass);
-            vm.isBusy = true;
-            vm.api = "/api/calculator/instrumentdefaults";
-            vm.apiPath = vm.protocol + vm.host + vm.port + vm.api;
-            vm.instrumentclass.Class=vm.selectedInstrumentClass;
-            $http.post(vm.apiPath, vm.instrumentclass)
-            .then(function (response) {
-                vm.selectedCalcDateAdjust = response.data.holidayAdjust;
-                vm.selectedCompoundFrequency = response.data.yieldFrequency;
-                vm.selectedDayCount = response.data.dayCount;
-                vm.selectedPayDateAdjust = response.data.holidayAdjust;
-                vm.selectedPayFrequency = response.data.payFreq;
-                vm.selectedYieldDayCount = response.data.yieldDayCount;
-                vm.selectedYieldMethod = response.data.yieldMethod;
-                vm.endOfMonth = response.data.endOfMonth;
-            },
-            function (err) {
-                vm.errorMessage = "Calculation Failed: " + err.data;
-            })
-            .finally(function () {
-                vm.isBusy = false;
-            });
-
-        }
         vm.defaultDates = {};
         vm.setDates = function () {
             vm.isBusy = true;
@@ -196,10 +196,10 @@
             enableRowHeaderSelection: true,
             selectionRowHeaderWidth: 35,
             multiSelect: true,
-            paginationPageSize: 25, showGridFooter: true,
+            paginationPageSize: 25, 
             showColumnFooter: true,
             columnDefs: [
-                { name: 'HoliDate', field: 'holiDate', type: 'date', cellFilter: 'date:"yyyy-MM-dd"', footerCellFilter: 'date' },
+                { name: 'HoliDate', field: 'holiDate', type: 'date', cellFilter: 'date:"yyyy-MM-dd"' },
             ],
             importerDataAddCallback: function (grid, newObjects) {
                 vm.holidays = newObjects;
@@ -246,20 +246,20 @@
             $uibModal.open(options);
         }
         ///////////////////// datepicker ///////////////////////
-              vm.datepickers = {
-        maturityDate: false,
-        previousPay: false,
-        nextPay: false,
-        issueDate: false,
-        firstPayDate: false,
-        nextToLastDate: false,
-        valueDate: false
-      }
-              vm.now = new Date();
-              vm.valueDate = new Date(vm.now.getFullYear(), vm.now.getMonth(), vm.now.getDate(), 0, 0, 0, 0);
-              vm.maturityDate = new Date(vm.now.getFullYear(), vm.now.getMonth(), vm.now.getDate(), 0, 0, 0, 0);
-              vm.maturityDate.setFullYear(vm.maturityDate.getFullYear() + 1);
-      vm.previousPay = new Date(vm.now.getFullYear(), vm.now.getMonth(), vm.now.getDate(), 0, 0, 0, 0);
+        vm.datepickers = {
+            maturityDate: false,
+            previousPay: false,
+            nextPay: false,
+            issueDate: false,
+            firstPayDate: false,
+            nextToLastDate: false,
+            valueDate: false
+        }
+        vm.now = new Date();
+        vm.valueDate = new Date(vm.now.getFullYear(), vm.now.getMonth(), vm.now.getDate(), 0, 0, 0, 0);
+        vm.maturityDate = new Date(vm.now.getFullYear(), vm.now.getMonth(), vm.now.getDate(), 0, 0, 0, 0);
+        vm.maturityDate.setFullYear(vm.maturityDate.getFullYear() + 1);
+        vm.previousPay = new Date(vm.now.getFullYear(), vm.now.getMonth(), vm.now.getDate(), 0, 0, 0, 0);
       vm.nextPay = new Date(vm.maturityDate.getFullYear(), vm.now.getMonth(), vm.now.getDate(), 0, 0, 0, 0);
       vm.issueDate = new Date(vm.now.getFullYear(), vm.now.getMonth(), vm.now.getDate(), 0, 0, 0, 0);
       vm.issueDate.setFullYear(vm.issueDate.getFullYear() - 3);
