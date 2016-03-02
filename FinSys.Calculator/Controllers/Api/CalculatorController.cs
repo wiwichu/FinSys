@@ -118,6 +118,45 @@ namespace FinSys.Calculator.Controllers.Api
                 return Json(ex.Message);
             }
         }
+        [HttpPost("defaultdates")]
+        public async Task<JsonResult> Post([FromBody]DefaultDatesViewModel vm)
+        {
+            try
+            {
+                Instrument instr = new Instrument
+                {
+                    Class="Eurobond",
+                    IntDayCount = vm.IntDayCount,
+                    IntPayFreq = vm.IntPayFreq,
+                    MaturityDate = vm.MaturityDate,
+                    EndOfMonthPay = vm.EndOfMonthPay,
+                    HolidayAdjust=vm.HolidayAdjust                   
+                };
+                Calculations calc = new Calculations
+                {
+                    ValueDate = vm.ValueDate
+                };
+                IEnumerable<Holiday> holidays = Mapper.Map <IEnumerable<Holiday>>(vm.Holidays);
+                var res = await _repository.GetDefaultDatesAsync(instr, calc,holidays);
+                Instrument instrResult = res.Key;
+                Calculations calcResult = res.Value;
+
+                DefaultDatesResultViewModel result = new DefaultDatesResultViewModel
+                {
+                    MaturityDate = instrResult.MaturityDate,
+                    IssueDate=instrResult.IssueDate,
+                    FirstPayDate=instrResult.FirstPayDate,
+                    NextToLastPayDate=instrResult.NextToLastPayDate
+                };
+                JsonResult jResult = new JsonResult(result);
+                return jResult;
+            }
+            catch (Exception ex)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(ex.Message);
+            }
+        }
         [HttpPost("cashflows")]
         public async Task<JsonResult> Post([FromBody]CashFlowPricingViewModel vm)
         {

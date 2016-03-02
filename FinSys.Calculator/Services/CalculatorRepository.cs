@@ -374,6 +374,9 @@ namespace FinSys.Calculator.Services
             {
                 InstrumentDescr instr = makeInstrumentDescr(instrument);
                 CalculationsDescr calcs = makeCalculationsDescr(calculations);
+                calcs.yieldMethod = InstrumentDescr.noValue;
+                calcs.yieldFreq = InstrumentDescr.noValue;
+                calcs.yieldDayCount = InstrumentDescr.noValue;
                 DatesDescr holidayList = makeDates(holidays);
                 int status = getDefaultDatesAndData(instr, calcs, holidayList);
                 if (status != 0)

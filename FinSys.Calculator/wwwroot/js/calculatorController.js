@@ -24,21 +24,18 @@
         vm.selectedPayFrequency = "";
         vm.opened = false;
         vm.isBusy = true;
-        vm.price = 0.00;
+        vm.endOfMonth = false;
+        vm.price = 100.00;
         vm.yield = 0.00;
         vm.interestRate = 0.00;
         vm.interest = 0.00;
-        vm.dirtyPrice = 0.00;
+        vm.dirtyPrice = 100.00;
         vm.interestDays = 0;
         vm.duration = 0.00;
         vm.modDuration = 0.00;
         vm.convexity = 0.00;
         vm.pvbp = 0.00;
         vm.cvxPvbp = 0.00;
-        vm.ustbill = {};
-        vm.ustbill.discount = 0.00;
-        vm.ustbill.be = 0.00;
-        vm.ustbill.mmYield = 0.00;
         vm.api = "/api/staticdata";
         vm.protocol = $location.protocol() + "://";
         vm.host = $location.host();
@@ -54,7 +51,8 @@
                 if ($rootScope.staticData) {
                     vm.instrumentClass = $rootScope.staticData.instrumentClasses;
                     if ($rootScope.staticData.instrumentClasses != null && $rootScope.staticData.instrumentClasses[0] != null) {
-                        vm.selectedInstrumentClass = $rootScope.staticData.instrumentClasses[0];
+                        //vm.selectedInstrumentClass = $rootScope.staticData.instrumentClasses[0];
+                        vm.selectedInstrumentClass = "Eurobond";
                     }
                     vm.yieldMethod = $rootScope.staticData.yieldMethods;
                     if (vm.yieldMethod != null && vm.yieldMethod[0] != null) {
@@ -84,6 +82,7 @@
                     if (vm.payDateAdjust != null && vm.payDateAdjust[0] != null) {
                         vm.selectedPayDateAdjust = vm.payDateAdjust[0];
                     }
+                    vm.instrumentClassChanged();
                 }
                 else {
                     vm.errorMessage = "Failed to load data: Static Data not Initialized.";
@@ -128,6 +127,9 @@
             vm.isBusy = false;
         }
         vm.instrumentclass = {};
+        vm.setDefaults = function () {
+            vm.instrumentClassChanged();
+        }
         vm.instrumentClassChanged = function () {
             //alert("Selected Instrument: " + vm.selectedInstrumentClass);
             vm.isBusy = true;
@@ -153,6 +155,34 @@
             });
 
         }
+        vm.defaultDates = {};
+        vm.setDates = function () {
+            vm.isBusy = true;
+            vm.api = "/api/calculator/defaultDates";
+            vm.apiPath = vm.protocol + vm.host + vm.port + vm.api;
+            vm.defaultDates.IntDayCount = vm.selectedDayCount;
+            vm.defaultDates.IntPayFreq = vm.selectedPayFrequency;
+            vm.defaultDates.MaturityDate = vm.maturityDate;
+            vm.defaultDates.ValueDate = vm.valueDate;
+            vm.defaultDates.EndOfMonthPay = vm.endOfMonth;
+            vm.defaultDates.HolidayAdjust = vm.selectedCalcDateAdjust;
+            vm.defaultDates.Holidays = vm.holidays;
+            $http.post(vm.apiPath, vm.defaultDates)
+            .then(function (response) {
+                vm.maturityDate = response.data.maturityDate;
+                vm.issueDate = response.data.issueDate;
+                vm.firstPayDate = response.data.firstPayDate;
+                vm.nextToLastDate = response.data.nextToLastPayDate;
+            },
+            function (err) {
+                vm.errorMessage = "Calculation Failed: " + err.data;
+            })
+            .finally(function () {
+                vm.isBusy = false;
+            });
+
+        }
+
         vm.instrumentClassSelected = function (selectedItem) {
             alert("Selected Instrument: " + selectedItem);
         }
@@ -193,42 +223,6 @@
             $rootScope.cfData = vm.cashFlows;
             $window.location.href = '/App/CashFlows';
         }
-        vm.calcUSTBill = function (selectedItem) {
-            vm.isBusy = true;
-            vm.errorMessage = "";
-            vm.api = "/api/calculator/ustbill";
-            vm.protocol = $location.protocol() + "://";
-            vm.host = $location.host();
-            vm.port = $location.port();
-            if (vm.port) {
-                vm.port = ":" + vm.port;
-            }
-            vm.apiPath = vm.protocol + vm.host + vm.port + vm.api;
-            vm.ustbill.maturityDate = vm.maturityDate;
-            vm.ustbill.valueDate = vm.valueDate;
-            switch (vm.ustbill.calcfrom)
-            {
-                case 'price':
-                    vm.ustbill.calcsource = vm.price;
-                    break;
-                case 'discount':
-                    vm.ustbill.calcsource = vm.discount;
-                    break;
-                case 'be':
-                    vm.ustbill.calcsource = vm.be;
-                    break;
-                case 'mmyield':
-                    vm.ustbill.calcsource = vm.mmYield;
-                    break;
-                default:
-                    vm.errorMessage = "Invalid Calculation Choice";
-                    return; 
-                    break;
-            }
-            vm.requestJson = "";
-            vm.responseJson = "";
-            //alert("Calculation USTBill");
-        }
 
         var api = {
             apiPath: vm.apiPath,
@@ -261,11 +255,14 @@
         nextToLastDate: false,
         valueDate: false
       }
-      vm.maturityDate = new Date();
+              vm.maturityDate = new Date();
+              vm.maturityDate.setFullYear(vm.maturityDate.getFullYear() + 1);
       vm.previousPay = new Date();
-      vm.nextPay = new Date();
+      vm.nextPay = vm.maturityDate;
       vm.issueDate = new Date();
+      vm.issueDate.setFullYear(vm.issueDate.getFullYear() - 3);
       vm.firstPayDate = new Date();
+      vm.firstPayDate.setFullYear(vm.firstPayDate.getFullYear() - 2);
       vm.nextToLastDate = new Date();
       vm.valueDate = new Date();
 
