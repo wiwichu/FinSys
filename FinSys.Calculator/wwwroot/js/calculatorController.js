@@ -205,7 +205,7 @@
             enableRowHeaderSelection: true,
             selectionRowHeaderWidth: 35,
             multiSelect: true,
-            paginationPageSize: 25, 
+            paginationPageSize: 25, showGridFooter: true,
             showColumnFooter: true,
             columnDefs: [
                 { name: 'HoliDate', field: 'holiDate', type: 'date', cellFilter: 'date:"yyyy-MM-dd"' },
