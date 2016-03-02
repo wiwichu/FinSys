@@ -47,6 +47,7 @@
         {
             vm.port = ":" + vm.port;
         }
+        vm.instrumentclass = {};
         vm.instrumentClassChanged = function () {
             //alert("Selected Instrument: " + vm.selectedInstrumentClass);
             var deferred = $q.defer();
@@ -155,7 +156,6 @@
             vm.init();
             vm.isBusy = false;
         }
-        vm.instrumentclass = {};
         vm.defaultDates = {};
         vm.setDates = function () {
             vm.isBusy = true;
