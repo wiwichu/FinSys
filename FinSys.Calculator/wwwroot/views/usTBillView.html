@@ -122,7 +122,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <input type="submit" value="Calculate" class="btn btn-success btn-large form-control"
+                        <input type="submit" value="Calculate" class="btn btn-success btn-large btn-block"
                                ng-click="vm.calcUSTBill()" ng-disabled="USTBillForm.$invalid" />
                     </div>
                 </div>
@@ -133,12 +133,12 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <input type="submit" value="CashFlows" ng-click="vm.goToCashFlows()" 
-                               class="btn btn-primary btn-default form-control" ng-disabled="USTBillForm.$invalid || !vm.cashFlows || vm.cashFlows.length==0"/>
+                               class="btn btn-primary btn-default btn-block" ng-disabled="USTBillForm.$invalid || !vm.cashFlows || vm.cashFlows.length==0"/>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <input type="submit" value="API" class="btn btn-primary btn-default form-control"
+                        <input type="submit" value="API" class="btn btn-primary btn-default btn-block"
                                ng-click="vm.getApi()" ng-disabled="USTBillForm.$invalid || !vm.responseJson" />
                     </div>
                 </div>
