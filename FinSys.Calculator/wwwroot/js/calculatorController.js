@@ -10,6 +10,7 @@
     function calculatorController($http, $location,$window, $rootScope
         //, apiDialog
         , $uibModal
+        ,$q
         ) {
 
         var vm = this;
@@ -48,6 +49,7 @@
         }
         vm.instrumentClassChanged = function () {
             //alert("Selected Instrument: " + vm.selectedInstrumentClass);
+            var deferred = $q.defer();
             vm.isBusy = true;
             vm.api = "/api/calculator/instrumentdefaults";
             vm.apiPath = vm.protocol + vm.host + vm.port + vm.api;
@@ -62,14 +64,16 @@
                 vm.selectedYieldDayCount = response.data.yieldDayCount;
                 vm.selectedYieldMethod = response.data.yieldMethod;
                 vm.endOfMonth = response.data.endOfMonth;
+                deferred.resolve();
             },
             function (err) {
                 vm.errorMessage = "Calculation Failed: " + err.data;
+                deferred.reject("Calculation Failed: " + err.data);
             })
             .finally(function () {
                 vm.isBusy = false;
             });
-
+            return deferred.promise;
         }
         vm.init = function () {
             try {
@@ -152,9 +156,6 @@
             vm.isBusy = false;
         }
         vm.instrumentclass = {};
-        vm.setDefaults = function () {
-            vm.instrumentClassChanged();
-        }
         vm.defaultDates = {};
         vm.setDates = function () {
             vm.isBusy = true;
@@ -182,10 +183,18 @@
             });
 
         }
-
-        vm.instrumentClassSelected = function (selectedItem) {
-            alert("Selected Instrument: " + selectedItem);
+        vm.setDefaults = function () {
+            vm.instrumentClassChanged().then(function(){
+                vm.setDates();
+            },
+            function (err) {
+                vm.errorMessage = "Calculation Failed: " + err.data;
+            })
+            .finally(function () {
+                vm.isBusy = false;
+            });
         }
+
         vm.holidayGridOptions = {
             data: 'vm.holidays',
             enableSelectAll: true,
