@@ -16,7 +16,7 @@ namespace FinSys.Calculator.Services
         Task<KeyValuePair<Instrument, Calculations>> GetDefaultDatesAsync(Instrument instrument, Calculations calculations, IEnumerable<Holiday> holidays);
         Task<List<string>> GetYieldMethodsAsync();
         Task<List<string>> GetInterpolationMethodsAsync();
-        Task<KeyValuePair<Instrument, Calculations>> CalculateAsync(Instrument instrument, Calculations calculations, IEnumerable<Holiday> holidays);
+        Task<KeyValuePair<Instrument, Calculations>> CalculateAsync(Instrument instrument, Calculations calculations, IEnumerable<Holiday> holidays, bool includeCashflows);
         Task<DateTime> Forecast(DateTime startDate, DateTime endDate, int dayCountRule, int months, int days);
         Task<List<CashFlow>> PriceCashFlowsAsync(CashFlowPricing cfp);
         Task<USTBillResult> USTBillCalcAsync(USTBill usTbill);

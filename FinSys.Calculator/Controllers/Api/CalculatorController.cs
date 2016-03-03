@@ -8,6 +8,7 @@ using FinSys.Calculator.ViewModels;
 using System.Net;
 using AutoMapper;
 using FinSys.Calculator.Models;
+using System.Collections.Concurrent;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -109,6 +110,41 @@ namespace FinSys.Calculator.Controllers.Api
                     YieldFrequency=calcResult.YieldFreq,
                     YieldMethod=calcResult.YieldMethod
                 };
+                JsonResult jResult = new JsonResult(result);
+                return jResult;
+            }
+            catch (Exception ex)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(ex.Message);
+            }
+        }
+        [HttpPost("calculate")]
+        public async Task<JsonResult> Post([FromBody]IEnumerable<CalculatorViewModel> vms)
+        {
+            try
+            {
+                CalculatorResultViewModel[] vmsOutArray = new CalculatorResultViewModel[vms.Count()];
+                Parallel.ForEach(vms, async (vm, pls, index) =>
+                {
+                    Instrument instr = new Instrument
+                    {
+                    };
+                    Calculations calc = new Calculations
+                    {
+                    };
+                    Instrument instrResult = null;
+                    Calculations calcResult = null;
+
+                    var res = await _repository.GetInstrumentDefaultsAsync(instr, calc);
+                    instrResult = res.Key;
+                    calcResult = res.Value;
+
+                    CalculatorResultViewModel rvm = new CalculatorResultViewModel();
+                    vmsOutArray[(int)index] = rvm;
+                    //Console.WriteLine("{0}:\t{1}", index, value);
+                });
+                var result = vmsOutArray.ToList();
                 JsonResult jResult = new JsonResult(result);
                 return jResult;
             }

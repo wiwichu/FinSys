@@ -510,7 +510,7 @@ namespace FinSys.Calculator.Services
 
             }
         }
-        public async Task<KeyValuePair<Instrument, Calculations>> CalculateAsync(Instrument instrument, Calculations calculations, IEnumerable<Holiday> holidays)
+        public async Task<KeyValuePair<Instrument, Calculations>> CalculateAsync(Instrument instrument, Calculations calculations, IEnumerable<Holiday> holidays, bool includeCashflows)
         {
             try
             { 
