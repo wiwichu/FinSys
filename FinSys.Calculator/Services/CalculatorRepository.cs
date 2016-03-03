@@ -522,7 +522,15 @@ namespace FinSys.Calculator.Services
                 int dateAdjust = holidayAdjusts.IndexOf(calculations.PayHolidayAdjust);
                 DatesDescr holidayList = makeDates(holidays);
 
-                int status = calculateWithCashFlows(instr, calcs, cashFlows, dateAdjust, holidayList);
+                int status = 0;
+                if (includeCashflows)
+                {
+                    status = calculateWithCashFlows(instr, calcs, cashFlows, dateAdjust, holidayList);
+                }
+                else
+                {
+                    status = calculate(instr, calcs, holidayList);
+                }
                 if (status != 0)
                 {
                     StringBuilder statusText = new StringBuilder(200);

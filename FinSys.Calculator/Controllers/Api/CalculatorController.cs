@@ -27,12 +27,12 @@ namespace FinSys.Calculator.Controllers.Api
         public async Task<JsonResult> Get()
         {
 
-            var instrumentClasses = await _repository.GetInstrumentClassesAsync();
-            var dayCounts = await _repository.GetDayCountsAsync();
-            var holidayAdjust = await _repository.GetHolidayAdjustAsync();
-            var interpolationMethods = await _repository.GetInterpolationMethodsAsync();
-            var payFrequency = await _repository.GetPayFreqsAsync();
-            var yieldMethods = await _repository.GetYieldMethodsAsync();
+            var instrumentClasses = await _repository.GetInstrumentClassesAsync().ConfigureAwait(false);
+            var dayCounts = await _repository.GetDayCountsAsync().ConfigureAwait(false);
+            var holidayAdjust = await _repository.GetHolidayAdjustAsync().ConfigureAwait(false);
+            var interpolationMethods = await _repository.GetInterpolationMethodsAsync().ConfigureAwait(false);
+            var payFrequency = await _repository.GetPayFreqsAsync().ConfigureAwait(false);
+            var yieldMethods = await _repository.GetYieldMethodsAsync().ConfigureAwait(false);
 
             IDictionary<string, IEnumerable<object>> staticData = new Dictionary<string, IEnumerable<object>>();
             staticData.Add("instrumentClasses", instrumentClasses);
@@ -62,7 +62,7 @@ namespace FinSys.Calculator.Controllers.Api
                 {
                     var ustb = Mapper.Map<USTBill>(vm);
                     ustb.CalcSource /= 100;
-                    USTBillResultViewModel result = Mapper.Map < USTBillResultViewModel > (await _repository.USTBillCalcAsync(ustb));
+                    USTBillResultViewModel result = Mapper.Map < USTBillResultViewModel > (await _repository.USTBillCalcAsync(ustb).ConfigureAwait(false));
                     result.BondEquivalent *= 100;
                     result.Discount *= 100;
                     result.MMYield *= 100;
@@ -96,7 +96,7 @@ namespace FinSys.Calculator.Controllers.Api
                 {
                     ValueDate=DateTime.Now
                 };
-                var res = await _repository.GetInstrumentDefaultsAsync(instr, calc);
+                var res = await _repository.GetInstrumentDefaultsAsync(instr, calc).ConfigureAwait(false);
                 Instrument instrResult = res.Key;
                 Calculations calcResult = res.Value;
 
@@ -124,35 +124,55 @@ namespace FinSys.Calculator.Controllers.Api
         {
             try
             {
-                CalculatorResultViewModel[] vmsOutArray = new CalculatorResultViewModel[vms.Count()];
-                Parallel.ForEach(vms, async (vm, pls, index) =>
+                if (ModelState.IsValid)
                 {
-                    Instrument instr = new Instrument
+                    CalculatorResultViewModel[] vmsOutArray = new CalculatorResultViewModel[vms.Count()];
+                    await Task.Run(() =>
                     {
-                    };
-                    Calculations calc = new Calculations
-                    {
-                    };
-                    Instrument instrResult = null;
-                    Calculations calcResult = null;
+                        Parallel.ForEach(vms, (vm, pls, index) =>
+                        {
+                            CalculatorResultViewModel rvm = new CalculatorResultViewModel
+                            {
+                                Id = vm.Id
+                            };
+                            try
+                            {
+                                Instrument instr = new Instrument
+                                {
+                                };
+                                Calculations calc = new Calculations
+                                {
+                                };
+                                Instrument instrResult = null;
+                                Calculations calcResult = null;
+                                IEnumerable<Holiday> holidays = Mapper.Map<IEnumerable<Holiday>>(vm.Holidays);
+                                //var res = await _repository.CalculateAsync(instr, calc, holidays, vm.IncludeCashflows).ConfigureAwait(false);
+                                //instrResult = res.Key;
+                                //calcResult = res.Value;
+                                var res = _repository.CalculateAsync(instr, calc, holidays, vm.IncludeCashflows);
+                                instrResult = res.Result.Key;
+                                calcResult = res.Result.Value;
 
-                    var res = await _repository.GetInstrumentDefaultsAsync(instr, calc);
-                    instrResult = res.Key;
-                    calcResult = res.Value;
-
-                    CalculatorResultViewModel rvm = new CalculatorResultViewModel();
-                    vmsOutArray[(int)index] = rvm;
-                    //Console.WriteLine("{0}:\t{1}", index, value);
-                });
-                var result = vmsOutArray.ToList();
-                JsonResult jResult = new JsonResult(result);
-                return jResult;
+                            }
+                            catch (InvalidOperationException ioEx)
+                            {
+                                rvm.Status = ioEx.Message;
+                            }
+                            vmsOutArray[(int)index] = rvm;
+                        });
+                    }).ConfigureAwait(false);
+                    var result = vmsOutArray.ToList();
+                    JsonResult jResult = new JsonResult(result);
+                    return jResult;
+                }
             }
             catch (Exception ex)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json(ex.Message);
             }
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json(new { Message = "Failed", ModelState = ModelState });
         }
         [HttpPost("defaultdates")]
         public async Task<JsonResult> Post([FromBody]DefaultDatesViewModel vm)
@@ -173,7 +193,7 @@ namespace FinSys.Calculator.Controllers.Api
                     ValueDate = vm.ValueDate
                 };
                 IEnumerable<Holiday> holidays = Mapper.Map <IEnumerable<Holiday>>(vm.Holidays);
-                var res = await _repository.GetDefaultDatesAsync(instr, calc,holidays);
+                var res = await _repository.GetDefaultDatesAsync(instr, calc,holidays).ConfigureAwait(false);
                 Instrument instrResult = res.Key;
                 Calculations calcResult = res.Value;
 
@@ -201,7 +221,7 @@ namespace FinSys.Calculator.Controllers.Api
                 if (ModelState.IsValid)
                 {
                     var cf = Mapper.Map<CashFlowPricing>(vm);
-                    var cfOut = await _repository.PriceCashFlowsAsync(cf);
+                    var cfOut = await _repository.PriceCashFlowsAsync(cf).ConfigureAwait(false);
                     IEnumerable<CashFlowViewModel> result = Mapper.Map<IEnumerable<CashFlowViewModel>>(cfOut);
                     JsonResult jResult = new JsonResult(result);
                     return jResult;
