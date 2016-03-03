@@ -158,7 +158,15 @@ namespace FinSys.Calculator.Controllers.Api
                             {
                                 rvm.Status = ioEx.Message;
                             }
-                            vmsOutArray[(int)index] = rvm;
+                            catch (Exception ex)
+                            {
+                                rvm.Status = "Calculation Error";
+                                rvm.Message = ex.ToString();
+                            }
+                            finally
+                            {
+                                vmsOutArray[(int)index] = rvm;
+                            }
                         });
                     }).ConfigureAwait(false);
                     var result = vmsOutArray.ToList();
