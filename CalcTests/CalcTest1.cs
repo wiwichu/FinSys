@@ -1829,15 +1829,21 @@ namespace CalcTests
         [TestMethod]
         public void Cashflow_Pricing_Parallel_1()
         {
+            //Use parallel when:
+            //calc > 1
+            //cf > 50 && true yield
+            //cf > 150 && !true yield
+
             InstrumentDescr instrument = new InstrumentDescr();
             CalculationsDescr calculations = new CalculationsDescr();
             instrument.instrumentClass = (int)TestHelper.instr_class_descs.instr_ukcd_class_desc;
+            //instrument.instrumentClass = (int)TestHelper.instr_class_descs.instr_euro_class_desc;
 
-            DateDescr matDate = new DateDescr { year = 2030, month = 10, day = 7 };
+            DateDescr matDate = new DateDescr { year = 2020, month = 10, day = 7 };
             DateDescr valueDate = new DateDescr { year = 2016, month = 5, day = 10 };
             DateDescr issueDate = new DateDescr { year = 2014, month = 1, day = 10 };
             DateDescr firstPayDate = new DateDescr { year = 2015, month = 12, day = 15 };
-            DateDescr preLastPayDate = new DateDescr { year = 2030, month = 4, day = 15 };
+            DateDescr preLastPayDate = new DateDescr { year = 2020, month = 4, day = 15 };
 
             instrument.maturityDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
@@ -1885,12 +1891,13 @@ namespace CalcTests
             var cashFlowsOutSer = new ConcurrentBag<CashFlowDescr>();
             var cashFlowsOut = new ConcurrentBag<CashFlowDescr>();
 
-            IEnumerable< int > calcs = new List<int>(new int[3]);
+            IEnumerable< int > calcs = new List<int>(new int[1]);
             Func<int, bool> calcsPredSer =
                 (c) =>
                 {
                     CashFlowsDescr cashFlows = new CashFlowsDescr();
                     status = calculateWithCashFlows(instrument, calculations, cashFlows, dateAdjust, holidays);
+                    //status = calculate(instrument, calculations, holidays);
                     if (status != 0)
                     {
                         StringBuilder statusText = new StringBuilder(200);
@@ -1915,6 +1922,7 @@ namespace CalcTests
                 {
                     CashFlowsDescr cashFlows = new CashFlowsDescr();
                     status = calculateWithCashFlows(instrument, calculations, cashFlows, dateAdjust, holidays);
+                    //status = calculate(instrument, calculations, holidays);
                     if (status != 0)
                     {
                         StringBuilder statusText = new StringBuilder(200);
