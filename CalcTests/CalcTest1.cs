@@ -3,7 +3,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Collections.Concurrent;
 
 namespace CalcTests
 {
@@ -60,6 +63,14 @@ namespace CalcTests
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int USTBillCalcFromBEYield(DateDescr valueDate, DateDescr maturityDate,
             double beYield,out  double price, out double mmYield, out double discount);
+        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern int priceCashFlows(CashFlowsDescr cashFlowsStruct,
+            int yieldMth,
+            int frequency,
+            int dayCount,
+            DateDescr valueDate,
+            RateCurveDescr rateCurve,
+            int interpolation);
         public TestContext TestContext { get; set; }
         [TestMethod]
         public void GetCashFlows_1()
@@ -1813,6 +1824,278 @@ namespace CalcTests
             //GC.KeepAlive(instrument);
             //GC.KeepAlive(calculations);
             //GC.KeepAlive(cashFlows);
+
+        }
+        [TestMethod]
+        public void Cashflow_Pricing_Parallel_1()
+        {
+            InstrumentDescr instrument = new InstrumentDescr();
+            CalculationsDescr calculations = new CalculationsDescr();
+            instrument.instrumentClass = (int)TestHelper.instr_class_descs.instr_ukcd_class_desc;
+
+            DateDescr matDate = new DateDescr { year = 2030, month = 10, day = 7 };
+            DateDescr valueDate = new DateDescr { year = 2016, month = 5, day = 10 };
+            DateDescr issueDate = new DateDescr { year = 2014, month = 1, day = 10 };
+            DateDescr firstPayDate = new DateDescr { year = 2015, month = 12, day = 15 };
+            DateDescr preLastPayDate = new DateDescr { year = 2030, month = 4, day = 15 };
+
+            instrument.maturityDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
+            instrument.issueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
+            calculations.valueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
+
+            instrument.intPayFreq = (int)TestHelper.frequency.frequency_monthly;
+            instrument.holidayAdjust = (int)TestHelper.DateAdjustRule.event_sched_same_holiday_adj;
+
+            int status = getInstrumentDefaultsAndData(instrument, calculations);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+
+            Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
+            Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            double result = .957;
+            calculations.yieldIn = 0.0659;
+            calculations.calculatePrice = 1;
+            instrument.interestRate = 0.04;
+            instrument.nextToLastPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(preLastPayDate, instrument.nextToLastPayDate, false);
+            instrument.issueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
+            instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
+            int dateAdjust = instrument.holidayAdjust;
+            var structSize = Marshal.SizeOf(typeof(CashFlowDescr));
+            var cashFlowsOutSer = new ConcurrentBag<CashFlowDescr>();
+            var cashFlowsOut = new ConcurrentBag<CashFlowDescr>();
+
+            IEnumerable< int > calcs = new List<int>(new int[3]);
+            Func<int, bool> calcsPredSer =
+                (c) =>
+                {
+                    CashFlowsDescr cashFlows = new CashFlowsDescr();
+                    status = calculateWithCashFlows(instrument, calculations, cashFlows, dateAdjust, holidays);
+                    if (status != 0)
+                    {
+                        StringBuilder statusText = new StringBuilder(200);
+                        int textSize;
+                        status = getStatusText(status, statusText, out textSize);
+                        throw new InvalidOperationException(statusText.ToString());
+                    }
+
+                    var cashFlowOut = cashFlows.cashFlows;
+
+                    for (int i = 0; i < cashFlows.size; i++)
+                    {
+                        cashFlowsOutSer.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
+                            typeof(CashFlowDescr)));
+                        cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
+                    }
+
+                    return true;
+                };
+            Func<int, bool> calcsPred =
+                (c) =>
+                {
+                    CashFlowsDescr cashFlows = new CashFlowsDescr();
+                    status = calculateWithCashFlows(instrument, calculations, cashFlows, dateAdjust, holidays);
+                    if (status != 0)
+                    {
+                        StringBuilder statusText = new StringBuilder(200);
+                        int textSize;
+                        status = getStatusText(status, statusText, out textSize);
+                        throw new InvalidOperationException(statusText.ToString());
+                    }
+
+                    var cashFlowOut = cashFlows.cashFlows;
+
+                    for (int i = 0; i < cashFlows.size; i++)
+                    {
+                        cashFlowsOut.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
+                            typeof(CashFlowDescr)));
+                        cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
+                    }
+
+                    return true;
+                };
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            calcs.All(calcsPredSer);
+            sw.Stop();
+            TestContext.WriteLine("");
+            TestContext.WriteLine("Serial Calc: {0}", sw.Elapsed);
+            TestContext.WriteLine("");
+            sw.Reset();
+            sw.Start();
+            calcs.AsParallel().All(calcsPred);
+            sw.Stop();
+            TestContext.WriteLine("");
+            TestContext.WriteLine("Parallel Calc: {0}", sw.Elapsed);
+            TestContext.WriteLine("");
+            sw.Reset();
+
+            int ym = calculations.yieldMethod;
+            int yf = calculations.yieldFreq;
+            int ydc = calculations.yieldDayCount;
+            int itp = 0;
+            DateDescr vDate = new DateDescr
+            {
+                year = valueDate.year,
+                month = valueDate.month,
+                day = valueDate.day
+            };
+            RateCurveDescr rateCurveDescr = new RateCurveDescr
+            {
+                size = 0,
+                rates = IntPtr.Zero
+            };
+            CashFlowsDescr cashFlowsDescrSer = TestHelper.makeCashFlows(cashFlowsOutSer.ToList());
+            IList<CashFlowsDescr> cashFlowsDescrsSer = new List<CashFlowsDescr>();
+            cashFlowsOutSer.All((c) =>
+            {
+                List<CashFlowDescr> cfdl = new List<CashFlowDescr>();
+                cfdl.Add(c);
+                CashFlowsDescr cfds = TestHelper.makeCashFlows(cfdl);
+                cashFlowsDescrsSer.Add(cfds);
+                return true;
+            });
+            CashFlowsDescr cashFlowsDescr = TestHelper.makeCashFlows(cashFlowsOut.ToList());
+            IList<CashFlowsDescr> cashFlowsDescrs = new List<CashFlowsDescr>();
+            cashFlowsOut.All((c) =>
+            {
+                List<CashFlowDescr> cfdl = new List<CashFlowDescr>();
+                cfdl.Add(c);
+                CashFlowsDescr cfds = TestHelper.makeCashFlows(cfdl);
+                cashFlowsDescrs.Add(cfds);
+                return true;
+            });
+            TestContext.WriteLine("");
+            TestContext.WriteLine("Total CashFlows: {0}", cashFlowsDescrsSer.Count());
+            TestContext.WriteLine("");
+            Func<CashFlowsDescr, bool> cfsPredSer =
+            (c) =>
+            {
+                status = priceCashFlows(c, ym, yf, ydc, vDate, rateCurveDescr, itp);
+                if (status != 0)
+                {
+                    StringBuilder statusText = new StringBuilder(200);
+                    int textSize;
+                    status = getStatusText(status, statusText, out textSize);
+                    throw new InvalidOperationException(statusText.ToString());
+                }
+
+                return true;
+            };
+            sw.Start();
+            status = priceCashFlows(cashFlowsDescr, ym, yf, ydc, vDate, rateCurveDescr, itp);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            sw.Stop();
+            TestContext.WriteLine("");
+            TestContext.WriteLine("Single Price Call: {0}", sw.Elapsed);
+            TestContext.WriteLine("");
+            sw.Reset();
+
+
+            sw.Start();
+            cashFlowsDescrsSer.All(cfsPredSer);
+            sw.Stop();
+            TestContext.WriteLine("");
+            TestContext.WriteLine("Serial CF: {0}", sw.Elapsed);
+            TestContext.WriteLine("");
+            sw.Reset();
+
+            List<CashFlowDescr> serCf = new List<CashFlowDescr>();
+            List<CashFlowsDescr> serCfd = new List<CashFlowsDescr>(cashFlowsDescrsSer);
+            sw.Start();
+            cashFlowsDescrs.AsParallel().ForAll((c) =>
+            {
+                status = priceCashFlows(c, ym, yf, ydc, vDate, rateCurveDescr, itp);
+                if (status != 0)
+                {
+                    StringBuilder statusText = new StringBuilder(200);
+                    int textSize;
+                    status = getStatusText(status, statusText, out textSize);
+                    throw new InvalidOperationException(statusText.ToString());
+                }
+            });
+            sw.Stop();
+            TestContext.WriteLine("");
+            TestContext.WriteLine("Parallel CF: {0}", sw.Elapsed);
+            TestContext.WriteLine("");
+            sw.Reset();
+
+            TestContext.WriteLine("");
+            TestContext.WriteLine("Prepare Serial CashFlows Collectiom.");
+            TestContext.WriteLine("");
+            serCfd.All((c) =>
+            {
+                for (int i = 0; i < c.size; i++)
+                {
+                    serCf.Add((CashFlowDescr)Marshal.PtrToStructure(c.cashFlows,
+                        typeof(CashFlowDescr)));
+                    c.cashFlows = (IntPtr)((int)c.cashFlows + structSize);
+                }
+
+                return true;
+            });
+
+            TestContext.WriteLine("");
+            TestContext.WriteLine("Prepare Parallel CashFlows Collectiom.");
+            TestContext.WriteLine("");
+            List<CashFlowDescr> parCf = new List<CashFlowDescr>();
+            List<CashFlowsDescr> parCfd = new List<CashFlowsDescr>(cashFlowsDescrs);
+            parCfd.All((c) =>
+            {
+                for (int i = 0; i < c.size; i++)
+                {
+                    parCf.Add((CashFlowDescr)Marshal.PtrToStructure(c.cashFlows,
+                        typeof(CashFlowDescr)));
+                    c.cashFlows = (IntPtr)((int)c.cashFlows + structSize);
+                }
+
+                return true;
+            });
+            TestContext.WriteLine("");
+            TestContext.WriteLine($"Serial Count { serCf.Count()} ");
+            TestContext.WriteLine($"Parallel Count { parCf.Count()} ");
+            TestContext.WriteLine("");
+
+            for (int i=0;i<serCf.Count();i++)
+            {
+                if (Math.Abs(serCf[i].presentValue - parCf[i].presentValue) >= .0000000005)
+                {
+                    TestContext.WriteLine("");
+                    TestContext.WriteLine($"Cashflow mismatch. Count { i} Serial: {serCf[i].presentValue}  Parallel: {parCf[i].presentValue} ");
+                    TestContext.WriteLine("");
+
+                }
+                //Assert.IsTrue(Math.Abs(serCf[i].presentValue - parCf[i].presentValue) < .0005);
+            }
+
+            GC.KeepAlive(instrument);
+            GC.KeepAlive(calculations);
 
         }
 

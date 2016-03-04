@@ -10,6 +10,20 @@ namespace CalcTests
 
     public class TestHelper
     {
+        internal static CashFlowsDescr makeCashFlows(List<CashFlowDescr> cfList)
+        {
+            CashFlowsDescr cashFlowsDescr = new CashFlowsDescr();
+            CashFlowDescr[] cfArray = cfList.ToArray();
+            cashFlowsDescr.size = cfList.Count;
+            cashFlowsDescr.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) * cfArray.Length);
+            IntPtr buffer = new IntPtr(cashFlowsDescr.cashFlows.ToInt64());
+            for (int i = 0; i < cfArray.Length; i++)
+            {
+                Marshal.StructureToPtr(cfArray[i], buffer, true);
+                buffer = new IntPtr(buffer.ToInt64() + Marshal.SizeOf(typeof(CashFlowDescr)));
+            }
+            return cashFlowsDescr;
+        }
         internal static DatesDescr makeDates(IEnumerable<DateTime> dates)
         {
             DatesDescr datesDescr = new DatesDescr();
@@ -232,6 +246,12 @@ namespace CalcTests
     public class DatesDescr
     {
         public IntPtr dates;
+        public int size;
+    };
+    [StructLayout(LayoutKind.Sequential)]
+    internal class RateCurveDescr
+    {
+        public IntPtr rates; //RateStruct Array
         public int size;
     };
     public class Instrument
