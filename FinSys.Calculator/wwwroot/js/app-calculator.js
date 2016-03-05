@@ -50,5 +50,11 @@
 
         $routeProvider.otherwise({ redirectTo: "/" });
     });
-
+    app.filter('decimal', function () {
+        return function (text) {
+            var parts = parseFloat(text).toFixed(8).split('.');
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            return parts.join('.');
+        }
+    });
 })();

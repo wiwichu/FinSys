@@ -44,6 +44,7 @@
         vm.port = $location.port();
         vm.cashFlows = [];
         vm.holidays = [];
+        vm.viewDefaults = "View Defaults";
         if (vm.port)
         {
             vm.port = ":" + vm.port;
@@ -195,7 +196,14 @@
                 vm.isBusy = false;
             });
         }
-
+        vm.openDefaults = function () {
+            if (vm.viewDefaults=="View Defaults") {
+                vm.viewDefaults = "Close Defaults";
+            }
+            else {
+                vm.viewDefaults = "View Defaults";
+            }
+        }
         vm.holidayGridOptions = {
             data: 'vm.holidays',
             enableSelectAll: true,
