@@ -23,6 +23,7 @@
         vm.selectedCompoundFrequency = "";
         vm.selectedYieldDayCount = "";
         vm.selectedPayFrequency = "";
+        vm.overrideDefaults = false;
         vm.opened = false;
         vm.isBusy = true;
         vm.endOfMonth = false;
@@ -232,6 +233,87 @@
             $rootScope.cfData = vm.cashFlows;
             $window.location.href = '/App/CashFlows';
         }
+        vm.calculations = [];
+        vm.calculation = {};
+     vm.calculate = function () {
+        vm.isBusy = true;
+        vm.errorMessage = "";
+        vm.api = "/api/calculator/calculate";
+        vm.apiPath = vm.protocol + vm.host + vm.port + vm.api;
+        vm.requestJson = "";
+        vm.responseJson = "";
+        vm.calcFrom = "price";
+        vm.calculation.OverrideDefaults = vm.overrideDefaults;
+        vm.calculation.InterestRate = vm.interestRate;
+        vm.calculation.MaturityDate = vm.maturityDate;
+        vm.calculation.ValueDate = vm.valueDate;
+        vm.calculation.YieldIn = vm.yield;
+        vm.calculation.PriceIn = vm.price;
+        vm.calculation.ExCoupon = vm.exCoup;
+        vm.calculation.TradeFlat = vm.tradeFlat;
+        if (vm.calcFrom == "price")
+        {
+            vm.calculation.CalculatePrice = false;
+        }
+         else
+        {
+            vm.calculation.CalculatePrice = true;
+        }
+        vm.calculation.IncludeCashflows = vm.includeCashflows
+        vm.calculation.UseHolidays = vm.useHolidays;
+        vm.calculation.DayCount = vm.selectedDayCount;
+        vm.calculation.PayFrequency = vm.selectedPayFrequency;
+        vm.calculation.CalcDateAdjust = vm.selectedCalcDateAdjust;
+        vm.calculation.PayDateAdjust = vm.selectedPayDateAdjust;
+        vm.calculation.YieldDayCount = vm.selectedYieldDayCount;
+        vm.calculation.YieldFrequency = vm.selectedCompoundFrequency;
+        vm.calculation.YieldMethod = vm.selectedYieldMethod;
+        vm.calculation.IssueDate = vm.issueDate;
+        vm.calculation.FirstPayDate = vm.firstPayDate;
+        vm.calculation.NextToLastDate = vm.nextToLastDate;
+        vm.calculation.Holidays = vm.holidays;
+        vm.calculations[0] = vm.calculation;
+         $http.post(vm.apiPath, vm.calculations)
+        .then(function (response) {
+            if (response.data[0].status) {
+                vm.errorMessage = "Calculation Failed: " + response.data[0].status;
+
+            }
+            else {
+                vm.interest = response.data[0].accruedInterest;
+                vm.interestDays = response.data[0].interestDays;
+                vm.dirtyPrice = response.data[0].dirtyPrice;
+                vm.previousPay = new Date(response.data[0].previousPay);
+                vm.nextPay = new Date(response.data[0].nextPay);
+                vm.convexity = response.data[0].convexity;
+                vm.cvxPvbp = response.data[0].convexityAdjustedPvbp;
+                vm.duration = response.data[0].duration;
+                vm.modDuration = response.data[0].modifiedDuration;
+                if (vm.calcFrom == "price") {
+                    vm.yield = response.data[0].yield;
+                }
+                else {
+                    vm.price = response.data[0].price;
+                }
+                vm.pvbp = response.data[0].pvbp;
+                vm.issueDate = new Date(response.data[0].issueDate);
+                vm.firstPayDate = new Date(response.data[0].firstPayDate);
+                vm.nextToLastDate = new Date(response.data[0].nextToLastDate);
+
+                vm.requestJson = JSON.stringify(vm.calculations, null, 2);
+                vm.responseJson = JSON.stringify(response.data, null, 2);
+                vm.cashFlows = response.data[0].cashFlows;
+            }
+        },
+        function (err) {
+            vm.errorMessage = "Calculation Failed: " +  err.data;
+        })
+        .finally(function () {
+            vm.isBusy = false;
+        });
+
+        //alert("Calculation USTBill");
+    }
 
         var api = {
             apiPath: vm.apiPath,

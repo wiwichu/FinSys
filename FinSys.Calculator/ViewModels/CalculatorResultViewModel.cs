@@ -18,6 +18,8 @@ namespace FinSys.Calculator.ViewModels
         [Required]
         public double AccruedInterest { get; set; }
         [Required]
+        public int InterestDays { get; set; }
+        [Required]
         public double DirtyPrice { get; set; }
         [Required]
         public DateTime PreviousPay { get; set; }
@@ -35,8 +37,11 @@ namespace FinSys.Calculator.ViewModels
         public double ConvexityAdjustedPvbp { get; set; }
         [Required]
         public IEnumerable<CashFlowViewModel> Cashflows  { get; set; }
-
-
-
+        [Required]
+        public DateTime IssueDate { get; set; }
+        [Required]
+        public DateTime FirstPayDate { get; set; }
+        [Required]
+        public DateTime NextToLastDate { get; set; }
     }
 }

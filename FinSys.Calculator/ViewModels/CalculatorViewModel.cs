@@ -31,7 +31,6 @@ namespace FinSys.Calculator.ViewModels
         public bool IncludeCashflows { get; set; }
         [Required]
         public bool UseHolidays { get; set; }
-        [Required]
         public IEnumerable<DateTime> Holidays { get; set; }
         [Required]
         public string DayCount { get; set; }
@@ -48,7 +47,11 @@ namespace FinSys.Calculator.ViewModels
         [Required]
         public string YieldMethod { get; set; }
         [Required]
+        public bool OverrideDefaults { get; set; }
+        [Required]
         public DateTime IssueDate { get; set; }
+        [Required]
+        public DateTime FirstPayDate { get; set; }
         [Required]
         public DateTime NextToLastDate { get; set; }
 

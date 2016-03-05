@@ -28,7 +28,9 @@
                 <input type="text" class="form-control" id="interestRate" name="interestRate" ng-model="vm.interestRate"
                        ng-required="true" ng-pattern="/^\d{0,20}(\.\d{1,20})?$/" />
             </div>
-            <div class="form-group">
+            <span class="text-danger" ng-cloak ng-show="CustCalcForm.interestRate.$error.required">Required</span>
+            <span class="text-danger" ng-cloak ng-show="CustCalcForm.interestRate.$error.pattern">Invalid Number</span>
+          <div class="form-group">
                 <label for="maturityDate">Maturity Date</label>
                 <div class="input-group">
                     <input id="maturityDate" type="text" class="form-control" uib-datepicker-popup="{{format}}"
@@ -46,7 +48,7 @@
             </div>
             <div class="form-group">
                 <label class="checkbox-inline">
-                    <input type="checkbox" name="includeCashflows" ng-model="vm.endOfMonth"> End of Month
+                    <input type="checkbox" name="includeCashflows" ng-model="vm.includeCashflows"> End of Month
                 </label>
             </div>
             <div class="form-group">
@@ -68,7 +70,7 @@
             <label class="control-label">Calculate From:</label>
             <div class="form-group" ng-init="vm.calcfrom='price'">
                 <label class="radio-inline">
-                    <input type="radio" name="calcchoice" value="price" ng-model="vm.calcfrom">
+                    <input type="radio" name="calcChoice" value="price" ng-model="vm.calcfrom">
                     Price
                 </label>
                 <label class="radio-inline">
@@ -77,7 +79,7 @@
                 </label>
             </div>
             <div class="form-group">
-                <input type="submit" value="Calculate" class="btn btn-success btn-block" />
+                <input type="submit" value="Calculate" class="btn btn-success btn-block"  ng-click="vm.calculate()" ng-disabled="CustCalcForm.$invalid"/>
             </div>
             <div class="form-group">
                 <input type="submit" value="API" class="btn btn-primary btn-block"
@@ -91,8 +93,8 @@
                     <input type="text" class="form-control" id="yield" name="yield" ng-disabled="vm.calcfrom!='yield'"
                            ng-model="vm.yield" ng-required="true" ng-pattern="/^\d{0,20}(\.\d{1,20})?$/" />
                 </div>
-                <span class="text-danger" ng-cloak ng-show="CustCalcForm.price.$error.required">Required</span>
-                <span class="text-danger" ng-cloak ng-show="CustCalcForm.price.$error.pattern">Invalid Number</span>
+                <span class="text-danger" ng-cloak ng-show="CustCalcForm.yield.$error.required">Required</span>
+                <span class="text-danger" ng-cloak ng-show="CustCalcForm.yield.$error.pattern">Invalid Number</span>
             </div>
             <div class="form-group">
                 <div class="input-group">
@@ -105,16 +107,16 @@
             </div>
             <div class="form-group">
                 <div class="input-group">
-                    <label for="price">Accrued Interest</label>
-                    <input type="text" class="form-control" id="price" name="price" readonly
-                           ng-model="vm.interest" ng-required="true" ng-pattern="/^\d{0,20}(\.\d{1,20})?$/" />
+                    <label for="interest">Accrued Interest</label>
+                    <input type="text" class="form-control" id="interest" name="interest" readonly
+                           ng-model="vm.interest" />
                 </div>
             </div>
             <div class="form-group">
                 <div class="input-group">
-                    <label for="price">Dirty Price</label>
+                    <label for="dirtyPrice">Dirty Price</label>
                     <input type="text" class="form-control" id="dirtyPrice" name="dirtyPrice" readonly
-                           ng-model="vm.dirtyPrice" ng-required="true" ng-pattern="/^\d{0,20}(\.\d{1,20})?$/" />
+                           ng-model="vm.dirtyPrice" />
                 </div>
             </div>
             <div class="form-group">
@@ -164,9 +166,9 @@
             </div>
             <div class="form-group">
                 <div class="input-group">
-                    <label for="price">Interest Days</label>
+                    <label for="interestDays">Interest Days</label>
                     <input type="text" class="form-control" id="interestDays" name="interestDays" readonly
-                           ng-model="vm.interestDays" ng-pattern="/^\d{0,20}(\.\d{1,20})?$/" />
+                           ng-model="vm.interestDays" />
                 </div>
             </div>
             <div class="form-group">
@@ -221,7 +223,7 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label class="checkbox-inline">
-                    <input type="checkbox" name="useDefaults" ng-model="vm.useDefaults" data-toggle="collapse" data-target="#defaults"> Override Defaults
+                    <input type="checkbox" name="overrideDefaults" ng-model="vm.overrideDefaults" data-toggle="collapse" data-target="#defaults"> Override Defaults
                 </label>
             </div>
             <div id="defaults" class="collapse">

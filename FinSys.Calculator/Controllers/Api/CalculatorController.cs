@@ -133,30 +133,102 @@ namespace FinSys.Calculator.Controllers.Api
                         {
                             CalculatorResultViewModel rvm = new CalculatorResultViewModel
                             {
-                                Id = vm.Id
-                            };
+                                Id = vm.Id,
+                                Status = "",
+                                Message = ""
+                        };
                             try
                             {
                                 Instrument instr = new Instrument
                                 {
+                                    Class = "Eurobond",
+                                    EndOfMonthPay = vm.EndOfMonth,
+                                    FirstPayDate=vm.FirstPayDate,
+                                    HolidayAdjust=vm.CalcDateAdjust,
+                                    IntDayCount=vm.DayCount,
+                                    InterestRate=vm.InterestRate/100,
+                                    IntPayFreq=vm.PayFrequency,
+                                    IssueDate=vm.IssueDate,
+                                    MaturityDate=vm.MaturityDate,
+                                    Name="",
+                                    NextToLastPayDate=vm.NextToLastDate
                                 };
                                 Calculations calc = new Calculations
                                 {
+                                    CalculatePrice=vm.CalculatePrice,
+                                    ExCoupDays=0,
+                                    IsExCoup=vm.ExCoupon,
+                                    PayHolidayAdjust=vm.PayDateAdjust,
+                                    PriceIn=vm.PriceIn/100,
+                                    ValueDate=vm.ValueDate,
+                                    YieldIn=vm.YieldIn/100,
+                                    YieldDayCount=vm.YieldDayCount,
+                                    YieldFreq=vm.YieldFrequency,
+                                    YieldMethod=vm.YieldMethod
                                 };
+                                if (!vm.OverrideDefaults)
+                                {
+                                    DefaultDatesViewModel ddvm = new DefaultDatesViewModel
+                                    {
+                                        EndOfMonthPay = instr.EndOfMonthPay,
+                                        HolidayAdjust = instr.HolidayAdjust,
+                                        Holidays = vm.Holidays,
+                                        IntDayCount = instr.IntDayCount,
+                                        IntPayFreq = instr.IntPayFreq,
+                                        MaturityDate = instr.MaturityDate,
+                                        ValueDate = calc.ValueDate
+                                    };
+                                    var defaultDates = getDefaultDates(ddvm).Result;
+
+                                    instr.MaturityDate = defaultDates.MaturityDate;
+                                    instr.IssueDate = defaultDates.IssueDate;
+                                    instr.FirstPayDate = defaultDates.FirstPayDate;
+                                    instr.NextToLastPayDate = defaultDates.NextToLastPayDate;
+                                }
                                 Instrument instrResult = null;
                                 Calculations calcResult = null;
                                 IEnumerable<Holiday> holidays = Mapper.Map<IEnumerable<Holiday>>(vm.Holidays);
-                                //var res = await _repository.CalculateAsync(instr, calc, holidays, vm.IncludeCashflows).ConfigureAwait(false);
-                                //instrResult = res.Key;
-                                //calcResult = res.Value;
                                 var res = _repository.CalculateAsync(instr, calc, holidays, vm.IncludeCashflows);
                                 instrResult = res.Result.Key;
                                 calcResult = res.Result.Value;
-
+                                rvm = new CalculatorResultViewModel
+                                {
+                                    Id = vm.Id,
+                                    Status = "",
+                                    Message = "",
+                                    AccruedInterest = calcResult.Interest*100,
+                                    Cashflows = Mapper.Map<IEnumerable<CashFlowViewModel>>(calcResult.Cashflows),
+                                    CleanPrice = calcResult.PriceOut*100,
+                                    Convexity = calcResult.Convexity,
+                                    ConvexityAdjustedPvbp = calcResult.PvbpConvexityAdjusted,
+                                    DirtyPrice = (calcResult.Interest + (vm.CalculatePrice ? calcResult.PriceOut : vm.PriceIn/100))*100,
+                                    Duration=calcResult.Duration,
+                                    ModifiedDuration=calcResult.ModifiedDuration,
+                                    NextPay=calcResult.NextPayDate,
+                                    PreviousPay=calcResult.PreviousPayDate,
+                                    Pvbp=calcResult.Pvbp,
+                                    Yield=(vm.CalculatePrice ? vm.YieldIn/100:calcResult.YieldOut)*100,
+                                    IssueDate=instr.IssueDate,
+                                    FirstPayDate=instr.FirstPayDate,
+                                    NextToLastDate=instr.NextToLastPayDate
+                            };
                             }
                             catch (InvalidOperationException ioEx)
                             {
                                 rvm.Status = ioEx.Message;
+                            }
+                            catch (AggregateException aex)
+                            {
+                                if (aex.InnerExceptions.Count==1 && aex.InnerExceptions[0] is InvalidOperationException)
+                                {
+                                    InvalidOperationException ioe = aex.InnerExceptions[0] as InvalidOperationException;
+                                    rvm.Status = ioe.Message;
+                                }
+                                else
+                                {
+                                    rvm.Status = "Calculation Error";
+                                    rvm.Message = aex.Flatten().ToString();
+                                }
                             }
                             catch (Exception ex)
                             {
@@ -182,36 +254,42 @@ namespace FinSys.Calculator.Controllers.Api
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             return Json(new { Message = "Failed", ModelState = ModelState });
         }
+        private async Task<DefaultDatesResultViewModel> getDefaultDates(DefaultDatesViewModel vm)
+        {
+            Instrument instr = new Instrument
+            {
+                Class = "Eurobond",
+                IntDayCount = vm.IntDayCount,
+                IntPayFreq = vm.IntPayFreq,
+                MaturityDate = vm.MaturityDate,
+                EndOfMonthPay = vm.EndOfMonthPay,
+                HolidayAdjust = vm.HolidayAdjust
+            };
+            Calculations calc = new Calculations
+            {
+                ValueDate = vm.ValueDate
+            };
+            IEnumerable<Holiday> holidays = Mapper.Map<IEnumerable<Holiday>>(vm.Holidays);
+            var res = await _repository.GetDefaultDatesAsync(instr, calc, holidays).ConfigureAwait(false);
+            Instrument instrResult = res.Key;
+            Calculations calcResult = res.Value;
+
+            DefaultDatesResultViewModel result = new DefaultDatesResultViewModel
+            {
+                MaturityDate = instrResult.MaturityDate,
+                IssueDate = instrResult.IssueDate,
+                FirstPayDate = instrResult.FirstPayDate,
+                NextToLastPayDate = instrResult.NextToLastPayDate
+            };
+
+            return result;
+        }
         [HttpPost("defaultdates")]
         public async Task<JsonResult> Post([FromBody]DefaultDatesViewModel vm)
         {
             try
             {
-                Instrument instr = new Instrument
-                {
-                    Class="Eurobond",
-                    IntDayCount = vm.IntDayCount,
-                    IntPayFreq = vm.IntPayFreq,
-                    MaturityDate = vm.MaturityDate,
-                    EndOfMonthPay = vm.EndOfMonthPay,
-                    HolidayAdjust=vm.HolidayAdjust                   
-                };
-                Calculations calc = new Calculations
-                {
-                    ValueDate = vm.ValueDate
-                };
-                IEnumerable<Holiday> holidays = Mapper.Map <IEnumerable<Holiday>>(vm.Holidays);
-                var res = await _repository.GetDefaultDatesAsync(instr, calc,holidays).ConfigureAwait(false);
-                Instrument instrResult = res.Key;
-                Calculations calcResult = res.Value;
-
-                DefaultDatesResultViewModel result = new DefaultDatesResultViewModel
-                {
-                    MaturityDate = instrResult.MaturityDate,
-                    IssueDate=instrResult.IssueDate,
-                    FirstPayDate=instrResult.FirstPayDate,
-                    NextToLastPayDate=instrResult.NextToLastPayDate
-                };
+                var result = await getDefaultDates(vm);
                 JsonResult jResult = new JsonResult(result);
                 return jResult;
             }
