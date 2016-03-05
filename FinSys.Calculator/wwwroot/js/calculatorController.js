@@ -230,8 +230,17 @@
         };
         vm.goToCashFlows = function ()
         {
-            $rootScope.cfData = vm.cashFlows;
-            $window.location.href = '/App/CashFlows';
+            if (vm.cashFlows && vm.cashFlows.length > 0) {
+                vm.cfData = {
+                    yieldmethod: vm.selectedYieldMethod,
+                    daycount: vm.selectedYieldDayCount,
+                    frequency: vm.selectedCompoundFrequency,
+                    cashFlows: vm.cashFlows,
+                    valueDate: vm.valueDate
+                };
+                $rootScope.cfData = vm.cfData;
+            }
+            $window.location.href = '#/CashFlows';
         }
         vm.calculations = [];
         vm.calculation = {};
@@ -302,7 +311,7 @@
 
                 vm.requestJson = JSON.stringify(vm.calculations, null, 2);
                 vm.responseJson = JSON.stringify(response.data, null, 2);
-                vm.cashFlows = response.data[0].cashFlows;
+                vm.cashFlows = response.data[0].cashflows;
             }
         },
         function (err) {
@@ -311,8 +320,6 @@
         .finally(function () {
             vm.isBusy = false;
         });
-
-        //alert("Calculation USTBill");
     }
 
         var api = {
