@@ -39,6 +39,12 @@ namespace CalcTests
                 vmList[vmList.Count - 1].Id = Convert.ToString(++id);
                 vmList.Add(Bund30360SemiPriceFromYISMA_1_Vm());
                 vmList[vmList.Count - 1].Id = Convert.ToString(++id);
+                vmList.Add(Bund30360YISMAFromSemiPrice_1_Vm());
+                vmList[vmList.Count - 1].Id = Convert.ToString(++id);
+                vmList.Add(BundAct365AnnualPriceFromYISMA_1_Vm());
+                vmList[vmList.Count - 1].Id = Convert.ToString(++id);
+                vmList.Add(BundAct365AnnualYISMAFromPrice_1_Vm());
+                vmList[vmList.Count - 1].Id = Convert.ToString(++id);
                 var jSon = JsonConvert.SerializeObject(vmList);
                 var request = new StringContent(jSon);
                 request.Headers.ContentType = new MediaTypeHeaderValue("application/json");
@@ -55,6 +61,9 @@ namespace CalcTests
                 BondYtmFromPriceLongLastCoupon_2_Run(results[resInd++]);
                 BondYtmFromPriceLongLastCoupon_3_Run(results[resInd++]);
                 Bund30360SemiPriceFromYISMA_1_Run(results[resInd++]);
+                Bund30360YISMAFromSemiPrice_1_Run(results[resInd++]);
+                BundAct365AnnualPriceFromYISMA_1_Run(results[resInd++]);
+                BundAct365AnnualYISMAFromPrice_1_Run(results[resInd++]);
             }
         }
         [TestMethod]
@@ -223,6 +232,69 @@ namespace CalcTests
                 IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
                 List<CalculatorResultViewModel> results = new List<CalculatorResultViewModel>(result);
                 Bund30360SemiPriceFromYISMA_1_Run(results[0]);
+            }
+        }
+        [TestMethod]
+        public async Task Api_Bund30360YISMAFromSemiPrice_1()
+        {
+            int id = 0;
+            using (HttpClient client = new HttpClient())
+            {
+                List<CalculatorViewModel> vmList = new List<CalculatorViewModel>();
+                var cvm1 = Bund30360YISMAFromSemiPrice_1_Vm();
+                cvm1.Id = Convert.ToString(++id);
+
+                vmList.Add(cvm1);
+                var jSon = JsonConvert.SerializeObject(vmList);
+                var request = new StringContent(jSon);
+                request.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var response = await client.PostAsync(calcUri, request);
+                string responseBodyAsText = await response.Content.ReadAsStringAsync();
+                IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
+                List<CalculatorResultViewModel> results = new List<CalculatorResultViewModel>(result);
+                Bund30360YISMAFromSemiPrice_1_Run(results[0]);
+            }
+        }
+        [TestMethod]
+        public async Task Api_BundAct365AnnualPriceFromYISMA_1()
+        {
+            int id = 0;
+            using (HttpClient client = new HttpClient())
+            {
+                List<CalculatorViewModel> vmList = new List<CalculatorViewModel>();
+                var cvm1 = BundAct365AnnualPriceFromYISMA_1_Vm();
+                cvm1.Id = Convert.ToString(++id);
+
+                vmList.Add(cvm1);
+                var jSon = JsonConvert.SerializeObject(vmList);
+                var request = new StringContent(jSon);
+                request.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var response = await client.PostAsync(calcUri, request);
+                string responseBodyAsText = await response.Content.ReadAsStringAsync();
+                IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
+                List<CalculatorResultViewModel> results = new List<CalculatorResultViewModel>(result);
+                BundAct365AnnualPriceFromYISMA_1_Run(results[0]);
+            }
+        }
+        [TestMethod]
+        public async Task Api_BundAct365AnnualYISMAFromPrice_1()
+        {
+            int id = 0;
+            using (HttpClient client = new HttpClient())
+            {
+                List<CalculatorViewModel> vmList = new List<CalculatorViewModel>();
+                var cvm1 = BundAct365AnnualYISMAFromPrice_1_Vm();
+                cvm1.Id = Convert.ToString(++id);
+
+                vmList.Add(cvm1);
+                var jSon = JsonConvert.SerializeObject(vmList);
+                var request = new StringContent(jSon);
+                request.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var response = await client.PostAsync(calcUri, request);
+                string responseBodyAsText = await response.Content.ReadAsStringAsync();
+                IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
+                List<CalculatorResultViewModel> results = new List<CalculatorResultViewModel>(result);
+                BundAct365AnnualYISMAFromPrice_1_Run(results[0]);
             }
         }
 
@@ -486,6 +558,105 @@ namespace CalcTests
                 YieldMethod = "ISMA",
                 IssueDate = new DateTime(2005, 11, 15),
                 FirstPayDate = new DateTime(2006, 11, 15),
+                NextToLastDate = new DateTime(2012, 11, 15),
+                Holidays = new List<DateTime>().ToArray(),
+                IncludeCashflows = false,
+                EndOfMonth = false,
+                ExCoupon = false,
+                TradeFlat = false,
+                UseHolidays = false
+            };
+        }
+        public void Bund30360YISMAFromSemiPrice_1_Run(CalculatorResultViewModel vm)
+        {
+            Assert.IsTrue(Math.Abs(6 - vm.Yield) < .00005);
+        }
+        public CalculatorViewModel Bund30360YISMAFromSemiPrice_1_Vm()
+        {
+            return new CalculatorViewModel
+            {
+                OverrideDefaults = false,
+                InterestRate = 7,
+                MaturityDate = new DateTime(2013, 11, 15),
+                ValueDate = new DateTime(2010, 11, 15),
+                YieldIn = 6,
+                PriceIn = 102.7086,
+                CalculatePrice = false,
+                DayCount = "30/360 German",
+                PayFrequency = "Semi-Annually",
+                CalcDateAdjust = "Same",
+                PayDateAdjust = "Same",
+                YieldDayCount = "30/360 German",
+                YieldFrequency = "Semi-Annually",
+                YieldMethod = "ISMA",
+                IssueDate = new DateTime(2005, 11, 15),
+                FirstPayDate = new DateTime(2006, 11, 15),
+                NextToLastDate = new DateTime(2012, 11, 15),
+                Holidays = new List<DateTime>().ToArray(),
+                IncludeCashflows = false,
+                EndOfMonth = false,
+                ExCoupon = false,
+                TradeFlat = false,
+                UseHolidays = false
+            };
+        }
+        public void BundAct365AnnualPriceFromYISMA_1_Run(CalculatorResultViewModel vm)
+        {
+            Assert.IsTrue(Math.Abs(103.9830 - vm.CleanPrice) < .00005);
+        }
+        public CalculatorViewModel BundAct365AnnualPriceFromYISMA_1_Vm()
+        {
+            return new CalculatorViewModel
+            {
+                OverrideDefaults = false,
+                InterestRate = 7,
+                MaturityDate = new DateTime(2013, 11, 15),
+                ValueDate = new DateTime(2009, 2, 18),
+                YieldIn = 6,
+                PriceIn = 100,
+                CalculatePrice = true,
+                DayCount = "ACT/365",
+                PayFrequency = "Annually",
+                CalcDateAdjust = "Same",
+                PayDateAdjust = "Same",
+                YieldDayCount = "ACT/365",
+                YieldFrequency = "Annually",
+                YieldMethod = "ISMA",
+                IssueDate = new DateTime(2006, 11, 15),
+                FirstPayDate = new DateTime(2007, 11, 15),
+                NextToLastDate = new DateTime(2012, 11, 15),
+                Holidays = new List<DateTime>().ToArray(),
+                IncludeCashflows = false,
+                EndOfMonth = false,
+                ExCoupon = false,
+                TradeFlat = false,
+                UseHolidays = false
+            };
+        }
+        public void BundAct365AnnualYISMAFromPrice_1_Run(CalculatorResultViewModel vm)
+        {
+            Assert.IsTrue(Math.Abs(6 - vm.Yield) < .00005);
+        }
+        public CalculatorViewModel BundAct365AnnualYISMAFromPrice_1_Vm()
+        {
+            return new CalculatorViewModel
+            {
+                OverrideDefaults = false,
+                InterestRate = 7,
+                MaturityDate = new DateTime(2013, 11, 15),
+                ValueDate = new DateTime(2009, 2, 18),
+                YieldIn = 6,
+                PriceIn = 103.9830,
+                CalculatePrice = false,
+                DayCount = "ACT/365",
+                PayFrequency = "Annually",
+                CalcDateAdjust = "Same",
+                PayDateAdjust = "Same",
+                YieldDayCount = "ACT/365",
+                YieldFrequency = "Annually",
+                YieldMethod = "ISMA",
+                IssueDate = new DateTime(2006, 11, 15),
+                FirstPayDate = new DateTime(2007, 11, 15),
                 NextToLastDate = new DateTime(2012, 11, 15),
                 Holidays = new List<DateTime>().ToArray(),
                 IncludeCashflows = false,
