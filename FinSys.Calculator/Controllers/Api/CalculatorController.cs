@@ -210,7 +210,8 @@ namespace FinSys.Calculator.Controllers.Api
                                     Yield=(vm.CalculatePrice ? vm.YieldIn/100:calcResult.YieldOut)*100,
                                     IssueDate=instr.IssueDate,
                                     FirstPayDate=instr.FirstPayDate,
-                                    NextToLastDate=instr.NextToLastPayDate
+                                    NextToLastDate=instr.NextToLastPayDate,
+                                    InterestDays=calcResult.InterestDays
                             };
                             }
                             catch (InvalidOperationException ioEx)
