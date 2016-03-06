@@ -198,7 +198,7 @@ namespace FinSys.Calculator.Controllers.Api
                                     Message = "",
                                     AccruedInterest = calcResult.Interest*100,
                                     Cashflows = Mapper.Map<IEnumerable<CashFlowViewModel>>(calcResult.Cashflows),
-                                    CleanPrice = calcResult.PriceOut*100,
+                                    CleanPrice = (vm.CalculatePrice ? calcResult.PriceOut : vm.PriceIn / 100) * 100,
                                     Convexity = calcResult.Convexity,
                                     ConvexityAdjustedPvbp = calcResult.PvbpConvexityAdjusted,
                                     DirtyPrice = (calcResult.Interest + (vm.CalculatePrice ? calcResult.PriceOut : vm.PriceIn/100))*100,
