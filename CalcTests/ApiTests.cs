@@ -37,6 +37,8 @@ namespace CalcTests
                 vmList[vmList.Count - 1].Id = Convert.ToString(++id);
                 vmList.Add(BondYtmFromPriceLongLastCoupon_3_Vm());
                 vmList[vmList.Count - 1].Id = Convert.ToString(++id);
+                vmList.Add(Bund30360SemiPriceFromYISMA_1_Vm());
+                vmList[vmList.Count - 1].Id = Convert.ToString(++id);
                 var jSon = JsonConvert.SerializeObject(vmList);
                 var request = new StringContent(jSon);
                 request.Headers.ContentType = new MediaTypeHeaderValue("application/json");
@@ -52,6 +54,7 @@ namespace CalcTests
                 BondYtmFromPriceLongLastCoupon_1_Run(results[resInd++]);
                 BondYtmFromPriceLongLastCoupon_2_Run(results[resInd++]);
                 BondYtmFromPriceLongLastCoupon_3_Run(results[resInd++]);
+                Bund30360SemiPriceFromYISMA_1_Run(results[resInd++]);
             }
         }
         [TestMethod]
@@ -199,6 +202,27 @@ namespace CalcTests
                 IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
                 List<CalculatorResultViewModel> results = new List<CalculatorResultViewModel>(result);
                 BondPriceFromYtmLongLastCoupon_3_Run(results[0]);
+            }
+        }
+        [TestMethod]
+        public async Task Api_Bund30360SemiPriceFromYISMA_1()
+        {
+            int id = 0;
+            using (HttpClient client = new HttpClient())
+            {
+                List<CalculatorViewModel> vmList = new List<CalculatorViewModel>();
+                var cvm1 = Bund30360SemiPriceFromYISMA_1_Vm();
+                cvm1.Id = Convert.ToString(++id);
+
+                vmList.Add(cvm1);
+                var jSon = JsonConvert.SerializeObject(vmList);
+                var request = new StringContent(jSon);
+                request.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var response = await client.PostAsync(calcUri, request);
+                string responseBodyAsText = await response.Content.ReadAsStringAsync();
+                IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
+                List<CalculatorResultViewModel> results = new List<CalculatorResultViewModel>(result);
+                Bund30360SemiPriceFromYISMA_1_Run(results[0]);
             }
         }
 
@@ -430,6 +454,39 @@ namespace CalcTests
                 IssueDate = new DateTime(2005, 10, 15),
                 FirstPayDate = new DateTime(2006, 10, 15),
                 NextToLastDate = new DateTime(2007, 10, 15),
+                Holidays = new List<DateTime>().ToArray(),
+                IncludeCashflows = false,
+                EndOfMonth = false,
+                ExCoupon = false,
+                TradeFlat = false,
+                UseHolidays = false
+            };
+        }
+        public void Bund30360SemiPriceFromYISMA_1_Run(CalculatorResultViewModel vm)
+        {
+            Assert.IsTrue(Math.Abs(102.7086 - vm.CleanPrice) < .00005);
+        }
+        public CalculatorViewModel Bund30360SemiPriceFromYISMA_1_Vm()
+        {
+            return new CalculatorViewModel
+            {
+                OverrideDefaults = false,
+                InterestRate = 7,
+                MaturityDate = new DateTime(2013, 11, 15),
+                ValueDate = new DateTime(2010, 11, 15),
+                YieldIn = 6,
+                PriceIn = 100,
+                CalculatePrice = true,
+                DayCount = "30/360 German",
+                PayFrequency = "Semi-Annually",
+                CalcDateAdjust = "Same",
+                PayDateAdjust = "Same",
+                YieldDayCount = "30/360 German",
+                YieldFrequency = "Semi-Annually",
+                YieldMethod = "ISMA",
+                IssueDate = new DateTime(2005, 11, 15),
+                FirstPayDate = new DateTime(2006, 11, 15),
+                NextToLastDate = new DateTime(2012, 11, 15),
                 Holidays = new List<DateTime>().ToArray(),
                 IncludeCashflows = false,
                 EndOfMonth = false,
