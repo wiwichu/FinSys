@@ -14,102 +14,432 @@ namespace CalcTests
     {
         const string apiBase = "http://localhost:8000";
         const string calcApi = "api/calculator/calculate";
+        const string calcUri = apiBase + "/" + calcApi;
+        public TestContext TestContext { get; set; }
         [TestMethod]
         public async Task ApiCalculator()
         {
-            string uri = apiBase + "/" + calcApi;
             int id = 0;
             using (HttpClient client = new HttpClient())
             {
                 List<CalculatorViewModel> vmList = new List<CalculatorViewModel>();
-                var cvm1 = new CalculatorViewModel
-                {
-                    OverrideDefaults = true,
-                    InterestRate = 5,
-                    MaturityDate = new DateTime(2009, 3, 20),
-                    ValueDate = new DateTime(2006, 9, 10),
-                    YieldIn = 5.5,
-                    PriceIn = 95,
-                    CalculatePrice = true,
-                    DayCount = "30/360 US",
-                    PayFrequency = "Semi-Annually",
-                    CalcDateAdjust = "Same",
-                    PayDateAdjust = "Same",
-                    YieldDayCount = "30/360 US",
-                    YieldFrequency = "Semi-Annually",
-                    YieldMethod = "ISMA",
-                    IssueDate = new DateTime(2003, 3, 20),
-                    FirstPayDate = new DateTime(2004, 3, 10),
-                    NextToLastDate = new DateTime(2008, 9, 10),
-                    Holidays = new List<DateTime>().ToArray(),
-                    IncludeCashflows = false,
-                    EndOfMonth = false,
-                    ExCoupon = false,
-                    TradeFlat = true,
-                    UseHolidays = false,
-                    Id = Convert.ToString(++id)
-                };
-
-                vmList.Add(cvm1);
+                vmList.Add(BondFlatPriceFromYtmLongLastCoupon_1_Vm());
+                vmList[vmList.Count - 1].Id = Convert.ToString(++id);
+                vmList.Add(BondPriceFromYtmLongLastCoupon_1_Vm());
+                vmList[vmList.Count - 1].Id = Convert.ToString(++id);
+                vmList.Add(BondPriceFromYtmLongLastCoupon_2_Vm());
+                vmList[vmList.Count - 1].Id = Convert.ToString(++id);
+                vmList.Add(BondPriceFromYtmLongLastCoupon_3_Vm());
+                vmList[vmList.Count - 1].Id = Convert.ToString(++id);
+                vmList.Add(BondYtmFromPriceLongLastCoupon_1_Vm());
+                vmList[vmList.Count - 1].Id = Convert.ToString(++id);
+                vmList.Add(BondYtmFromPriceLongLastCoupon_2_Vm());
+                vmList[vmList.Count - 1].Id = Convert.ToString(++id);
+                vmList.Add(BondYtmFromPriceLongLastCoupon_3_Vm());
+                vmList[vmList.Count - 1].Id = Convert.ToString(++id);
                 var jSon = JsonConvert.SerializeObject(vmList);
                 var request = new StringContent(jSon);
                 request.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                var response = await client.PostAsync(uri, request);
+                var response = await client.PostAsync(calcUri, request);
                 string responseBodyAsText = await response.Content.ReadAsStringAsync();
                 IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
                 List<CalculatorResultViewModel> results = new List<CalculatorResultViewModel>(result);
-                Assert.IsTrue(Math.Abs(98.83315770 - results[0].CleanPrice) < .0000005);
+                int resInd = 0;
+                BondFlatPriceFromYtmLongLastCoupon_1_Run(results[resInd++]);
+                BondPriceFromYtmLongLastCoupon_1_Run(results[resInd++]);
+                BondPriceFromYtmLongLastCoupon_2_Run(results[resInd++]);
+                BondPriceFromYtmLongLastCoupon_3_Run(results[resInd++]);
+                BondYtmFromPriceLongLastCoupon_1_Run(results[resInd++]);
+                BondYtmFromPriceLongLastCoupon_2_Run(results[resInd++]);
+                BondYtmFromPriceLongLastCoupon_3_Run(results[resInd++]);
             }
         }
         [TestMethod]
         public async Task Api_BondFlatPriceFromYtmLongLastCoupon_1()
         {
-            string uri = apiBase + "/" + calcApi;
             int id = 0;
             using (HttpClient client = new HttpClient())
             {
                 List<CalculatorViewModel> vmList = new List<CalculatorViewModel>();
-                var cvm1 = new CalculatorViewModel
-                {
-                    OverrideDefaults = true,
-                    InterestRate = 5,
-                    MaturityDate = new DateTime(2009, 3, 20),
-                    ValueDate = new DateTime(2006, 9, 10),
-                    YieldIn = 5.5,
-                    PriceIn = 95,
-                    CalculatePrice = true,
-                    DayCount = "30/360 US",
-                    PayFrequency = "Semi-Annually",
-                    CalcDateAdjust = "Same",
-                    PayDateAdjust = "Same",
-                    YieldDayCount = "30/360 US",
-                    YieldFrequency = "Semi-Annually",
-                    YieldMethod = "ISMA",
-                    IssueDate = new DateTime(2003, 3, 20),
-                    FirstPayDate = new DateTime(2004, 3, 10),
-                    NextToLastDate = new DateTime(2008, 9, 10),
-                    Holidays = new List<DateTime>().ToArray(),
-                    IncludeCashflows = false,
-                    EndOfMonth = false,
-                    ExCoupon = false,
-                    TradeFlat = true,
-                    UseHolidays = false,
-                    Id = Convert.ToString(++id)
-                };
+                var cvm1 = BondFlatPriceFromYtmLongLastCoupon_1_Vm();
+                cvm1.Id = Convert.ToString(++id);
 
                 vmList.Add(cvm1);
                 var jSon = JsonConvert.SerializeObject(vmList);
                 var request = new StringContent(jSon);
                 request.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                var response = await client.PostAsync(uri, request);
+                var response = await client.PostAsync(calcUri, request);
                 string responseBodyAsText = await response.Content.ReadAsStringAsync();
                 IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
                 List<CalculatorResultViewModel> results = new List<CalculatorResultViewModel>(result);
-                Assert.IsTrue(Math.Abs(98.83315770 - results[0].CleanPrice) < .0000005);
+                BondFlatPriceFromYtmLongLastCoupon_1_Run(results[0]);
             }
         }
+        [TestMethod]
+        public async Task Api_BondPriceFromYtmLongLastCoupon_1()
+        {
+            int id = 0;
+            using (HttpClient client = new HttpClient())
+            {
+                List<CalculatorViewModel> vmList = new List<CalculatorViewModel>();
+                var cvm1 = BondPriceFromYtmLongLastCoupon_1_Vm();
+                cvm1.Id = Convert.ToString(++id);
+
+                vmList.Add(cvm1);
+                var jSon = JsonConvert.SerializeObject(vmList);
+                var request = new StringContent(jSon);
+                request.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var response = await client.PostAsync(calcUri, request);
+                string responseBodyAsText = await response.Content.ReadAsStringAsync();
+                IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
+                List<CalculatorResultViewModel> results = new List<CalculatorResultViewModel>(result);
+                BondPriceFromYtmLongLastCoupon_1_Run(results[0]);
+            }
+        }
+        [TestMethod]
+        public async Task Api_BondPriceFromYtmLongLastCoupon_2()
+        {
+            int id = 0;
+            using (HttpClient client = new HttpClient())
+            {
+                List<CalculatorViewModel> vmList = new List<CalculatorViewModel>();
+                var cvm1 = BondPriceFromYtmLongLastCoupon_2_Vm();
+                cvm1.Id = Convert.ToString(++id);
+
+                vmList.Add(cvm1);
+                var jSon = JsonConvert.SerializeObject(vmList);
+                var request = new StringContent(jSon);
+                request.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var response = await client.PostAsync(calcUri, request);
+                string responseBodyAsText = await response.Content.ReadAsStringAsync();
+                IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
+                List<CalculatorResultViewModel> results = new List<CalculatorResultViewModel>(result);
+                BondPriceFromYtmLongLastCoupon_2_Run(results[0]);
+            }
+        }
+        [TestMethod]
+        public async Task Api_BondPriceFromYtmLongLastCoupon_3()
+        {
+            int id = 0;
+            using (HttpClient client = new HttpClient())
+            {
+                List<CalculatorViewModel> vmList = new List<CalculatorViewModel>();
+                var cvm1 = BondPriceFromYtmLongLastCoupon_3_Vm();
+                cvm1.Id = Convert.ToString(++id);
+
+                vmList.Add(cvm1);
+                var jSon = JsonConvert.SerializeObject(vmList);
+                var request = new StringContent(jSon);
+                request.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var response = await client.PostAsync(calcUri, request);
+                string responseBodyAsText = await response.Content.ReadAsStringAsync();
+                IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
+                List<CalculatorResultViewModel> results = new List<CalculatorResultViewModel>(result);
+                BondPriceFromYtmLongLastCoupon_3_Run(results[0]);
+            }
+        }
+        [TestMethod]
+        public async Task Api_BondYtmFromPriceLongLastCoupon_1()
+        {
+            int id = 0;
+            using (HttpClient client = new HttpClient())
+            {
+                List<CalculatorViewModel> vmList = new List<CalculatorViewModel>();
+                var cvm1 = BondYtmFromPriceLongLastCoupon_1_Vm();
+                cvm1.Id = Convert.ToString(++id);
+
+                vmList.Add(cvm1);
+                var jSon = JsonConvert.SerializeObject(vmList);
+                var request = new StringContent(jSon);
+                request.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var response = await client.PostAsync(calcUri, request);
+                string responseBodyAsText = await response.Content.ReadAsStringAsync();
+                IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
+                List<CalculatorResultViewModel> results = new List<CalculatorResultViewModel>(result);
+                BondYtmFromPriceLongLastCoupon_1_Run(results[0]);
+            }
+        }
+        [TestMethod]
+        public async Task Api_BondYtmFromPriceLongLastCoupon_2()
+        {
+            int id = 0;
+            using (HttpClient client = new HttpClient())
+            {
+                List<CalculatorViewModel> vmList = new List<CalculatorViewModel>();
+                var cvm1 = BondYtmFromPriceLongLastCoupon_2_Vm();
+                cvm1.Id = Convert.ToString(++id);
+
+                vmList.Add(cvm1);
+                var jSon = JsonConvert.SerializeObject(vmList);
+                var request = new StringContent(jSon);
+                request.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var response = await client.PostAsync(calcUri, request);
+                string responseBodyAsText = await response.Content.ReadAsStringAsync();
+                IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
+                List<CalculatorResultViewModel> results = new List<CalculatorResultViewModel>(result);
+                BondYtmFromPriceLongLastCoupon_2_Run(results[0]);
+            }
+        }
+        [TestMethod]
+        public async Task Api_BondYtmFromPriceLastCoupon_3()
+        {
+            int id = 0;
+            using (HttpClient client = new HttpClient())
+            {
+                List<CalculatorViewModel> vmList = new List<CalculatorViewModel>();
+                var cvm1 = BondPriceFromYtmLongLastCoupon_3_Vm();
+                cvm1.Id = Convert.ToString(++id);
+
+                vmList.Add(cvm1);
+                var jSon = JsonConvert.SerializeObject(vmList);
+                var request = new StringContent(jSon);
+                request.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var response = await client.PostAsync(calcUri, request);
+                string responseBodyAsText = await response.Content.ReadAsStringAsync();
+                IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
+                List<CalculatorResultViewModel> results = new List<CalculatorResultViewModel>(result);
+                BondPriceFromYtmLongLastCoupon_3_Run(results[0]);
+            }
+        }
+
+        /// ////////////////////////////////////
+
+        public void BondFlatPriceFromYtmLongLastCoupon_1_Run(CalculatorResultViewModel vm)
+        {
+            Assert.IsTrue(Math.Abs(98.83315770 - vm.CleanPrice) < .0000005);
+        }
+        public CalculatorViewModel BondFlatPriceFromYtmLongLastCoupon_1_Vm()
+        {
+            return new CalculatorViewModel
+            {
+                OverrideDefaults = true,
+                InterestRate = 5,
+                MaturityDate = new DateTime(2009, 3, 20),
+                ValueDate = new DateTime(2006, 9, 10),
+                YieldIn = 5.5,
+                PriceIn = 95,
+                CalculatePrice = true,
+                DayCount = "30/360 US",
+                PayFrequency = "Semi-Annually",
+                CalcDateAdjust = "Same",
+                PayDateAdjust = "Same",
+                YieldDayCount = "30/360 US",
+                YieldFrequency = "Semi-Annually",
+                YieldMethod = "ISMA",
+                IssueDate = new DateTime(2003, 3, 20),
+                FirstPayDate = new DateTime(2004, 3, 10),
+                NextToLastDate = new DateTime(2008, 9, 10),
+                Holidays = new List<DateTime>().ToArray(),
+                IncludeCashflows = false,
+                EndOfMonth = false,
+                ExCoupon = false,
+                TradeFlat = true,
+                UseHolidays = false
+            };
+
+        }
+        public void BondPriceFromYtmLongLastCoupon_1_Run(CalculatorResultViewModel vm)
+        {
+            Assert.IsTrue(Math.Abs(98.83315770 - vm.CleanPrice) < .0000005);
+        }
+        public CalculatorViewModel BondPriceFromYtmLongLastCoupon_1_Vm()
+        {
+            return new CalculatorViewModel
+            {
+                OverrideDefaults = true,
+                InterestRate = 5,
+                MaturityDate = new DateTime(2009, 3, 20),
+                ValueDate = new DateTime(2006, 9, 10),
+                YieldIn = 5.5,
+                PriceIn = 95,
+                CalculatePrice = true,
+                DayCount = "30/360 US",
+                PayFrequency = "Semi-Annually",
+                CalcDateAdjust = "Same",
+                PayDateAdjust = "Same",
+                YieldDayCount = "30/360 US",
+                YieldFrequency = "Semi-Annually",
+                YieldMethod = "ISMA",
+                IssueDate = new DateTime(2003, 3, 20),
+                FirstPayDate = new DateTime(2004, 3, 10),
+                NextToLastDate = new DateTime(2008, 9, 10),
+                Holidays = new List<DateTime>().ToArray(),
+                IncludeCashflows = false,
+                EndOfMonth = false,
+                ExCoupon = false,
+                TradeFlat = false,
+                UseHolidays = false
+            };
+
+        }
+        public void BondPriceFromYtmLongLastCoupon_2_Run(CalculatorResultViewModel vm)
+        {
+            Assert.IsTrue(Math.Abs(98.83416556 - vm.CleanPrice) < .0000005);
+        }
+        public CalculatorViewModel BondPriceFromYtmLongLastCoupon_2_Vm()
+        {
+            return new CalculatorViewModel
+            {
+                OverrideDefaults = true,
+                InterestRate = 5,
+                MaturityDate = new DateTime(2009, 3, 20),
+                ValueDate = new DateTime(2006, 9, 11),
+                YieldIn = 5.5,
+                PriceIn = 95,
+                CalculatePrice = true,
+                DayCount = "30/360 US",
+                PayFrequency = "Semi-Annually",
+                CalcDateAdjust = "Same",
+                PayDateAdjust = "Same",
+                YieldDayCount = "30/360 US",
+                YieldFrequency = "Semi-Annually",
+                YieldMethod = "ISMA",
+                IssueDate = new DateTime(2003, 3, 20),
+                FirstPayDate = new DateTime(2004, 3, 10),
+                NextToLastDate = new DateTime(2008, 9, 10),
+                Holidays = new List<DateTime>().ToArray(),
+                IncludeCashflows = false,
+                EndOfMonth = false,
+                ExCoupon = false,
+                TradeFlat = false,
+                UseHolidays = false
+            };
+        }
+        public void BondPriceFromYtmLongLastCoupon_3_Run(CalculatorResultViewModel vm)
+        {
+            Assert.IsTrue(Math.Abs(99.882445698485 - vm.CleanPrice) < .0000005);
+        }
+        public CalculatorViewModel BondPriceFromYtmLongLastCoupon_3_Vm()
+        {
+            return new CalculatorViewModel
+            {
+                OverrideDefaults = true,
+                InterestRate = 3.75,
+                MaturityDate = new DateTime(2008, 6, 15),
+                ValueDate = new DateTime(2008, 2, 7),
+                YieldIn = 4.05,
+                PriceIn = 95,
+                CalculatePrice = true,
+                DayCount = "30/360 US",
+                PayFrequency = "Semi-Annually",
+                CalcDateAdjust = "Same",
+                PayDateAdjust = "Same",
+                YieldDayCount = "30/360 US",
+                YieldFrequency = "Semi-Annually",
+                YieldMethod = "ISMA",
+                IssueDate = new DateTime(2005, 10, 15),
+                FirstPayDate = new DateTime(2006, 10, 15),
+                NextToLastDate = new DateTime(2007, 10, 15),
+                Holidays = new List<DateTime>().ToArray(),
+                IncludeCashflows = false,
+                EndOfMonth = false,
+                ExCoupon = false,
+                TradeFlat = false,
+                UseHolidays = false
+            };
+        }
+        public void BondYtmFromPriceLongLastCoupon_1_Run(CalculatorResultViewModel vm)
+        {
+            Assert.IsTrue(Math.Abs(5.5 - vm.Yield) < .0000005);
+        }
+        public CalculatorViewModel BondYtmFromPriceLongLastCoupon_1_Vm()
+        {
+            return new CalculatorViewModel
+            {
+                OverrideDefaults = true,
+                InterestRate = 5,
+                MaturityDate = new DateTime(2009, 3, 20),
+                ValueDate = new DateTime(2006, 9, 10),
+                YieldIn = 0,
+                PriceIn = 98.83315770,
+                CalculatePrice = false,
+                DayCount = "30/360 US",
+                PayFrequency = "Semi-Annually",
+                CalcDateAdjust = "Same",
+                PayDateAdjust = "Same",
+                YieldDayCount = "30/360 US",
+                YieldFrequency = "Semi-Annually",
+                YieldMethod = "ISMA",
+                IssueDate = new DateTime(2003, 3, 20),
+                FirstPayDate = new DateTime(2004, 3, 10),
+                NextToLastDate = new DateTime(2008, 9, 10),
+                Holidays = new List<DateTime>().ToArray(),
+                IncludeCashflows = false,
+                EndOfMonth = false,
+                ExCoupon = false,
+                TradeFlat = false,
+                UseHolidays = false
+            };
+
+        }
+        public void BondYtmFromPriceLongLastCoupon_2_Run(CalculatorResultViewModel vm)
+        {
+            Assert.IsTrue(Math.Abs(5.5 - vm.Yield) < .0000005);
+        }
+        public CalculatorViewModel BondYtmFromPriceLongLastCoupon_2_Vm()
+        {
+            return new CalculatorViewModel
+            {
+                OverrideDefaults = true,
+                InterestRate = 5,
+                MaturityDate = new DateTime(2009, 3, 20),
+                ValueDate = new DateTime(2006, 9, 11),
+                YieldIn = 0,
+                PriceIn = 98.83416556,
+                CalculatePrice = false,
+                DayCount = "30/360 US",
+                PayFrequency = "Semi-Annually",
+                CalcDateAdjust = "Same",
+                PayDateAdjust = "Same",
+                YieldDayCount = "30/360 US",
+                YieldFrequency = "Semi-Annually",
+                YieldMethod = "ISMA",
+                IssueDate = new DateTime(2003, 3, 20),
+                FirstPayDate = new DateTime(2004, 3, 10),
+                NextToLastDate = new DateTime(2008, 9, 10),
+                Holidays = new List<DateTime>().ToArray(),
+                IncludeCashflows = false,
+                EndOfMonth = false,
+                ExCoupon = false,
+                TradeFlat = false,
+                UseHolidays = false
+            };
+        }
+        public void BondYtmFromPriceLongLastCoupon_3_Run(CalculatorResultViewModel vm)
+        {
+            Assert.IsTrue(Math.Abs(4.05 - vm.Yield) < .0000005);
+        }
+        public CalculatorViewModel BondYtmFromPriceLongLastCoupon_3_Vm()
+        {
+            return new CalculatorViewModel
+            {
+                OverrideDefaults = true,
+                InterestRate = 3.75,
+                MaturityDate = new DateTime(2008, 6, 15),
+                ValueDate = new DateTime(2008, 2, 7),
+                YieldIn = 0,
+                PriceIn = 99.882445698485,
+                CalculatePrice = false,
+                DayCount = "30/360 US",
+                PayFrequency = "Semi-Annually",
+                CalcDateAdjust = "Same",
+                PayDateAdjust = "Same",
+                YieldDayCount = "30/360 US",
+                YieldFrequency = "Semi-Annually",
+                YieldMethod = "ISMA",
+                IssueDate = new DateTime(2005, 10, 15),
+                FirstPayDate = new DateTime(2006, 10, 15),
+                NextToLastDate = new DateTime(2007, 10, 15),
+                Holidays = new List<DateTime>().ToArray(),
+                IncludeCashflows = false,
+                EndOfMonth = false,
+                ExCoupon = false,
+                TradeFlat = false,
+                UseHolidays = false
+            };
+        }
     }
-    internal class CalculatorViewModel
+    public class CalculatorViewModel
     {
         public string Id { get; set; }
         [Required]
@@ -158,7 +488,7 @@ namespace CalcTests
         [Required]
         public DateTime NextToLastDate { get; set; }
     }
-    internal class CalculatorResultViewModel
+    public class CalculatorResultViewModel
     {
         public string Id { get; set; }
         public string Status { get; set; }
