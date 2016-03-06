@@ -164,7 +164,8 @@ namespace FinSys.Calculator.Controllers.Api
                                     YieldIn=vm.YieldIn/100,
                                     YieldDayCount=vm.YieldDayCount,
                                     YieldFreq=vm.YieldFrequency,
-                                    YieldMethod=vm.YieldMethod
+                                    YieldMethod=vm.YieldMethod,
+                                    TradeFlat=vm.TradeFlat
                                 };
                                 if (!vm.OverrideDefaults)
                                 {

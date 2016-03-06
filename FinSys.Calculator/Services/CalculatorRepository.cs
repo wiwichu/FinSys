@@ -298,6 +298,7 @@ namespace FinSys.Calculator.Services
                 yieldOut = 0,
                 exCoupDays = calcs.IsExCoup ? 1 : 0,
                 calculatePrice = calcs.CalculatePrice ? 1 : 0,
+                tradeflat = calcs.TradeFlat ? 1 : 0,
                 yieldDayCount = dayCounts.IndexOf(calcs.YieldDayCount),
                 yieldFreq = payFreqs.IndexOf(calcs.YieldFreq),
                 yieldMethod = yieldMethods.IndexOf(calcs.YieldMethod)

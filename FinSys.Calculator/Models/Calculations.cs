@@ -31,5 +31,7 @@ namespace FinSys.Calculator.Models
         public double PvbpConvexityAdjusted { get; set; }
         public IEnumerable<CashFlow> Cashflows { get; set; }
         public string PayHolidayAdjust { get; set; }
+        public bool TradeFlat { get; set; }
+
     }
 }

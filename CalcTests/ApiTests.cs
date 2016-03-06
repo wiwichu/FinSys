@@ -24,30 +24,30 @@ namespace CalcTests
                 List<CalculatorViewModel> vmList = new List<CalculatorViewModel>();
                 var cvm1 = new CalculatorViewModel
                 {
-                    OverrideDefaults = false,
-                    InterestRate = 10,
-                    MaturityDate = new DateTime(2030, 3, 5),
-                    ValueDate = new DateTime(2016, 3, 5),
-                    YieldIn = 0,
+                    OverrideDefaults = true,
+                    InterestRate = 5,
+                    MaturityDate = new DateTime(2009, 3, 20),
+                    ValueDate = new DateTime(2006, 9, 10),
+                    YieldIn = 5.5,
                     PriceIn = 95,
-                    CalculatePrice = false,
-                    DayCount = "30E/360",
-                    PayFrequency = "Annually",
+                    CalculatePrice = true,
+                    DayCount = "30/360 US",
+                    PayFrequency = "Semi-Annually",
                     CalcDateAdjust = "Same",
                     PayDateAdjust = "Same",
-                    YieldDayCount = "30E/360",
-                    YieldFrequency = "Annually",
+                    YieldDayCount = "30/360 US",
+                    YieldFrequency = "Semi-Annually",
                     YieldMethod = "ISMA",
-                    IssueDate = new DateTime(2013, 3, 5),
-                    FirstPayDate = new DateTime(2014, 3, 5),
-                    NextToLastDate = new DateTime(2016, 3, 5),
+                    IssueDate = new DateTime(2003, 3, 20),
+                    FirstPayDate = new DateTime(2004, 3, 10),
+                    NextToLastDate = new DateTime(2008, 9, 10),
                     Holidays = new List<DateTime>().ToArray(),
-                    IncludeCashflows = true,
+                    IncludeCashflows = false,
                     EndOfMonth = false,
                     ExCoupon = false,
-                    TradeFlat=false,
-                    UseHolidays=false,
-                    Id= Convert.ToString(++id)
+                    TradeFlat = true,
+                    UseHolidays = false,
+                    Id = Convert.ToString(++id)
                 };
 
                 vmList.Add(cvm1);
@@ -57,6 +57,55 @@ namespace CalcTests
                 var response = await client.PostAsync(uri, request);
                 string responseBodyAsText = await response.Content.ReadAsStringAsync();
                 IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
+                List<CalculatorResultViewModel> results = new List<CalculatorResultViewModel>(result);
+                Assert.IsTrue(Math.Abs(98.83315770 - results[0].CleanPrice) < .0000005);
+            }
+        }
+        [TestMethod]
+        public async Task Api_BondFlatPriceFromYtmLongLastCoupon_1()
+        {
+            string uri = apiBase + "/" + calcApi;
+            int id = 0;
+            using (HttpClient client = new HttpClient())
+            {
+                List<CalculatorViewModel> vmList = new List<CalculatorViewModel>();
+                var cvm1 = new CalculatorViewModel
+                {
+                    OverrideDefaults = true,
+                    InterestRate = 5,
+                    MaturityDate = new DateTime(2009, 3, 20),
+                    ValueDate = new DateTime(2006, 9, 10),
+                    YieldIn = 5.5,
+                    PriceIn = 95,
+                    CalculatePrice = true,
+                    DayCount = "30/360 US",
+                    PayFrequency = "Semi-Annually",
+                    CalcDateAdjust = "Same",
+                    PayDateAdjust = "Same",
+                    YieldDayCount = "30/360 US",
+                    YieldFrequency = "Semi-Annually",
+                    YieldMethod = "ISMA",
+                    IssueDate = new DateTime(2003, 3, 20),
+                    FirstPayDate = new DateTime(2004, 3, 10),
+                    NextToLastDate = new DateTime(2008, 9, 10),
+                    Holidays = new List<DateTime>().ToArray(),
+                    IncludeCashflows = false,
+                    EndOfMonth = false,
+                    ExCoupon = false,
+                    TradeFlat = true,
+                    UseHolidays = false,
+                    Id = Convert.ToString(++id)
+                };
+
+                vmList.Add(cvm1);
+                var jSon = JsonConvert.SerializeObject(vmList);
+                var request = new StringContent(jSon);
+                request.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var response = await client.PostAsync(uri, request);
+                string responseBodyAsText = await response.Content.ReadAsStringAsync();
+                IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
+                List<CalculatorResultViewModel> results = new List<CalculatorResultViewModel>(result);
+                Assert.IsTrue(Math.Abs(98.83315770 - results[0].CleanPrice) < .0000005);
             }
         }
     }
