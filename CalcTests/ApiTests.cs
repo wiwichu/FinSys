@@ -45,6 +45,10 @@ namespace CalcTests
                 vmList[vmList.Count - 1].Id = Convert.ToString(++id);
                 vmList.Add(BundAct365AnnualYISMAFromPrice_1_Vm());
                 vmList[vmList.Count - 1].Id = Convert.ToString(++id);
+                vmList.Add(BundAct365AnnualPriceFromMoos_1_Vm());
+                vmList[vmList.Count - 1].Id = Convert.ToString(++id);
+                vmList.Add(BundAct365AnnualMoosFromPrice_1_Vm());
+                vmList[vmList.Count - 1].Id = Convert.ToString(++id);
                 var jSon = JsonConvert.SerializeObject(vmList);
                 var request = new StringContent(jSon);
                 request.Headers.ContentType = new MediaTypeHeaderValue("application/json");
@@ -64,6 +68,8 @@ namespace CalcTests
                 Bund30360YISMAFromSemiPrice_1_Run(results[resInd++]);
                 BundAct365AnnualPriceFromYISMA_1_Run(results[resInd++]);
                 BundAct365AnnualYISMAFromPrice_1_Run(results[resInd++]);
+                BundAct365AnnualPriceFromMoos_1_Run(results[resInd++]);
+                BundAct365AnnualMoosFromPrice_1_Run(results[resInd++]);
             }
         }
         [TestMethod]
@@ -295,6 +301,48 @@ namespace CalcTests
                 IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
                 List<CalculatorResultViewModel> results = new List<CalculatorResultViewModel>(result);
                 BundAct365AnnualYISMAFromPrice_1_Run(results[0]);
+            }
+        }
+        [TestMethod]
+        public async Task Api_BundAct365AnnualPriceFromMoos_1()
+        {
+            int id = 0;
+            using (HttpClient client = new HttpClient())
+            {
+                List<CalculatorViewModel> vmList = new List<CalculatorViewModel>();
+                var cvm1 = BundAct365AnnualPriceFromMoos_1_Vm();
+                cvm1.Id = Convert.ToString(++id);
+
+                vmList.Add(cvm1);
+                var jSon = JsonConvert.SerializeObject(vmList);
+                var request = new StringContent(jSon);
+                request.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var response = await client.PostAsync(calcUri, request);
+                string responseBodyAsText = await response.Content.ReadAsStringAsync();
+                IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
+                List<CalculatorResultViewModel> results = new List<CalculatorResultViewModel>(result);
+                BundAct365AnnualPriceFromMoos_1_Run(results[0]);
+            }
+        }
+        [TestMethod]
+        public async Task Api_BundAct365AnnualMoosFromPrice_1()
+        {
+            int id = 0;
+            using (HttpClient client = new HttpClient())
+            {
+                List<CalculatorViewModel> vmList = new List<CalculatorViewModel>();
+                var cvm1 = BundAct365AnnualMoosFromPrice_1_Vm();
+                cvm1.Id = Convert.ToString(++id);
+
+                vmList.Add(cvm1);
+                var jSon = JsonConvert.SerializeObject(vmList);
+                var request = new StringContent(jSon);
+                request.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var response = await client.PostAsync(calcUri, request);
+                string responseBodyAsText = await response.Content.ReadAsStringAsync();
+                IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
+                List<CalculatorResultViewModel> results = new List<CalculatorResultViewModel>(result);
+                BundAct365AnnualMoosFromPrice_1_Run(results[0]);
             }
         }
 
@@ -655,6 +703,72 @@ namespace CalcTests
                 YieldDayCount = "ACT/365",
                 YieldFrequency = "Annually",
                 YieldMethod = "ISMA",
+                IssueDate = new DateTime(2006, 11, 15),
+                FirstPayDate = new DateTime(2007, 11, 15),
+                NextToLastDate = new DateTime(2012, 11, 15),
+                Holidays = new List<DateTime>().ToArray(),
+                IncludeCashflows = false,
+                EndOfMonth = false,
+                ExCoupon = false,
+                TradeFlat = false,
+                UseHolidays = false
+            };
+        }
+        public void BundAct365AnnualPriceFromMoos_1_Run(CalculatorResultViewModel vm)
+        {
+            Assert.IsTrue(Math.Abs(103.9487 - vm.CleanPrice) < .00005);
+        }
+        public CalculatorViewModel BundAct365AnnualPriceFromMoos_1_Vm()
+        {
+            return new CalculatorViewModel
+            {
+                OverrideDefaults = false,
+                InterestRate = 7,
+                MaturityDate = new DateTime(2013, 11, 15),
+                ValueDate = new DateTime(2009, 2, 18),
+                YieldIn = 6,
+                PriceIn = 100,
+                CalculatePrice = true,
+                DayCount = "ACT/365",
+                PayFrequency = "Annually",
+                CalcDateAdjust = "Same",
+                PayDateAdjust = "Same",
+                YieldDayCount = "ACT/365",
+                YieldFrequency = "Annually",
+                YieldMethod = "Moosmueller",
+                IssueDate = new DateTime(2006, 11, 15),
+                FirstPayDate = new DateTime(2007, 11, 15),
+                NextToLastDate = new DateTime(2012, 11, 15),
+                Holidays = new List<DateTime>().ToArray(),
+                IncludeCashflows = false,
+                EndOfMonth = false,
+                ExCoupon = false,
+                TradeFlat = false,
+                UseHolidays = false
+            };
+        }
+        public void BundAct365AnnualMoosFromPrice_1_Run(CalculatorResultViewModel vm)
+        {
+            Assert.IsTrue(Math.Abs(6 - vm.Yield) < .00005);
+        }
+        public CalculatorViewModel BundAct365AnnualMoosFromPrice_1_Vm()
+        {
+            return new CalculatorViewModel
+            {
+                OverrideDefaults = false,
+                InterestRate = 7,
+                MaturityDate = new DateTime(2013, 11, 15),
+                ValueDate = new DateTime(2009, 2, 18),
+                YieldIn = 6,
+                PriceIn = 103.9487,
+                CalculatePrice = false,
+                DayCount = "ACT/365",
+                PayFrequency = "Annually",
+                CalcDateAdjust = "Same",
+                PayDateAdjust = "Same",
+                YieldDayCount = "ACT/365",
+                YieldFrequency = "Annually",
+                YieldMethod = "Moosmueller",
                 IssueDate = new DateTime(2006, 11, 15),
                 FirstPayDate = new DateTime(2007, 11, 15),
                 NextToLastDate = new DateTime(2012, 11, 15),
