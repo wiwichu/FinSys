@@ -14,6 +14,7 @@
         ) {
 
         var vm = this;
+        vm.calcFrom = "price";
         vm.errorMessage = "";
         vm.staticData = [];
         vm.instrumentClass = [];
@@ -259,7 +260,6 @@
         vm.apiPath = vm.protocol + vm.host + vm.port + vm.api;
         vm.requestJson = "";
         vm.responseJson = "";
-        vm.calcFrom = "price";
         vm.calculation.OverrideDefaults = vm.overrideDefaults;
         vm.calculation.InterestRate = vm.interestRate;
         vm.calculation.MaturityDate = vm.maturityDate;
@@ -310,7 +310,7 @@
                     vm.yield = response.data[0].yield;
                 }
                 else {
-                    vm.price = response.data[0].price;
+                    vm.price = response.data[0].cleanPrice;
                 }
                 vm.pvbp = response.data[0].pvbp;
                 vm.issueDate = new Date(response.data[0].issueDate);
