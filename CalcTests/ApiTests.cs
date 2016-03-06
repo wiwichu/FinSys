@@ -18,6 +18,7 @@ namespace CalcTests
         public async Task ApiCalculator()
         {
             string uri = apiBase + "/" + calcApi;
+            int id = 0;
             using (HttpClient client = new HttpClient())
             {
                 List<CalculatorViewModel> vmList = new List<CalculatorViewModel>();
@@ -40,7 +41,13 @@ namespace CalcTests
                     IssueDate = new DateTime(2013, 3, 5),
                     FirstPayDate = new DateTime(2014, 3, 5),
                     NextToLastDate = new DateTime(2016, 3, 5),
-                    Holidays = new List<DateTime>().ToArray()
+                    Holidays = new List<DateTime>().ToArray(),
+                    IncludeCashflows = true,
+                    EndOfMonth = false,
+                    ExCoupon = false,
+                    TradeFlat=false,
+                    UseHolidays=false,
+                    Id= Convert.ToString(++id)
                 };
 
                 vmList.Add(cvm1);
