@@ -24,6 +24,7 @@
         vm.cfGridOptions = {
             data: 'vm.cashFlows',
             enableSelectAll: true,
+            exporterMenuPdf: false,
             exporterCsvFilename: 'cashFlows.csv', enableGridMenu: true,
             exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
             enablePaginationControls: true,
@@ -65,6 +66,7 @@
         vm.curveGridOptions = {
             data: 'vm.curveData',
             enableSelectAll: true,
+            exporterMenuPdf: false,
             exporterCsvFilename: 'curve.csv', enableGridMenu: true,
             exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
             enablePaginationControls: true,

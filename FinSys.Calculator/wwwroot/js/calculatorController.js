@@ -208,6 +208,7 @@
         vm.holidayGridOptions = {
             data: 'vm.holidays',
             enableSelectAll: true,
+            exporterMenuPdf: false,
             exporterCsvFilename: 'holidays.csv', enableGridMenu: true,
             exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
             enablePaginationControls: true,
