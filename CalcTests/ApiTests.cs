@@ -49,6 +49,8 @@ namespace CalcTests
                 vmList[vmList.Count - 1].Id = Convert.ToString(++id);
                 vmList.Add(BundAct365AnnualMoosFromPrice_1_Vm());
                 vmList[vmList.Count - 1].Id = Convert.ToString(++id);
+                vmList.Add(DurationConvexity_1_Vm());
+                vmList[vmList.Count - 1].Id = Convert.ToString(++id);
                 var jSon = JsonConvert.SerializeObject(vmList);
                 var request = new StringContent(jSon);
                 request.Headers.ContentType = new MediaTypeHeaderValue("application/json");
@@ -70,6 +72,7 @@ namespace CalcTests
                 BundAct365AnnualYISMAFromPrice_1_Run(results[resInd++]);
                 BundAct365AnnualPriceFromMoos_1_Run(results[resInd++]);
                 BundAct365AnnualMoosFromPrice_1_Run(results[resInd++]);
+                DurationConvexity_1_Run(results[resInd++]);
             }
         }
         [TestMethod]
@@ -343,6 +346,27 @@ namespace CalcTests
                 IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
                 List<CalculatorResultViewModel> results = new List<CalculatorResultViewModel>(result);
                 BundAct365AnnualMoosFromPrice_1_Run(results[0]);
+            }
+        }
+        [TestMethod]
+        public async Task Api_DurationConvexity_1()
+        {
+            int id = 0;
+            using (HttpClient client = new HttpClient())
+            {
+                List<CalculatorViewModel> vmList = new List<CalculatorViewModel>();
+                var cvm1 = DurationConvexity_1_Vm();
+                cvm1.Id = Convert.ToString(++id);
+
+                vmList.Add(cvm1);
+                var jSon = JsonConvert.SerializeObject(vmList);
+                var request = new StringContent(jSon);
+                request.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var response = await client.PostAsync(calcUri, request);
+                string responseBodyAsText = await response.Content.ReadAsStringAsync();
+                IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
+                List<CalculatorResultViewModel> results = new List<CalculatorResultViewModel>(result);
+                DurationConvexity_1_Run(results[0]);
             }
         }
 
@@ -772,6 +796,41 @@ namespace CalcTests
                 IssueDate = new DateTime(2006, 11, 15),
                 FirstPayDate = new DateTime(2007, 11, 15),
                 NextToLastDate = new DateTime(2012, 11, 15),
+                Holidays = new List<DateTime>().ToArray(),
+                IncludeCashflows = false,
+                EndOfMonth = false,
+                ExCoupon = false,
+                TradeFlat = false,
+                UseHolidays = false
+            };
+        }
+        public void DurationConvexity_1_Run(CalculatorResultViewModel vm)
+        {
+            Assert.IsTrue(Math.Abs(5.007 - vm.Duration) < .0005);
+            Assert.IsTrue(Math.Abs(4.77 - vm.ModifiedDuration) < .005);
+            Assert.IsTrue(Math.Abs(27.72 - vm.Convexity) < .005);
+        }
+        public CalculatorViewModel DurationConvexity_1_Vm()
+        {
+            return new CalculatorViewModel
+            {
+                OverrideDefaults = false,
+                InterestRate = 6.1,
+                MaturityDate = new DateTime(2014, 1, 15),
+                ValueDate = new DateTime(2008, 1, 15),
+                YieldIn = 10,
+                PriceIn = 100,
+                CalculatePrice = true,
+                DayCount = "ACT/ACT(UST)",
+                PayFrequency = "Semi-Annually",
+                CalcDateAdjust = "Same",
+                PayDateAdjust = "Same",
+                YieldDayCount = "ACT/ACT(UST)",
+                YieldFrequency = "Semi-Annually",
+                YieldMethod = "US TBond",
+                IssueDate = new DateTime(2005, 01, 15),
+                FirstPayDate = new DateTime(2006, 01, 15),
+                NextToLastDate = new DateTime(2013, 07, 15),
                 Holidays = new List<DateTime>().ToArray(),
                 IncludeCashflows = false,
                 EndOfMonth = false,
