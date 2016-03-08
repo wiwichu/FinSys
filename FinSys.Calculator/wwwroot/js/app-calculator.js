@@ -42,6 +42,11 @@
             controllerAs: "vm",
             templateUrl: "/views/contactView.html"
         });
+        $routeProvider.when("/DayCount", {
+            controller: "dayCountController",
+            controllerAs: "vm",
+            templateUrl: "/views/dayCountView.html"
+        });
         //$routeProvider.when("/CustomCalc", {
         //    controller: "calculatorController",
         //    controllerAs: "vm",

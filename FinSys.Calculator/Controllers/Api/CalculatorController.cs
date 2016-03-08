@@ -126,17 +126,27 @@ namespace FinSys.Calculator.Controllers.Api
             {
                 if (ModelState.IsValid)
                 {
+                    if(vms.Count()>10)
+                    {
+                        Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        return Json(new { Message = "Calculation maximum of 10 exceeded." });
+                    }
+
                     CalculatorResultViewModel[] vmsOutArray = new CalculatorResultViewModel[vms.Count()];
                     await Task.Run(() =>
                     {
-                        Parallel.ForEach(vms, (vm, pls, index) =>
+                        int index = -1;
+                        foreach(CalculatorViewModel vm in vms)
                         {
+                            index++;
+                        //Parallel.ForEach(vms, (vm, pls, index) =>
+                        //{
                             CalculatorResultViewModel rvm = new CalculatorResultViewModel
                             {
                                 Id = vm.Id,
                                 Status = "",
                                 Message = ""
-                        };
+                            };
                             try
                             {
                                 Instrument instr = new Instrument
@@ -241,7 +251,9 @@ namespace FinSys.Calculator.Controllers.Api
                             {
                                 vmsOutArray[(int)index] = rvm;
                             }
-                        });
+                        }
+                        //)
+                        ;
                     }).ConfigureAwait(false);
                     var result = vmsOutArray.ToList();
                     JsonResult jResult = new JsonResult(result);

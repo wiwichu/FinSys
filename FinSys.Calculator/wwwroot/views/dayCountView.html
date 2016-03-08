@@ -1,0 +1,11 @@
+﻿
+<div class="col-md-12" ng-app="app-calculator">
+    <div class="col-md-12 ">
+        <div class="col-md-4 col-md-offset-4">
+            <h2>Day Count</h2>
+        </div>
+    </div>
+    <div class="text-danger text-center" ng-cloak ng-show="vm.errorMessage">{{ vm.errorMessage}}</div>
+    <div class="text-center" ng-show="vm.isBusy"><i class="fa fa-spinner fa-spin"></i> Loading... </div>
+    <form novalidate name="DayCountForm"></form>
+</div>

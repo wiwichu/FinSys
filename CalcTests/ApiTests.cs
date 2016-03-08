@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace CalcTests
 {
@@ -838,6 +839,70 @@ namespace CalcTests
                 TradeFlat = false,
                 UseHolidays = false
             };
+        }
+        public CalculatorViewModel CalcStress_1_Vm()
+        {
+            return new CalculatorViewModel
+            {
+                OverrideDefaults = true,
+                InterestRate = 7,
+                MaturityDate = new DateTime(2058, 11, 15),
+                ValueDate = new DateTime(2009, 2, 18),
+                YieldIn = 6,
+                PriceIn = 103.9830,
+                CalculatePrice = false,
+                DayCount = "ACT/365",
+                PayFrequency = "Monthly",
+                CalcDateAdjust = "Same",
+                PayDateAdjust = "Same",
+                YieldDayCount = "ACT/365",
+                YieldFrequency = "Monthly",
+                YieldMethod = "True Yield",
+                IssueDate = new DateTime(2006, 11, 15),
+                FirstPayDate = new DateTime(2007, 11, 15),
+                NextToLastDate = new DateTime(2057, 11, 15),
+                Holidays = new List<DateTime>().ToArray(),
+                IncludeCashflows = false,
+                EndOfMonth = false,
+                ExCoupon = false,
+                TradeFlat = false,
+                UseHolidays = false
+            };
+        }
+
+        [TestMethod]
+        public async Task Api_CalcStress_1()
+        {
+            int id = 0;
+            using (HttpClient client = new HttpClient())
+            {
+                List<CalculatorViewModel> vmList = new List<CalculatorViewModel>();
+                for (int i = 0; i < 11; i++)
+                {
+                    var cvm1 = CalcStress_1_Vm();
+                    cvm1.Id = Convert.ToString(++id);
+
+                    vmList.Add(cvm1);
+                }
+                var jSon = JsonConvert.SerializeObject(vmList);
+                var request = new StringContent(jSon);
+                request.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                var response = await client.PostAsync(calcUri, request);
+                string responseBodyAsText = await response.Content.ReadAsStringAsync();
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    throw new InvalidOperationException(responseBodyAsText);
+                }
+                IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
+                result.All((c) =>
+                {
+                    string status = string.IsNullOrEmpty(c.Status) ? "OK" : c.Status;
+                    TestContext.WriteLine($"ID:{c.Id} Status: {status}");
+      
+                    return true;
+                });
+                //List<CalculatorResultViewModel> results = new List<CalculatorResultViewModel>(result);
+            }
         }
     }
     public class CalculatorViewModel
