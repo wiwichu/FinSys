@@ -1,8 +1,15 @@
 ﻿
 <div class="col-md-12" ng-app="app-calculator">
     <div class="col-md-12 ">
-        <div class="col-md-2 col-md-offset-5">
-            <h2>Day Count</h2>
+        <div class="col-md-3 col-md-offset-5">
+            <div class="input-group">
+                <h2>Day Count</h2>
+                <span class="input-group-btn">
+                    <button class="btn btn-info btn-xs">
+                        <i class="fa fa-question-circle"></i>
+                    </button>
+                </span>
+            </div>
         </div>
     </div>
     <div class="text-danger text-center" ng-cloak ng-show="vm.errorMessage">{{ vm.errorMessage}}</div>
