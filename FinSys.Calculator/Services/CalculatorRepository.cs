@@ -64,6 +64,8 @@ namespace FinSys.Calculator.Services
         [DllImport("calc", CallingConvention = CallingConvention.Cdecl)]
         private static extern int USTBillCalcFromBEYield(DateDescr valueDate, DateDescr maturityDate,
             double beYield, out double price, out double mmYield, out double discount);
+        [DllImport("calc", CallingConvention = CallingConvention.Cdecl)]
+        private static extern int intCalc(DateDescr startDate, DateDescr endDate, int dayCountRule, out int days, out double dayCountFraction);
 
         private List<string> classes = new List<string>();
         private List<string> dayCounts = new List<string>();
@@ -767,8 +769,7 @@ namespace FinSys.Calculator.Services
             }
             return rateCurveDescr;
         }
-        public async Task<List<CashFlow>> PriceCashFlowsAsync(CashFlowPricing cfp
-            )
+        public async Task<List<CashFlow>> PriceCashFlowsAsync(CashFlowPricing cfp )
         {
             try
             { 
@@ -1020,6 +1021,53 @@ namespace FinSys.Calculator.Services
                 throw;
             }
         }
+
+        public async Task<IEnumerable<DayCount>> IntCalcAsync(IEnumerable<DayCount> day_Counts)
+        {
+            IEnumerable<DayCount> result = await Task.Run(() =>
+            {
+                DayCount[] dcOut = new DayCount[day_Counts.Count()];
+                int index = -1;
+                bool hasError = false;
+                foreach (DayCount dc in day_Counts)
+                {
+                    index++;
+                    DateDescr startDate = new DateDescr();
+                    startDate.year = dc.StartDate.Year;
+                    startDate.month = dc.StartDate.Month;
+                    startDate.day = dc.StartDate.Day;
+
+                    DateDescr endDate = new DateDescr();
+                    endDate.year = dc.EndDate.Year;
+                    endDate.month = dc.EndDate.Month;
+                    endDate.day = dc.EndDate.Day;
+                    int days = 0;
+                    double dayCountFraction = 0;
+                    int status = intCalc(startDate,
+                        endDate,
+                        dayCounts.IndexOf(dc.Rule),
+                        out days,
+                        out dayCountFraction);
+                    if (status != 0)
+                    {
+                        hasError = true;
+                        StringBuilder statusText = new StringBuilder(200);
+                        int textSize;
+                        status = getStatusText(status, statusText, out textSize);
+                        dc.Status = statusText.ToString();
+                    }
+                    else
+                    {
+                        dc.Days = days;
+                        dc.Factor = dayCountFraction;
+                    }
+                    dcOut[index] = dc;
+                }
+                return dcOut.ToList();
+            });
+            return result;
+        }
+
     }
     enum CurveInterpolation
     {

@@ -171,6 +171,7 @@
             vm.isBusy = false;
         }
         vm.getPresentValues = function () {
+            vm.isBusy = true;
             vm.cashflowsPricing =
                 {
                     CashFlows: vm.cashFlows,

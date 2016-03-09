@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Collections.Concurrent;
 
 namespace CalcTests
 {
@@ -862,7 +863,7 @@ namespace CalcTests
                 FirstPayDate = new DateTime(2007, 11, 15),
                 NextToLastDate = new DateTime(2057, 11, 15),
                 Holidays = new List<DateTime>().ToArray(),
-                IncludeCashflows = false,
+                IncludeCashflows = true,
                 EndOfMonth = false,
                 ExCoupon = false,
                 TradeFlat = false,
@@ -873,36 +874,62 @@ namespace CalcTests
         [TestMethod]
         public async Task Api_CalcStress_1()
         {
-            int id = 0;
-            using (HttpClient client = new HttpClient())
+            List<Task> tasks = new List<Task>();
+            ConcurrentBag<string> statuses = new ConcurrentBag<string>();
+            for (int x = 0; x < 100; x++)
             {
-                List<CalculatorViewModel> vmList = new List<CalculatorViewModel>();
-                for (int i = 0; i < 11; i++)
+                tasks.Add( Task.Run(async () =>
                 {
-                    var cvm1 = CalcStress_1_Vm();
-                    cvm1.Id = Convert.ToString(++id);
+                    try
+                    {
+                        int id = 0;
+                        using (HttpClient client = new HttpClient())
+                        {
+                            List<CalculatorViewModel> vmList = new List<CalculatorViewModel>();
+                            for (int i = 0; i < 1; i++)
+                            {
+                                var cvm1 = CalcStress_1_Vm();
+                                cvm1.Id = Convert.ToString(++id);
 
-                    vmList.Add(cvm1);
-                }
-                var jSon = JsonConvert.SerializeObject(vmList);
-                var request = new StringContent(jSon);
-                request.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                var response = await client.PostAsync(calcUri, request);
-                string responseBodyAsText = await response.Content.ReadAsStringAsync();
-                if (response.StatusCode != System.Net.HttpStatusCode.OK)
-                {
-                    throw new InvalidOperationException(responseBodyAsText);
-                }
-                IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
-                result.All((c) =>
-                {
-                    string status = string.IsNullOrEmpty(c.Status) ? "OK" : c.Status;
-                    TestContext.WriteLine($"ID:{c.Id} Status: {status}");
-      
-                    return true;
-                });
-                //List<CalculatorResultViewModel> results = new List<CalculatorResultViewModel>(result);
+                                vmList.Add(cvm1);
+                            }
+                            var jSon = JsonConvert.SerializeObject(vmList);
+                            var request = new StringContent(jSon);
+                            request.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                            var response = await client.PostAsync(calcUri, request);
+                            string responseBodyAsText = await response.Content.ReadAsStringAsync();
+                            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                            {
+                                throw new InvalidOperationException(responseBodyAsText);
+                            }
+                            IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
+                            result.All((c) =>
+                            {
+                                string status = string.IsNullOrEmpty(c.Status) ? "OK" : c.Status;
+                                string statusLine = $"ID:{c.Id} Status: {status}";
+                            //statuses.Add(statusLine);
+                            TestContext.WriteLine($"ID:{c.Id} Status: {status}");
+
+                                return true;
+                            });
+                            //List<CalculatorResultViewModel> results = new List<CalculatorResultViewModel>(result);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        TestContext.WriteLine(ex.ToString());
+
+                    }
+                }));
+                
             }
+            Task.WaitAll(tasks.ToArray());
+            //IList<string> sList = statuses.ToList();
+            //sList.All((c) =>
+            //{
+            //    TestContext.WriteLine(c);
+            //    return true;
+            //});
         }
     }
     public class CalculatorViewModel

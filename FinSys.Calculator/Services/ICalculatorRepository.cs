@@ -20,5 +20,6 @@ namespace FinSys.Calculator.Services
         Task<DateTime> Forecast(DateTime startDate, DateTime endDate, int dayCountRule, int months, int days);
         Task<List<CashFlow>> PriceCashFlowsAsync(CashFlowPricing cfp);
         Task<USTBillResult> USTBillCalcAsync(USTBill usTbill);
+        Task<IEnumerable<DayCount>> IntCalcAsync(IEnumerable<DayCount> dayCounts);
     }
 }

@@ -126,10 +126,10 @@ namespace FinSys.Calculator.Controllers.Api
             {
                 if (ModelState.IsValid)
                 {
-                    if(vms.Count()>10)
+                    if(vms.Count()>2)
                     {
                         Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                        return Json(new { Message = "Calculation maximum of 10 exceeded." });
+                        return Json(new { Message = "Calculation maximum of 2 exceeded." });
                     }
 
                     CalculatorResultViewModel[] vmsOutArray = new CalculatorResultViewModel[vms.Count()];
@@ -312,6 +312,32 @@ namespace FinSys.Calculator.Controllers.Api
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json(ex.Message);
             }
+        }
+        [HttpPost("daycounts")]
+        public async Task<JsonResult> Post([FromBody]IEnumerable<DayCountViewModel> vms)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    IEnumerable<DayCountViewModel> result = await Task.Run(async () =>
+                    {
+                        IEnumerable<DayCount> dcIn = Mapper.Map<IEnumerable<DayCount>>(vms);
+                        var dcOut = await _repository.IntCalcAsync(dcIn);
+                        IEnumerable<DayCountViewModel> dcRes = Mapper.Map<IEnumerable<DayCountViewModel>>(dcOut);
+                        return dcRes;
+                    });
+                    JsonResult jResult = new JsonResult(result);
+                    return jResult;
+                }
+            }
+            catch (Exception ex)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(ex.Message);
+            }
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return Json(new { Message = "Failed", ModelState = ModelState });
         }
         [HttpPost("cashflows")]
         public async Task<JsonResult> Post([FromBody]CashFlowPricingViewModel vm)
