@@ -106,8 +106,10 @@
             vm.api = "/api/calculator/dayCounts";
             vm.apiPath = vm.protocol + vm.host + vm.port + vm.api;
             angular.forEach(vm.dayCounts, function (value, key) {
-                value.startDate = vm.startDate;
-                value.endDate = vm.endDate;
+                value.startDate = new Date(vm.startDate);
+                value.endDate = new Date(vm.endDate);
+                value.status = "";
+                value.message = "";
             }); vm.requestJson = "";
             vm.responseJson = "";
             $http.post(vm.apiPath, vm.dayCounts)
