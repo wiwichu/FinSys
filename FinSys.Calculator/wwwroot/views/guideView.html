@@ -48,95 +48,169 @@
             <label>Day Count</label>
             <div id="30EP_360" class="col-md-12">
                 <h5>30E+/360</h5>
+                <label>
+                    Factor = Num/Den Num:
+                    1. If D1 = 31, Set D1 = 30
+                    2. If D2 = 31, Set D2.M2.Y2 to the 1st day of the next month - (D2 = 1, Y2 = Y2 + Integer part of (M2+1)/12, M2= M2 + 1 Mod 12)
+                    3. Num = (D2 – D1) + 30 * (M2 – M1) + 360 * (Y2 – Y1)
+                    Den = 360
+                </label>
             </div>
             <div id="30E_360" class="col-md-12">
                 <h5>30E/360</h5>
+                <label>
+                    Factor = Num/Den
+                    Num:
+                    1. If D1 = 31, Set D1 = 30
+                    2. If D2 = 31, Set D2 = 30
+                    3. Last day of February not treated specially
+                    4. Num = (D2 – D1) + 30 * (M2 – M1) + 360 * (Y2 – Y1)
+                    Den = 360
+                </label>
             </div>
             <div id="30_360German" class="col-md-12">
                 <h5>30/360 German</h5>
+                <label>
+                    Factor = Num/Den
+                    Num:
+                    1. If D1 (and/or D2) = 31, Set D1 (and/or D2) = 30
+                    2. If D1.M1.Y1 (and/or D2.M2.Y2) falls on the last day of the February set use D1 = 30 (and/or D2 = 30)
+                    3. Num = (D2 – D1) + 30 * (M2 – M1) + 360 * (Y2 – Y1)
+                    Den = 360
+                </label>
             </div>
             <div id="30_360ISDA(Muni)" class="col-md-12">
                 <h5>30/360 ISDA(Muni)</h5>
+                <label>
+                    Factor = Num/Den
+                    Num:
+                    1. If D1 = 31, Set D1 = 30
+                    2. If D1 = 30 after applying 1 and D2 = 31, Set D2 = 30
+                    3. Num = (D2 – D1) + 30 * (M2 – M1) + 360 * (Y2 – Y1)
+                    Den = 360
+                </label>
             </div>
             <div id="ACT_360" class="col-md-12">
                 <h5>ACT/360</h5>
+                <label>
+                    Factor = Num/Den
+                    Num = Actual number of days within the accrual period
+                    Den = 360
+                </label>
             </div>
             <div id="ACT_365" class="col-md-12">
                 <h5>ACT/365</h5>
                 <label>
-                    DCF = Num/Den
+                    Factor = Num/Den
                     Num = Actual number of days within the accrual period
                     Den = 365
                 </label>
             </div>
-        </div>
-        <div id="ACT_365CD" class="col-md-12">
-            <h5>ACT/365CD</h5>
-        </div>
-        <div id="ACT_ACT(UST)" class="col-md-12">
-            <h5>ACT/ACT(UST)</h5>
-            <label>
-                DCF = Days1 /366 + Days2 / 365
-                Days1 = Actual number of days in period that fall in a leap year.
-                Days2 = Actual number of days in period that fall in a normal year.
-            </label>
-        </div>
-        <div id="ACT_365L" class="col-md-12">
-            <h5>ACT/365L</h5>
-        </div>
-        <div id="ACT_365A" class="col-md-12">
-            <h5>ACT/365A</h5>
-        </div>
-        <div id="ACT_ACT(ISDA)" class="col-md-12">
-            <h5>ACT/ACT(ISDA)</h5>
-        </div>
-        <div id="NL_365" class="col-md-12">
-            <h5>NL/365</h5>
-        </div>
-        <div id="ACT_366" class="col-md-12">
-            <h5>ACT/366</h5>
-        </div>
-        <div id="30_360US" class="col-md-12">
-            <h5>30/360 US</h5>
+            <div id="ACT_365CD" class="col-md-12">
+                <h5>ACT/365CD</h5>
+                <label>
+                    Similar to ACT/365. However the amount of the coupon will vary accordimg to the days in the period.
+                    Whereas in ACT/365 the coupon is constant and the daily accrual changes.
+                </label>
+            </div>
+            <div id="ACT_ACT(UST)" class="col-md-12">
+                <h5>ACT/ACT(UST)</h5>
+                <label>
+                    Factor = Days1 /366 + Days2 / 365
+                    Days1 = Actual number of days in period that fall in a leap year.
+                    Days2 = Actual number of days in period that fall in a normal year.
+                </label>
+            </div>
+            <div id="ACT_365L" class="col-md-12">
+                <h5>ACT/365L</h5>
+                <label>
+                    Factor = Num/Den
+                    Num = Actual number of days within the accrual period
+                    Den = 366 if the accrual period end date (D2.M2.Y2) falls in a leap year else 365
+                </label>
+            </div>
+            <div id="ACT_365A" class="col-md-12">
+                <h5>ACT/365A</h5>
+                <label>
+                    Factor = Num/Den
+                    Num = Actual number of days within the accrual period
+                    Den = 366 if the Leap day (29th Feb) falls within the accrual period else 365
+                </label>
+            </div>
+            <div id="ACT_ACT(ISDA)" class="col-md-12">
+                <h5>ACT/ACT(ISDA)</h5>
+            </div>
+            <div id="NL_365" class="col-md-12">
+                <h5>NL/365</h5>
+                <label>
+                    Factor = Num/Den
+                    Num: If the Leap day (29th Feb) does not fall within the accrual period
+                    then,
+                    Actual number of days within the accrual period
+                    Otherwise,
+                    Actual number of days within the accrual period -1
+                    Den=365
+                </label>
+            </div>
+            <div id="ACT_366" class="col-md-12">
+                <h5>ACT/366</h5>
+                <label>
+                    Factor = Num/Den
+                    Num = Actual number of days within the accrual period
+                    Den = 366
+                </label>
+            </div>
+            <div id="30_360US" class="col-md-12">
+                <h5>30/360 US</h5>
+                <label>
+                    Factor = Num/Den
+                    Num:
+                    1. If D2.M2.Y2 is the last day of February (28 in a non leap year; 29 in a leap year) and
+                    D1.M1.Y1 is the last day of February, Set D2 = 30
+                    2. If D1 is the last day of February, Set D1 = 30
+                    3. If D2 = 31 and D1 = 30 or 31, Set D2 = 30
+                    4. If D1 = 31, Set D1 = 30
+                    Den = 360
+                </label>
+            </div>
         </div>
     </div>
-</div>
-<div id="references" class="col-md-12">
-    <div class="col-md-4 col-md-offset-4">
-        <h2>References</h2>
+    <div id="references" class="col-md-12">
+        <div class="col-md-4 col-md-offset-4">
+            <h2>References</h2>
+        </div>
+        <div class="col-md-12">
+            <ul>
+                <li>
+                    <label>
+                        Standard securities calculation methods : fixed income securities formulas
+                        Author: Jan Mayle.
+                        Publisher: New York : Securities Industry and Financial Markets Association, 2007.
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Yield Calculations.
+                        Author:	Paul Fage; Credit Suisse First Boston. Research Department.
+                        Publisher:	London : Credit Suisse First Boston, ©1986.
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        http://www.icmagroup.org/assets/documents/Media/Bondmarketsbook/Bond%20markets_structures%20and%20yield%20calculations.pdf
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        http://docs.fincad.com/support/developerfunc/mathref/Daycount.htm
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        http://www.deltaquants.com/day-count-conventions
+                    </label>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div class="col-md-12">
-        <ul>
-            <li>
-                <label>
-                    Standard securities calculation methods : fixed income securities formulas
-                    Author: Jan Mayle.
-                    Publisher: New York : Securities Industry and Financial Markets Association, 2007.
-                </label>
-            </li>
-            <li>
-                <label>
-                    Yield Calculations.
-                    Author:	Paul Fage; Credit Suisse First Boston. Research Department.
-                    Publisher:	London : Credit Suisse First Boston, ©1986.
-                </label>
-            </li>
-            <li>
-                <label>
-                    http://www.icmagroup.org/assets/documents/Media/Bondmarketsbook/Bond%20markets_structures%20and%20yield%20calculations.pdf
-                </label>
-            </li>
-            <li>
-                <label>
-                    http://docs.fincad.com/support/developerfunc/mathref/Daycount.htm
-                </label>
-            </li>
-            <li>
-                <label>
-                    http://www.deltaquants.com/day-count-conventions
-                </label>
-            </li>
-        </ul>
-    </div>
-</div>
 </div>
