@@ -13,7 +13,7 @@
         "ui.grid.resizeColumns",
         "ui.grid.autoResize"
     ])
-    .config(function ($routeProvider) {
+    .config(function ($routeProvider, $locationProvider) {
         $routeProvider.when("/", {
             templateUrl: "/views/calculatorsView.html"
         });
@@ -48,17 +48,18 @@
             templateUrl: "/views/dayCountView.html"
         });
         $routeProvider.when("/Guide", {
-            controller: "dayCountController",
+            controller: "guideController",
             controllerAs: "vm",
             templateUrl: "/views/guideView.html"
         });
-        //$routeProvider.when("/CustomCalc", {
-        //    controller: "calculatorController",
-        //    controllerAs: "vm",
-        //    templateUrl: "/views/custCalcView.html"
-        //});
-
+ 
         $routeProvider.otherwise({ redirectTo: "/" });
+
+        //$locationProvider.html5Mode({
+        //    enabled: true
+        //    ,requireBase: false
+        //    ,rewriteLinks: false
+        //});
     });
     app.filter('decimal', function () {
         return function (text) {

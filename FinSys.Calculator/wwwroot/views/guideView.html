@@ -6,7 +6,7 @@
     </div>
     <div>
         <ul class="nav">
-            <li><a href="#/About">About</a></li>
+            <li><a href="" ng-click="vm.gotoAnchor('api')" >Api</a></li>
             <li><a href="#/Contact">Contact</a></li>
             <li><a href="#/DayCount">Day Count</a></li>
             <li><a href="#/CashFlows">Cash Flows</a></li>
@@ -14,7 +14,14 @@
             <li><a href="#/CustomCalc">Custom Calcs</a></li>
         </ul>
     </div>
-    <div>
-    <img src="/img/dayCountCalculateCircled.jpg" alt="Calculate Chosen" class="img-responsive" />
+    <div class="row">
+        <div class="col-md-6">
         </div>
-</div>
+        <div class="col-md-6">
+            <img src="/img/dayCountCalculateCircled.jpg" alt="Calculate Chosen" class="img-responsive" />
+            <div id="api" name="api">
+                <img src="/img/dayCountApiCircled.png" alt="Calculate Chosen" class="img-responsive" />
+                </div>
+            </div>
+        </div>
+    </div>
