@@ -36,45 +36,107 @@
             <h2>Technical Guide</h2>
         </div>
         <div id="maturitydate" class="col-md-12">
-            <h3>Maturity Date</h3>
+            <h4>Maturity Date</h4>
+            <label>Date on which the instrument matures.</label>
+        </div>
+        <div id="valuedate" class="col-md-12">
+            <h4>Value Date</h4>
+            <label>Also called Settlement Date. Base date used for calculating accrued interest and yield.</label>
+        </div>
+        <div id="daycount" class="col-md-12">
+            <h4>Day Count</h4>
+            <label>Day Count</label>
+            <div id="30EP_360" class="col-md-12">
+                <h5>30E+/360</h5>
+            </div>
+            <div id="30E_360" class="col-md-12">
+                <h5>30E/360</h5>
+            </div>
+            <div id="30_360German" class="col-md-12">
+                <h5>30/360 German</h5>
+            </div>
+            <div id="30_360ISDA(Muni)" class="col-md-12">
+                <h5>30/360 ISDA(Muni)</h5>
+            </div>
+            <div id="ACT_360" class="col-md-12">
+                <h5>ACT/360</h5>
+            </div>
+            <div id="ACT_365" class="col-md-12">
+                <h5>ACT/365</h5>
+                <label>
+                    DCF = Num/Den
+                    Num = Actual number of days within the accrual period
+                    Den = 365
+                </label>
+            </div>
+        </div>
+        <div id="ACT_365CD" class="col-md-12">
+            <h5>ACT/365CD</h5>
+        </div>
+        <div id="ACT_ACT(UST)" class="col-md-12">
+            <h5>ACT/ACT(UST)</h5>
+            <label>
+                DCF = Days1 /366 + Days2 / 365
+                Days1 = Actual number of days in period that fall in a leap year.
+                Days2 = Actual number of days in period that fall in a normal year.
+            </label>
+        </div>
+        <div id="ACT_365L" class="col-md-12">
+            <h5>ACT/365L</h5>
+        </div>
+        <div id="ACT_365A" class="col-md-12">
+            <h5>ACT/365A</h5>
+        </div>
+        <div id="ACT_ACT(ISDA)" class="col-md-12">
+            <h5>ACT/ACT(ISDA)</h5>
+        </div>
+        <div id="NL_365" class="col-md-12">
+            <h5>NL/365</h5>
+        </div>
+        <div id="ACT_366" class="col-md-12">
+            <h5>ACT/366</h5>
+        </div>
+        <div id="30_360US" class="col-md-12">
+            <h5>30/360 US</h5>
         </div>
     </div>
-    <div id="references" class="col-md-12">
-        <div class="col-md-4 col-md-offset-4">
-            <h2>References</h2>
-        </div>
-        <div class="col-md-12">
-            <ul>
-                <li>
-                    <label>
-                        Title: Standard securities calculation methods : fixed income securities formulas
-                        Author: Jan Mayle.
-                        Publisher: New York : Securities Industry and Financial Markets Association, 2007.
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        Yield Calculations.
-                        Author:	Paul Fage; Credit Suisse First Boston. Research Department.
-                        Publisher:	London : Credit Suisse First Boston, ©1986.
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        http://www.icmagroup.org/assets/documents/Media/Bondmarketsbook/Bond%20markets_structures%20and%20yield%20calculations.pdf
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        http://docs.fincad.com/support/developerfunc/mathref/Daycount.htm
-                    </label>
-                </li>
-                <li>
-                    <label>
-                        http://www.deltaquants.com/day-count-conventions
-                    </label>
-                </li>
-            </ul>
-        </div>
+</div>
+<div id="references" class="col-md-12">
+    <div class="col-md-4 col-md-offset-4">
+        <h2>References</h2>
     </div>
+    <div class="col-md-12">
+        <ul>
+            <li>
+                <label>
+                    Standard securities calculation methods : fixed income securities formulas
+                    Author: Jan Mayle.
+                    Publisher: New York : Securities Industry and Financial Markets Association, 2007.
+                </label>
+            </li>
+            <li>
+                <label>
+                    Yield Calculations.
+                    Author:	Paul Fage; Credit Suisse First Boston. Research Department.
+                    Publisher:	London : Credit Suisse First Boston, ©1986.
+                </label>
+            </li>
+            <li>
+                <label>
+                    http://www.icmagroup.org/assets/documents/Media/Bondmarketsbook/Bond%20markets_structures%20and%20yield%20calculations.pdf
+                </label>
+            </li>
+            <li>
+                <label>
+                    http://docs.fincad.com/support/developerfunc/mathref/Daycount.htm
+                </label>
+            </li>
+            <li>
+                <label>
+                    http://www.deltaquants.com/day-count-conventions
+                </label>
+            </li>
+        </ul>
+    </div>
+</div>
 </div>
