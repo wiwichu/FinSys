@@ -2214,7 +2214,8 @@ unsigned long  _PYFUNCS fast_calc_check(booleans *fast_calc, instr in_instr,
 		 (in_instr.pay_sched == instr_str_pay_sched) &&
 		 (py_day_count != date_act_360_day_count) &&
 		 (py_day_count != date_act_365cd_day_count) &&
-		 (pay_adj == event_sched_same_holiday_adj) &&
+			(py_day_count != date_act_360cd_day_count) &&
+			(pay_adj == event_sched_same_holiday_adj) &&
 		 (in_instr.redemps == 0) &&
 		 ! ((in_yield == 0) &&
 	(py_parm.calc_what == py_price_from_yield_calc_what))

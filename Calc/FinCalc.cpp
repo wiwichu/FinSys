@@ -180,6 +180,9 @@ string FinCalc::getDAYCOUNT_Text(FinCalc::_DAYCOUNT daycount)
 	case FinCalc::_ACT_365CD:
 		_DAYCOUNT_Text.assign("ACT/365CD");
 		break;
+	case FinCalc::_ACT_360CD:
+		_DAYCOUNT_Text.assign("ACT/360CD");
+		break;
 	case FinCalc::_ACT_ACT:
 		_DAYCOUNT_Text.assign("ACT/ACT(UST)");
 		break;

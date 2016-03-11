@@ -106,7 +106,8 @@ const	unsigned char	date_30eplus_360_day_count = 10;
 const	unsigned char	date_30_360US_day_count = 11;
 const	unsigned char	date_act_365A_day_count = 12;
 const	unsigned char	date_act_366_day_count = 13;
-const	unsigned char	date_last_day_count	= 14;
+const	unsigned char	date_act_360cd_day_count = 14;
+const	unsigned char	date_last_day_count	= 15;
 
 
 char *const	date_30eplus_360_day_count_name = "30E+/360";
@@ -116,6 +117,7 @@ char *const	date_30_360_day_count_name	= "30/360 ISDA(Muni)";
 char *const date_act_360_day_count_name	= "ACT/360";
 char *const	date_act_365_day_count_name	= "ACT/365";
 char *const	date_act_365cd_day_count_name = "ACT/365CD";
+char *const	date_act_360cd_day_count_name = "ACT/360CD";
 char *const	date_act_act_day_count_name	= "ACT/ACT(UST)";
 char *const	date_act_365L_day_count_name	= "ACT/365L";
 char *const	date_act_365A_day_count_name = "ACT/365A";
@@ -155,10 +157,10 @@ const	unsigned day_counts[date_last_day_count] =
 	,date_30_360US_day_count
 	,date_act_365A_day_count
 	,date_act_366_day_count
+	,date_act_360cd_day_count
 };
 
 char *const day_count_names[date_last_day_count] =
-//		 {"30E/360","30/360","ACT/360","ACT/365","ACT/365CD","ACT/ACT","ACT/366"};
 		{
 		date_30e_360_day_count_name
 		,date_30_360_day_count_name
@@ -174,6 +176,7 @@ char *const day_count_names[date_last_day_count] =
 	,date_30_360US_day_count_name
 	,date_act_365A_day_count_name
 	,date_act_366_day_count_name
+	,date_act_360cd_day_count_name
 };
 char const  day_count_nums[date_last_day_count] =
 			 {date_30e_cal,

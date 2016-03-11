@@ -984,6 +984,15 @@ unsigned long FAR _export	 	Py_Front::proc_day_count_py()
 						}
 						else
 							if (strcmp(current_day_count_name,
+								day_count_names[date_act_360cd_day_count]) == 0)
+							{
+
+								in_instr.day_count = date_act_360cd_day_count;
+								in_instr.cal_num = day_count_nums[date_act_act_day_count];
+								in_instr.cal_den = day_count_dens[date_act_360_day_count];
+							}
+							else
+							if (strcmp(current_day_count_name,
 								day_count_names[date_act_365L_day_count]) == 0)
 							{
 
@@ -1345,6 +1354,15 @@ unsigned long FAR _export	Py_Front::proc_yield_days_py()
 
 						}
 						else
+							if (strcmp(current_day_count_name,
+								day_count_names[date_act_360cd_day_count]) == 0)
+							{
+
+								in_instr.day_count = date_act_360cd_day_count;
+								in_instr.cal_num = day_count_nums[date_act_act_day_count];
+								in_instr.cal_den = day_count_dens[date_act_360_day_count];
+							}
+							else
 							if (strcmp(current_yield_days_name,
 								day_count_names[date_act_365L_day_count]) == 0)
 							{

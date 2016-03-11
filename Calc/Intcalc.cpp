@@ -1114,7 +1114,7 @@ accrued interest and number of days of interest for that date.
 	period is calculated and an even amount results.}*/
 
 	if (! (part_pay ) &&
-		(in_instr.day_count != date_act_365cd_day_count) &&
+		((in_instr.day_count != date_act_365cd_day_count)&& (in_instr.day_count != date_act_360cd_day_count)) &&
 		(in_instr.yield_meth != py_mm_yield_meth) &&
 		(total_calc == int_yes_total_per) &&
 		(in_instr.pay_type != instr_float_pay_type) &&

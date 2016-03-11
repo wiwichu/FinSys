@@ -1128,6 +1128,7 @@ namespace FinSys.Calculator.Services
     , date_30_360US_day_count
     , date_act_365A_day_count
     , date_act_366_day_count
+        , date_act_360cd_day_count
     };
     public enum frequency
     {
