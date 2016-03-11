@@ -27,7 +27,6 @@
                 { rule: "ACT/365A", days: 0, factor: 0 },
                 { rule: "ACT/366", days: 0, factor: 0 },
                 { rule: "ACT/360CD", days: 0, factor: 0 },
-                { rule: "ACT/360CD", days: 0, factor: 0 },
                        ];
 
         vm.protocol = $location.protocol() + "://";
