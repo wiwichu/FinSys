@@ -165,13 +165,33 @@
 
             //alert("Calculation USTBill");
         }
+        var help = {
+            title: "Maturity Date",
+            text: "Date on which the instrument matures.",
+            link: "#/Guide#maturitydate"
+        };
+        vm.maturityDateHelp = function () {
 
+            var options = {
+                templateUrl: "/templates/helpDialog.html",
+                controller: function () {
+                    this.help = {
+                        title: "Maturity Date",
+                        text: "Date on which the instrument matures.",
+                        link: "#/Guide#maturitydate"
+                    };
+                },
+                controllerAs: "model"
+            };
+            $uibModal.open(options);
+        }
+
+        var that = this;
         var api = {
             apiPath: vm.apiPath,
             requestJson: vm.requestJson,
             responseJson: vm.responseJson
         };
-        var that = this;
         vm.getApi = function () {
 
             var options = {

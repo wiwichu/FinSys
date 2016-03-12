@@ -45,14 +45,18 @@
         </div>
         <div id="daycount" class="col-md-12">
             <h4>Day Count</h4>
-            <label>Day Count</label>
+            <label>
+                Day Count both determines the number of days between 2 dates and also in the factor to multiply by the
+                rate and nominal to arrive at accrued interest over the range. Some day count rules only differ within the context of an instrument
+                where they are used to also determine the amount of a coupon payment, such as ACT/365CD.
+            </label>
             <div id="30EP_360" class="col-md-12">
                 <h5>30E+/360</h5>
                 <label>
                     Factor = Num/Den Num:
-                    1. If D1 = 31, Set D1 = 30
-                    2. If D2 = 31, Set D2.M2.Y2 to the 1st day of the next month - (D2 = 1, Y2 = Y2 + Integer part of (M2+1)/12, M2= M2 + 1 Mod 12)
-                    3. Num = (D2 – D1) + 30 * (M2 – M1) + 360 * (Y2 – Y1)
+                    <br />1. If D1 = 31, Set D1 = 30
+                    <br />2. If D2 = 31, Set D2.M2.Y2 to the 1st day of the next month - (D2 = 1, Y2 = Y2 + Integer part of (M2+1)/12, M2= M2 + 1 Mod 12)
+                    <br />3. Num = (D2 – D1) + 30 * (M2 – M1) + 360 * (Y2 – Y1)
                     Den = 360
                 </label>
             </div>
@@ -61,10 +65,10 @@
                 <label>
                     Factor = Num/Den
                     Num:
-                    1. If D1 = 31, Set D1 = 30
-                    2. If D2 = 31, Set D2 = 30
-                    3. Last day of February not treated specially
-                    4. Num = (D2 – D1) + 30 * (M2 – M1) + 360 * (Y2 – Y1)
+                    <br />1. If D1 = 31, Set D1 = 30
+                    <br />2. If D2 = 31, Set D2 = 30
+                    <br />3. Last day of February not treated specially
+                    <br />4. Num = (D2 – D1) + 30 * (M2 – M1) + 360 * (Y2 – Y1)
                     Den = 360
                 </label>
             </div>
@@ -73,9 +77,9 @@
                 <label>
                     Factor = Num/Den
                     Num:
-                    1. If D1 (and/or D2) = 31, Set D1 (and/or D2) = 30
-                    2. If D1.M1.Y1 (and/or D2.M2.Y2) falls on the last day of the February set use D1 = 30 (and/or D2 = 30)
-                    3. Num = (D2 – D1) + 30 * (M2 – M1) + 360 * (Y2 – Y1)
+                    <br />1. If D1 (and/or D2) = 31, Set D1 (and/or D2) = 30
+                    <br />2. If D1.M1.Y1 (and/or D2.M2.Y2) falls on the last day of the February set use D1 = 30 (and/or D2 = 30)
+                    <br />3. Num = (D2 – D1) + 30 * (M2 – M1) + 360 * (Y2 – Y1)
                     Den = 360
                 </label>
             </div>
@@ -84,9 +88,9 @@
                 <label>
                     Factor = Num/Den
                     Num:
-                    1. If D1 = 31, Set D1 = 30
-                    2. If D1 = 30 after applying 1 and D2 = 31, Set D2 = 30
-                    3. Num = (D2 – D1) + 30 * (M2 – M1) + 360 * (Y2 – Y1)
+                    <br />1. If D1 = 31, Set D1 = 30
+                    <br />2. If D1 = 30 after applying 1 and D2 = 31, Set D2 = 30
+                    <br />3. Num = (D2 – D1) + 30 * (M2 – M1) + 360 * (Y2 – Y1)
                     Den = 360
                 </label>
             </div>
@@ -94,76 +98,88 @@
                 <h5>ACT/360</h5>
                 <label>
                     Factor = Num/Den
-                    Num = Actual number of days within the accrual period
-                    Den = 360
+                    <br />Num = Actual number of days within the accrual period
+                    <br />Den = 360
                 </label>
             </div>
             <div id="ACT_365" class="col-md-12">
                 <h5>ACT/365</h5>
                 <label>
                     Factor = Num/Den
-                    Num = Actual number of days within the accrual period
-                    Den = 365
+                    <br />Num = Actual number of days within the accrual period
+                    <br />Den = 365
                 </label>
             </div>
             <div id="ACT_365CD" class="col-md-12">
                 <h5>ACT/365CD</h5>
                 <label>
                     Similar to ACT/365. However the amount of the coupon will vary accordimg to the days in the period.
-                    Whereas in ACT/365 the coupon is constant and the daily accrual changes.
+                    <br />Whereas in ACT/365 the coupon is constant and the daily accrual changes.
                 </label>
             </div>
             <div id="ACT_360CD" class="col-md-12">
                 <h5>ACT/360CD</h5>
                 <label>
                     Similar to ACT/360. However the amount of the coupon will vary accordimg to the days in the period.
-                    Whereas in ACT/360 the coupon is constant and the daily accrual changes.
+                    <br />Whereas in ACT/360 the coupon is constant and the daily accrual changes.
                 </label>
             </div>
             <div id="ACT_ACT(UST)" class="col-md-12">
                 <h5>ACT/ACT(UST)</h5>
                 <label>
-                    Factor = Days1 /366 + Days2 / 365
-                    Days1 = Actual number of days in period that fall in a leap year.
-                    Days2 = Actual number of days in period that fall in a normal year.
+                    In the context of a simple date range:
+                    <br />Factor = Days1 /366 + Days2 / 365
+                    <br />Days1 = Actual number of days in period that fall in a leap year.
+                    <br />Days2 = Actual number of days in period that fall in a normal year.
+                    <br />
+                    <br />In the context of an instrument coupon period,
+                    <br />the coupon payment is the coupon rate divided by the pay frequency.
+                    <br />The factor will then be the the number of days in therange divided by the number of days in the period.
                 </label>
             </div>
             <div id="ACT_365L" class="col-md-12">
                 <h5>ACT/365L</h5>
                 <label>
                     Factor = Num/Den
-                    Num = Actual number of days within the accrual period
-                    Den = 366 if the accrual period end date (D2.M2.Y2) falls in a leap year else 365
+                    <br />Num = Actual number of days within the accrual period
+                    <br />Den = 366 if the accrual period end date (D2.M2.Y2) falls in a leap year else 365
                 </label>
             </div>
             <div id="ACT_365A" class="col-md-12">
                 <h5>ACT/365A</h5>
                 <label>
                     Factor = Num/Den
-                    Num = Actual number of days within the accrual period
-                    Den = 366 if the Leap day (29th Feb) falls within the accrual period else 365
+                    <br />Num = Actual number of days within the accrual period
+                    <br />Den = 366 if the Leap day (29th Feb) falls within the accrual period else 365
                 </label>
             </div>
             <div id="ACT_ACT(ISDA)" class="col-md-12">
                 <h5>ACT/ACT(ISDA)</h5>
+                <label>
+                    Factor = Days1 /366 + Days2 / 365
+                    <br />Days1 = Actual number of days in period that fall in a leap year.
+                    <br />Days2 = Actual number of days in period that fall in a normal year.
+                </label>
             </div>
-            <div id="NL_365" class="col-md-12">
+             <div id="NL_365" class="col-md-12">
                 <h5>NL/365</h5>
                 <label>
                     Factor = Num/Den
-                    Num: If the Leap day (29th Feb) does not fall within the accrual period
+                    <br />Num: If the Leap day (29th Feb) does not fall within the accrual period
                     then,
-                    Actual number of days within the accrual period
-                    Otherwise,
-                    Actual number of days within the accrual period -1
+                    <br />Actual number of days within the accrual period
+                    <br />Otherwise,
+                    <br />Actual number of days within the accrual period -1
                     Den=365
+
+                    <br />This method is used in Japan.
                 </label>
             </div>
             <div id="ACT_366" class="col-md-12">
                 <h5>ACT/366</h5>
                 <label>
                     Factor = Num/Den
-                    Num = Actual number of days within the accrual period
+                    <br />Num = Actual number of days within the accrual period
                     Den = 366
                 </label>
             </div>
@@ -171,12 +187,12 @@
                 <h5>30/360 US</h5>
                 <label>
                     Factor = Num/Den
-                    Num:
-                    1. If D2.M2.Y2 is the last day of February (28 in a non leap year; 29 in a leap year) and
+                    <br />Num:
+                    <br />1. If D2.M2.Y2 is the last day of February (28 in a non leap year; 29 in a leap year) and
                     D1.M1.Y1 is the last day of February, Set D2 = 30
-                    2. If D1 is the last day of February, Set D1 = 30
-                    3. If D2 = 31 and D1 = 30 or 31, Set D2 = 30
-                    4. If D1 = 31, Set D1 = 30
+                    <br />2. If D1 is the last day of February, Set D1 = 30
+                    <br />3. If D2 = 31 and D1 = 30 or 31, Set D2 = 30
+                    <br />4. If D1 = 31, Set D1 = 30
                     Den = 360
                 </label>
             </div>
