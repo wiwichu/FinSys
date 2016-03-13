@@ -11,6 +11,7 @@
         //, apiDialog
         , $uibModal
         , $q
+        , alertService
         ) {
 
         var vm = this;
@@ -71,7 +72,13 @@
                 deferred.resolve();
             },
             function (err) {
-                vm.errorMessage = "Calculation Failed: " + err.data;
+                if (err.data.length < 200) {
+                    vm.errorMessage = "Calculation Failed: " + err.data;
+                }
+                else
+                {
+                    alertService("An Error has occurred.", "Calculation Failed", err.data);
+                }
                 deferred.reject("Calculation Failed: " + err.data);
             })
             .finally(function () {
@@ -179,7 +186,12 @@
                 vm.nextToLastDate = new Date(response.data.nextToLastPayDate);
             },
             function (err) {
-                vm.errorMessage = "Calculation Failed: " + err.data;
+                if (err.data.length < 200) {
+                    vm.errorMessage = "Calculation Failed: " + err.data;
+                }
+                else {
+                    alertService("An Error has occurred.", "Calculation Failed", err.data);
+                }
             })
             .finally(function () {
                 vm.isBusy = false;
@@ -324,7 +336,12 @@
             }
         },
         function (err) {
-            vm.errorMessage = "Calculation Failed: " +  err.data;
+            if (err.data.length < 200) {
+                vm.errorMessage = "Calculation Failed: " + err.data;
+            }
+            else {
+                alertService("An Error has occurred.", "Calculation Failed", err.data);
+            }
         })
         .finally(function () {
             vm.isBusy = false;
