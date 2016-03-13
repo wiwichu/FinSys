@@ -8,7 +8,7 @@
     ;
     
     function ustbillController($http, $location,$window, $rootScope
-        , $uibModal
+        , $uibModal, helpService
         ) {
 
         var vm = this;
@@ -163,29 +163,10 @@
                 vm.isBusy = false;
             });
 
-            //alert("Calculation USTBill");
         }
-        var help = {
-            title: "Maturity Date",
-            text: "Date on which the instrument matures.",
-            link: "#/Guide#maturitydate"
-        };
         vm.maturityDateHelp = function () {
-
-            var options = {
-                templateUrl: "/templates/helpDialog.html",
-                controller: function () {
-                    this.help = {
-                        title: "Maturity Date",
-                        text: "Date on which the instrument matures.",
-                        link: "#/Guide#maturitydate"
-                    };
-                },
-                controllerAs: "model"
-            };
-            $uibModal.open(options);
+            helpService("maturitydate");
         }
-
         var that = this;
         var api = {
             apiPath: vm.apiPath,

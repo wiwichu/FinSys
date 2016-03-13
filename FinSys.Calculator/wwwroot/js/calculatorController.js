@@ -1,7 +1,7 @@
 ﻿// calculatorController.js
 (function () {
 
-    "use strict";
+    //"use strict";
 
     angular.module("app-calculator")
     .controller("calculatorController", calculatorController)
@@ -10,7 +10,7 @@
     function calculatorController($http, $location,$window, $rootScope
         //, apiDialog
         , $uibModal
-        ,$q
+        , $q
         ) {
 
         var vm = this;
