@@ -39,7 +39,7 @@ namespace FinSys.Calculator
             services.AddLogging();
             services.AddEntityFramework()
                 .AddSqlServer()
-                .AddDbContext<LoggingContext>();
+                .AddDbContext<FinSysContext>();
 
             services.AddScoped<ICalculatorRepository, CalculatorRepository>();
 #if DEBUG

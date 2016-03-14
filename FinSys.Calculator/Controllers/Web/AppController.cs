@@ -1,8 +1,10 @@
 ﻿using FinSys.Calculator;
+using FinSys.Calculator.Models;
 using FinSys.Calculator.Services;
 using FinSys.Calculator.ViewModels;
 using Microsoft.AspNet.Mvc;
 using System;
+using System.Linq;
 
 namespace FinSys.Controllers.Web
 {
@@ -10,13 +12,25 @@ namespace FinSys.Controllers.Web
     {
         private IMailService _mailService;
         private ICalculatorRepository _calculatorRepository;
-        public AppController(IMailService service, ICalculatorRepository calculatorRepository)
+        private FinSysContext _context;
+        public AppController(IMailService service, ICalculatorRepository calculatorRepository, FinSysContext context)
         {
             _mailService = service;
             _calculatorRepository = calculatorRepository;
+            _context = context;
+            Logging log = new Logging
+            {
+                User = "x",
+                Log = "AppController Constructor",
+                LogTime = DateTime.Now,
+                Severity = "Info",
+                Topic = "x"
+            };
+            _context.Logs.Add(log);
         }
         public IActionResult Index()
         {
+            var logs = _context.Logs.OrderBy(l => l.User).ToList();
             //return View();
             return Redirect(Url.Content("/App/Calculators#/"));
         }
