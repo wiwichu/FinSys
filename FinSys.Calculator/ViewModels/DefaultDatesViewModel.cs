@@ -9,6 +9,8 @@ namespace FinSys.Calculator.ViewModels
     public class DefaultDatesViewModel
     {
         [Required]
+        public string Class { get; set; }
+        [Required]
         public string IntDayCount { get; set; }
         [Required]
         public string IntPayFreq { get; set; }

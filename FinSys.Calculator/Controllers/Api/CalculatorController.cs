@@ -87,14 +87,14 @@ namespace FinSys.Calculator.Controllers.Api
                 Instrument instr = new Instrument
                 {
                     Class = vm.Class,
-                    IssueDate = DateTime.Now.AddYears(-1),
-                    NextToLastPayDate = DateTime.Now,
-                    MaturityDate=DateTime.Now.AddYears(1),
-                    FirstPayDate=DateTime.Now
+                    IssueDate = DateTime.UtcNow.AddYears(-1),
+                    NextToLastPayDate = DateTime.UtcNow,
+                    MaturityDate=DateTime.UtcNow.AddYears(1),
+                    FirstPayDate=DateTime.UtcNow
                 };
                 Calculations calc = new Calculations
                 {
-                    ValueDate=DateTime.Now
+                    ValueDate=DateTime.UtcNow
                 };
                 var res = await _repository.GetInstrumentDefaultsAsync(instr, calc).ConfigureAwait(false);
                 Instrument instrResult = res.Key;
@@ -151,7 +151,7 @@ namespace FinSys.Calculator.Controllers.Api
                             {
                                 Instrument instr = new Instrument
                                 {
-                                    Class = "Eurobond",
+                                    Class = vm.Class,
                                     EndOfMonthPay = vm.EndOfMonth,
                                     FirstPayDate=vm.FirstPayDate,
                                     HolidayAdjust=vm.CalcDateAdjust,
@@ -181,6 +181,7 @@ namespace FinSys.Calculator.Controllers.Api
                                 {
                                     DefaultDatesViewModel ddvm = new DefaultDatesViewModel
                                     {
+                                        Class = instr.Class,
                                         EndOfMonthPay = instr.EndOfMonthPay,
                                         HolidayAdjust = instr.HolidayAdjust,
                                         Holidays = vm.Holidays,
@@ -272,7 +273,7 @@ namespace FinSys.Calculator.Controllers.Api
         {
             Instrument instr = new Instrument
             {
-                Class = "Eurobond",
+                Class = vm.Class,
                 IntDayCount = vm.IntDayCount,
                 IntPayFreq = vm.IntPayFreq,
                 MaturityDate = vm.MaturityDate,

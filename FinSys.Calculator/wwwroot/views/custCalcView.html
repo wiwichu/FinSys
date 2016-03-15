@@ -79,7 +79,7 @@
                 </label>
             </div>
             <div class="form-group">
-                <input type="submit" value="Calculate" class="btn btn-success btn-block"  ng-click="vm.calculate()" ng-disabled="CustCalcForm.$invalid"/>
+                <input type="submit" value="Calculate" class="btn btn-success btn-block"  ng-click="vm.calculate()" ng-disabled="CustCalcForm.$invalid || vm.isBusy"/>
             </div>
             <div class="form-group">
                 <input type="submit" value="API" class="btn btn-primary btn-block"
@@ -90,7 +90,7 @@
             <div class="form-group">
                 <div class="input-group">
                     <label for="yield">Yield/Discount</label>
-                    <input type="number" class="form-control" id="yield" name="yield" ng-disabled="vm.calcFrom!='yield'"
+                    <input type="number" class="form-control" id="yield" name="yield" ng-readonly="vm.calcFrom!='yield'"
                            ng-model="vm.yield" ng-required="true" />
                 </div>
                 <span class="text-danger" ng-cloak ng-show="CustCalcForm.yield.$error.required">Required</span>
@@ -98,7 +98,7 @@
             <div class="form-group">
                 <div class="input-group">
                     <label for="price">Clean Price (Par=100)</label>
-                    <input type="number" class="form-control" id="price" name="price" ng-disabled="vm.calcFrom!='price'"
+                    <input type="number" class="form-control" id="price" name="price" ng-readonly="vm.calcFrom!='price'"
                            ng-model="vm.price" ng-required="true"  />
                 </div>
                 <span class="text-danger" ng-cloak ng-show="CustCalcForm.price.$error.required">Required</span>

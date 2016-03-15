@@ -155,9 +155,8 @@
         startDate: false,
         endDate: false
     }
-    vm.now = new Date();
-    vm.startDate = new Date(vm.now.getFullYear(), vm.now.getMonth(), vm.now.getDate(), 0, 0, 0, 0);
-    vm.endDate = new Date(vm.now.getFullYear(), vm.now.getMonth(), vm.now.getDate(), 0, 0, 0, 0);
+    vm.startDate = new UtcDate(vm.now.getFullYear(), vm.now.getMonth(), vm.now.getDate(), 0, 0, 0, 0);
+    vm.endDate = new UtcDate();
 
     vm.showWeeks = true;
     vm.toggleWeeks = function () {

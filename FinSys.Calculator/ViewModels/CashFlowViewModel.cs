@@ -9,13 +9,13 @@ namespace FinSys.Calculator.ViewModels
     public class CashFlowViewModel
     {
         [Required]
-        public DateTime ScheduledDate { get; set; } = DateTime.Now;
+        public DateTime ScheduledDate { get; set; } = DateTime.UtcNow;
         [Required]
         public double Amount { get; set; }
         [Required]
         public double PresentValue { get; set; }
         [Required]
-        public DateTime AdjustedDate { get; set; } = DateTime.Now;
+        public DateTime AdjustedDate { get; set; } = DateTime.UtcNow;
         [Required]
         public double DiscountRate { get; set; }
     }

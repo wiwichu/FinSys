@@ -10,6 +10,8 @@ namespace FinSys.Calculator.ViewModels
     {
         public string Id { get; set; }
         [Required]
+        public string Class { get; set; }
+        [Required]
         public double InterestRate { get; set; }
         [Required]
         public DateTime MaturityDate { get; set; }

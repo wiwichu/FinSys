@@ -27,7 +27,7 @@
         vm.selectedPayFrequency = "";
         vm.overrideDefaults = false;
         vm.opened = false;
-        vm.isBusy = true;
+        vm.isBusy = false;
         vm.endOfMonth = false;
         vm.price = 100.00;
         vm.yield = 0.00;
@@ -144,7 +144,6 @@
                 vm.isBusy = false;
                 vm.api = "/api/calculator/cashflows";
                 vm.apiPath = vm.protocol + vm.host + vm.port + vm.api;
-                vm.isBusy = false;
             }
 
         }
@@ -171,6 +170,7 @@
             vm.isBusy = true;
             vm.api = "/api/calculator/defaultDates";
             vm.apiPath = vm.protocol + vm.host + vm.port + vm.api;
+            vm.defaultDates.Class = vm.selectedInstrumentClass;
             vm.defaultDates.IntDayCount = vm.selectedDayCount;
             vm.defaultDates.IntPayFreq = vm.selectedPayFrequency;
             vm.defaultDates.MaturityDate = vm.maturityDate;
@@ -273,6 +273,7 @@
         vm.apiPath = vm.protocol + vm.host + vm.port + vm.api;
         vm.requestJson = "";
         vm.responseJson = "";
+        vm.calculation.Class = vm.selectedInstrumentClass;
         vm.calculation.OverrideDefaults = vm.overrideDefaults;
         vm.calculation.InterestRate = vm.interestRate;
         vm.calculation.MaturityDate = vm.maturityDate;
@@ -385,11 +386,9 @@
         vm.maturityDate.setFullYear(vm.maturityDate.getFullYear() + 1);
         vm.previousPay = new Date(vm.now.getFullYear(), vm.now.getMonth(), vm.now.getDate(), 0, 0, 0, 0);
       vm.nextPay = new Date(vm.maturityDate.getFullYear(), vm.now.getMonth(), vm.now.getDate(), 0, 0, 0, 0);
-      vm.issueDate = new Date(vm.now.getFullYear(), vm.now.getMonth(), vm.now.getDate(), 0, 0, 0, 0);
-      vm.issueDate.setFullYear(vm.issueDate.getFullYear() - 3);
-      vm.firstPayDate = new Date(vm.now.getFullYear(), vm.now.getMonth(), vm.now.getDate(), 0, 0, 0, 0);
-      vm.firstPayDate.setFullYear(vm.firstPayDate.getFullYear() - 2);
-      vm.nextToLastDate = new Date(vm.now.getFullYear(), vm.now.getMonth(), vm.now.getDate(), 0, 0, 0, 0);
+      vm.issueDate = new Date(vm.valueDate.getFullYear(), vm.valueDate.getMonth(), vm.valueDate.getDate(), 0, 0, 0, 0);
+      vm.firstPayDate = new Date(vm.maturityDate.getFullYear(), vm.maturityDate.getMonth(), vm.maturityDate.getDate(), 0, 0, 0, 0);
+      vm.nextToLastDate = new Date(vm.issueDate.getFullYear(), vm.issueDate.getMonth(), vm.issueDate.getDate(), 0, 0, 0, 0);
 
       vm.showWeeks = true;
       vm.toggleWeeks = function () {

@@ -9,7 +9,7 @@ namespace FinSys.Calculator.ViewModels
     public class RateCurveViewModel
     {
         [Required]
-        public DateTime RateDate { get; set; } = DateTime.Now;
+        public DateTime RateDate { get; set; } = DateTime.UtcNow;
         [Required]
         public double Rate { get; set; }
     }

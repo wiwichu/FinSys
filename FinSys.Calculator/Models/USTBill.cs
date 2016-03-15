@@ -14,8 +14,8 @@ namespace FinSys.Calculator.Models
             BONDEQUIVALENT,
             MMYIELD
         };
-        public DateTime MaturityDate { get; set; } = DateTime.Now.AddYears(1);
-        public DateTime ValueDate { get; set; } = DateTime.Now;
+        public DateTime MaturityDate { get; set; } = DateTime.UtcNow.AddYears(1);
+        public DateTime ValueDate { get; set; } = DateTime.UtcNow;
         public CALCULATEFROM CalcFrom { get; set; }
         public double CalcSource { get; set; }
         public bool IncludeCashFlows { get; set; }

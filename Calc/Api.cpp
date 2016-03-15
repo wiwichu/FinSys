@@ -1322,6 +1322,7 @@ int  USTBillCalcFromPrice(DateStruct &valueDate, DateStruct &maturityDate,
 	DatesStruct holidays;
 	holidays.size = 0;
 	result = getDefaultDatesAndData(instrument, calculations, holidays);
+
 	if (result != return_success)
 	{
 		return result;

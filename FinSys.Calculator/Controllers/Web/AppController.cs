@@ -27,6 +27,7 @@ namespace FinSys.Controllers.Web
                 Topic = "x"
             };
             _context.Logs.Add(log);
+            _context.SaveChanges();
         }
         public IActionResult Index()
         {

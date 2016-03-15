@@ -268,7 +268,7 @@ unsigned int	element_count = 0;
 int     coups_left = 0;
 int     iter_count = 0;
 int     iter_count_save = 0;
-int     max_iter = 10000;
+int     max_iter = 10000000;
 
 int pay_array_index = 0;
 int redemps_array_index = 0;

@@ -193,9 +193,8 @@
             maturityDate: false,
             valueDate: false
         }
-        vm.now = new Date();
-        vm.valueDate = new Date(vm.now.getFullYear(), vm.now.getMonth(), vm.now.getDate(), 0, 0, 0, 0);
-        vm.maturityDate = new Date(vm.now.getFullYear(), vm.now.getMonth(), vm.now.getDate(), 0, 0, 0, 0);
+        vm.valueDate = new Date();
+        vm.maturityDate = new Date();
         vm.maturityDate.setFullYear(vm.maturityDate.getFullYear() + 1);
         vm.showWeeks = true;
         vm.toggleWeeks = function () {
