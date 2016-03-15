@@ -93,7 +93,8 @@ namespace CalcTests
                 request.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 var response = await client.PostAsync(calcUri, request);
                 string responseBodyAsText = await response.Content.ReadAsStringAsync();
-                IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
+                var result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
+                //IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
                 List<CalculatorResultViewModel> results = new List<CalculatorResultViewModel>(result);
                 BondFlatPriceFromYtmLongLastCoupon_1_Run(results[0]);
             }
@@ -382,6 +383,7 @@ namespace CalcTests
         {
             return new CalculatorViewModel
             {
+                Class="Eurobond",
                 OverrideDefaults = true,
                 InterestRate = 5,
                 MaturityDate = new DateTime(2009, 3, 20),
@@ -416,6 +418,7 @@ namespace CalcTests
         {
             return new CalculatorViewModel
             {
+                Class = "Eurobond",
                 OverrideDefaults = true,
                 InterestRate = 5,
                 MaturityDate = new DateTime(2009, 3, 20),
@@ -450,6 +453,7 @@ namespace CalcTests
         {
             return new CalculatorViewModel
             {
+                Class = "Eurobond",
                 OverrideDefaults = true,
                 InterestRate = 5,
                 MaturityDate = new DateTime(2009, 3, 20),
@@ -483,6 +487,7 @@ namespace CalcTests
         {
             return new CalculatorViewModel
             {
+                Class = "Eurobond",
                 OverrideDefaults = true,
                 InterestRate = 3.75,
                 MaturityDate = new DateTime(2008, 6, 15),
@@ -516,6 +521,7 @@ namespace CalcTests
         {
             return new CalculatorViewModel
             {
+                Class = "Eurobond",
                 OverrideDefaults = true,
                 InterestRate = 5,
                 MaturityDate = new DateTime(2009, 3, 20),
@@ -550,6 +556,7 @@ namespace CalcTests
         {
             return new CalculatorViewModel
             {
+                Class = "Eurobond",
                 OverrideDefaults = true,
                 InterestRate = 5,
                 MaturityDate = new DateTime(2009, 3, 20),
@@ -583,6 +590,7 @@ namespace CalcTests
         {
             return new CalculatorViewModel
             {
+                Class = "Eurobond",
                 OverrideDefaults = true,
                 InterestRate = 3.75,
                 MaturityDate = new DateTime(2008, 6, 15),
@@ -616,6 +624,7 @@ namespace CalcTests
         {
             return new CalculatorViewModel
             {
+                Class = "Eurobond",
                 OverrideDefaults = false,
                 InterestRate = 7,
                 MaturityDate = new DateTime(2013, 11, 15),
@@ -649,6 +658,7 @@ namespace CalcTests
         {
             return new CalculatorViewModel
             {
+                Class = "Eurobond",
                 OverrideDefaults = false,
                 InterestRate = 7,
                 MaturityDate = new DateTime(2013, 11, 15),
@@ -682,6 +692,7 @@ namespace CalcTests
         {
             return new CalculatorViewModel
             {
+                Class = "Eurobond",
                 OverrideDefaults = false,
                 InterestRate = 7,
                 MaturityDate = new DateTime(2013, 11, 15),
@@ -715,6 +726,7 @@ namespace CalcTests
         {
             return new CalculatorViewModel
             {
+                Class = "Eurobond",
                 OverrideDefaults = false,
                 InterestRate = 7,
                 MaturityDate = new DateTime(2013, 11, 15),
@@ -748,6 +760,7 @@ namespace CalcTests
         {
             return new CalculatorViewModel
             {
+                Class = "Eurobond",
                 OverrideDefaults = false,
                 InterestRate = 7,
                 MaturityDate = new DateTime(2013, 11, 15),
@@ -781,6 +794,7 @@ namespace CalcTests
         {
             return new CalculatorViewModel
             {
+                Class = "Eurobond",
                 OverrideDefaults = false,
                 InterestRate = 7,
                 MaturityDate = new DateTime(2013, 11, 15),
@@ -816,6 +830,7 @@ namespace CalcTests
         {
             return new CalculatorViewModel
             {
+                Class = "Eurobond",
                 OverrideDefaults = false,
                 InterestRate = 6.1,
                 MaturityDate = new DateTime(2014, 1, 15),
@@ -845,6 +860,7 @@ namespace CalcTests
         {
             return new CalculatorViewModel
             {
+                Class = "Eurobond",
                 OverrideDefaults = true,
                 InterestRate = 7,
                 MaturityDate = new DateTime(2058, 11, 15),
@@ -935,6 +951,8 @@ namespace CalcTests
     public class CalculatorViewModel
     {
         public string Id { get; set; }
+        [Required]
+        public string Class { get; set; }
         [Required]
         public double InterestRate { get; set; }
         [Required]
