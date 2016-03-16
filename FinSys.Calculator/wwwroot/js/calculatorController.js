@@ -303,7 +303,10 @@
         vm.calculation.FirstPayDate = vm.firstPayDate;
         vm.calculation.NextToLastDate = vm.nextToLastDate;
         vm.calculation.Holidays = vm.holidays;
-        vm.calculations[0] = vm.calculation;
+        //for (i = 0; i < 20; i++) { 
+        //    vm.calculations[i] = vm.calculation;
+        //}
+         //vm.calculations[0] = vm.calculation;
          $http.post(vm.apiPath, vm.calculations)
         .then(function (response) {
             if (response.data[0].status) {
@@ -337,11 +340,11 @@
             }
         },
         function (err) {
-            if (err.data.length < 200) {
-                vm.errorMessage = "Calculation Failed: " + err.data;
+            if (err.data.message.length < 200) {
+                vm.errorMessage = "Calculation Failed: " + err.data.message;
             }
             else {
-                alertService("An Error has occurred.", "Calculation Failed", err.data);
+                alertService("An Error has occurred.", "Calculation Failed", err.data.message);
             }
         })
         .finally(function () {

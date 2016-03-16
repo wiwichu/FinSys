@@ -126,10 +126,27 @@ namespace FinSys.Calculator.Controllers.Api
             {
                 if (ModelState.IsValid)
                 {
-                    if(vms.Count()>2)
+                    var maxCalcsStr = Startup.Configuration["AppSettings:MaximumCalculations"];
+                    int maxCalcs = 2;
+                    try
+                    {
+                        int mCConvert = Convert.ToInt16(maxCalcsStr);
+                        maxCalcs = mCConvert;
+                    }
+                    catch (FormatException fe)
+                    {
+                        //log here
+                    }
+                    catch (OverflowException oe)
+                    {
+                        //log here
+                    }
+
+                    if (vms.Count()>maxCalcs)
                     {
                         Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                        return Json(new { Message = "Calculation maximum of 2 exceeded." });
+                        string msg = $"Calculation maximum of {maxCalcsStr} exceeded.";
+                        return Json(new { Message = msg });
                     }
 
                     CalculatorResultViewModel[] vmsOutArray = new CalculatorResultViewModel[vms.Count()];

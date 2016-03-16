@@ -58,8 +58,19 @@ namespace CalcTests
                 request.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 var response = await client.PostAsync(calcUri, request);
                 string responseBodyAsText = await response.Content.ReadAsStringAsync();
-                IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
-                List<CalculatorResultViewModel> results = new List<CalculatorResultViewModel>(result);
+                //IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
+                List<CalculatorResultViewModel> results = null;
+                try
+                {
+                    var result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
+                    results = new List<CalculatorResultViewModel>(result);
+                }
+                catch (JsonSerializationException )
+                {
+                    string msg = "Cannot convert response to JSon. Response: " + responseBodyAsText;
+                    TestContext.WriteLine(msg);
+                    throw;
+                }
                 int resInd = 0;
                 BondFlatPriceFromYtmLongLastCoupon_1_Run(results[resInd++]);
                 BondPriceFromYtmLongLastCoupon_1_Run(results[resInd++]);
