@@ -306,7 +306,7 @@
         //for (i = 0; i < 20; i++) { 
         //    vm.calculations[i] = vm.calculation;
         //}
-         //vm.calculations[0] = vm.calculation;
+         vm.calculations[0] = vm.calculation;
          $http.post(vm.apiPath, vm.calculations)
         .then(function (response) {
             if (response.data[0].status) {
