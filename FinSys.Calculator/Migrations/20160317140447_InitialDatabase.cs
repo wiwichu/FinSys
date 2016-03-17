@@ -10,26 +10,26 @@ namespace FinSys.Calculator.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Logging",
+                name: "Log",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Log = table.Column<string>(nullable: true),
                     LogTime = table.Column<DateTime>(nullable: false),
+                    Message = table.Column<string>(nullable: true),
                     Severity = table.Column<string>(nullable: true),
                     Topic = table.Column<string>(nullable: true),
                     User = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Logging", x => x.Id);
+                    table.PrimaryKey("PK_Log", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable("Logging");
+            migrationBuilder.DropTable("Log");
         }
     }
 }

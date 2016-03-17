@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 
 namespace FinSys.Calculator.Models
 {
-    public class Logging
+    public class Log
     {
         public int Id { get; set; }
         public string User { get; set; }
         public string Severity { get; set; }
         public DateTime LogTime { get; set; }
         public string Topic { get; set; }
-        public string Log { get; set; }
+        public string Message { get; set; }
 
     }
 }

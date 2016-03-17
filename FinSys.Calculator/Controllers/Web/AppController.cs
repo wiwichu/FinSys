@@ -18,10 +18,10 @@ namespace FinSys.Controllers.Web
             _mailService = service;
             _calculatorRepository = calculatorRepository;
             _context = context;
-            Logging log = new Logging
+            Log log = new Log
             {
                 User = "x",
-                Log = "AppController Constructor",
+                Message = "AppController Constructor",
                 LogTime = DateTime.Now,
                 Severity = "Info",
                 Topic = "x"

@@ -8,7 +8,7 @@ using FinSys.Calculator.Models;
 namespace FinSys.Calculator.Migrations
 {
     [DbContext(typeof(FinSysContext))]
-    [Migration("20160314013744_InitialDatabase")]
+    [Migration("20160317140447_InitialDatabase")]
     partial class InitialDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -17,14 +17,14 @@ namespace FinSys.Calculator.Migrations
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("FinSys.Calculator.Models.Logging", b =>
+            modelBuilder.Entity("FinSys.Calculator.Models.Log", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Log");
-
                     b.Property<DateTime>("LogTime");
+
+                    b.Property<string>("Message");
 
                     b.Property<string>("Severity");
 

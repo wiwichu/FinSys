@@ -12,7 +12,7 @@ namespace FinSys.Calculator.Models
         {
             Database.EnsureCreated();
         }
-        public DbSet<Logging> Logs { get; set; }
+        public DbSet<Log> Logs { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var connString = Startup.Configuration["Data:FinSysConnection"];
