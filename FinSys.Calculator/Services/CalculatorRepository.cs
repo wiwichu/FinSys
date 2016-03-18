@@ -73,8 +73,8 @@ namespace FinSys.Calculator.Services
         private List<string> yieldMethods = new List<string>();
         private List<string> holidayAdjusts = new List<string>();
         private List<string> interpolationMethods = new List<string>();
-        private ILogger<CalculatorRepository> _logger;
-        public CalculatorRepository(ILogger<CalculatorRepository> logger)
+        private ILogger _logger;
+        public CalculatorRepository(ILoggerFactory loggerFactory)
         {
             classes = GetInstrumentClassesAsync().Result;
             dayCounts = GetDayCountsAsync().Result;
@@ -82,7 +82,7 @@ namespace FinSys.Calculator.Services
             yieldMethods = GetYieldMethodsAsync().Result;
             holidayAdjusts = GetHolidayAdjustAsync().Result;
             interpolationMethods = GetInterpolationMethodsAsync().Result;
-            _logger = logger;
+            _logger = loggerFactory.CreateLogger<CalculatorRepository>();
         }
 
         public async Task<List<string>> GetDayCountsAsync()

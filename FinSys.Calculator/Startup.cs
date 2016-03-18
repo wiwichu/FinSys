@@ -10,6 +10,7 @@ using AutoMapper;
 using FinSys.Calculator.Models;
 using FinSys.Calculator.ViewModels;
 using System;
+using FinSys.Calculator.Logging;
 
 namespace FinSys.Calculator
 {
@@ -52,7 +53,14 @@ namespace FinSys.Calculator
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app,ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddDebug(LogLevel.Information);
+            var logLevelStr = Startup.Configuration["AppSettings:LogLevel"];
+            LogLevel logLevel = LogLevel.Verbose;
+            if (!string.IsNullOrEmpty(logLevelStr))
+            {
+                logLevel = (LogLevel)System.Enum.Parse(typeof(LogLevel), logLevelStr); loggerFactory.AddDebug(LogLevel.Information);
+            }
+            loggerFactory.AddDebug(logLevel)
+                .AddProvider(new EFLoggerProvider(logLevel,new FinSysContext()));
             app.UseStaticFiles();
             Mapper.Initialize(config =>
             {

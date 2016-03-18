@@ -8,7 +8,7 @@ using FinSys.Calculator.Models;
 namespace FinSys.Calculator.Migrations
 {
     [DbContext(typeof(FinSysContext))]
-    [Migration("20160317140447_InitialDatabase")]
+    [Migration("20160318014510_InitialDatabase")]
     partial class InitialDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

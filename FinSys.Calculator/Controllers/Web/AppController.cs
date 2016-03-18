@@ -3,6 +3,7 @@ using FinSys.Calculator.Models;
 using FinSys.Calculator.Services;
 using FinSys.Calculator.ViewModels;
 using Microsoft.AspNet.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 
@@ -12,22 +13,15 @@ namespace FinSys.Controllers.Web
     {
         private IMailService _mailService;
         private ICalculatorRepository _calculatorRepository;
+        private ILogger _logger;
         private FinSysContext _context;
-        public AppController(IMailService service, ICalculatorRepository calculatorRepository, FinSysContext context)
+        public AppController(ILoggerFactory loggerFactory,IMailService service, ICalculatorRepository calculatorRepository, FinSysContext context)
         {
+            _logger = loggerFactory.CreateLogger<AppController>();
             _mailService = service;
             _calculatorRepository = calculatorRepository;
             _context = context;
-            Log log = new Log
-            {
-                User = "x",
-                Message = "AppController Constructor",
-                LogTime = DateTime.Now,
-                Severity = "Info",
-                Topic = "x"
-            };
-            _context.Logs.Add(log);
-            _context.SaveChanges();
+            _logger.LogInformation("AppController Constructor");
         }
         public IActionResult Index()
         {

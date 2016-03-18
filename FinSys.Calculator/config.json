@@ -1,7 +1,8 @@
 ﻿{
   "AppSettings": {
     "SiteEmailAddress": "me@aol.com",
-    "MaximumCalculations": "5"
+    "MaximumCalculations": "2",
+    "LogLevel": "Verbose"
   },
   "Data": {
     "FinSysConnection": "Server=(localdb)\\ProjectsV12;Database=FinSysDB;Trusted_Connection=true;MultipleActiveResultSets=true;"

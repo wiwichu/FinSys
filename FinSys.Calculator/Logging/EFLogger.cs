@@ -10,13 +10,12 @@ namespace FinSys.Calculator.Logging
 {
     public class EFLogger : ILogger
     {
-        private Log _log;
-        private ICalculatorRepository _repository;
+        private FinSysContext _context;
         private LogLevel _logLevel;
-        public EFLogger(Log log, ICalculatorRepository repository, LogLevel logLevel)
+        public EFLogger(FinSysContext context, LogLevel logLevel)
         {
-            _log = log;
-            _repository = repository;
+            _context = context;
+            _logLevel = logLevel;
         }
         public IDisposable BeginScopeImpl(object state)
         {
@@ -30,7 +29,16 @@ namespace FinSys.Calculator.Logging
 
         public void Log(LogLevel logLevel, int eventId, object state, Exception exception, Func<object, Exception, string> formatter)
         {
-            throw new NotImplementedException();
+            Log log = new Log
+            {
+                User = "Guest",
+                Message = formatter(state, exception),
+                LogTime = DateTime.Now,
+                Severity = Enum.GetName(typeof(LogLevel), logLevel),
+                Topic = "Log"
+            };
+            _context.Logs.Add(log);
+            _context.SaveChanges();
         }
     }
 }
