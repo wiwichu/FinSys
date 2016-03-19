@@ -59,8 +59,12 @@ namespace FinSys.Calculator
             {
                 logLevel = (LogLevel)System.Enum.Parse(typeof(LogLevel), logLevelStr); loggerFactory.AddDebug(LogLevel.Information);
             }
-            loggerFactory.AddDebug(logLevel)
-                .AddProvider(new EFLoggerProvider(logLevel,new FinSysContext()));
+#if DEBUG
+            loggerFactory.AddDebug(logLevel);
+#else
+            loggerFactory.AddProvider(new EFLoggerProvider(logLevel,new FinSysContext()));
+
+#endif
             app.UseStaticFiles();
             Mapper.Initialize(config =>
             {

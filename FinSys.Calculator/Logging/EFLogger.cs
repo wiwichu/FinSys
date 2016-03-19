@@ -26,7 +26,7 @@ namespace FinSys.Calculator.Logging
         {
             return ((int)logLevel >= (int)this._logLevel);
         }
-
+        private object logLock = new object();
         public void Log(LogLevel logLevel, int eventId, object state, Exception exception, Func<object, Exception, string> formatter)
         {
             Log log = new Log

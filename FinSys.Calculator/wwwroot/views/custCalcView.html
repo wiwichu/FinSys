@@ -226,11 +226,6 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="checkbox-inline">
-                            <input type="checkbox" name="overrideDefaults" ng-model="vm.overrideDefaults"> Override Defaults
-                        </label>
-                    </div>
                 </div>
             </div>
             <div id="defaults" class="collapse">
@@ -316,14 +311,19 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="overrideDefaults" ng-model="vm.overrideDefaults"> Override Dates
+                            </label>
+                        </div>
+                     <div class="form-group">
                             <label for="issueDate">Issue Date</label>
                             <div class="input-group">
                                 <input id="issueDate" type="text" class="form-control" uib-datepicker-popup="{{format}}"
                                        name="issueDate" ng-model="vm.issueDate" is-open="vm.datepickers.issueDate"
-                                       datepicker-options="dateOptions" ng-required="true"
+                                       datepicker-options="dateOptions" ng-required="true" ng-readonly="!vm.overrideDefaults"
                                        close-text="Close" />
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default" ng-click="vm.open($event,'issueDate')" ng-focus="vm.datepickers.issueDate=true">
+                                    <button class="btn btn-default" ng-click="vm.open($event,'issueDate')" ng-focus="vm.datepickers.issueDate=true"  ng-disabled="!vm.overrideDefaults">
                                         <i class="fa fa-calendar"></i>
                                     </button>
                                 </span>
@@ -336,10 +336,10 @@
                             <div class="input-group">
                                 <input id="firstPayDate" type="text" class="form-control" uib-datepicker-popup="{{format}}"
                                        name="firstPayDate" ng-model="vm.firstPayDate" is-open="vm.datepickers.firstPayDate"
-                                       datepicker-options="dateOptions" ng-required="true"
+                                       datepicker-options="dateOptions" ng-required="true"  ng-readonly="!vm.overrideDefaults"
                                        close-text="Close" />
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default" ng-click="vm.open($event,'firstPayDate')" ng-focus="vm.datepickers.firstPayDate=true">
+                                    <button class="btn btn-default" ng-click="vm.open($event,'firstPayDate')" ng-focus="vm.datepickers.firstPayDate=true"  ng-disabled="!vm.overrideDefaults">
                                         <i class="fa fa-calendar"></i>
                                     </button>
                                 </span>
@@ -352,10 +352,10 @@
                             <div class="input-group">
                                 <input id="nextToLastDate" type="text" class="form-control" uib-datepicker-popup="{{format}}"
                                        name="nextToLastDate" ng-model="vm.nextToLastDate" is-open="vm.datepickers.nextToLastDate"
-                                       datepicker-options="dateOptions" ng-required="true"
+                                       datepicker-options="dateOptions" ng-required="true" ng-readonly="!vm.overrideDefaults"
                                        close-text="Close" />
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default" ng-click="vm.open($event,'firstPayDate')" ng-focus="vm.datepickers.nextToLastDate=true">
+                                    <button class="btn btn-default" ng-click="vm.open($event,'firstPayDate')" ng-focus="vm.datepickers.nextToLastDate=true"  ng-disabled="!vm.overrideDefaults">
                                         <i class="fa fa-calendar"></i>
                                     </button>
                                 </span>

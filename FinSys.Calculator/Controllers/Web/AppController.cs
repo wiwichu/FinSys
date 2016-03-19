@@ -25,7 +25,7 @@ namespace FinSys.Controllers.Web
         }
         public IActionResult Index()
         {
-            var logs = _context.Logs.OrderBy(l => l.User).ToList();
+            //var logs = _context.Logs.OrderBy(l => l.User).ToList();
             //return View();
             return Redirect(Url.Content("/App/Calculators#/"));
         }
