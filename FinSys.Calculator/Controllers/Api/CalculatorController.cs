@@ -284,7 +284,7 @@ namespace FinSys.Calculator.Controllers.Api
                 return Json(ex.Message);
             }
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            return Json(new { Message = "Failed", ModelState = ModelState });
+            return Json(new { Message = "Failed: " + ModelState.ToString(), ModelState = ModelState });
         }
         private async Task<DefaultDatesResultViewModel> getDefaultDates(DefaultDatesViewModel vm)
         {
