@@ -15,7 +15,8 @@
     "EntityFramework.Core": "7.0.0-rc1-final",
     "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final",
     "EntityFramework.Relational": "7.0.0-rc1-final",
-    "EntityFramework.Commands": "7.0.0-rc1-final"
+    "EntityFramework.Commands": "7.0.0-rc1-final",
+    "Microsoft.CodeAnalysis.FxCopAnalyzers": "1.1.0"
   },
 
   "commands": {
