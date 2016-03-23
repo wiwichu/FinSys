@@ -78,6 +78,8 @@ namespace FinSys.Calculator
                 config.CreateMap<DefaultDates, DefaultDatesViewModel>().ReverseMap();
                 config.CreateMap<DefaultDatesResult, DefaultDatesResultViewModel>().ReverseMap();
                 config.CreateMap<DateTime, Holiday>().ReverseMap();
+                config.CreateMap<DateTime, HolidayViewModel>().ReverseMap();
+                config.CreateMap<HolidayViewModel, Holiday>().ReverseMap();
                 config.CreateMap<DayCount, DayCountViewModel>().ReverseMap();
             });
             app.UseMvc(config =>

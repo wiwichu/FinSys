@@ -140,7 +140,8 @@
                     vm.selectedCompoundFrequency = $rootScope.cfData.frequency;
                 }
                 else {
-                    vm.valueDate = new Date();
+                    vm.now = new Date();
+                    vm.valueDate = new Date(vm.now.getFullYear(), vm.now.getMonth(), vm.now.getDate(), 0, 0, 0, 0);
                 }
                 $rootScope.cfData = null;
                 vm.isBusy = false;
@@ -233,7 +234,7 @@
             paginationPageSize: 25, showGridFooter: true,
             showColumnFooter: true,
             columnDefs: [
-                { name: 'HoliDate', field: 'holiDate', type: 'date', cellFilter: 'date:"yyyy-MM-dd"' },
+                { name: 'HolidayDate', field: 'holidayDate', type: 'date', cellFilter: 'date:"yyyy-MM-dd"' },
             ],
             importerDataAddCallback: function (grid, newObjects) {
                 vm.holidays = newObjects;
@@ -311,8 +312,13 @@
             vm.calculation.IssueDate = vm.issueDate;
             vm.calculation.FirstPayDate = vm.firstPayDate;
             vm.calculation.NextToLastDate = vm.nextToLastDate;
-            vm.calculation.Holidays = vm.holidays;
-            //for (i = 0; i < 20; i++) { 
+            if (vm.useHolidays) {
+                vm.calculation.Holidays = angular.copy(vm.holidays);
+            }
+            else {
+                vm.calculation.Holidays = [];
+            }
+                //for (i = 0; i < 20; i++) {
             //    vm.calculations[i] = vm.calculation;
             //}
             vm.calculations[0] = vm.calculation;

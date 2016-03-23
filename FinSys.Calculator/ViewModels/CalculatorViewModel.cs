@@ -33,7 +33,7 @@ namespace FinSys.Calculator.ViewModels
         public bool IncludeCashflows { get; set; }
         [Required]
         public bool UseHolidays { get; set; }
-        public IEnumerable<DateTime> Holidays { get; set; }
+        public IEnumerable<HolidayViewModel> Holidays { get; set; }
         [Required]
         public string DayCount { get; set; }
         [Required]

@@ -23,6 +23,6 @@ namespace FinSys.Calculator.ViewModels
         [Required]
         public string HolidayAdjust { get; set; }
         [Required]
-        public IEnumerable<DateTime> Holidays { get; set; }
+        public IEnumerable<HolidayViewModel> Holidays { get; set; }
     }
 }
