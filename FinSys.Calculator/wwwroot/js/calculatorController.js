@@ -294,6 +294,7 @@
             vm.calculation.PriceIn = vm.price;
             vm.calculation.ExCoupon = vm.exCoup;
             vm.calculation.TradeFlat = vm.tradeFlat;
+            vm.calculation.EndOfMonth = vm.endOfMonth;
             if (vm.calcFrom == "price") {
                 vm.calculation.CalculatePrice = false;
             }

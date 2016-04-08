@@ -275,6 +275,7 @@ namespace FinSys.Calculator.Controllers.Api
                     }).ConfigureAwait(false);
                     var result = vmsOutArray.ToList();
                     JsonResult jResult = new JsonResult(result);
+                    
                     return jResult;
                 }
             }
