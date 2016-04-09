@@ -5,7 +5,8 @@
         .module('app-calculator')
         .controller('dayCountController', dayCountController);
 
-    function dayCountController($http, $location, $rootScope, uiGridConstants,$uibModal) {
+    function dayCountController($http, $location, $rootScope,
+        uiGridConstants, $uibModal, $timeout) {
         /* jshint validthis:true */
         var vm = this;
         vm.title = 'dayCountController';
@@ -173,22 +174,28 @@
         vm.minDate = ( vm.minDate ) ? null : new Date();
     };
     vm.toggleMin();
-
-    vm.open = function($event, which) {
+    vm.open = function ($event, which) {
         $event.preventDefault();
         $event.stopPropagation();
+        $timeout(function () {
+            angular.forEach(vm.datepickers, function (value, key) {
+                if (key == which) {
+                    vm.datepickers[key] = true;
+                }
+                else {
+                    vm.datepickers[key] = false;
+                }
 
-        $timeout(function () { vm.datepickers[which] = true; });
+            });
+        });
     };
-
     vm.dateOptions = {
         'year-format': "'yy'",
         'starting-day': 1
     };
-
     vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'shortDate'];
     vm.format = vm.formats[0];
-    /////////////////////////////////
+        /////////////////////////////////
     vm.openVD = function () {
         $timeout(function () {  vm.opened = true;  });
     };

@@ -43,9 +43,9 @@
                             </span>
                         </div>
                         <div class="input-group input-group-sm">
-                            <input id="valueDate" type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                            <input id="valueDate" type="text" class="form-control" uib-datepicker-popup="{{vm.format}}"
                                    name="valueDate" ng-model="vm.valueDate" is-open="vm.datepickers.valueDate"
-                                   datepicker-options="dateOptions" ng-required="true"
+                                   datepicker-options="vm.dateOptions" ng-required="true"
                                    close-text="Close" />
                             <span class="input-group-btn">
                                 <button class="btn btn-xs" ng-click="vm.open($event,'valueDate')" ng-focus="vm.datepickers.valueDate=true">

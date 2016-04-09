@@ -7,7 +7,8 @@
     .controller("cashflowsController", cashflowsController)
     ;
     
-    function cashflowsController($http, $location, $rootScope, uiGridConstants,$uibModal
+    function cashflowsController($http, $location, $rootScope,
+        uiGridConstants, $uibModal, $timeout
         ) {
 
         var vm = this;
@@ -239,8 +240,17 @@
         vm.open = function ($event, which) {
             $event.preventDefault();
             $event.stopPropagation();
+            $timeout(function () {
+                angular.forEach(vm.datepickers, function (value, key) {
+                    if (key == which) {
+                        vm.datepickers[key] = true;
+                    }
+                    else {
+                        vm.datepickers[key] = false;
+                    }
 
-            $timeout(function () { vm.datepickers[which] = true; });
+                });
+            });
         };
         vm.dateOptions = {
             'year-format': "'yy'",

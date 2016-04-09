@@ -21,9 +21,9 @@
                     <div class="col-md-4">
                         <label for="startDate">Start Date</label>
                         <div class="input-group">
-                            <input id="startDate" type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                            <input id="startDate" type="text" class="form-control" uib-datepicker-popup="{{vm.format}}"
                                    name="startDate" ng-model="vm.startDate" is-open="vm.datepickers.startDate"
-                                   datepicker-options="dateOptions" ng-required="true"
+                                   datepicker-options="vm.dateOptions" ng-required="true"
                                    close-text="Close" />
                             <span class="input-group-btn">
                                 <button class="btn btn-default" ng-click="vm.open($event,'startDate')" ng-focus="vm.datepickers.startDate=true">
@@ -37,9 +37,9 @@
                     <div class="col-md-4">
                         <label for="endDate">End Date</label>
                         <div class="input-group">
-                            <input id="endDate" type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                            <input id="endDate" type="text" class="form-control" uib-datepicker-popup="{{vm.format}}"
                                    name="endDate" ng-model="vm.endDate" is-open="vm.datepickers.endDate"
-                                   datepicker-options="dateOptions" ng-required="true"
+                                   datepicker-options="vm.dateOptions" ng-required="true"
                                    close-text="Close" />
                             <span class="input-group-btn">
                                 <button class="btn btn-default" ng-click="vm.open($event,'endDate')" ng-focus="vm.datepickers.endDate=true">

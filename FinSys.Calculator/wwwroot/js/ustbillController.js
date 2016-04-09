@@ -8,7 +8,7 @@
     ;
     
     function ustbillController($http, $location,$window, $rootScope
-        , $uibModal, helpService
+        , $uibModal, helpService, $timeout
         ) {
 
         var vm = this;
@@ -214,7 +214,20 @@
         vm.open = function ($event, which) {
             $event.preventDefault();
             $event.stopPropagation();
-            $timeout(function () { vm.datepickers[which] = true; });
+            $timeout(function ()
+            {
+                angular.forEach(vm.datepickers, function (value, key) {
+                    if (key == which)
+                    {
+                        vm.datepickers[key] = true;
+                    }
+                    else
+                    {
+                        vm.datepickers[key] = false;
+                    }
+
+                });
+            });
         };
         vm.dateOptions = {
             'year-format': "'yy'",
