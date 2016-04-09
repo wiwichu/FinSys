@@ -6,7 +6,7 @@
         .controller('dayCountController', dayCountController);
 
     function dayCountController($http, $location, $rootScope,
-        uiGridConstants, $uibModal, $timeout) {
+        uiGridConstants, $uibModal, $timeout, helpService) {
         /* jshint validthis:true */
         var vm = this;
         vm.title = 'dayCountController';
@@ -149,6 +149,9 @@
                 controllerAs: "model"
             };
             $uibModal.open(options);
+        }
+        vm.getHelp = function (helpText) {
+            helpService(helpText);
         }
 
         ///////////////////// datepicker ///////////////////////

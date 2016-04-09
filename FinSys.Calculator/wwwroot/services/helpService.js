@@ -5,7 +5,7 @@
         .module('app-calculator')
         .factory('helpService',['$uibModal', helpService]);
 
-    function helpService($uibModal) {
+    function helpService($uibModal, $timeout) {
         var shinyNewServiceInstance = { test: "test" };
         //return shinyNewServiceInstance;
         return showHelp;
@@ -28,16 +28,26 @@
                         text: "Date on which the instrument matures.",
                         link: "#/Guide#maturitydate"
                     };
+                    break;
                 }
+                case "daycount":
+                    {
+                        help = {
+                            title: "Day Count",
+                            text: "Rules for calculating days in a period and payment factor.",
+                            link: "#/Guide#daycount"
+                        };
+                        break;
+                    }
             }
             var options = {
                 templateUrl: "/templates/helpDialog.html",
-                controller: function () {
+                controller: function ( $uibModalInstance) {
                     this.help = help;
                 },
                 controllerAs: "model"
             }
-            $uibModal.open(options);
+            var  theModal = $uibModal.open(options);
         };
     }
 })();

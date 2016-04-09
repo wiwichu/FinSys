@@ -46,7 +46,8 @@ namespace FinSys.Calculator
 #if DEBUG
             services.AddScoped<IMailService, DebugMailService>();
 #else
-            services.AddScoped<IMailService, RealMailService>();
+            services.AddScoped<IMailService, DebugMailService>();
+            //services.AddScoped<IMailService, RealMailService>();
 #endif
         }
 
@@ -63,8 +64,8 @@ namespace FinSys.Calculator
             loggerFactory.AddDebug(logLevel);
 #else
             loggerFactory.AddProvider(new EFLoggerProvider(logLevel,new FinSysContext()));
-
 #endif
+
             app.UseStaticFiles();
             Mapper.Initialize(config =>
             {

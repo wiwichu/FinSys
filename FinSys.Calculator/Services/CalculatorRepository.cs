@@ -526,6 +526,7 @@ namespace FinSys.Calculator.Services
                 DatesDescr holidayList = makeDates(holidays);
 
                 int status = 0;
+                _logger.LogInformation($"Calculating {instrument.Class}");
                 if (includeCashflows)
                 {
                     status = calculateWithCashFlows(instr, calcs, cashFlows, dateAdjust, holidayList);

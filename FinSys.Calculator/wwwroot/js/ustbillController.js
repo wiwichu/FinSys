@@ -164,8 +164,8 @@
             });
 
         }
-        vm.maturityDateHelp = function () {
-            helpService("maturitydate");
+        vm.getHelp = function (helpText) {
+            helpService(helpText);
         }
         var that = this;
         var api = {
