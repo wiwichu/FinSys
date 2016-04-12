@@ -16,7 +16,8 @@
     "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final",
     "EntityFramework.Relational": "7.0.0-rc1-final",
     "EntityFramework.Commands": "7.0.0-rc1-final",
-    "Microsoft.CodeAnalysis.FxCopAnalyzers": "1.1.0"
+    "Microsoft.CodeAnalysis.FxCopAnalyzers": "1.1.0",
+    "FinSys.Calc": "1.0.1"
   },
 
   "commands": {
@@ -27,7 +28,6 @@
   "frameworks": {
     "dnx451": {
       "dependencies": {
-        "Calc": "1.0.0-*"
       }
     }
   },
