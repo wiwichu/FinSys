@@ -58,6 +58,13 @@ namespace CalcTests
                 request.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 var response = await client.PostAsync(calcUri, request);
                 string responseBodyAsText = await response.Content.ReadAsStringAsync();
+                if (response.StatusCode == System.Net.HttpStatusCode.BadRequest
+                    && responseBodyAsText.Contains("Calculation maximum of")
+                    && responseBodyAsText.Contains("exceeded")
+                    )
+                {
+                    return;
+                }
                 //IEnumerable<CalculatorResultViewModel> result = JsonConvert.DeserializeObject<IEnumerable<CalculatorResultViewModel>>(responseBodyAsText);
                 List<CalculatorResultViewModel> results = null;
                 try

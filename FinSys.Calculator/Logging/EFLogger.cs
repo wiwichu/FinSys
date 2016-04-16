@@ -37,8 +37,11 @@ namespace FinSys.Calculator.Logging
                 Severity = Enum.GetName(typeof(LogLevel), logLevel),
                 Topic = "Log"
             };
-            _context.Logs.Add(log);
-            _context.SaveChanges();
+            lock(logLock)
+            {
+                _context.Logs.Add(log);
+                _context.SaveChanges();
+            }
         }
     }
 }
