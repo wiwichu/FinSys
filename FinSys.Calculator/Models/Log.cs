@@ -8,7 +8,7 @@ namespace FinSys.Calculator.Models
 {
     public class Log
     {
-        public int Id { get; set; }
+        public int Id { get; private set; }
         public string User { get; set; }
         public string Severity { get; set; }
         public DateTime LogTime { get; set; }

@@ -8,9 +8,14 @@ namespace FinSys.Calculator.Models
 {
     public class FinSysContext : DbContext
     {
+        static bool dbCreated = false;
         public FinSysContext()
         {
-            Database.EnsureCreated();
+            if (!dbCreated)
+            {
+                Database.EnsureCreated();
+                dbCreated = true;
+            }
         }
         public DbSet<Log> Logs { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -39,8 +39,13 @@ namespace FinSys.Calculator.Logging
             };
             lock(logLock)
             {
-                _context.Logs.Add(log);
-                _context.SaveChanges();
+                using (FinSysContext localContext = new FinSysContext())
+                {
+                    //_context.Logs.Add(log);
+                    //_context.SaveChanges();
+                    localContext.Logs.Add(log);
+                    localContext.SaveChanges();
+                }
             }
         }
     }

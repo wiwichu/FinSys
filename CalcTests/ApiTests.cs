@@ -42,6 +42,11 @@ namespace CalcTests
                 vmList.Add(Bund30360SemiPriceFromYISMA_1_Vm());
                 vmList[vmList.Count - 1].Id = Convert.ToString(++id);
                 vmList.Add(Bund30360YISMAFromSemiPrice_1_Vm());
+
+                //var badOne = DurationConvexity_1_Vm();
+                //badOne.ValueDate = badOne.MaturityDate.AddYears(1);
+                //vmList.Add(badOne);
+
                 vmList[vmList.Count - 1].Id = Convert.ToString(++id);
                 vmList.Add(BundAct365AnnualPriceFromYISMA_1_Vm());
                 vmList[vmList.Count - 1].Id = Convert.ToString(++id);
@@ -53,6 +58,7 @@ namespace CalcTests
                 vmList[vmList.Count - 1].Id = Convert.ToString(++id);
                 vmList.Add(DurationConvexity_1_Vm());
                 vmList[vmList.Count - 1].Id = Convert.ToString(++id);
+
                 var jSon = JsonConvert.SerializeObject(vmList);
                 var request = new StringContent(jSon);
                 request.Headers.ContentType = new MediaTypeHeaderValue("application/json");
