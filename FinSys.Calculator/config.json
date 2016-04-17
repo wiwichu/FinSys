@@ -1,7 +1,7 @@
 ﻿{
   "AppSettings": {
     "SiteEmailAddress": "me@aol.com",
-    "MaximumCalculations": "2",
+    "MaximumCalculations": "20",
     "LogLevel": "Verbose"
   },
   "Data": {
