@@ -8,10 +8,11 @@
     ;
     
     function cashflowsController($http, $location, $rootScope,
-        uiGridConstants, $uibModal, $timeout
+        uiGridConstants, $uibModal, $timeout, $q
         ) {
 
         var vm = this;
+        vm.calcText = "Present Values";
         vm.errorMessage = "";
         vm.opened = false;
         vm.isBusy = true;
@@ -171,8 +172,18 @@
             vm.init();
             vm.isBusy = false;
         }
+        vm.cancelCalc;
         vm.getPresentValues = function () {
+            if (vm.calcText == "Cancel") {
+                vm.calcText = "Present Values";
+                vm.isBusy = false;
+                vm.cancelCalc.resolve();
+                return;
+            }
+            vm.cancelCalc = $q.defer();
+            vm.calcText = "Cancel";
             vm.isBusy = true;
+            vm.errorMessage = "";
             vm.cashflowsPricing =
                 {
                     CashFlows: vm.cashFlows,
@@ -184,16 +195,26 @@
                     Interpolation: vm.selectedInterpolationMethod,
                     PriceFromCurve: vm.useCurve
                 };
-            $http.post(vm.apiPath, vm.cashflowsPricing)
+            $http.post(vm.apiPath, vm.cashflowsPricing, {
+                timeout: vm.cancelCalc.promise
+                // timeout: 10000
+            }
+            )
            .then(function (response) {
                vm.cashFlows = response.data;
                vm.requestJson = JSON.stringify(vm.cashflowsPricing, null, 2);
                vm.responseJson = JSON.stringify(response.data, null, 2);
            },
            function (err) {
-               vm.errorMessage = "Calculation Failed: " + err.data;
+               if (err.d != null) {
+                   vm.errorMessage = "Calculation Failed: " + err.data;
+               }
+               else {
+                   vm.errorMessage = "Calculation Interrupted.";
+               }
            })
            .finally(function () {
+               vm.calcText = "Present Values";
                vm.isBusy = false;
            });
 

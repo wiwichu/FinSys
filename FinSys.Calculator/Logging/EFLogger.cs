@@ -33,19 +33,19 @@ namespace FinSys.Calculator.Logging
             {
                 User = "Guest",
                 Message = formatter(state, exception),
-                LogTime = DateTime.Now,
+                LogTime = DateTime.UtcNow,
                 Severity = Enum.GetName(typeof(LogLevel), logLevel),
                 Topic = "Log"
             };
             lock(logLock)
             {
-                _context.Logs.Add(log);
-                _context.SaveChanges();
-                //using (FinSysContext localContext = new FinSysContext())
-                //{
-                //    localContext.Logs.Add(log);
-                //    localContext.SaveChanges();
-                //}
+                //_context.Logs.Add(log);
+                //_context.SaveChanges();
+                using (FinSysContext localContext = new FinSysContext())
+                {
+                    localContext.Logs.Add(log);
+                    localContext.SaveChanges();
+                }
             }
         }
     }
