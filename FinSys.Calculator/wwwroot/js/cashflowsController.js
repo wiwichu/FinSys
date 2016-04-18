@@ -8,7 +8,7 @@
     ;
     
     function cashflowsController($http, $location, $rootScope,
-        uiGridConstants, $uibModal, $timeout, $q
+        uiGridConstants, $uibModal, $timeout, helpService, $q
         ) {
 
         var vm = this;
@@ -240,6 +240,9 @@
                 controllerAs: "model"
             };
             $uibModal.open(options);
+        }
+        vm.getHelp = function (helpText) {
+            helpService(helpText);
         }
         ///////////////////// datepicker ///////////////////////
         vm.datepickers = {

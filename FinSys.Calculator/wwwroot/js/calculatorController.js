@@ -12,7 +12,7 @@
         , $uibModal
         , $q
         ,$timeout
-        , alertService
+        , helpService, alertService
         ) {
 
         var vm = this;
@@ -401,6 +401,9 @@
                 controllerAs: "model"
             };
             $uibModal.open(options);
+        }
+        vm.getHelp = function (helpText) {
+            helpService(helpText);
         }
         ///////////////////// datepicker ///////////////////////
         vm.datepickers = {

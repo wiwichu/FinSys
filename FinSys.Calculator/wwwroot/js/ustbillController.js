@@ -18,6 +18,9 @@
         vm.opened = false;
         vm.isBusy = true;
         vm.price = 0.00;
+        vm.discount = 0.00;
+        vm.bondequivalent = 0.00;
+        vm.mmyield = 0.00;
         vm.duration = 0.00;
         vm.modDuration = 0.00;
         vm.convexity = 0.00;
@@ -25,7 +28,7 @@
         vm.cvxPvbp = 0.00;
         vm.ustbill = {};
         vm.ustbill.discount = 0.00;
-        vm.ustbill.be = 0.00;
+        vm.ustbill.bondequivalent = 0.00;
         vm.ustbill.mmYield = 0.00;
         $rootScope.cfData = null;
         //vm.api = "/api/staticdata";
@@ -128,11 +131,11 @@
                 case 'discount':
                     vm.ustbill.calcsource = vm.discount;
                     break;
-                case 'be':
-                    vm.ustbill.calcsource = vm.be;
+                case 'bondequivalent':
+                    vm.ustbill.calcsource = vm.bondequivalent;
                     break;
                 case 'mmyield':
-                    vm.ustbill.calcsource = vm.mmYield;
+                    vm.ustbill.calcsource = vm.mmyield;
                     break;
                 default:
                     vm.errorMessage = "Invalid Calculation Choice";
@@ -143,12 +146,12 @@
             vm.responseJson = "";
             $http.post(vm.apiPath, vm.ustbill)
             .then(function (response) {
-                vm.ustbill.be = response.data.bondEquivalent;
+                vm.bondequivalent = response.data.bondEquivalent;
                 vm.convexity = response.data.convexity;
                 vm.cvxPvbp = response.data.convexityAdjustedPvbp;
-                vm.ustbill.discount = response.data.discount;
+                vm.discount = response.data.discount;
                 vm.duration = response.data.duration;
-                vm.ustbill.mmYield = response.data.mmYield;
+                vm.mmyield = response.data.mmYield;
                 vm.modDuration = response.data.modifiedDuration;
                 vm.price = response.data.price;
                 vm.pvbp = response.data.pvbp;
