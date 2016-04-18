@@ -30,6 +30,15 @@
                     };
                     break;
                 }
+                case "valuedate" :
+                {
+                    help = {
+                        title: "Value Date",
+                        text: "Also called Settlement Date. Base date used for calculating accrued interest and yield.",
+                        link: "#/Guide#valuedate"
+                    };
+                    break;
+                }
                 case "daycount":
                     {
                         help = {
