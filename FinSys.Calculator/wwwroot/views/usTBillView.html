@@ -155,9 +155,16 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="checkbox-inline">
-                    <input type="checkbox" name="includeCashflows" ng-model="vm.ustbill.includeCashflows"> Include Cashflows
-                </label>
+                <div class="input-group">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" name="includeCashflows" ng-model="vm.ustbill.includeCashflows"> Include Cashflows
+                    </label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-info btn-xs" ng-click="vm.getHelp('includeCashflows')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
@@ -186,23 +193,58 @@
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label for="duration">Duration</label>
+                <div class="input-group">
+                    <label for="duration">Duration</label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-info btn-xs" ng-click="vm.getHelp('duration')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
                 <input class="form-control" id="duration" readonly ng-model="vm.duration" />
             </div>
             <div class="form-group">
-                <label for="modDuration">Modified Duration</label>
+                <div class="input-group">
+                    <label for="modDuration">Modified Duration</label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-info btn-xs" ng-click="vm.getHelp('modifiedDuration')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
                 <input class="form-control" id="modDuration" readonly ng-model="vm.modDuration" />
             </div>
             <div class="form-group">
-                <label for="convexity">Convexity</label>
+                <div class="input-group">
+                    <label for="convexity">Convexity</label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-info btn-xs" ng-click="vm.getHelp('convexity')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
                 <input class="form-control" id="convexity" readonly ng-model="vm.convexity" />
             </div>
             <div class="form-group">
-                <label for="pvbp">PVBP</label>
+                <div class="input-group">
+                    <label for="pvbp">PVBP</label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-info btn-xs" ng-click="vm.getHelp('pvbp')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
                 <input class="form-control" id="pvbp" readonly ng-model="vm.pvbp" />
             </div>
             <div class="form-group">
-                <label for="cvxPvbp">Convexity Adjusted PVBP</label>
+                <div class="input-group">
+                    <label for="cvxPvbp">Convexity Adjusted PVBP</label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-info btn-xs" ng-click="vm.getHelp('cvxPvbp')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
                 <input class="form-control" id="cvxPvbp" readonly ng-model="vm.cvxPvbp" />
             </div>
         </div>
