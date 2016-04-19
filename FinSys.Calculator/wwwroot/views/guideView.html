@@ -10,6 +10,7 @@
             <li class="list-group-item borderless">
                 <a href="" ng-click="vm.gotoAnchor('userInterface')">User Interface</a>
                 <ul class="list-group borderless">
+                    <li class="list-group-item borderless"> <a href="" ng-click="vm.gotoAnchor('generalUI')">General</a></li>
                     <li class="list-group-item borderless"> <a href="" ng-click="vm.gotoAnchor('custCalc')">Custom Calculator</a></li>
                 </ul>
             </li>
@@ -33,16 +34,47 @@
     <div class="col-md-4 col-md-offset-4">
         <h2>User Interface</h2>
     </div>
-    <div id="custCalc" class="col-md-12">
-        <h3>Custom Calculator</h3>
-        <label>Allows for flexible Custom Calculations.</label><br/>
-        <div >
+    <div id="generalUI" class="col-md-12">
+        <h3>General</h3>
+        <label>The following features generally apply accross the UI.</label><br /><br />
+        <div class="col-md-7">
             <img src="/img/CustCalc.png" alt="Custom Calculator" class="img-responsive" />
         </div>
-        <h4>Holiday Input</h4>
-        <label>Allows for holiday input.</label><br />
-        <div id="api" name="custCalcHolidayInput">
-            <img src="/img/CustCalcHolidays.png" alt="Custom Calculator Holidays" class="img-responsive" />
+        <div id="api" class="col-md-12">
+            <h4>Api</h4>
+            <label>After a calculation has occurred, the Api button will be enabled. Clicking it will open the Api dialog.</label><br /><br />
+            <div class="col-md-7" name="custCalcApi">
+                <img src="/img/CustCalcApiCircled.png" alt="Custom Calculator Api" class="img-responsive" />
+            </div>
+            <div class="col-md-4 col-md-offset-1" name="Api">
+                <img src="/img/Api.png" alt="Api Dialog" class="img-responsive" />
+            </div>
+            <br/><br/>
+            <label>The Api Dialog provides the information necessary to call direct posts to the Api without using the UI.</label>
+            <br /><br />
+            <div class="col-md-12 borderless">
+                <ul class="list-group borderless">
+                    <li class="list-group-item borderless">Url - address to use when posting to the Api</li>
+                    <li class="list-group-item borderless">REQUEST JSON - Json sent in body for the latest Calculation.</li>
+                    <li class="list-group-item borderless">RESPONSE JSON - Json in response from latest calculation latest Calculation.</li>
+                </ul>
+            </div>
+            <br /><br />
+            <label>The request json can be edited to make an http post for a different calculation.</label>
+        </div>
+    </div>
+    <div id="custCalc" class="col-md-12">
+        <h3>Custom Calculator</h3>
+        <label>Allows for flexible Custom Calculations.</label><br /><br />
+        <div class="col-md-7">
+            <img src="/img/CustCalc.png" alt="Custom Calculator" class="img-responsive" />
+        </div>
+        <div class="col-md-12">
+            <h4>Holiday Input</h4>
+            <label>Allows for holiday input.</label><br /><br />
+            <div class="col-md-7" name="custCalcHolidayInput">
+                <img src="/img/CustCalcHolidays.png" alt="Custom Calculator Holidays" class="img-responsive" />
+            </div>
         </div>
     </div>
 </div>
@@ -52,7 +84,7 @@
         </div>
         <div id="maturitydate" class="col-md-12">
             <h3>Maturity Date</h3>
-            <label>Date on which the instrument matures.</label>
+            <label>Date on which the instrument matures.</label><br />
         </div>
         <div id="valuedate" class="col-md-12">
             <h3>Value Date</h3>
