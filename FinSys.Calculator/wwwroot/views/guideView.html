@@ -27,6 +27,7 @@
                             <li class="list-group-item borderless"> <a href="" ng-click="vm.gotoAnchor('CustCalcPayFreq')"><h6>Payment Frequency</h6></a></li>
                             <li class="list-group-item borderless"> <a href="" ng-click="vm.gotoAnchor('CustCalcCompoundFreq')"><h6>Compound Frequency</h6></a></li>
                             <li class="list-group-item borderless"> <a href="" ng-click="vm.gotoAnchor('CustCalcCalcDateAdjust')"><h6>Calculation Date Adjustment</h6></a></li>
+                            <li class="list-group-item borderless"> <a href="" ng-click="vm.gotoAnchor('CustCalcPayDateAdjust')"><h6>Payment Date Adjustment</h6></a></li>
                         </ul>
                     </li>
                 </ul>
@@ -171,6 +172,17 @@
             </label><br /><br />
             <div class="col-md-7" name="calcDateAdjDropDown">
                 <img src="/img/CalcDateAdjustDropDown.png" alt="Calculation Date Adjustment Dropdown" class="img-responsive" />
+            </div>
+        </div>
+        <div id="CustCalcPayDateAdjust" class="col-md-12">
+            <h4>Payment Date Adjustment</h4>
+            <label>
+                Payment
+                <a href="" ng-click="vm.gotoAnchor('dateAdjust')"> Date Adjustment</a>
+                sets how the scheduled payment date is adjusted for a non business date. While <a href="" ng-click="vm.gotoAnchor('CustCalcCalcDateAdjust')">Calculation Date Adjustment</a> actually changes the amount of the payment, Payment Date Adjustment only changes the date on which the payment is made. This can be important for precise yield calculation methods, such as <a href="" ng-click="vm.gotoAnchor('trueYield')">True Yield</a> which take the exact number of days to a payment into account.
+            </label><br /><br />
+            <div class="col-md-7" name="payDateAdjDropDown">
+                <img src="/img/PayDateAdjDropDown.png" alt="Payment Date Adjustment Dropdown" class="img-responsive" />
             </div>
         </div>
     </div>
