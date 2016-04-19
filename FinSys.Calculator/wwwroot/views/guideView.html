@@ -6,11 +6,16 @@
     </div>
     <div class="col-md-12 borderless">
         <ul class="list-group borderless" >
-            <li class="list-group-item borderless"><a href="" ng-click="vm.gotoAnchor('api')" >Api</a></li>
             <li class="list-group-item borderless">
                 <a href="" ng-click="vm.gotoAnchor('userInterface')">User Interface</a>
                 <ul class="list-group borderless">
-                    <li class="list-group-item borderless"> <a href="" ng-click="vm.gotoAnchor('generalUI')">General</a></li>
+                    <li class="list-group-item borderless">
+                        <a href="" ng-click="vm.gotoAnchor('generalUI')">General</a>
+                        <ul class="list-group borderless">
+                            <li class="list-group-item borderless"> <a href="" ng-click="vm.gotoAnchor('api')">Api</a></li>
+                            <li class="list-group-item borderless"> <a href="" ng-click="vm.gotoAnchor('help')">Help</a></li>
+                        </ul>
+                    </li>
                     <li class="list-group-item borderless"> <a href="" ng-click="vm.gotoAnchor('custCalc')">Custom Calculator</a></li>
                 </ul>
             </li>
@@ -61,6 +66,18 @@
             </div>
             <br /><br />
             <label>The request json can be edited to make an http post for a different calculation.</label>
+        </div>
+        <div id="help" class="col-md-12">
+            <h4>Help</h4>
+            <label>The circled question mark provides help on an item. Clicking it will open the Help Dialog</label><br /><br />
+            <div class="col-md-7" name="custCalcApi">
+                <img src="/img/CustCalcHelpCircled.png" alt="Custom Calculator Help" class="img-responsive" />
+            </div>
+            <div class="col-md-4 col-md-offset-1" name="Help">
+                <img src="/img/HelpDialog.png" alt="Help Dialog" class="img-responsive" />
+            </div>
+            <br /><br />
+            <label>The Help Dialog gives a brief description of the item plus a button to open the item in the guide.</label>
         </div>
     </div>
     <div id="custCalc" class="col-md-12">
