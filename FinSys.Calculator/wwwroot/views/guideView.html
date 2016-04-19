@@ -21,6 +21,9 @@
                         <ul class="list-group borderless">
                             <li class="list-group-item borderless"> <a href="" ng-click="vm.gotoAnchor('HolidayInput')"><h6>Holiday Input</h6></a></li>
                             <li class="list-group-item borderless"> <a href="" ng-click="vm.gotoAnchor('CalculationDefaults')"><h6>Calculation Defaults</h6></a></li>
+                            <li class="list-group-item borderless"> <a href="" ng-click="vm.gotoAnchor('CustCalcClass')"><h6>Instrument Class</h6></a></li>
+                            <li class="list-group-item borderless"> <a href="" ng-click="vm.gotoAnchor('CustCalcDayCount')"><h6>Day Count</h6></a></li>
+                            <li class="list-group-item borderless"> <a href="" ng-click="vm.gotoAnchor('CustCalcYieldDayCount')"><h6>Yield Day Count</h6></a></li>
                         </ul>
                     </li>
                 </ul>
@@ -92,6 +95,14 @@
         <div class="col-md-7">
             <img src="/img/CustCalc.png" alt="Custom Calculator" class="img-responsive" />
         </div>
+        <div id="CustCalcClass" class="col-md-12">
+            <h4>Instrument Class</h4>
+            <label><a href="" ng-click="vm.gotoAnchor('instrumentClass')">Instrument Class</a>
+ allows the selection of a class to set defaults. The defaults can then be overridden.</label><br /><br />
+            <div class="col-md-7" name="instrumentClassDropDown">
+                <img src="/img/ClassDropDown.png" alt="Instrument Class Dropdown" class="img-responsive" />
+            </div>
+        </div>
         <div id="HolidayInput" class="col-md-12">
             <h4>Holiday Input</h4>
             <label>Allows for holiday input.</label><br /><br />
@@ -106,11 +117,35 @@
                 <img src="/img/CustCalcDefaults.png" alt="Custom Calculator Holidays" class="img-responsive" />
             </div>
         </div>
+        <div id="CustCalcDayCount" class="col-md-12">
+            <h4>Day Count</h4>
+            <label>
+                <a href="" ng-click="vm.gotoAnchor('daycount')">Day Count</a>
+                allows the selection of a day count rule for calculating interest in a period.
+            </label><br /><br />
+            <div class="col-md-7" name="dayCountDropDown">
+                <img src="/img/DayCountDropDown.png" alt="Day Count Dropdown" class="img-responsive" />
+            </div>
+        </div>
+        <div id="CustCalcYieldDayCount" class="col-md-12">
+            <h4>Day Count</h4>
+            <label> Yield 
+                <a href="" ng-click="vm.gotoAnchor('daycount')">Day Count</a>
+                allows the selection of a day count rule for calculating days in a period for discounting future cashflows in yield calculations.
+            </label><br /><br />
+            <div class="col-md-7" name="yieldDayCountDropDown">
+                <img src="/img/YieldDayCountDropDown.png" alt="Yield Day Count Dropdown" class="img-responsive" />
+            </div>
+        </div>
     </div>
 </div>
     <div id="functional" class="col-md-12">
         <div class="col-md-4 col-md-offset-4">
             <h2>Functional Guide</h2>
+        </div>
+        <div id="instrumentClass" class="col-md-12">
+            <h3>Instrument Class</h3>
+            <label>Class of Instrument associated with defaults.</label><br />
         </div>
         <div id="maturitydate" class="col-md-12">
             <h3>Maturity Date</h3>
