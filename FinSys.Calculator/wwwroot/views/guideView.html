@@ -16,7 +16,13 @@
                             <li class="list-group-item borderless"> <a href="" ng-click="vm.gotoAnchor('help')">Help</a></li>
                         </ul>
                     </li>
-                    <li class="list-group-item borderless"> <a href="" ng-click="vm.gotoAnchor('custCalc')">Custom Calculator</a></li>
+                    <li class="list-group-item borderless">
+                        <a href="" ng-click="vm.gotoAnchor('custCalc')">Custom Calculator</a>
+                        <ul class="list-group borderless">
+                            <li class="list-group-item borderless"> <a href="" ng-click="vm.gotoAnchor('HolidayInput')">Holiday Input</a></li>
+                            <li class="list-group-item borderless"> <a href="" ng-click="vm.gotoAnchor('CalculationDefaults')">Calculation Defaults</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </li>
             <li class="list-group-item borderless"><a href="" ng-click="vm.gotoAnchor('functional')">Functional Guide</a></li>
@@ -86,11 +92,18 @@
         <div class="col-md-7">
             <img src="/img/CustCalc.png" alt="Custom Calculator" class="img-responsive" />
         </div>
-        <div class="col-md-12">
+        <div id="HolidayInput" class="col-md-12">
             <h4>Holiday Input</h4>
             <label>Allows for holiday input.</label><br /><br />
             <div class="col-md-7" name="custCalcHolidayInput">
                 <img src="/img/CustCalcHolidays.png" alt="Custom Calculator Holidays" class="img-responsive" />
+            </div>
+        </div>
+        <div id="CalculationDefaults" class="col-md-12">
+            <h4>Defaults</h4>
+            <label>Clicking the 'View Defaults' button will show the defults in effect and allow them to be edited.</label><br /><br />
+            <div class="col-md-7" name="custCalcHolidayInput">
+                <img src="/img/CustCalcDefaults.png" alt="Custom Calculator Holidays" class="img-responsive" />
             </div>
         </div>
     </div>
