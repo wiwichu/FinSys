@@ -4,13 +4,18 @@
             Guide
         </div>
     </div>
-    <div>
-        <ul class="nav">
-            <li><a href="" ng-click="vm.gotoAnchor('api')">Api</a></li>
-            <li><a href="" ng-click="vm.gotoAnchor('userInterface')">User Interface</a></li>
-            <li><a href="" ng-click="vm.gotoAnchor('functional')">Functional Guide</a></li>
-            <li><a href="" ng-click="vm.gotoAnchor('technical')">Technical Guide</a></li>
-            <li><a href="" ng-click="vm.gotoAnchor('references')">References</a></li>
+    <div class="col-md-12 borderless">
+        <ul class="list-group borderless" >
+            <li class="list-group-item borderless"><a href="" ng-click="vm.gotoAnchor('api')" >Api</a></li>
+            <li class="list-group-item borderless">
+                <a href="" ng-click="vm.gotoAnchor('userInterface')">User Interface</a>
+                <ul class="list-group borderless">
+                    <li class="list-group-item borderless"> <a href="" ng-click="vm.gotoAnchor('custCalc')">Custom Calculator</a></li>
+                </ul>
+            </li>
+            <li class="list-group-item borderless"><a href="" ng-click="vm.gotoAnchor('functional')">Functional Guide</a></li>
+            <li class="list-group-item borderless"><a href="" ng-click="vm.gotoAnchor('technical')">Technical Guide</a></li>
+            <li class="list-group-item borderless"><a href="" ng-click="vm.gotoAnchor('references')">References</a></li>
         </ul>
     </div>
     <!--<div class="row">
@@ -46,22 +51,22 @@
             <h2>Functional Guide</h2>
         </div>
         <div id="maturitydate" class="col-md-12">
-            <h4>Maturity Date</h4>
+            <h3>Maturity Date</h3>
             <label>Date on which the instrument matures.</label>
         </div>
         <div id="valuedate" class="col-md-12">
-            <h4>Value Date</h4>
+            <h3>Value Date</h3>
             <label>Also called Settlement Date. Base date used for calculating accrued interest and yield.</label>
         </div>
         <div id="daycount" class="col-md-12">
-            <h4>Day Count</h4>
+            <h3>Day Count</h3>
             <label>
                 Day Count both determines the number of days between 2 dates and also in the factor to multiply by the
                 rate and nominal to arrive at accrued interest over the range. Some day count rules only differ within the context of an instrument
                 where they are used to also determine the amount of a coupon payment, such as ACT/365CD.
             </label>
             <div id="30EP_360" class="col-md-12">
-                <h5>30E+/360</h5>
+                <h4>30E+/360</h4>
                 <label>
                     Factor = Num/Den Num:
                     <br />1. If D1 = 31, Set D1 = 30
@@ -71,7 +76,7 @@
                 </label>
             </div>
             <div id="30E_360" class="col-md-12">
-                <h5>30E/360</h5>
+                <h4>30E/360</h4>
                 <label>
                     Factor = Num/Den
                     Num:
@@ -83,7 +88,7 @@
                 </label>
             </div>
             <div id="30_360German" class="col-md-12">
-                <h5>30/360 German</h5>
+                <h4>30/360 German</h4>
                 <label>
                     Factor = Num/Den
                     Num:
@@ -94,7 +99,7 @@
                 </label>
             </div>
             <div id="30_360ISDA(Muni)" class="col-md-12">
-                <h5>30/360 ISDA(Muni)</h5>
+                <h4>30/360 ISDA(Muni)</h4>
                 <label>
                     Factor = Num/Den
                     Num:
@@ -105,7 +110,7 @@
                 </label>
             </div>
             <div id="ACT_360" class="col-md-12">
-                <h5>ACT/360</h5>
+                <h4>ACT/360</h4>
                 <label>
                     Factor = Num/Den
                     <br />Num = Actual number of days within the accrual period
@@ -113,7 +118,7 @@
                 </label>
             </div>
             <div id="ACT_365" class="col-md-12">
-                <h5>ACT/365</h5>
+                <h4>ACT/365</h4>
                 <label>
                     Factor = Num/Den
                     <br />Num = Actual number of days within the accrual period
@@ -121,21 +126,21 @@
                 </label>
             </div>
             <div id="ACT_365CD" class="col-md-12">
-                <h5>ACT/365CD</h5>
+                <h4>ACT/365CD</h4>
                 <label>
                     Similar to ACT/365. However the amount of the coupon will vary accordimg to the days in the period.
                     <br />Whereas in ACT/365 the coupon is constant and the daily accrual changes.
                 </label>
             </div>
             <div id="ACT_360CD" class="col-md-12">
-                <h5>ACT/360CD</h5>
+                <h4>ACT/360CD</h4>
                 <label>
                     Similar to ACT/360. However the amount of the coupon will vary accordimg to the days in the period.
                     <br />Whereas in ACT/360 the coupon is constant and the daily accrual changes.
                 </label>
             </div>
             <div id="ACT_ACT(UST)" class="col-md-12">
-                <h5>ACT/ACT(UST)</h5>
+                <h4>ACT/ACT(UST)</h4>
                 <label>
                     In the context of a simple date range:
                     <br />Factor = Days1 /366 + Days2 / 365
@@ -148,7 +153,7 @@
                 </label>
             </div>
             <div id="ACT_365L" class="col-md-12">
-                <h5>ACT/365L</h5>
+                <h4>ACT/365L</h4>
                 <label>
                     Factor = Num/Den
                     <br />Num = Actual number of days within the accrual period
@@ -156,7 +161,7 @@
                 </label>
             </div>
             <div id="ACT_365A" class="col-md-12">
-                <h5>ACT/365A</h5>
+                <h4>ACT/365A</h4>
                 <label>
                     Factor = Num/Den
                     <br />Num = Actual number of days within the accrual period
@@ -164,7 +169,7 @@
                 </label>
             </div>
             <div id="ACT_ACT(ISDA)" class="col-md-12">
-                <h5>ACT/ACT(ISDA)</h5>
+                <h4>ACT/ACT(ISDA)</h4>
                 <label>
                     Factor = Days1 /366 + Days2 / 365
                     <br />Days1 = Actual number of days in period that fall in a leap year.
@@ -172,7 +177,7 @@
                 </label>
             </div>
             <div id="NL_365" class="col-md-12">
-                <h5>NL/365</h5>
+                <h4>NL/365</h4>
                 <label>
                     Factor = Num/Den
                     <br />Num: If the Leap day (29th Feb) does not fall within the accrual period
@@ -186,7 +191,7 @@
                 </label>
             </div>
             <div id="ACT_366" class="col-md-12">
-                <h5>ACT/366</h5>
+                <h4>ACT/366</h4>
                 <label>
                     Factor = Num/Den
                     <br />Num = Actual number of days within the accrual period
@@ -194,7 +199,7 @@
                 </label>
             </div>
             <div id="30_360US" class="col-md-12">
-                <h5>30/360 US</h5>
+                <h4>30/360 US</h4>
                 <label>
                     Factor = Num/Den
                     <br />Num:
