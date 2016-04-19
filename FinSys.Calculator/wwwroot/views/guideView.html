@@ -24,6 +24,9 @@
                             <li class="list-group-item borderless"> <a href="" ng-click="vm.gotoAnchor('CustCalcClass')"><h6>Instrument Class</h6></a></li>
                             <li class="list-group-item borderless"> <a href="" ng-click="vm.gotoAnchor('CustCalcDayCount')"><h6>Day Count</h6></a></li>
                             <li class="list-group-item borderless"> <a href="" ng-click="vm.gotoAnchor('CustCalcYieldDayCount')"><h6>Yield Day Count</h6></a></li>
+                            <li class="list-group-item borderless"> <a href="" ng-click="vm.gotoAnchor('CustCalcPayFreq')"><h6>Payment Frequency</h6></a></li>
+                            <li class="list-group-item borderless"> <a href="" ng-click="vm.gotoAnchor('CustCalcCompoundFreq')"><h6>Compound Frequency</h6></a></li>
+                            <li class="list-group-item borderless"> <a href="" ng-click="vm.gotoAnchor('CustCalcCalcDateAdjust')"><h6>Calculation Date Adjustment</h6></a></li>
                         </ul>
                     </li>
                 </ul>
@@ -128,13 +131,46 @@
             </div>
         </div>
         <div id="CustCalcYieldDayCount" class="col-md-12">
-            <h4>Day Count</h4>
+            <h4>Yield Day Count</h4>
             <label> Yield 
                 <a href="" ng-click="vm.gotoAnchor('daycount')">Day Count</a>
                 allows the selection of a day count rule for calculating days in a period for discounting future cashflows in yield calculations.
             </label><br /><br />
             <div class="col-md-7" name="yieldDayCountDropDown">
                 <img src="/img/YieldDayCountDropDown.png" alt="Yield Day Count Dropdown" class="img-responsive" />
+            </div>
+        </div>
+        <div id="CustCalcPayFreq" class="col-md-12">
+            <h4>Payment Frequency</h4>
+            <label>
+                Yield
+                <a href="" ng-click="vm.gotoAnchor('payFreq')">Payment Frequency</a>
+                allows the selection of a rule setting how often a payment occurs.
+            </label><br /><br />
+            <div class="col-md-7" name="payFreqDropDown">
+                <img src="/img/PayFreqDropDown.png" alt="Pay Frequency Dropdown" class="img-responsive" />
+            </div>
+        </div>
+        <div id="CustCalcCompoundFreq" class="col-md-12">
+            <h4>Compound Frequency</h4>
+            <label>
+                Compound
+                <a href="" ng-click="vm.gotoAnchor('payFreq')"> Frequency</a>
+                allows the selection of a rule setting how often compounding occurs in determining present value for yield calculations.
+            </label><br /><br />
+            <div class="col-md-7" name="compoundFreqDropDown">
+                <img src="/img/CompoundFreqDropDown.png" alt="Compound Frequency Dropdown" class="img-responsive" />
+            </div>
+        </div>
+        <div id="CustCalcCalcDateAdjust" class="col-md-12">
+            <h4>Calculation Date Adjustment</h4>
+            <label>
+                Calculation
+                <a href="" ng-click="vm.gotoAnchor('dateAdjust')"> Date Adjustment</a>
+                sets how the date at the end of a period for calculating the interest is adjusted for a non business date.
+            </label><br /><br />
+            <div class="col-md-7" name="calcDateAdjDropDown">
+                <img src="/img/CalcDateAdjustDropDown.png" alt="Calculation Date Adjustment Dropdown" class="img-responsive" />
             </div>
         </div>
     </div>
@@ -146,6 +182,14 @@
         <div id="instrumentClass" class="col-md-12">
             <h3>Instrument Class</h3>
             <label>Class of Instrument associated with defaults.</label><br />
+        </div>
+        <div id="payFreq" class="col-md-12">
+            <h3>Payment Frequency</h3>
+            <label>Rules for setting how often a payment occurs.</label><br />
+        </div>
+        <div id="dateAdjust" class="col-md-12">
+            <h3>Date Adjustment</h3>
+            <label>Rules for setting how a date is adjusted if it falls on a non business date (weekends or holidays).</label><br />
         </div>
         <div id="maturitydate" class="col-md-12">
             <h3>Maturity Date</h3>
