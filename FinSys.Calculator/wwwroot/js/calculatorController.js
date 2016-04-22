@@ -66,7 +66,15 @@
                 vm.selectedCalcDateAdjust = response.data.holidayAdjust;
                 vm.selectedCompoundFrequency = response.data.yieldFrequency;
                 vm.selectedDayCount = response.data.dayCount;
-                vm.selectedPayDateAdjust = response.data.holidayAdjust;
+                if (vm.payDateAdjust != null && vm.payDateAdjust[0] != null) {
+                    var ind = vm.payDateAdjust.lastIndexOf("Next");
+                    if (ind == -1) {
+                        vm.selectedPayDateAdjust = response.data.holidayAdjust;
+                    }
+                    else {
+                        vm.selectedPayDateAdjust = vm.payDateAdjust[ind];
+                    }
+                }
                 vm.selectedPayFrequency = response.data.payFreq;
                 vm.selectedYieldDayCount = response.data.yieldDayCount;
                 vm.selectedYieldMethod = response.data.yieldMethod;
@@ -93,8 +101,13 @@
                 if ($rootScope.staticData) {
                     vm.instrumentClass = $rootScope.staticData.instrumentClasses;
                     if ($rootScope.staticData.instrumentClasses != null && $rootScope.staticData.instrumentClasses[0] != null) {
-                        //vm.selectedInstrumentClass = $rootScope.staticData.instrumentClasses[0];
-                        vm.selectedInstrumentClass = "Eurobond";
+                        var ind = $rootScope.staticData.instrumentClasses.lastIndexOf("Eurobond");
+                        if (ind == -1) {
+                            vm.selectedInstrumentClass = $rootScope.staticData.instrumentClasses[0];
+                        }
+                        else {
+                            vm.selectedInstrumentClass = $rootScope.staticData.instrumentClasses[ind];
+                        }
                     }
                     vm.yieldMethod = $rootScope.staticData.yieldMethods;
                     if (vm.yieldMethod != null && vm.yieldMethod[0] != null) {
@@ -122,7 +135,14 @@
                     }
                     vm.payDateAdjust = $rootScope.staticData.holidayAdjust;
                     if (vm.payDateAdjust != null && vm.payDateAdjust[0] != null) {
-                        vm.selectedPayDateAdjust = vm.payDateAdjust[0];
+                        var ind = vm.payDateAdjust.lastIndexOf("Next");
+                        if (ind == -1) {
+                            vm.selectedPayDateAdjust = vm.payDateAdjust[0];
+                        }
+                        else
+                        {
+                            vm.selectedPayDateAdjust = vm.payDateAdjust[ind];
+                        }
                     }
                     vm.instrumentClassChanged();
                 }

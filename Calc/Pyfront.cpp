@@ -226,7 +226,24 @@ unsigned long FAR _export	 Py_Front::action_proc_monthend()
 	}
 	return return_success;
 }
+unsigned long FAR _export	 Py_Front::action_proc_payadj()
+{
 
+	if (strcmp(current_payadj_name,
+		holiday_adj_names[monthend_yes]) == 0)
+	{
+
+		current_payadj = monthend_yes;
+
+	}
+	else
+	{
+
+		current_payadj = monthend_no;
+
+	}
+	return return_success;
+}
 unsigned long FAR _export	Py_Front::action_sink_fund_mat()
 {
 
@@ -664,6 +681,102 @@ unsigned long FAR _export	Py_Front::proc_simp_comp_frn_py()
 		}
 	}
 	return return_success;
+}
+unsigned long FAR _export	Py_Front::proc_pay_adj_py()
+{
+	if (return_state != return_success)
+	{
+		return return_state;
+	}
+
+
+	if (strcmp(current_payadj_name,
+		holiday_adj_names[0]) == 0)
+	{
+
+		current_payadj =
+			event_sched_march_holiday_adj;
+
+	}
+
+	else
+	{
+
+		if (strcmp(current_payadj_name,
+			holiday_adj_names[1]) == 0)
+		{
+
+			current_payadj =
+				event_sched_next_holiday_adj;
+
+		}
+		else
+		{
+			if (strcmp(current_payadj_name,
+				holiday_adj_names[2]) == 0)
+			{
+
+				current_payadj =
+					event_sched_np_holiday_adj;
+
+			}
+
+			else
+			{
+
+				if (strcmp(current_payadj_name,
+					holiday_adj_names[3]) == 0)
+				{
+
+					current_payadj =
+						event_sched_prev_holiday_adj;
+
+				}
+				else
+				{
+
+					if (strcmp(current_payadj_name,
+						holiday_adj_names[4]) == 0)
+					{
+
+						current_payadj =
+							event_sched_pn_holiday_adj;
+
+					}
+					else
+					{
+
+						if (strcmp(current_payadj_name,
+							holiday_adj_names[5]) == 0)
+						{
+
+							current_payadj =
+								event_sched_same_holiday_adj;
+
+						}
+						else
+						{
+
+							current_payadj =
+								event_sched_same_holiday_adj;
+
+							return_state = return_err_invalid_holiday;
+
+							////errproc(return_state,module_name,"","","");
+
+							return return_state;
+
+						}
+					}
+				}
+			}
+		}
+	}
+	pyparm.parm_use = py_yes_parm_use;
+
+	pyparm.pay_adj = current_payadj;
+	return return_success;
+
 }
 unsigned long FAR _export	Py_Front::proc_holi_py()
 {
@@ -4327,6 +4440,13 @@ unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::proc_monthend()
 
 }
 
+unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::proc_payadj()
+{
+	return action_proc_payadj();
+	//action = py_action_proc_monthend;
+	//return pyproc45();
+
+}
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::proc_excoup()
 {
 	return action_proc_excoup();
@@ -5180,6 +5300,32 @@ unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getmonthend(int *monthend_numbe
 {
 	return_state = return_success;
 	*monthend_number = current_monthend;
+	return return_state;
+}
+unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getpayadj(int *pay_adj_number)
+{
+	return_state = return_success;
+	*pay_adj_number = current_payadj;
+	return return_state;
+}
+unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setpayadj(int pay_adj_number)
+{
+	return_state = return_success;
+	if (pay_adj_number >= holiday_adj_count)
+	{
+		current_payadj =
+			event_sched_same_holiday_adj;
+
+		return_state = return_err_invalid_holiday;
+
+		return return_state;
+
+	}
+	current_payadj = pay_adj_number;
+
+	strcpy(current_payadj_name,
+		holiday_adj_names[pay_adj_number]);
+
 	return return_state;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setexcoupdays(int excoupdays)

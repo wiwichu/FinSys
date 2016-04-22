@@ -271,6 +271,20 @@ int preProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_F
 		return result;
 	}
 
+	if (calculations.payDateAdjust != noValue)
+	{
+		result = pyfront.setpayadj(calculations.payDateAdjust);
+		if (result != return_success)
+		{
+			return result;
+		}
+		result = pyfront.proc_pay_adj_py();
+		if (result != return_success)
+		{
+			return result;
+		}
+	}
+
 	if (instrument.holidayAdjust != noValue)
 	{
 		result = pyfront.setholidayadj(holiday_adj_names[instrument.holidayAdjust]);
@@ -1034,7 +1048,9 @@ int  priceCashFlows(CashFlowsStruct &cashFlowsStruct,
 	}
 	return return_success;
 }
-int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &calculations,CashFlowsStruct &cashFlowsStruct, int adjustRule, DatesStruct &holidays)
+int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &calculations,CashFlowsStruct &cashFlowsStruct, 
+	//int adjustRule, 
+	DatesStruct &holidays)
 {
 	Py_Front pyfront;
 	int result = preProc(instrument, calculations, pyfront);
@@ -1241,7 +1257,8 @@ int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &ca
 			int holi_chan = 0;
 			result = Date_Funcs::adj_date(&date_hold,
 					adj_date_non_to_bus,
-					adjustRule,
+					calculations.payDateAdjust,
+					//adjustRule,
 					adj_date_yes_we,
 					adj_date_yes_hol,
 					//				in_instr->holiday_code,
@@ -1305,6 +1322,7 @@ int  USTBillCalcFromPrice(DateStruct &valueDate, DateStruct &maturityDate,
 	calculations.yieldDayCount = noValue;
 	calculations.yieldFreq = noValue;
 	calculations.yieldMethod = noValue;
+	calculations.payDateAdjust = noValue;
 	int result = getInstrumentDefaultsAndData(instrument, calculations);
 	if (result != return_success)
 	{
@@ -1408,6 +1426,7 @@ int  USTBillCalcFromPriceWithCashFlows(DateStruct &valueDate, DateStruct &maturi
 	calculations.yieldDayCount = noValue;
 	calculations.yieldFreq = noValue;
 	calculations.yieldMethod = noValue;
+	calculations.payDateAdjust = noValue;
 	int result = getInstrumentDefaultsAndData(instrument, calculations);
 	if (result != return_success)
 	{
@@ -1437,7 +1456,10 @@ int  USTBillCalcFromPriceWithCashFlows(DateStruct &valueDate, DateStruct &maturi
 	}
 	discount = calculations.yieldOut;
 	calculations.yieldMethod = py_mm_yield_meth;
-	result = calculateWithCashFlows(instrument, calculations, cashFlowsStruct, adjustRule, holidays);
+	calculations.payDateAdjust = adjustRule;
+	result = calculateWithCashFlows(instrument, calculations, cashFlowsStruct, 
+		//adjustRule, 
+		holidays);
 	if (result != return_success)
 	{
 		return result;
@@ -1507,6 +1529,7 @@ int  USTBillCalcFromPriceWithCashFlows(DateStruct &valueDate, DateStruct &maturi
 	calculations.yieldDayCount = noValue;
 	calculations.yieldFreq = noValue;
 	calculations.yieldMethod = noValue;
+	calculations.payDateAdjust = noValue;
 	int result = getInstrumentDefaultsAndData(instrument, calculations);
 	if (result != return_success)
 	{
@@ -1616,6 +1639,7 @@ int  USTBillCalcFromDiscount(DateStruct &valueDate, DateStruct &maturityDate,
 	calculations.yieldDayCount = noValue;
 	calculations.yieldFreq = noValue;
 	calculations.yieldMethod = noValue;
+	calculations.payDateAdjust = noValue;
 	int result = getInstrumentDefaultsAndData(instrument, calculations);
 	if (result != return_success)
 	{
@@ -1723,6 +1747,7 @@ int  USTBillCalcFromMMYield(DateStruct &valueDate, DateStruct &maturityDate,
 	calculations.yieldDayCount = noValue;
 	calculations.yieldFreq = noValue;
 	calculations.yieldMethod = noValue;
+	calculations.payDateAdjust = noValue;
 	int result = getInstrumentDefaultsAndData(instrument, calculations);
 	if (result != return_success)
 	{

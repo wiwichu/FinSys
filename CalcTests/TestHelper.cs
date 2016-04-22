@@ -235,6 +235,7 @@ namespace CalcTests
         public double modifiedDuration;
         public double pvbpConvexityAdjusted;
         public int tradeflat;
+        public int payDateAdj;
     };
     [StructLayout(LayoutKind.Sequential)]
     public class DateDescr
@@ -291,6 +292,7 @@ namespace CalcTests
         public string YieldDayCount { get; set; }
         public string YieldFreq { get; set; }
         public string YieldMethod { get; set; }
+        public string PayDateAdj { get; set; }
     }
 
 }

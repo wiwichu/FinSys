@@ -35,7 +35,9 @@ namespace FinSys.Calculator.Services
         [DllImport("calc", CallingConvention = CallingConvention.Cdecl)]
         private static extern int getCashFlows(CashFlowsDescr cashFlows, ref int size);
         [DllImport("calc", CallingConvention = CallingConvention.Cdecl)]
-        private static extern int calculateWithCashFlows(InstrumentDescr instrument, CalculationsDescr calculations, CashFlowsDescr cashFlows, int dateAdjustRule, DatesDescr holidays);
+        private static extern int calculateWithCashFlows(InstrumentDescr instrument, CalculationsDescr calculations, CashFlowsDescr cashFlows, 
+            //int dateAdjustRule, 
+            DatesDescr holidays);
         [DllImport("calc", CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr getHolidayAdjust(out int size);
         [DllImport("calc", CallingConvention = CallingConvention.Cdecl)]
@@ -303,8 +305,9 @@ namespace FinSys.Calculator.Services
                 tradeflat = calcs.TradeFlat ? 1 : 0,
                 yieldDayCount = dayCounts.IndexOf(calcs.YieldDayCount),
                 yieldFreq = payFreqs.IndexOf(calcs.YieldFreq),
-                yieldMethod = yieldMethods.IndexOf(calcs.YieldMethod)
-            };
+                yieldMethod = yieldMethods.IndexOf(calcs.YieldMethod),
+                payDateAdj = holidayAdjusts.IndexOf(calcs.PayHolidayAdjust)
+        };
             DateDescr valueDate = new DateDescr
             {
                 year = calcs.ValueDate.Year,
@@ -380,6 +383,7 @@ namespace FinSys.Calculator.Services
                 calcs.yieldMethod = InstrumentDescr.noValue;
                 calcs.yieldFreq = InstrumentDescr.noValue;
                 calcs.yieldDayCount = InstrumentDescr.noValue;
+                calcs.payDateAdj = InstrumentDescr.noValue;
                 DatesDescr holidayList = makeDates(holidays);
                 int status = getDefaultDatesAndData(instr, calcs, holidayList);
                 if (status != 0)
@@ -459,6 +463,7 @@ namespace FinSys.Calculator.Services
                 calcs.yieldDayCount = InstrumentDescr.noValue;
                 calcs.yieldFreq = InstrumentDescr.noValue;
                 calcs.yieldMethod = InstrumentDescr.noValue;
+                calcs.payDateAdj = InstrumentDescr.noValue;
                 instr.holidayAdjust = InstrumentDescr.noValue;
                 instr.intDayCount = InstrumentDescr.noValue;
                 instr.intPayFreq = InstrumentDescr.noValue;
@@ -529,7 +534,9 @@ namespace FinSys.Calculator.Services
                 _logger.LogInformation($"Calculating {instrument.Class}");
                 if (includeCashflows)
                 {
-                    status = calculateWithCashFlows(instr, calcs, cashFlows, dateAdjust, holidayList);
+                    status = calculateWithCashFlows(instr, calcs, cashFlows, 
+                        //dateAdjust, 
+                        holidayList);
                 }
                 else
                 {
@@ -1278,6 +1285,7 @@ public class CalculationsDescr
     public double modifiedDuration;
     public double pvbpConvexityAdjusted;
     public int tradeflat;
+    public int payDateAdj;
 };
 [StructLayout(LayoutKind.Sequential)]
 public class DateDescr

@@ -42,7 +42,9 @@ namespace CalcTests
         [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Debug/calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int intCalc(DateDescr startDate, DateDescr endDate, int dayCountRule,out int days,out double dayCountFraction);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
-        private static extern int calculateWithCashFlows(InstrumentDescr instrument, CalculationsDescr calculations, CashFlowsDescr cashFlows, int dateAdjustRule, DatesDescr holidays);
+        private static extern int calculateWithCashFlows(InstrumentDescr instrument, CalculationsDescr calculations, CashFlowsDescr cashFlows, 
+            //int dateAdjustRule, 
+            DatesDescr holidays);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr getHolidayAdjust(out int size);
         [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -1842,8 +1844,8 @@ namespace CalcTests
             calculations.calculatePrice = 0;
             instrument.interestRate = 0.025;
             CashFlowsDescr cashFlows = new CashFlowsDescr();
-            int dateAdjust = (int)TestHelper.DateAdjustRule.event_sched_next_holiday_adj;
-            status = calculateWithCashFlows(instrument, calculations, cashFlows, dateAdjust, holidays);
+            calculations.payDateAdj = (int)TestHelper.DateAdjustRule.event_sched_next_holiday_adj;
+            status = calculateWithCashFlows(instrument, calculations, cashFlows, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -1939,7 +1941,7 @@ namespace CalcTests
             Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
             instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
             Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
-            int dateAdjust = instrument.holidayAdjust;
+            calculations.payDateAdj = instrument.holidayAdjust;
             var structSize = Marshal.SizeOf(typeof(CashFlowDescr));
             var cashFlowsOutSer = new ConcurrentBag<CashFlowDescr>();
             var cashFlowsOut = new ConcurrentBag<CashFlowDescr>();
@@ -1949,7 +1951,7 @@ namespace CalcTests
                 (c) =>
                 {
                     CashFlowsDescr cashFlows = new CashFlowsDescr();
-                    status = calculateWithCashFlows(instrument, calculations, cashFlows, dateAdjust, holidays);
+                    status = calculateWithCashFlows(instrument, calculations, cashFlows, holidays);
                     //status = calculate(instrument, calculations, holidays);
                     if (status != 0)
                     {
@@ -1974,7 +1976,7 @@ namespace CalcTests
                 (c) =>
                 {
                     CashFlowsDescr cashFlows = new CashFlowsDescr();
-                    status = calculateWithCashFlows(instrument, calculations, cashFlows, dateAdjust, holidays);
+                    status = calculateWithCashFlows(instrument, calculations, cashFlows, holidays);
                     //status = calculate(instrument, calculations, holidays);
                     if (status != 0)
                     {
@@ -2221,9 +2223,9 @@ namespace CalcTests
             Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
             CashFlowsDescr cashFlows = new CashFlowsDescr();
             //cashFlows.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) );
-            int dateAdjust = instrument.holidayAdjust;
+            calculations.payDateAdj = instrument.holidayAdjust;
             //int status = calculate(instr, calcs);
-            status = calculateWithCashFlows(instrument, calculations, cashFlows, dateAdjust, holidays);
+            status = calculateWithCashFlows(instrument, calculations, cashFlows, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -2319,9 +2321,9 @@ namespace CalcTests
             Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
             CashFlowsDescr cashFlows = new CashFlowsDescr();
             //cashFlows.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) );
-            int dateAdjust = instrument.holidayAdjust;
+            calculations.payDateAdj = instrument.holidayAdjust;
             //int status = calculate(instr, calcs);
-            status = calculateWithCashFlows(instrument, calculations, cashFlows, dateAdjust, holidays);
+            status = calculateWithCashFlows(instrument, calculations, cashFlows, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -2417,9 +2419,9 @@ namespace CalcTests
             Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
             CashFlowsDescr cashFlows = new CashFlowsDescr();
             //cashFlows.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) );
-            int dateAdjust = instrument.holidayAdjust;
+            calculations.payDateAdj = instrument.holidayAdjust;
             //int status = calculate(instr, calcs);
-            status = calculateWithCashFlows(instrument, calculations, cashFlows, dateAdjust, holidays);
+            status = calculateWithCashFlows(instrument, calculations, cashFlows, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -2515,9 +2517,9 @@ namespace CalcTests
             Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
             CashFlowsDescr cashFlows = new CashFlowsDescr();
             //cashFlows.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) );
-            int dateAdjust = instrument.holidayAdjust;
+            calculations.payDateAdj = instrument.holidayAdjust;
             //int status = calculate(instr, calcs);
-            status = calculateWithCashFlows(instrument, calculations, cashFlows, dateAdjust, holidays);
+            status = calculateWithCashFlows(instrument, calculations, cashFlows, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -2613,9 +2615,9 @@ namespace CalcTests
             Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
             CashFlowsDescr cashFlows = new CashFlowsDescr();
             //cashFlows.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) );
-            int dateAdjust = instrument.holidayAdjust;
+            calculations.payDateAdj = instrument.holidayAdjust;
             //int status = calculate(instr, calcs);
-            status = calculateWithCashFlows(instrument, calculations, cashFlows, dateAdjust, holidays);
+            status = calculateWithCashFlows(instrument, calculations, cashFlows,  holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -2711,9 +2713,9 @@ namespace CalcTests
             Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
             CashFlowsDescr cashFlows = new CashFlowsDescr();
             //cashFlows.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) );
-            int dateAdjust = instrument.holidayAdjust;
+            calculations.payDateAdj = instrument.holidayAdjust;
             //int status = calculate(instr, calcs);
-            status = calculateWithCashFlows(instrument, calculations, cashFlows, dateAdjust, holidays);
+            status = calculateWithCashFlows(instrument, calculations, cashFlows, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -2809,9 +2811,9 @@ namespace CalcTests
             Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
             CashFlowsDescr cashFlows = new CashFlowsDescr();
             //cashFlows.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) );
-            int dateAdjust = (int)TestHelper.DateAdjustRule.event_sched_next_holiday_adj;
+            calculations.payDateAdj = (int)TestHelper.DateAdjustRule.event_sched_next_holiday_adj;
             //int status = calculate(instr, calcs);
-            status = calculateWithCashFlows(instrument, calculations, cashFlows, dateAdjust, holidays);
+            status = calculateWithCashFlows(instrument, calculations, cashFlows, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -2890,9 +2892,9 @@ namespace CalcTests
             calculations.calculatePrice = 1;
             instrument.interestRate = 0.08;
             CashFlowsDescr cashFlows = new CashFlowsDescr();
-            int dateAdjust = instrument.holidayAdjust;
+            calculations.payDateAdj = instrument.holidayAdjust;
             //int status = calculate(instr, calcs);
-            status = calculateWithCashFlows(instrument, calculations, cashFlows, dateAdjust, holidays);
+            status = calculateWithCashFlows(instrument, calculations, cashFlows, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
@@ -2969,9 +2971,9 @@ namespace CalcTests
             calculations.calculatePrice = 0;
             instrument.interestRate = 0.08;
             CashFlowsDescr cashFlows = new CashFlowsDescr();
-            int dateAdjust = instrument.holidayAdjust;
+            calculations.payDateAdj = instrument.holidayAdjust;
             //int status = calculate(instr, calcs);
-            status = calculateWithCashFlows(instrument, calculations, cashFlows, dateAdjust, holidays);
+            status = calculateWithCashFlows(instrument, calculations, cashFlows, holidays);
             if (status != 0)
             {
                 StringBuilder statusText = new StringBuilder(200);
