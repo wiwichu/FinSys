@@ -67,6 +67,7 @@ namespace FinSys.Calculator
 #else
             loggerFactory.AddProvider(new EFLoggerProvider(logLevel,new FinSysContext()));
 #endif
+            app.UseDeveloperExceptionPage();
             app.UseIISPlatformHandler();
             app.UseStaticFiles();
             Mapper.Initialize(config =>

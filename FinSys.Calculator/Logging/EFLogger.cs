@@ -33,7 +33,7 @@ namespace FinSys.Calculator.Logging
             {
                 User = "Guest",
                 Message = formatter(state, exception),
-                LogTime = DateTime.UtcNow,
+                LogTime = DateTime.UtcNow.ToLocalTime(),
                 Severity = Enum.GetName(typeof(LogLevel), logLevel),
                 Topic = "Log"
             };
