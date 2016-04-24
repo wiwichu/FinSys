@@ -17,7 +17,7 @@
             var help = {
                 title: "No Help",
                 text: "No Help Available.",
-                link: "#/Guide"
+                link: "#/Guide#guideStart"
             };
             switch (helpTopic)
             {
