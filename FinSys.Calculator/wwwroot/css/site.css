@@ -120,4 +120,22 @@ input[type=text], input[type=password], textarea {
 }*/
 .borderless {
     border: 0 none;
+  padding: 0 10px;
+  /*overflow:hidden;  
+  margin-bottom: -1px;
+  position: relative;
+  display: block;
+    vertical-align: middle;
+    vertical-align: middle;*/
 }
+
+/*.list-group-item
+{
+  overflow:hidden;  
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+  margin-bottom: -1px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}*/
