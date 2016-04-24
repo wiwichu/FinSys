@@ -60,7 +60,7 @@
                       </a>
                   </span>
               </div>
-                <div class="input-group">
+                <div class="input-group input-group-sm">
                     <input id="maturityDate" type="text" class="form-control" uib-datepicker-popup="{{vm.format}}"
                            name="maturityDate" ng-model="vm.maturityDate" is-open="vm.datepickers.maturityDate"
                            datepicker-options="vm.dateOptions" ng-required="true"
@@ -95,7 +95,7 @@
                         </button>
                     </span>
                 </div>
-                <div class="input-group">
+                <div class="input-group input-group-sm">
                     <input id="valueDate" type="text" class="form-control" uib-datepicker-popup="{{vm.format}}"
                            name="valueDate" ng-model="vm.valueDate" is-open="vm.datepickers.valueDate"
                            datepicker-options="vm.dateOptions" ng-required="true"
@@ -235,7 +235,7 @@
                         </a>
                     </span>
                 </div>
-                <div class="input-group">
+                <div class="input-group input-group-sm">
                     <input id="previousPay" type="text" class="form-control" uib-datepicker-popup="{{vm.format}}"
                            name="peviousPay" ng-model="vm.previousPay" is-open="vm.datepickers.previousPay"
                            datepicker-options="vm.dateOptions" readonly
@@ -258,7 +258,7 @@
                         </a>
                     </span>
                 </div>
-                <div class="input-group">
+                <div class="input-group input-group-sm">
                     <input id="nextPay" type="text" class="form-control" uib-datepicker-popup="{{vm.format}}"
                            name="nextPay" ng-model="vm.nextPay" is-open="vm.datepickers.nextPay"
                            datepicker-options="vm.dateOptions" readonly
@@ -523,12 +523,12 @@
                                  </a>
                              </span>
                          </div>
-                            <div class="input-group">
+                            <div class="input-group input-group-sm">
                                 <input id="issueDate" type="text" class="form-control" uib-datepicker-popup="{{vm.format}}"
                                        name="issueDate" ng-model="vm.issueDate" is-open="vm.datepickers.issueDate"
                                        datepicker-options="vm.dateOptions" ng-required="true" ng-readonly="!vm.overrideDefaults"
                                        close-text="Close" />
-                                <span class="input-group-btn">
+                                <span class="input-group-btn input-group-sm">
                                     <button class="btn btn-default" ng-click="vm.open($event,'issueDate')" ng-focus="vm.datepickers.issueDate=true"  ng-disabled="!vm.overrideDefaults">
                                         <i class="fa fa-calendar"></i>
                                     </button>
@@ -546,7 +546,7 @@
                                     </a>
                                 </span>
                             </div>
-                            <div class="input-group">
+                            <div class="input-group input-group-sm">
                                 <input id="firstPayDate" type="text" class="form-control" uib-datepicker-popup="{{vm.format}}"
                                        name="firstPayDate" ng-model="vm.firstPayDate" is-open="vm.datepickers.firstPayDate"
                                        datepicker-options="vm.dateOptions" ng-required="true"  ng-readonly="!vm.overrideDefaults"
@@ -569,7 +569,7 @@
                                     </a>
                                 </span>
                             </div>
-                            <div class="input-group">
+                            <div class="input-group input-group-sm">
                                 <input id="nextToLastDate" type="text" class="form-control" uib-datepicker-popup="{{vm.format}}"
                                        name="nextToLastDate" ng-model="vm.nextToLastDate" is-open="vm.datepickers.nextToLastDate"
                                        datepicker-options="vm.dateOptions" ng-required="true" ng-readonly="!vm.overrideDefaults"

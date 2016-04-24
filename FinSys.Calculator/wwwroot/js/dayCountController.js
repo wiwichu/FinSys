@@ -196,7 +196,7 @@
         'year-format': "'yy'",
         'starting-day': 1
     };
-    vm.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'shortDate'];
+    vm.formats = ['yyyy-MM-dd', 'dd-MMMM-yyyy', 'yyyy/MM/dd', 'shortDate'];
     vm.format = vm.formats[0];
         /////////////////////////////////
     vm.openVD = function () {
