@@ -15,8 +15,11 @@
     ])
     .config(function ($routeProvider, $locationProvider) {
         $routeProvider.when("/", {
-            templateUrl: "/views/calculatorsView.html"
-        });
+            //templateUrl: "/views/calculatorsView.html"
+            controller: "guideController",
+            controllerAs: "vm",
+            templateUrl: "/views/guideView.html"
+    });
         $routeProvider.when("/USTBill", {
             controller: "ustbillController",
             controllerAs: "vm",
