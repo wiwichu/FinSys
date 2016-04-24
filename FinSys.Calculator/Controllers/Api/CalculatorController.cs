@@ -89,12 +89,12 @@ namespace FinSys.Calculator.Controllers.Api
                     Class = vm.Class,
                     IssueDate = DateTime.UtcNow.AddYears(-1),
                     NextToLastPayDate = DateTime.UtcNow,
-                    MaturityDate=DateTime.UtcNow.AddYears(1),
-                    FirstPayDate=DateTime.UtcNow
+                    MaturityDate = DateTime.UtcNow.AddYears(1),
+                    FirstPayDate = DateTime.UtcNow.ToLocalTime()
                 };
                 Calculations calc = new Calculations
                 {
-                    ValueDate=DateTime.UtcNow
+                    ValueDate=DateTime.UtcNow.ToLocalTime()
                 };
                 var res = await _repository.GetInstrumentDefaultsAsync(instr, calc).ConfigureAwait(false);
                 Instrument instrResult = res.Key;
