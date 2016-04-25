@@ -161,9 +161,13 @@
             <h4>Value Date</h4>
             <label>Also called Settlement Date. Base date used for calculating accrued interest and yield.</label>
         </div>
+        <div id="CustCalcCalculateFrom" class="col-md-12">
+            <h4>Calculate From</h4>
+            <label>Indicates whether the calculations are done from <a href="" ng-click="vm.gotoAnchor('CustCalcYield')">Yield</a> or <a href="" ng-click="vm.gotoAnchor('CustCalcPrice')">Price</a>.</label>
+        </div>
         <div id="CustCalcYield" class="col-md-12">
             <h4>Yield/Discount</h4>
-            <label><a href="" ng-click="vm.gotoAnchor('yield')">Yield</a> or <a href="" ng-click="vm.gotoAnchor('discount')">Discount</a> corresponding to the <a href="" ng-click="vm.gotoAnchor('CustCalcCleanPrice')">Price</a>.</label>
+            <label><a href="" ng-click="vm.gotoAnchor('yield')">Yield</a> or <a href="" ng-click="vm.gotoAnchor('discount')">Discount</a> corresponding to the <a href="" ng-click="vm.gotoAnchor('CustCalcCleanPrice')">Price</a>. This field is only enabled for input if <a href="" ng-click="vm.gotoAnchor('CustCalcCalculateFrom')">Calculate From</a> is set to Yield. Five per cent would be entered as 5.0.</label>
         </div>
         <div id="HolidayInput" class="col-md-12">
             <h4>Holiday Input</h4>
