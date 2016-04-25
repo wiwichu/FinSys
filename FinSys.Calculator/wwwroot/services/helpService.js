@@ -66,6 +66,15 @@
                         };
                         break;
                     }
+                case "custCalcCleanPrice":
+                    {
+                        help = {
+                            title: "Clean Price.",
+                            text: "Clean price of the trade as a per cent of nominal.",
+                            link: "#/Guide#CustCalcCleanPrice"
+                        };
+                        break;
+                    }
                 case "custCalcMaturityDate":
                     {
                         help = {

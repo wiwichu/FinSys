@@ -36,6 +36,7 @@
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcValueDate')"><h6>Value Date</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcCalculateFrom')"><h6>Calculate From</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcYield')"><h6>Yield/Discount</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcCleanPrice')"><h6>Clean Price</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('HolidayInput')"><h6>Holiday Input</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CalculationDefaults')"><h6>Calculation Defaults</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcDayCount')"><h6>Day Count</h6></a></li>
@@ -168,6 +169,10 @@
         <div id="CustCalcYield" class="col-md-12">
             <h4>Yield/Discount</h4>
             <label><a href="" ng-click="vm.gotoAnchor('yield')">Yield</a> or <a href="" ng-click="vm.gotoAnchor('discount')">Discount</a> corresponding to the <a href="" ng-click="vm.gotoAnchor('CustCalcCleanPrice')">Price</a>. This field is only enabled for input if <a href="" ng-click="vm.gotoAnchor('CustCalcCalculateFrom')">Calculate From</a> is set to Yield. Five per cent would be entered as 5.0.</label>
+        </div>
+      <div id="CustCalcCleanPrice" class="col-md-12">
+            <h4>Clean Price</h4>
+            <label>The quoted price for the trade. This is a percent of the nominal amount of the instrument, 100 being 100%. For example if 1000 face value of a bond were purchased for a price of 95 the purchaser would pay 950 and receive 1000 at maturity as well as the periodic interest payments. The clean price plus the <a href="" ng-click="vm.gotoAnchor('CustCalcAccruedInterest')">accrued interest</a> equal the <a href="" ng-click="vm.gotoAnchor('CustCalcDirtyPrice')">Dirty Price</a>. This field is only enabled for input if <a href="" ng-click="vm.gotoAnchor('CustCalcCalculateFrom')">Calculate From</a> is set to Price.</label>
         </div>
         <div id="HolidayInput" class="col-md-12">
             <h4>Holiday Input</h4>
