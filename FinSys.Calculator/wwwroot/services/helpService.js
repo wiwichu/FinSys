@@ -48,6 +48,24 @@
                         };
                         break;
                     }
+                case "custCalcCalculateFrom":
+                    {
+                        help = {
+                            title: "Calculate From",
+                            text: "Sets whether calculations are done from Yield or Price.",
+                            link: "#/Guide#CustCalcCalculateFrom"
+                        };
+                        break;
+                    }
+                case "custCalcYield":
+                    {
+                        help = {
+                            title: "Yield or Discount",
+                            text: "Yield or Discount corresponding to Price.",
+                            link: "#/Guide#CustCalcYield"
+                        };
+                        break;
+                    }
                 case "custCalcMaturityDate":
                     {
                         help = {
