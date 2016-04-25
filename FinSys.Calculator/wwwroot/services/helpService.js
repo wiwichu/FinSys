@@ -69,9 +69,36 @@
                 case "custCalcCleanPrice":
                     {
                         help = {
-                            title: "Clean Price.",
+                            title: "Clean Price",
                             text: "Clean price of the trade as a per cent of nominal.",
                             link: "#/Guide#CustCalcCleanPrice"
+                        };
+                        break;
+                    }
+                case "custCalcExCoup":
+                    {
+                        help = {
+                            title: "Ex-Coupon",
+                            text: "Indicates that negative accrued interest will be calculated back from the next pay date.",
+                            link: "#/Guide#CustCalcExCoupon"
+                        };
+                        break;
+                    }
+                case "custCalcTradeFlat":
+                    {
+                        help = {
+                            title: "Trade Flat",
+                            text: "Indicates that accrued interest will not be included in the invoice price.",
+                            link: "#/Guide#CustCalcTradeFlat"
+                        };
+                        break;
+                    }
+                case "custCalcAccruedInterest":
+                    {
+                        help = {
+                            title: "Accrued Interest",
+                            text: "Accrued interest on the trade as a per cent of nominal.",
+                            link: "#/Guide#CustCalcAccruedInterest"
                         };
                         break;
                     }

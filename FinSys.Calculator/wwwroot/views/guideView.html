@@ -37,6 +37,10 @@
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcCalculateFrom')"><h6>Calculate From</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcYield')"><h6>Yield/Discount</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcCleanPrice')"><h6>Clean Price</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcAccruedInterest')"><h6>Accrued Interest</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcDirtyPrice')"><h6>Dirty Price</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcExCoupon')"><h6>Ex-Coupon</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcTradeFlat')"><h6>Trade Flat</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('HolidayInput')"><h6>Holiday Input</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CalculationDefaults')"><h6>Calculation Defaults</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcDayCount')"><h6>Day Count</h6></a></li>
@@ -174,13 +178,29 @@
             <h4>Clean Price</h4>
             <label>The quoted price for the trade. This is a percent of the nominal amount of the instrument, 100 being 100%. For example if 1000 face value of a bond were purchased for a price of 95 the purchaser would pay 950 and receive 1000 at maturity as well as the periodic interest payments. The clean price plus the <a href="" ng-click="vm.gotoAnchor('CustCalcAccruedInterest')">accrued interest</a> equal the <a href="" ng-click="vm.gotoAnchor('CustCalcDirtyPrice')">Dirty Price</a>. This field is only enabled for input if <a href="" ng-click="vm.gotoAnchor('CustCalcCalculateFrom')">Calculate From</a> is set to Price.</label>
         </div>
+        <div id="CustCalcAccruedInterest" class="col-md-12">
+            <h4>Accrued Interest</h4>
+            <label>When a trade occurs between payment dates the interest accrued from the previous date is paid to the seller along with the <a href="" ng-click="vm.gotoAnchor('CustCalcCleanPrice')">clean price</a>.</label>
+        </div>
+        <div id="CustCalcDirtyPrice" class="col-md-12">
+            <h4>Dirty Price</h4>
+            <label>The sum of the <a href="" ng-click="vm.gotoAnchor('CustCalcCleanPrice')">clean price</a> and the <a href="" ng-click="vm.gotoAnchor('CustCalcAccruedInterest')">accrued interest</a>. This is the invoice paid for the purchase of the instrument and also the present value of the future cashflows discounted by the <a href="" ng-click="vm.gotoAnchor('yield')">yield</a> according to the chosen <a href="" ng-click="vm.gotoAnchor('yieldMethod')">yield method</a>.</label>
+        </div>
+        <div id="CustCalcExCoupon" class="col-md-12">
+            <h4>Ex-Coupon</h4>
+            <label>Indicates that negative <a href="" ng-click="vm.gotoAnchor('CustCalcAccruedInterest')">accrued interest</a> will be calculated back from the <a href="" ng-click="vm.gotoAnchor('CustCalcNextPayDate')">next pay date</a>. This occurs in markets where the trade occurs to close to a coupon date to register ownership in time for the next payment.</label>
+        </div>
+        <div id="CustCalcTradeFlat" class="col-md-12">
+            <h4>Trade Flat</h4>
+            <label>Indicates that <a href="" ng-click="vm.gotoAnchor('CustCalcAccruedInterest')">accrued interest</a> will not be included in the <a href="" ng-click="vm.gotoAnchor('CustCalcDirtyPrice')"> invoice price.</a>.</label>
+        </div>
         <div id="HolidayInput" class="col-md-12">
             <h4>Holiday Input</h4>
             <label>Allows for holiday input. If use holidays is checked then a grid will open allowing for the input,<a href="" ng-click="vm.gotoAnchor('gridImportExport')"> import and export </a>of dates which are holidays. When the box is checked, the dates in the grid will also be used to<a href="" ng-click="vm.gotoAnchor('dateAdjust')"> adjust dates </a>for calculations.</label><br /><br />
         </div>
         <div id="CalculationDefaults" class="col-md-12">
             <h4>Defaults</h4>
-            <label>Clicking the 'View Defaults' button will show the defults in effect and allow them to be edited.</label><br /><br />
+            <label>Clicking the 'View Defaults' button will show the defaults in effect and allow them to be edited.</label><br /><br />
         </div>
         <div id="CustCalcDayCount" class="col-md-12">
             <h4>Day Count</h4>
