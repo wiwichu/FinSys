@@ -21,7 +21,16 @@
             };
             switch (helpTopic)
             {
-                case "maturitydate" :
+                case "useHolidays":
+                    {
+                        help = {
+                            title: "Use Holidays",
+                            text: "Adjust calculations for holidays entered.",
+                            link: "#/Guide#HolidayInput"
+                        };
+                        break;
+                    } 
+                case "maturitydate":
                 {
                     help = {
                         title: "Maturity Date",
@@ -30,7 +39,16 @@
                     };
                     break;
                 }
-                case "valuedate" :
+                case "custCalcMaturityDate":
+                    {
+                        help = {
+                            title: "Maturity Date",
+                            text: "Date on which the instrument matures.",
+                            link: "#/Guide#CustCalcMaturityDate"
+                        };
+                        break;
+                    }
+                case "valuedate":
                 {
                     help = {
                         title: "Value Date",

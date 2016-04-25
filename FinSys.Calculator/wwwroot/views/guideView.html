@@ -1,5 +1,4 @@
-﻿
-<div id="guide" class="col-md-12 " ng-app>
+﻿<div id="guide" class="col-md-12 " ng-app>
     <div class="col-md-12 ">
             <h1>Welcome to FinSys Calculator</h1>
         <br /><br />
@@ -30,10 +29,11 @@
                     <li class="list-group-item borderless ">
                         <a href="" ng-click="vm.gotoAnchor('custCalc')"><h5>Calculator</h5></a>
                         <ul class="list-group borderless">
-                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('HolidayInput')"><h6>Holiday Input</h6></a></li>
-                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CalculationDefaults')"><h6>Calculation Defaults</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcClass')"><h6>Instrument Class</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcInterestRate')"><h6>Interest Rate</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcMaturityDate')"><h6>Maturity Date</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('HolidayInput')"><h6>Holiday Input</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CalculationDefaults')"><h6>Calculation Defaults</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcDayCount')"><h6>Day Count</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcYieldDayCount')"><h6>Yield Day Count</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcPayFreq')"><h6>Payment Frequency</h6></a></li>
@@ -51,8 +51,14 @@
                     </li>
                 </ul>
             </li>
-            <li class="list-group-item borderless "><a href="" ng-click="vm.gotoAnchor('functional')"><h4>Functional Guide</h4></a></li>
-            <li class="list-group-item borderless "><a href="" ng-click="vm.gotoAnchor('technical')"><h4>Technical Guide</h4></a></li>
+            <li class="list-group-item borderless ">
+                <a href="" ng-click="vm.gotoAnchor('functional')"><h4>Functional Guide</h4></a>
+                <ul class="list-group borderless">
+                    <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('dateAdjust')"><h6>Date Adjustment</h6></a></li>
+                    <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('daycount')"><h6>Date Count</h6></a></li>
+                </ul>
+            </li>
+           <li class="list-group-item borderless "><a href="" ng-click="vm.gotoAnchor('technical')"><h4>Technical Guide</h4></a></li>
             <li class="list-group-item borderless "><a href="" ng-click="vm.gotoAnchor('references')"><h4>References</h4></a></li>
         </ul>
     </div>
@@ -158,9 +164,16 @@
                 <img src="/img/CustCalcInterestRate.png" alt="Interest Rate" class="img-responsive" />
             </div>
         </div>
+        <div id="CustCalcMaturityDate" class="col-md-12">
+            <h4>Maturity Date</h4>
+            <label><a href="" ng-click="vm.gotoAnchor('maturitydate')">Maturity Date</a> is the date on which the instrument matures.</label><br /><br /><br />
+            <div class="col-md-7" name="custCalcInstrumentRate">
+                <img src="/img/CustCalcMaturityDate.png" alt="Maturity Date" class="img-responsive" />
+            </div>
+        </div>
         <div id="HolidayInput" class="col-md-12">
             <h4>Holiday Input</h4>
-            <label>Allows for holiday input.</label><br /><br />
+            <label>Allows for holiday input. If use holidays is checked then a grid will open allowing for the input,<a href="" ng-click="vm.gotoAnchor('gridImportExport')"> import and export </a>of dates which are holidays. When the box is checked, the dates in the grid will also be used to<a href="" ng-click="vm.gotoAnchor('dateAdjust')"> adjust dates </a>for calculations.</label><br /><br />
             <div class="col-md-7" name="custCalcHolidayInput">
                 <img src="/img/CustCalcHolidays.png" alt="Custom Calculator Holidays" class="img-responsive" />
             </div>
@@ -289,33 +302,9 @@
     <div class="col-md-4 col-md-offset-4">
         <h2>Functional Guide</h2>
     </div>
-    <div id="instrumentClass" class="col-md-12">
-        <h3>Instrument Class</h3>
-        <label>Class of Instrument associated with defaults.</label><br />
-    </div>
-    <div id="interestRate" class="col-md-12">
-        <h3>Interest Rate</h3>
-        <label>Interest Rate paid on instrument.</label><br />
-    </div>
-    <div id="payFreq" class="col-md-12">
-        <h3>Payment Frequency</h3>
-        <label>Rules for setting how often a payment occurs.</label><br />
-    </div>
     <div id="dateAdjust" class="col-md-12">
         <h3>Date Adjustment</h3>
         <label>Rules for setting how a date is adjusted if it falls on a non business date (weekends or holidays).</label><br />
-    </div>
-    <div id="yieldMethod" class="col-md-12">
-        <h3>Yield Method</h3>
-        <label>Rules for setting how yield is calculated.</label><br />
-    </div>
-    <div id="maturitydate" class="col-md-12">
-        <h3>Maturity Date</h3>
-        <label>Date on which the instrument matures.</label><br />
-    </div>
-    <div id="valuedate" class="col-md-12">
-        <h3>Value Date</h3>
-        <label>Also called Settlement Date. Base date used for calculating accrued interest and yield.</label>
     </div>
     <div id="daycount" class="col-md-12">
         <h3>Day Count</h3>
@@ -470,6 +459,30 @@
                 Den = 360
             </label>
         </div>
+    </div>
+    <div id="instrumentClass" class="col-md-12">
+        <h3>Instrument Class</h3>
+        <label>Class of Instrument associated with defaults.</label><br />
+    </div>
+    <div id="interestRate" class="col-md-12">
+        <h3>Interest Rate</h3>
+        <label>Interest Rate paid on instrument.</label><br />
+    </div>
+    <div id="maturitydate" class="col-md-12">
+        <h3>Maturity Date</h3>
+        <label>Date on which the instrument matures.</label><br />
+    </div>
+    <div id="payFreq" class="col-md-12">
+        <h3>Payment Frequency</h3>
+        <label>Rules for setting how often a payment occurs.</label><br />
+    </div>
+    <div id="valuedate" class="col-md-12">
+        <h3>Value Date</h3>
+        <label>Also called Settlement Date. Base date used for calculating accrued interest and yield.</label>
+    </div>
+    <div id="yieldMethod" class="col-md-12">
+        <h3>Yield Method</h3>
+        <label>Rules for setting how yield is calculated.</label><br />
     </div>
     <div id="technical" class="col-md-12">
         <div class="col-md-4 col-md-offset-4">
