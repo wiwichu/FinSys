@@ -1,6 +1,6 @@
 ﻿<div id="guide" class="col-md-12 " ng-app>
     <div class="col-md-12 ">
-        <h1>Welcome to FinSys Calculator</h1>
+            <h1>Welcome to FinSys Calculator</h1>
         <br /><br />
         <h4>
             This app allows you to perform financial calculations. Navigate with the sidebar links or scroll down for the <a href="" ng-click="vm.gotoAnchor('guideStart')"> guide </a>.
@@ -58,13 +58,24 @@
                 <ul class="list-group borderless">
                     <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('dateAdjust')"><h6>Date Adjustment</h6></a></li>
                     <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('daycount')"><h6>Date Count</h6></a></li>
+                    <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('endofmonth')"><h6>End of Month</h6></a></li>
+                    <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('valuedate')"><h6>Value Date</h6></a></li>
                 </ul>
             </li>
-            <li class="list-group-item borderless "><a href="" ng-click="vm.gotoAnchor('technical')"><h4>Technical Guide</h4></a></li>
+           <li class="list-group-item borderless "><a href="" ng-click="vm.gotoAnchor('technical')"><h4>Technical Guide</h4></a></li>
             <li class="list-group-item borderless "><a href="" ng-click="vm.gotoAnchor('references')"><h4>References</h4></a></li>
         </ul>
     </div>
-
+    <!--<div class="row">
+        <div class="col-md-6">
+        </div>
+        <div class="col-md-6">
+            <img src="/img/dayCountCalculateCircled.jpg" alt="Calculate Chosen" class="img-responsive" />
+            <div id="api" name="api">
+                <img src="/img/dayCountApiCircled.png" alt="Calculate Chosen" class="img-responsive" />
+            </div>
+        </div>
+    </div>-->
 </div>
 <div id="userInterface" class="col-md-12">
     <div class="col-md-4 col-md-offset-4">
@@ -73,6 +84,9 @@
     <div id="generalUI" class="col-md-12">
         <h3>General</h3>
         <label>The following features generally apply accross the UI.</label><br /><br />
+        <div class="col-md-7">
+            <img src="/img/CustCalc.png" alt="Custom Calculator" class="img-responsive" />
+        </div>
         <div id="api" class="col-md-12">
             <h4>Api</h4>
             <label>After a calculation has occurred, the Api button will be enabled. Clicking it will open the Api dialog.</label><br /><br />
@@ -120,7 +134,7 @@
         <div id="gridImportExport" class="col-md-12">
             <h4>Grid Import/Export</h4>
             <label>
-                Clicking the upper right corner of data grids opens a menu allowing for importing and exporting data.
+                Clicking the upper right corner of data grids opens a menu allowing for importing and exporting data. 
             </label><br /><br />
             <div class="col-md-7" name="gridImportExport">
                 <img src="/img/gridimportexport.png" alt="Grid Import/Export" class="img-responsive" />
@@ -132,7 +146,7 @@
         <h3>Custom Calculator</h3>
         <label>Allows for flexible Custom Calculations.</label><br /><br />
         <div class="col-md-7">
-            <img src="/img/CustCalcFull.png" alt="Custom Calculator" class="img-responsive" />
+            <img src="/img/CustCalc.png" alt="Custom Calculator" class="img-responsive" />
         </div>
         <div id="CustCalcClass" class="col-md-12">
             <h4>Instrument Class</h4>
@@ -140,32 +154,54 @@
                 <a href="" ng-click="vm.gotoAnchor('instrumentClass')">Instrument Class</a>
                 allows the selection of a class to set defaults. The defaults can then be overridden.
             </label><br /><br />
+            <div class="col-md-7" name="instrumentClassDropDown">
+                <img src="/img/ClassDropDown.png" alt="Instrument Class Dropdown" class="img-responsive" />
+            </div>
         </div>
         <div id="CustCalcInterestRate" class="col-md-12">
             <h4>Interest Rate</h4>
             <label>
-                The rate of interest paid on the instrument. Five per cent would be entered as 5.0.
+                <a href="" ng-click="vm.gotoAnchor('interestRate')">Interest Rate</a>
+                is the rate of interest paid on the instrument. Five per cent would be entered as 5.0.
             </label><br /><br />
+            <div class="col-md-7" name="custCalcInterestRate">
+                <img src="/img/CustCalcInterestRate.png" alt="Interest Rate" class="img-responsive" />
+            </div>
         </div>
         <div id="CustCalcMaturityDate" class="col-md-12">
             <h4>Maturity Date</h4>
-            <label>Date on which the instrument matures.</label><br />
+            <label><a href="" ng-click="vm.gotoAnchor('maturitydate')">Maturity Date</a> is the date on which the instrument matures.</label><br /><br /><br />
+            <div class="col-md-7" name="custCalcMaturityDate">
+                <img src="/img/CustCalcMaturityDate.png" alt="Maturity Date" class="img-responsive" />
+            </div>
         </div>
         <div id="CustCalcEndOfMonth" class="col-md-12">
             <h4>End of Month</h4>
-            <label>Indicates whether the regular payment day is the last day of the month. This is necessary in a case such as a semi-annually paying instrument maturing on September 30th. In this case if End of Month is set to True, the instrument will pay every March 31st, whereas if it is set to false it will pay on March 30th.</label><br />
+            <label><a href="" ng-click="vm.gotoAnchor('endofmonth')">End of Month</a> indicates whether the regular payment date falls on the end of the month.</label><br /><br /><br />
+            <div class="col-md-7" name="custCalcEndOfMonth">
+                <img src="/img/CustCalcEndOfMonth.png" alt="End of Month" class="img-responsive" />
+            </div>
         </div>
         <div id="CustCalcValueDate" class="col-md-12">
             <h4>Value Date</h4>
-            <label>Also called Settlement Date. Base date used for calculating accrued interest and yield.</label>
+            <label><a href="" ng-click="vm.gotoAnchor('valuedate')">Value Date</a> is the date on which the trade is expected to settle.</label><br /><br /><br />
+            <div class="col-md-7" name="custCalcValueDate">
+                <img src="/img/CustCalcValueDate.png" alt="Value Date" class="img-responsive" />
+            </div>
         </div>
         <div id="HolidayInput" class="col-md-12">
             <h4>Holiday Input</h4>
             <label>Allows for holiday input. If use holidays is checked then a grid will open allowing for the input,<a href="" ng-click="vm.gotoAnchor('gridImportExport')"> import and export </a>of dates which are holidays. When the box is checked, the dates in the grid will also be used to<a href="" ng-click="vm.gotoAnchor('dateAdjust')"> adjust dates </a>for calculations.</label><br /><br />
+            <div class="col-md-7" name="custCalcHolidayInput">
+                <img src="/img/CustCalcHolidays.png" alt="Custom Calculator Holidays" class="img-responsive" />
+            </div>
         </div>
         <div id="CalculationDefaults" class="col-md-12">
             <h4>Defaults</h4>
             <label>Clicking the 'View Defaults' button will show the defults in effect and allow them to be edited.</label><br /><br />
+            <div class="col-md-7" name="custCalcHolidayInput">
+                <img src="/img/CustCalcDefaults.png" alt="Custom Calculator Holidays" class="img-responsive" />
+            </div>
         </div>
         <div id="CustCalcDayCount" class="col-md-12">
             <h4>Day Count</h4>
@@ -173,6 +209,9 @@
                 <a href="" ng-click="vm.gotoAnchor('daycount')">Day Count</a>
                 allows the selection of a day count rule for calculating interest in a period.
             </label><br /><br />
+            <div class="col-md-7" name="dayCountDropDown">
+                <img src="/img/DayCountDropDown.png" alt="Day Count Dropdown" class="img-responsive" />
+            </div>
         </div>
         <div id="CustCalcYieldDayCount" class="col-md-12">
             <h4>Yield Day Count</h4>
@@ -181,6 +220,9 @@
                 <a href="" ng-click="vm.gotoAnchor('daycount')">Day Count</a>
                 allows the selection of a day count rule for calculating days in a period for discounting future cashflows in yield calculations.
             </label><br /><br />
+            <div class="col-md-7" name="yieldDayCountDropDown">
+                <img src="/img/YieldDayCountDropDown.png" alt="Yield Day Count Dropdown" class="img-responsive" />
+            </div>
         </div>
         <div id="CustCalcPayFreq" class="col-md-12">
             <h4>Payment Frequency</h4>
@@ -189,6 +231,9 @@
                 <a href="" ng-click="vm.gotoAnchor('payFreq')">Payment Frequency</a>
                 allows the selection of a rule setting how often a payment occurs.
             </label><br /><br />
+            <div class="col-md-7" name="payFreqDropDown">
+                <img src="/img/PayFreqDropDown.png" alt="Pay Frequency Dropdown" class="img-responsive" />
+            </div>
         </div>
         <div id="CustCalcCompoundFreq" class="col-md-12">
             <h4>Compound Frequency</h4>
@@ -197,6 +242,9 @@
                 <a href="" ng-click="vm.gotoAnchor('payFreq')"> Frequency</a>
                 allows the selection of a rule setting how often compounding occurs in determining present value for yield calculations.
             </label><br /><br />
+            <div class="col-md-7" name="compoundFreqDropDown">
+                <img src="/img/CompoundFreqDropDown.png" alt="Compound Frequency Dropdown" class="img-responsive" />
+            </div>
         </div>
         <div id="CustCalcCalcDateAdjust" class="col-md-12">
             <h4>Calculation Date Adjustment</h4>
@@ -205,6 +253,9 @@
                 <a href="" ng-click="vm.gotoAnchor('dateAdjust')"> Date Adjustment</a>
                 sets how the date at the end of a period for calculating the interest is adjusted for a non business date.
             </label><br /><br />
+            <div class="col-md-7" name="calcDateAdjDropDown">
+                <img src="/img/CalcDateAdjustDropDown.png" alt="Calculation Date Adjustment Dropdown" class="img-responsive" />
+            </div>
         </div>
         <div id="CustCalcPayDateAdjust" class="col-md-12">
             <h4>Payment Date Adjustment</h4>
@@ -213,6 +264,9 @@
                 <a href="" ng-click="vm.gotoAnchor('dateAdjust')"> Date Adjustment</a>
                 sets how the scheduled payment date is adjusted for a non business date. While <a href="" ng-click="vm.gotoAnchor('CustCalcCalcDateAdjust')">Calculation Date Adjustment</a> can change the amount of the payment, Payment Date Adjustment only changes the date on which the payment is made. This setting is only pertinent if cashflows are included, and the only meaningful values are Same and Next. Precise yield calculation methods, such as <a href="" ng-click="vm.gotoAnchor('trueYield')">True Yield</a> which take the exact number of days to a payment into account will always adjust to the next business day after the Calculation Date Adjustment has been applied for calculation purposes.
             </label><br /><br />
+            <div class="col-md-7" name="payDateAdjDropDown">
+                <img src="/img/PayDateAdjDropDown.png" alt="Payment Date Adjustment Dropdown" class="img-responsive" />
+            </div>
         </div>
         <div id="CustCalcYieldMethod" class="col-md-12">
             <h4>Yield Method</h4>
@@ -220,30 +274,45 @@
                 <a href="" ng-click="vm.gotoAnchor('yieldMethod')"> Yield Method</a>
                 sets the method used to calculate yield.
             </label><br /><br />
+            <div class="col-md-7" name="yieldMethodDropDown">
+                <img src="/img/CustCalcYieldMethodDropDown.png" alt="Yield Method Dropdown" class="img-responsive" />
+            </div>
         </div>
         <div id="CustCalcOverrideDates" class="col-md-12">
             <h4>Override Dates</h4>
             <label>
-                The Override Dates Checkbox allows for the <a href="" ng-click="vm.gotoAnchor('CustCalcIssueDate')"> Issue Date</a>,<a href="" ng-click="vm.gotoAnchor('CustCalcFirstPayDate')"> First Pay Date</a> and <a href="" ng-click="vm.gotoAnchor('CustCalcNextToLastPayDate')"> Next to Last Pay Date</a> to be manually overridden. If this box is not checked default dates will be generated when the calculation is performed.
+            The Override Dates Checkbox allows for the <a href="" ng-click="vm.gotoAnchor('issueDate')"> Issue Date</a>,<a href="" ng-click="vm.gotoAnchor('firstPayDate')"> First Pay Date</a> and <a href="" ng-click="vm.gotoAnchor('nextToLastPayDate')"> Next to Last Pay Date</a> to be manually overridden. If this box is not checked default dates will be generated when the calculation is performed.
             </label><br /><br />
+            <div class="col-md-7" name="overrideDates">
+                <img src="/img/CustCalcsOverrideDates.png" alt="Override Dates" class="img-responsive" />
+            </div>
         </div>
         <div id="CustCalcIssueDate" class="col-md-12">
             <h4>Issue Date</h4>
             <label>
-                The date when the instrument was issued.
+                <a href="" ng-click="vm.gotoAnchor('issueDate')">Issue Date</a> is the date when the instrument was issued.
             </label><br /><br />
+            <div class="col-md-7" name="overrideDatesForm">
+                <img src="/img/CustCalcsIssueDate.png" alt="Issue Date" class="img-responsive" />
+            </div>
         </div>
         <div id="CustCalcFirstPayDate" class="col-md-12">
             <h4>First Pay Date</h4>
             <label>
-                First Pay Date is the date when the first payment occurs after the <a href="" ng-click="vm.gotoAnchor('CustCalcIssueDate')">Issue Date</a>.
+                <a href="" ng-click="vm.gotoAnchor('firstPayDate')">First Pay Date</a> is the date when the first payment occurs.
             </label><br /><br />
+            <div class="col-md-7" name="firstPayDateForm">
+                <img src="/img/CustCalcsFirstPayDate.png" alt="First Pay Date" class="img-responsive" />
+            </div>
         </div>
         <div id="CustCalcNextToLastPayDate" class="col-md-12">
             <h4>Next to Last Pay Date</h4>
             <label>
-                The last payment date before the <a href="" ng-click="vm.gotoAnchor('CustCalcMaturityDate')">Maturity Date</a>.
+                <a href="" ng-click="vm.gotoAnchor('nextToLastPayDate')">Next to Last Pay Date</a> is the last payment date before the <a href="" ng-click="vm.gotoAnchor('maturityDate')">Maturity Date</a> .
             </label><br /><br />
+            <div class="col-md-7" name="nextToLastPayDateForm">
+                <img src="/img/CustCalcsNextToLastPayDate.png" alt="Next to Last Pay Date" class="img-responsive" />
+            </div>
         </div>
     </div>
 </div>
@@ -413,9 +482,25 @@
         <h3>Instrument Class</h3>
         <label>Class of Instrument associated with defaults.</label><br />
     </div>
+    <div id="endofmonth" class="col-md-12">
+        <h3>End of Month</h3>
+        <label>Indicates whether the regular payment day is the last day of the month. This is necessary in a case such as a semi-annually paying instrument maturing on September 30th. In this case if End of Month is set to True, the instrument will pay every March 31st, whereas if it is set to false it will pay on March 30th.</label><br />
+    </div>
+    <div id="interestRate" class="col-md-12">
+        <h3>Interest Rate</h3>
+        <label>Interest Rate paid on instrument.</label><br />
+    </div>
+    <div id="maturitydate" class="col-md-12">
+        <h3>Maturity Date</h3>
+        <label>Date on which the instrument matures.</label><br />
+    </div>
     <div id="payFreq" class="col-md-12">
         <h3>Payment Frequency</h3>
         <label>Rules for setting how often a payment occurs.</label><br />
+    </div>
+    <div id="valuedate" class="col-md-12">
+        <h3>Value Date</h3>
+        <label>Also called Settlement Date. Base date used for calculating accrued interest and yield.</label>
     </div>
     <div id="yieldMethod" class="col-md-12">
         <h3>Yield Method</h3>
