@@ -32,6 +32,8 @@
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcClass')"><h6>Instrument Class</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcInterestRate')"><h6>Interest Rate</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcMaturityDate')"><h6>Maturity Date</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcEndOfMonth')"><h6>End of Month</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcValueDate')"><h6>Value Date</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('HolidayInput')"><h6>Holiday Input</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CalculationDefaults')"><h6>Calculation Defaults</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcDayCount')"><h6>Day Count</h6></a></li>
@@ -56,6 +58,8 @@
                 <ul class="list-group borderless">
                     <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('dateAdjust')"><h6>Date Adjustment</h6></a></li>
                     <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('daycount')"><h6>Date Count</h6></a></li>
+                    <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('endofmonth')"><h6>End of Month</h6></a></li>
+                    <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('valuedate')"><h6>Value Date</h6></a></li>
                 </ul>
             </li>
            <li class="list-group-item borderless "><a href="" ng-click="vm.gotoAnchor('technical')"><h4>Technical Guide</h4></a></li>
@@ -160,15 +164,29 @@
                 <a href="" ng-click="vm.gotoAnchor('interestRate')">Interest Rate</a>
                 is the rate of interest paid on the instrument. Five per cent would be entered as 5.0.
             </label><br /><br />
-            <div class="col-md-7" name="custCalcInstrumentRate">
+            <div class="col-md-7" name="custCalcInterestRate">
                 <img src="/img/CustCalcInterestRate.png" alt="Interest Rate" class="img-responsive" />
             </div>
         </div>
         <div id="CustCalcMaturityDate" class="col-md-12">
             <h4>Maturity Date</h4>
             <label><a href="" ng-click="vm.gotoAnchor('maturitydate')">Maturity Date</a> is the date on which the instrument matures.</label><br /><br /><br />
-            <div class="col-md-7" name="custCalcInstrumentRate">
+            <div class="col-md-7" name="custCalcMaturityDate">
                 <img src="/img/CustCalcMaturityDate.png" alt="Maturity Date" class="img-responsive" />
+            </div>
+        </div>
+        <div id="CustCalcEndOfMonth" class="col-md-12">
+            <h4>End of Month</h4>
+            <label><a href="" ng-click="vm.gotoAnchor('endofmonth')">End of Month</a> indicates whether the regular payment date falls on the end of the month.</label><br /><br /><br />
+            <div class="col-md-7" name="custCalcEndOfMonth">
+                <img src="/img/CustCalcEndOfMonth.png" alt="End of Month" class="img-responsive" />
+            </div>
+        </div>
+        <div id="CustCalcValueDate" class="col-md-12">
+            <h4>Value Date</h4>
+            <label><a href="" ng-click="vm.gotoAnchor('valuedate')">Value Date</a> is the date on which the trade is expected to settle.</label><br /><br /><br />
+            <div class="col-md-7" name="custCalcValueDate">
+                <img src="/img/CustCalcValueDate.png" alt="Value Date" class="img-responsive" />
             </div>
         </div>
         <div id="HolidayInput" class="col-md-12">
@@ -463,6 +481,10 @@
     <div id="instrumentClass" class="col-md-12">
         <h3>Instrument Class</h3>
         <label>Class of Instrument associated with defaults.</label><br />
+    </div>
+    <div id="endofmonth" class="col-md-12">
+        <h3>End of Month</h3>
+        <label>Indicates whether the regular payment day is the last day of the month. This is necessary in a case such as a semi-annually paying instrument maturing on September 30th. In this case if End of Month is set to True, the instrument will pay every March 31st, whereas if it is set to false it will pay on March 30th.</label><br />
     </div>
     <div id="interestRate" class="col-md-12">
         <h3>Interest Rate</h3>

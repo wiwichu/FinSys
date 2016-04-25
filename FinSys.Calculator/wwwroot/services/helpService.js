@@ -39,6 +39,15 @@
                     };
                     break;
                 }
+                case "custCalcEndOfMonth":
+                    {
+                        help = {
+                            title: "End of Month",
+                            text: "Indicates the instrument pays on the end of month.",
+                            link: "#/Guide#CustCalcEndOfMonth"
+                        };
+                        break;
+                    }
                 case "custCalcMaturityDate":
                     {
                         help = {
@@ -53,7 +62,7 @@
                     help = {
                         title: "Value Date",
                         text: "Also called Settlement Date. Base date used for calculating accrued interest and yield.",
-                        link: "#/Guide#valuedate"
+                        link: "#/Guide#CustCalcValueDate"
                     };
                     break;
                 }
