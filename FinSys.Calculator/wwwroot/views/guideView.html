@@ -34,6 +34,8 @@
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcMaturityDate')"><h6>Maturity Date</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcEndOfMonth')"><h6>End of Month</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcValueDate')"><h6>Value Date</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcCalculateFrom')"><h6>Calculate From</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcYield')"><h6>Yield/Discount</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('HolidayInput')"><h6>Holiday Input</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CalculationDefaults')"><h6>Calculation Defaults</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcDayCount')"><h6>Day Count</h6></a></li>
@@ -158,6 +160,10 @@
         <div id="CustCalcValueDate" class="col-md-12">
             <h4>Value Date</h4>
             <label>Also called Settlement Date. Base date used for calculating accrued interest and yield.</label>
+        </div>
+        <div id="CustCalcYield" class="col-md-12">
+            <h4>Yield/Discount</h4>
+            <label><a href="" ng-click="vm.gotoAnchor('yield')">Yield</a> or <a href="" ng-click="vm.gotoAnchor('discount')">Discount</a> corresponding to the <a href="" ng-click="vm.gotoAnchor('CustCalcCleanPrice')">Price</a>.</label>
         </div>
         <div id="HolidayInput" class="col-md-12">
             <h4>Holiday Input</h4>
@@ -409,6 +415,10 @@
             </label>
         </div>
     </div>
+    <div id="discount" class="col-md-12">
+        <h3>Discount Rate</h3>
+        <label>Discount from par value resulting in the current price.</label><br />
+    </div>
     <div id="instrumentClass" class="col-md-12">
         <h3>Instrument Class</h3>
         <label>Class of Instrument associated with defaults.</label><br />
@@ -416,6 +426,10 @@
     <div id="payFreq" class="col-md-12">
         <h3>Payment Frequency</h3>
         <label>Rules for setting how often a payment occurs.</label><br />
+    </div>
+    <div id="yield" class="col-md-12">
+        <h3>Yield</h3>
+        <label>Rate by which which the present value of future payments equls the dirty price according to the chosen yield method and conventions.</label><br />
     </div>
     <div id="yieldMethod" class="col-md-12">
         <h3>Yield Method</h3>
