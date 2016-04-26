@@ -47,6 +47,10 @@
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcInterestDays')"><h6>Interest Days</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('HolidayInput')"><h6>Holiday Input</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcDuration')"><h6>Duration</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcModifiedDuration')"><h6>ModifiedDuration</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcConvexity')"><h6>Convexity</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcPVBP')"><h6>PVBP</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcConvexityPVBP')"><h6>Convexity adjusted PVBP</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CalculationDefaults')"><h6>Calculation Defaults</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcDayCount')"><h6>Day Count</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcYieldDayCount')"><h6>Yield Day Count</h6></a></li>
@@ -222,6 +226,22 @@
         <div id="CustCalcDuration" class="col-md-12">
             <h4>Duration</h4>
             <label>Macaulay Duration is the time to future cashflows weighted by their present values. Mathematically it is the first order derivative of <a href="" ng-click="vm.gotoAnchor('CustCalcYield')">yield</a> and is used in the immunization of portfolios. </label>
+        </div>
+        <div id="CustCalcModifiedDuration" class="col-md-12">
+            <h4>Modified Duration</h4>
+            <label>Modified Duration is the price sensitivity to interest rates. </label>
+        </div>
+        <div id="CustCalcConvexity" class="col-md-12">
+            <h4>Convexity</h4>
+            <label>Measures the change in duration for a change in interest rates. </label>
+        </div>
+        <div id="CustCalcPVBP" class="col-md-12">
+            <h4>PVBP</h4>
+            <label>Change in price for a basis point (.01) change in yield. </label>
+        </div>
+        <div id="CustCalcConvexityPVBP" class="col-md-12">
+            <h4>Convexity Adjusted PVBP</h4>
+            <label><a href="" ng-click="vm.gotoAnchor('CustCalcPVBP')">PVBP</a> adjusted for <a href="" ng-click="vm.gotoAnchor('CustCalcConvexity')">convexity</a>. </label>
         </div>
         <div id="HolidayInput" class="col-md-12">
             <h4>Holiday Input</h4>

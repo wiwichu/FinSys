@@ -178,8 +178,44 @@
                     {
                         help = {
                             title: "Macaulay Duration",
-                            text: "Macaulay Duration is the time to future cashflows weighted by their present values.",
+                            text: "the time to cashflows weighted by their present values.",
                             link: "#/Guide#CustCalcDuration"
+                        };
+                        break;
+                    }
+                case "custCalcModifiedDuration":
+                    {
+                        help = {
+                            title: "Modified Duration",
+                            text: "Measures the price sensitivity of a bond to interest rates.",
+                            link: "#/Guide#CustCalcModifiedDuration"
+                        };
+                        break;
+                    }
+                case "custCalcConvexity":
+                    {
+                        help = {
+                            title: "Convexity",
+                            text: "Measures the change in duration for interest rates change.",
+                            link: "#/Guide#CustCalcConvexity"
+                        };
+                        break;
+                    }
+                case "custCalcPVBP":
+                    {
+                        help = {
+                            title: "PVBP",
+                            text: "Price change for a basis point change in yield.",
+                            link: "#/Guide#CustCalcPVBP"
+                        };
+                        break;
+                    }
+                case "custCalcConvexityPVBP":
+                    {
+                        help = {
+                            title: "Convexity Adjusted PVBP",
+                            text: "PVBP adjusted for convexity.",
+                            link: "#/Guide#CustCalcConvexityPVBP"
                         };
                         break;
                     }
