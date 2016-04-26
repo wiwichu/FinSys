@@ -174,6 +174,15 @@
                         };
                         break;
                     }
+                case "custCalcDuration":
+                    {
+                        help = {
+                            title: "Macaulay Duration",
+                            text: "Macaulay Duration is the time to future cashflows weighted by their present values.",
+                            link: "#/Guide#CustCalcDuration"
+                        };
+                        break;
+                    }
             }
             var options = {
                 templateUrl: "/templates/helpDialog.html",
