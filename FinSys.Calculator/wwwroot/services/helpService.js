@@ -129,6 +129,15 @@
                         };
                         break;
                     }
+                case "cashflowForm":
+                    {
+                        help = {
+                            title: "CashFlows",
+                            text: "Displays and allows pricing of cash flows.",
+                            link: "#/Guide#cashFlows"
+                        };
+                        break;
+                    }
             }
             var options = {
                 templateUrl: "/templates/helpDialog.html",
