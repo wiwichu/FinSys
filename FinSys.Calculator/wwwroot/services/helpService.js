@@ -21,6 +21,33 @@
             };
             switch (helpTopic)
             {
+                case "customCalcForm":
+                    {
+                        help = {
+                            title: "Use Holidays",
+                            text: "Form for custom calculations.",
+                            link: "#/Guide#custCalc"
+                        };
+                        break;
+                    }
+                case "instrumentClass":
+                    {
+                        help = {
+                            title: "Instrument Class",
+                            text: "Class for applying instrument defaults.",
+                            link: "#/Guide#CustCalcClass"
+                        };
+                        break;
+                    }
+                case "custCalcInterestRate":
+                    {
+                        help = {
+                            title: "Interest Rate",
+                            text: "Rate of interest paid on the instrument.",
+                            link: "#/Guide#CustCalcInterestRate"
+                        };
+                        break;
+                    }
                 case "useHolidays":
                     {
                         help = {
@@ -30,12 +57,12 @@
                         };
                         break;
                     } 
-                case "maturitydate":
+                case "custCalcMaturityDate":
                 {
                     help = {
                         title: "Maturity Date",
                         text: "Date on which the instrument matures.",
-                        link: "#/Guide#maturitydate"
+                        link: "#/Guide#CustCalcMaturityDate"
                     };
                     break;
                 }
@@ -66,12 +93,12 @@
                         };
                         break;
                     }
-                case "custCalcCleanPrice":
+                case "custCalcDirtyPrice":
                     {
                         help = {
-                            title: "Clean Price",
-                            text: "Clean price of the trade as a per cent of nominal.",
-                            link: "#/Guide#CustCalcCleanPrice"
+                            title: "Dirty Price",
+                            text: "Invoice price of the trade.",
+                            link: "#/Guide#CustCalcDirtyPrice"
                         };
                         break;
                     }
@@ -178,7 +205,7 @@
                     {
                         help = {
                             title: "Macaulay Duration",
-                            text: "the time to cashflows weighted by their present values.",
+                            text: "The time to cashflows weighted by their present values.",
                             link: "#/Guide#CustCalcDuration"
                         };
                         break;
@@ -216,6 +243,105 @@
                             title: "Convexity Adjusted PVBP",
                             text: "PVBP adjusted for convexity.",
                             link: "#/Guide#CustCalcConvexityPVBP"
+                        };
+                        break;
+                    }
+                case "custCalcDayCount":
+                    {
+                        help = {
+                            title: "Calculation Day Count",
+                            text: "Day Count Rule for calculating interest.",
+                            link: "#/Guide#CustCalcDayCount"
+                        };
+                        break;
+                    }
+                case "custCalcPayFreq":
+                    {
+                        help = {
+                            title: "Pay Frequency",
+                            text: "Frequency of interest payments.",
+                            link: "#/Guide#CustCalcPayFreq"
+                        };
+                        break;
+                    }
+                case "custCalcCompoundFreq":
+                    {
+                        help = {
+                            title: "Compound Frequency",
+                            text: "Frequency of yield compounding.",
+                            link: "#/Guide#CustCalcCompoundFreq"
+                        };
+                        break;
+                    }
+                case "custCalcYieldDayCount":
+                    {
+                        help = {
+                            title: "Yield Day Count",
+                            text: "Day Count Rule for calculating yield.",
+                            link: "#/Guide#CustCalcYieldDayCount"
+                        };
+                        break;
+                    }
+                case "custCalcCalcDateAdjust":
+                    {
+                        help = {
+                            title: "Calculation Date Adjustment",
+                            text: "Holiday Adjust Rule for calcuation dates.",
+                            link: "#/Guide#CustCalcCalcDateAdjust"
+                        };
+                        break;
+                    }
+                case "custCalcPayDateAdjust":
+                    {
+                        help = {
+                            title: "Payment Date Adjustment",
+                            text: "Holiday Adjust Rule for payment dates.",
+                            link: "#/Guide#CustCalcPayDateAdjust"
+                        };
+                        break;
+                    }
+                case "custCalcYieldMethod":
+                    {
+                        help = {
+                            title: "Yield Method",
+                            text: "Method for calculating yield.",
+                            link: "#/Guide#CustCalcYieldMethod"
+                        };
+                        break;
+                    }
+                case "custCalcOverrideDates":
+                    {
+                        help = {
+                            title: "OverrideDates",
+                            text: "Override default dates with entered values.",
+                            link: "#/Guide#CustCalcOverrideDates"
+                        };
+                        break;
+                    }
+                case "custCalcIssueDate":
+                    {
+                        help = {
+                            title: "Issue Date",
+                            text: "Date instrument was issued.",
+                            link: "#/Guide#CustCalcIssueDate"
+                        };
+                        break;
+                    }
+                case "custCalcFirstPayDate":
+                    {
+                        help = {
+                            title: "First Pay Date",
+                            text: "First payment on the instrument.",
+                            link: "#/Guide#CustCalcFirstPayDate"
+                        };
+                        break;
+                    }
+                case "custCalcNextToLastPayDate":
+                    {
+                        help = {
+                            title: "Next to Last Pay Date",
+                            text: "Last payment on the instrument before maturity.",
+                            link: "#/Guide#CustCalcNextToLastPayDate"
                         };
                         break;
                     }
