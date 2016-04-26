@@ -147,6 +147,33 @@
                         };
                         break;
                     }
+                case "custCalcPreviousPay":
+                    {
+                        help = {
+                            title: "Previous Pay Date",
+                            text: "The last payment before the Value Date.",
+                            link: "#/Guide#CustCalcPreviousPay"
+                        };
+                        break;
+                    }
+                case "custCalcNextPay":
+                    {
+                        help = {
+                            title: "Next Pay Date",
+                            text: "The next payment after the Value Date.",
+                            link: "#/Guide#CustCalcNextPay"
+                        };
+                        break;
+                    }
+                case "custCalcInterestDays":
+                    {
+                        help = {
+                            title: "Interest Days",
+                            text: "The number of days from the previous pay date to the value date.",
+                            link: "#/Guide#CustCalcInterestDays"
+                        };
+                        break;
+                    }
             }
             var options = {
                 templateUrl: "/templates/helpDialog.html",
