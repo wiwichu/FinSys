@@ -42,6 +42,9 @@
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcExCoupon')"><h6>Ex-Coupon</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcTradeFlat')"><h6>Trade Flat</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcIncludeCashflows')"><h6>Include Cashflows</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcPreviousPay')"><h6>Previous Pay Date</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcNextPay')"><h6>Next Pay Date</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcInterestDays')"><h6>Interest Days</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('HolidayInput')"><h6>Holiday Input</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CalculationDefaults')"><h6>Calculation Defaults</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcDayCount')"><h6>Day Count</h6></a></li>
@@ -202,6 +205,18 @@
         <div id="CustCalcIncludeCashflows" class="col-md-12">
             <h4>Include Cashflows</h4>
             <label>Checking this box will cause cash flows to be generated along with the yield related calculations. These can then be viewed by clicking the <a href="" ng-click="vm.gotoAnchor('cashFlowsButton')">Cashflows</a> button. This will not perform as well as simply requesting the yield calculations.</label>
+        </div>
+        <div id="CustCalcPreviousPay" class="col-md-12">
+            <h4>Previous Pay Date</h4>
+            <label>The last payment before the <a href="" ng-click="vm.gotoAnchor('CustCalcValueDate')">value date</a>. </label>
+        </div>
+        <div id="CustCalcNextPay" class="col-md-12">
+            <h4>Next Pay Date</h4>
+            <label>The next payment after the <a href="" ng-click="vm.gotoAnchor('CustCalcValueDate')">value date</a>. </label>
+        </div>
+        <div id="CustCalcInterestDays" class="col-md-12">
+            <h4>Interest Days</h4>
+            <label>The number of days from the <a href="" ng-click="vm.gotoAnchor('CustCalcPreviousPay')">previous pay date</a> to the <a href="" ng-click="vm.gotoAnchor('CustCalcValueDate')">value date</a> as determined by the <a href="" ng-click="vm.gotoAnchor('CustCalcDayCount')">day count rule</a> used to calculate <a href="" ng-click="vm.gotoAnchor('CustCalcAccruedInterest')">accrued interest</a>. </label>
         </div>
         <div id="HolidayInput" class="col-md-12">
             <h4>Holiday Input</h4>
