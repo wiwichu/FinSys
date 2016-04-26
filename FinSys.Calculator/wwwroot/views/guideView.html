@@ -27,10 +27,6 @@
                         </ul>
                     </li>
                     <li class="list-group-item borderless ">
-                        <a href="" ng-click="vm.gotoAnchor('cashFlows')"><h5>CashFlows</h5></a>
-                        <ul class="list-group borderless"></ul>
-                    </li>
-                    <li class="list-group-item borderless ">
                         <a href="" ng-click="vm.gotoAnchor('custCalc')"><h5>Calculator</h5></a>
                         <ul class="list-group borderless">
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcClass')"><h6>Instrument Class</h6></a></li>
@@ -45,6 +41,7 @@
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcDirtyPrice')"><h6>Dirty Price</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcExCoupon')"><h6>Ex-Coupon</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcTradeFlat')"><h6>Trade Flat</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcIncludeCashflows')"><h6>Include Cashflows</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('HolidayInput')"><h6>Holiday Input</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CalculationDefaults')"><h6>Calculation Defaults</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcDayCount')"><h6>Day Count</h6></a></li>
@@ -61,6 +58,10 @@
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcSetDates')"><h6>Set Dates</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcResetDefaults')"><h6>Reset Defaults</h6></a></li>
                         </ul>
+                    </li>
+                    <li class="list-group-item borderless ">
+                        <a href="" ng-click="vm.gotoAnchor('cashFlows')"><h5>CashFlows</h5></a>
+                        <ul class="list-group borderless"></ul>
                     </li>
                 </ul>
             </li>
@@ -139,13 +140,6 @@
             <br /><br />
         </div>
     </div>
-    <div id="cashFlows" class="col-md-12">
-        <h3>Cash Flows</h3>
-        <label>Displays and allows for the pricing of cash flows.</label><br /><br />
-        <div class="col-md-7">
-            <img src="/img/CashFlows.png" alt="Cash Flows" class="img-responsive" />
-        </div>
-    </div>
     <div id="custCalc" class="col-md-12">
         <h3>Custom Calculator</h3>
         <label>Allows for flexible Custom Calculations.</label><br /><br />
@@ -204,6 +198,10 @@
         <div id="CustCalcTradeFlat" class="col-md-12">
             <h4>Trade Flat</h4>
             <label>Indicates that <a href="" ng-click="vm.gotoAnchor('CustCalcAccruedInterest')">accrued interest</a> will not be included in the <a href="" ng-click="vm.gotoAnchor('CustCalcDirtyPrice')"> invoice price.</a>.</label>
+        </div>
+        <div id="CustCalcIncludeCashflows" class="col-md-12">
+            <h4>Include Cashflows</h4>
+            <label>Checking this box will cause cash flows to be generated along with the yield related calculations. These can then be viewed by clicking the <a href="" ng-click="vm.gotoAnchor('cashFlowsButton')">Cashflows</a> button. This will not perform as well as simply requesting the yield calculations.</label>
         </div>
         <div id="HolidayInput" class="col-md-12">
             <h4>Holiday Input</h4>
@@ -290,6 +288,13 @@
             <label>
                 The last payment date before the <a href="" ng-click="vm.gotoAnchor('CustCalcMaturityDate')">Maturity Date</a>.
             </label><br /><br />
+        </div>
+    </div>
+    <div id="cashFlows" class="col-md-12">
+        <h3>Cash Flows</h3>
+        <label>Displays and allows for the pricing of cash flows.</label><br /><br />
+        <div class="col-md-7">
+            <img src="/img/CashFlows.png" alt="Cash Flows" class="img-responsive" />
         </div>
     </div>
 </div>

@@ -138,6 +138,15 @@
                         };
                         break;
                     }
+                case "custCalcIncludeCashflows":
+                    {
+                        help = {
+                            title: "Include CashFlows",
+                            text: "Causes cashflows to be included in the calculation result.",
+                            link: "#/Guide#CustCalcIncludeCashflows"
+                        };
+                        break;
+                    }
             }
             var options = {
                 templateUrl: "/templates/helpDialog.html",
