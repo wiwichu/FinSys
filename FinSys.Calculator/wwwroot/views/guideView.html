@@ -69,7 +69,9 @@
                     </li>
                     <li class="list-group-item borderless ">
                         <a href="" ng-click="vm.gotoAnchor('cashFlows')"><h5>CashFlows</h5></a>
-                        <ul class="list-group borderless"></ul>
+                        <ul class="list-group borderless">
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CashFlowGrid')"><h6>Cash Flow Grid</h6></a></li>
+                        </ul>
                     </li>
                 </ul>
             </li>
@@ -347,6 +349,23 @@
         <label>Displays and allows for the pricing of cash flows.</label><br /><br />
         <div class="col-md-7">
             <img src="/img/CashFlows.png" alt="Cash Flows" class="img-responsive" />
+        </div>
+        <div id="CashFlowGrid" class="col-md-12">
+            <h4>Cash Flow Grid</h4>
+            <label>
+                The grid will be populated with cash flows if the form is opened as a result of a navigation from a <a href="" ng-click="vm.gotoAnchor('cashFlowsButton')">Cashflows Button Click</a>. Otherwise the grid will be empty. In either case it can be populated either manually or by using the <a href="" ng-click="vm.gotoAnchor('gridImportExport')">import menu</a>. The columns in the grid are as follows:
+            </label>
+            <ul class="list-group borderless">
+                <li class="list-group-item borderless ">Scheduled Date - The date the payment was scheduled. </li>
+                <li class="list-group-item borderless ">Adjusted Date - scheduled date after any non-business day adjustment. </li>
+                <li class="list-group-item borderless ">Amount - amount of the payment. </li>
+                <li class="list-group-item borderless ">Present Value - value of the amount after applying the discount rate. </li>
+                <li class="list-group-item borderless ">Discount Rate - rate by which the amount is discounted to arrive at the present value. </li>
+            </ul>
+            <label>
+                When data is imported into the grid it must be in comma delimited format with the column names and types exactly matching those in the grid.
+            </label>
+<br /><br />
         </div>
     </div>
 </div>
