@@ -345,6 +345,15 @@
                         };
                         break;
                     }
+                case "cashFlowGrid":
+                    {
+                        help = {
+                            title: "Cash Flow Grid",
+                            text: "Editable Grid of cash flows.",
+                            link: "#/Guide#CashFlowGrid"
+                        };
+                        break;
+                    }
             }
             var options = {
                 templateUrl: "/templates/helpDialog.html",
