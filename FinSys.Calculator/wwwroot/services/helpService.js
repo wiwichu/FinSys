@@ -354,6 +354,42 @@
                         };
                         break;
                     }
+                case "cashFlowYieldMethod":
+                    {
+                        help = {
+                            title: "Yield Method",
+                            text: "Method for discounting to present value.",
+                            link: "#/Guide#CashFlowYieldMethod"
+                        };
+                        break;
+                    }
+                case "cashFlowYieldDayCount":
+                    {
+                        help = {
+                            title: "Yield Day Count",
+                            text: "Day Count Rule for discounting payments.",
+                            link: "#/Guide#CashFlowYieldDayCount"
+                        };
+                        break;
+                    }
+                case "cashFlowCompoundFreq":
+                    {
+                        help = {
+                            title: "Compound Frequency",
+                            text: "Frequency of discounting for present value.",
+                            link: "#/Guide#CashFlowCompoundFreq"
+                        };
+                        break;
+                    }
+                case "cashFlowValueDate":
+                {
+                    help = {
+                        title: "Value Date",
+                        text: "Date to which payments are discounted..",
+                        link: "#/Guide#CashFlowValueDate"
+                    };
+                    break;
+                }
             }
             var options = {
                 templateUrl: "/templates/helpDialog.html",
