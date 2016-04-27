@@ -77,7 +77,7 @@
                                 <input type="checkbox" name="useCurve" ng-model="vm.useCurve" data-toggle="collapse" data-target="#curve"> Use Curve
                             </label>
                             <span class="input-group-btn">
-                                <a class="btn btn-link btn-xs" ng-click="vm.getHelp('useCurve')">
+                                <a class="btn btn-link btn-xs" ng-click="vm.getHelp('cashFlowUseCurve')">
                                     <i class="fa fa-question-circle"></i>
                                 </a>
                             </span>
@@ -134,7 +134,14 @@
             </div>
             <div class="row">
                 <div id="curve" class="collapse">
-                    <label for="interpolationMethodSelect">Interpolation Method</label>
+                    <div class="input-group">
+                        <label for="interpolationMethodSelect">Interpolation Method</label>
+                        <span class="input-group-btn">
+                            <a class="btn btn-link btn-xs" ng-click="vm.getHelp('interpolationMethod')">
+                                <i class="fa fa-question-circle"></i>
+                            </a>
+                        </span>
+                    </div>
                     <select class="form-control" name="interpolationMethodSelect" id="interpolationMethodSelect"
                             ng-options="iClass for iClass in vm.interpolationMethod"
                             ng-model="vm.selectedInterpolationMethod">
@@ -143,7 +150,7 @@
                     <div class="input-group">
                         <label for="cashFlows">Enter Or Import Curve. Date Format: YYYY-MM-DD</label>
                         <span class="input-group-btn">
-                            <button class="btn btn-link btn-xs">
+                            <button class="btn btn-link btn-xs" ng-click="vm.getHelp('cashFlowRateCurveGrid')">
                                 <i class="fa fa-question-circle"></i>
                             </button>
                         </span>

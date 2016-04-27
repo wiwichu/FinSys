@@ -385,11 +385,38 @@
                 {
                     help = {
                         title: "Value Date",
-                        text: "Date to which payments are discounted..",
+                        text: "Date to which payments are discounted.",
                         link: "#/Guide#CashFlowValueDate"
                     };
                     break;
                 }
+                case "cashFlowUseCurve":
+                    {
+                        help = {
+                            title: "Use Curve",
+                            text: "Get discount rates from curve.",
+                            link: "#/Guide#CashFlowUseCurve"
+                        };
+                        break;
+                    }
+                case "interpolationMethod":
+                    {
+                        help = {
+                            title: "Interpolation Method",
+                            text: "How to interpolate between dates.",
+                            link: "#/Guide#CashFlowInterpolationMethod"
+                        };
+                        break;
+                    }
+                case "cashFlowRateCurveGrid":
+                    {
+                        help = {
+                            title: "Rate Curve",
+                            text: "Editable Grid of rates.",
+                            link: "#/Guide#CashFlowRateCurveGrid"
+                        };
+                        break;
+                    }
             }
             var options = {
                 templateUrl: "/templates/helpDialog.html",

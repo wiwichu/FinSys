@@ -75,6 +75,9 @@
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CashFlowYieldMethod')"><h6>YieldMethod</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CashFlowYieldDayCount')"><h6>Yield Day Count</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CashFlowCompoundFreq')"><h6>Compound Frequency</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CashFlowUseCurve')"><h6>Use Curve</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CashFlowInterpolationMethod')"><h6>Interpolation Method</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CashFlowRateCurveGrid')"><h6>Rate Curve</h6></a></li>
                         </ul>
                     </li>
                 </ul>
@@ -361,14 +364,15 @@
             </label>
             <ul class="list-group borderless">
                 <li class="list-group-item borderless ">Scheduled Date - The date the payment was scheduled. </li>
-                <li class="list-group-item borderless ">Adjusted Date - scheduled date after any non-business day adjustment. </li>
+                <li class="list-group-item borderless ">Adjusted Date - Scheduled date after any non-business day adjustment. This is the date which will actually be used when determining the present value.</li>
                 <li class="list-group-item borderless ">Amount - amount of the payment. </li>
-                <li class="list-group-item borderless ">Present Value - value of the amount after applying the discount rate. </li>
-                <li class="list-group-item borderless ">Discount Rate - rate by which the amount is discounted to arrive at the present value. </li>
+                <li class="list-group-item borderless ">Present Value - Value of the amount after applying the discount rate. </li>
+                <li class="list-group-item borderless ">Discount Rate - Rate by which the amount is discounted to arrive at the present value. </li>
             </ul>
             <label>
                 When data is imported into the grid it must be in comma delimited format with the column names and types exactly matching those in the grid.
             </label>
+        </div>
             <div id="CashFlowValueDate" class="col-md-12">
                 <h4>Value Date</h4>
                 <label>
@@ -398,8 +402,32 @@
                     allows the selection of a rule setting how often compounding occurs in determining present value.
                 </label><br /><br />
             </div>
-<br /><br />
+            <div id="CashFlowUseCurve" class="col-md-12">
+                <h4>Use Curve</h4>
+                <label>
+                    When checked, will reveal the <a href="" ng-click="vm.gotoAnchor('CashFlowRateCurveGrid')">Rate Curve Grid</a> to be used instead of the rates in the <a href="" ng-click="vm.gotoAnchor('CashFlowGrid')">Cash Flow Grid</a>.
+                </label><br /><br />
+            </div>
+            <div id="CashFlowInterpolationMethod" class="col-md-12">
+                <h4>Interpolation Method</h4>
+                <label>
+                    How rates are interpolated for dates not falling on curve.
+                </label><br /><br />
+            </div>
+        <div id="CashFlowRateCurveGrid" class="col-md-12">
+            <h4>Rate Curve Grid</h4>
+            <label>
+                When <a href="" ng-click="vm.gotoAnchor('CashFlowUseCurve')">Use Curve</a> is checked the payments in the <a href="" ng-click="vm.gotoAnchor('CashFlowGrid')">Cash Flow Grid</a> will be discounted to their present values using the rates in this grid. The grid can be populated either manually or by using the <a href="" ng-click="vm.gotoAnchor('gridImportExport')">import menu</a>. The columns in the grid are as follows:
+            </label>
+            <ul class="list-group borderless">
+                <li class="list-group-item borderless ">Rate Date - The date for which the rate will be used. </li>
+                <li class="list-group-item borderless ">Rate - Rate to be used to discount cash flows. </li>
+            </ul>
+            <label>
+                When data is imported into the grid it must be in comma delimited format with the column names and types exactly matching those in the grid.
+            </label>
         </div>
+<br /><br />
     </div>
 </div>
 <div id="functional" class="col-md-12">
