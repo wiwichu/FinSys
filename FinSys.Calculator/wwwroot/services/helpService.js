@@ -417,6 +417,78 @@
                         };
                         break;
                     }
+                case "ustbillForm":
+                    {
+                        help = {
+                            title: "US Treasury Bill Calculator",
+                            text: "US Treasury Bill Yield and Price Calculations.",
+                            link: "#/Guide#usTBill"
+                        };
+                        break;
+                    }
+                case "USTBDuration":
+                    {
+                        help = {
+                            title: "Macaulay Duration",
+                            text: "The time to cashflows weighted by their present values.",
+                            link: "#/Guide#USTBDuration"
+                        };
+                        break;
+                    }
+                case "USTBModifiedDuration":
+                    {
+                        help = {
+                            title: "Modified Duration",
+                            text: "Measures the price sensitivity of a bond to interest rates.",
+                            link: "#/Guide#USTBModifiedDuration"
+                        };
+                        break;
+                    }
+                case "USTBConvexity":
+                    {
+                        help = {
+                            title: "Convexity",
+                            text: "Measures the change in duration for interest rates change.",
+                            link: "#/Guide#USTBConvexity"
+                        };
+                        break;
+                    }
+                case "USTBPVBP":
+                    {
+                        help = {
+                            title: "PVBP",
+                            text: "Price change for a basis point change in yield.",
+                            link: "#/Guide#USTBPVBP"
+                        };
+                        break;
+                    }
+                case "USTBConvexityPVBP":
+                    {
+                        help = {
+                            title: "Convexity Adjusted PVBP",
+                            text: "PVBP adjusted for convexity.",
+                            link: "#/Guide#USTBConvexityPVBP"
+                        };
+                        break;
+                    }
+                case "USTBMaturityDate":
+                    {
+                        help = {
+                            title: "Maturity Date",
+                            text: "Date on which the instrument matures.",
+                            link: "#/Guide#USTBMaturityDate"
+                        };
+                        break;
+                    }
+                case "USTBValueDate":
+                    {
+                        help = {
+                            title: "Value Date",
+                            text: "Date on which the trade settles.",
+                            link: "#/Guide#USTBValueDate"
+                        };
+                        break;
+                    }
             }
             var options = {
                 templateUrl: "/templates/helpDialog.html",
