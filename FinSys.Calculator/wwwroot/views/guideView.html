@@ -27,7 +27,7 @@
                         </ul>
                     </li>
                     <li class="list-group-item borderless ">
-                        <a href="" ng-click="vm.gotoAnchor('custCalc')"><h5>Calculator</h5></a>
+                        <a href="" ng-click="vm.gotoAnchor('custCalc')"><h5>Custom Calculator</h5></a>
                         <ul class="list-group borderless">
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcClass')"><h6>Instrument Class</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcInterestRate')"><h6>Interest Rate</h6></a></li>
@@ -80,6 +80,18 @@
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CashFlowRateCurveGrid')"><h6>Rate Curve</h6></a></li>
                         </ul>
                     </li>
+                    <li class="list-group-item borderless ">
+                        <a href="" ng-click="vm.gotoAnchor('usTBill')"><h5>US TBill</h5></a>
+                        <ul class="list-group borderless">
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('USTBMaturityDate')"><h6>Maturity Date</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('USTBValueDate')"><h6>Value Date</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('USTBDuration')"><h6>Duration</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('USTBModifiedDuration')"><h6>ModifiedDuration</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('USTBConvexity')"><h6>Convexity</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('USTBPVBP')"><h6>PVBP</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('USTBConvexityPVBP')"><h6>Convexity adjusted PVBP</h6></a></li>
+                        </ul>
+                    </li>
                 </ul>
             </li>
             <li class="list-group-item borderless ">
@@ -87,6 +99,25 @@
                 <ul class="list-group borderless">
                     <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('dateAdjust')"><h6>Date Adjustment</h6></a></li>
                     <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('daycount')"><h6>Date Count</h6></a></li>
+                    <li class="list-group-item borderless ">
+                        <a href="" ng-click="vm.gotoAnchor('yieldMethod')"><h6>Yield Method</h6></a>
+                        <ul class="list-group borderless">
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('ISMA')"><h6>ISMA</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('MMDiscount')"><h6>Money Market Discount</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('MMYield')"><h6>Money Market Yield</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('SimpleYtm')"><h6>Simple Yield to Maturity</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CompoundYtm')"><h6>Compound Yield to Maturity</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('SimpleJapan')"><h6>Simple Japan</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CurrentYield')"><h6>Current Yield</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('GreenwellMontagu')"><h6>Greenwell Montagu</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('Muni')"><h6>Muni</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('Corporate')"><h6>Corporate</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('USTBond')"><h6>US TBond</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('Moosmueller')"><h6>Moosmueller</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('BraessFangmeyer')"><h6>Braess/Fangmeyer</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('TrueYield')"><h6>True Yield</h6></a></li>
+                        </ul>
+                    </li>
                 </ul>
             </li>
             <li class="list-group-item borderless "><a href="" ng-click="vm.gotoAnchor('technical')"><h4>Technical Guide</h4></a></li>
@@ -373,47 +404,47 @@
                 When data is imported into the grid it must be in comma delimited format with the column names and types exactly matching those in the grid.
             </label>
         </div>
-            <div id="CashFlowValueDate" class="col-md-12">
-                <h4>Value Date</h4>
-                <label>
-                    Date to which cash flows are discounted to arrive at present value.
-                </label><br /><br />
-            </div>
-            <div id="CashFlowYieldMethod" class="col-md-12">
-                <h4>Yield Method</h4>
-                <label>
-                    <a href="" ng-click="vm.gotoAnchor('yieldMethod')"> Yield Method</a>
-                    sets the method used to discount cash flows.
-                </label><br /><br />
-            </div>
-            <div id="CashFlowYieldDayCount" class="col-md-12">
-                <h4>Yield Day Count</h4>
-                <label>
-                    Yield
-                    <a href="" ng-click="vm.gotoAnchor('daycount')">Day Count</a>
-                    allows the selection of a day count rule for calculating days in a period for discounting cashflows.
-                </label><br /><br />
-            </div>
-            <div id="CashFlowCompoundFreq" class="col-md-12">
-                <h4>Compound Frequency</h4>
-                <label>
-                    Compound
-                    <a href="" ng-click="vm.gotoAnchor('payFreq')"> Frequency</a>
-                    allows the selection of a rule setting how often compounding occurs in determining present value.
-                </label><br /><br />
-            </div>
-            <div id="CashFlowUseCurve" class="col-md-12">
-                <h4>Use Curve</h4>
-                <label>
-                    When checked, will reveal the <a href="" ng-click="vm.gotoAnchor('CashFlowRateCurveGrid')">Rate Curve Grid</a> to be used instead of the rates in the <a href="" ng-click="vm.gotoAnchor('CashFlowGrid')">Cash Flow Grid</a>.
-                </label><br /><br />
-            </div>
-            <div id="CashFlowInterpolationMethod" class="col-md-12">
-                <h4>Interpolation Method</h4>
-                <label>
-                    How rates are interpolated for dates not falling on curve.
-                </label><br /><br />
-            </div>
+        <div id="CashFlowValueDate" class="col-md-12">
+            <h4>Value Date</h4>
+            <label>
+                Date to which cash flows are discounted to arrive at present value.
+            </label><br /><br />
+        </div>
+        <div id="CashFlowYieldMethod" class="col-md-12">
+            <h4>Yield Method</h4>
+            <label>
+                <a href="" ng-click="vm.gotoAnchor('yieldMethod')"> Yield Method</a>
+                sets the method used to discount cash flows.
+            </label><br /><br />
+        </div>
+        <div id="CashFlowYieldDayCount" class="col-md-12">
+            <h4>Yield Day Count</h4>
+            <label>
+                Yield
+                <a href="" ng-click="vm.gotoAnchor('daycount')">Day Count</a>
+                allows the selection of a day count rule for calculating days in a period for discounting cashflows.
+            </label><br /><br />
+        </div>
+        <div id="CashFlowCompoundFreq" class="col-md-12">
+            <h4>Compound Frequency</h4>
+            <label>
+                Compound
+                <a href="" ng-click="vm.gotoAnchor('payFreq')"> Frequency</a>
+                allows the selection of a rule setting how often compounding occurs in determining present value.
+            </label><br /><br />
+        </div>
+        <div id="CashFlowUseCurve" class="col-md-12">
+            <h4>Use Curve</h4>
+            <label>
+                When checked, will reveal the <a href="" ng-click="vm.gotoAnchor('CashFlowRateCurveGrid')">Rate Curve Grid</a> to be used instead of the rates in the <a href="" ng-click="vm.gotoAnchor('CashFlowGrid')">Cash Flow Grid</a>.
+            </label><br /><br />
+        </div>
+        <div id="CashFlowInterpolationMethod" class="col-md-12">
+            <h4>Interpolation Method</h4>
+            <label>
+                How rates are interpolated for dates not falling on curve.
+            </label><br /><br />
+        </div>
         <div id="CashFlowRateCurveGrid" class="col-md-12">
             <h4>Rate Curve Grid</h4>
             <label>
@@ -427,7 +458,42 @@
                 When data is imported into the grid it must be in comma delimited format with the column names and types exactly matching those in the grid.
             </label>
         </div>
-<br /><br />
+        <br /><br />
+        <div id="usTBill" class="col-md-12">
+            <h3>USTBill</h3>
+            <label>Allows for pricing and calculating common yield methods for US Treasury Bills. All these calculations could be carried out through the <a href="" ng-click="vm.gotoAnchor('custCalc')">Custom Calculator</a>, but this form conveniently applies defaults.</label><br /><br />
+            <div class="col-md-7">
+                <img src="/img/USTBill.png" alt="USTBill" class="img-responsive" />
+            </div>
+        </div>
+        <div id="USTBMaturityDate" class="col-md-12">
+            <h4>Maturity Date</h4>
+            <label>Date on which the instrument matures.</label><br />
+        </div>
+        <div id="USTBValueDate" class="col-md-12">
+            <h4>Value Date</h4>
+            <label>Also called Settlement Date. Base date used for calculating yield.</label>
+        </div>
+        <div id="USTBDuration" class="col-md-12">
+            <h4>Duration</h4>
+            <label>Macaulay Duration is the time to future cashflows weighted by their present values. Mathematically it is the first order derivative of <a href="" ng-click="vm.gotoAnchor('CustCalcYield')">yield</a> and is used in the immunization of portfolios. </label>
+        </div>
+        <div id="USTBModifiedDuration" class="col-md-12">
+            <h4>Modified Duration</h4>
+            <label>Modified Duration is the price sensitivity to interest rates. </label>
+        </div>
+        <div id="USTBConvexity" class="col-md-12">
+            <h4>Convexity</h4>
+            <label>Measures the change in duration for a change in interest rates. </label>
+        </div>
+        <div id="USTBPVBP" class="col-md-12">
+            <h4>PVBP</h4>
+            <label>Change in price for a basis point (.01) change in yield. </label>
+        </div>
+        <div id="USTBConvexityPVBP" class="col-md-12">
+            <h4>Convexity Adjusted PVBP</h4>
+            <label><a href="" ng-click="vm.gotoAnchor('CustCalcPVBP')">PVBP</a> adjusted for <a href="" ng-click="vm.gotoAnchor('CustCalcConvexity')">convexity</a>. </label>
+        </div>
     </div>
 </div>
 <div id="functional" class="col-md-12">
@@ -611,6 +677,90 @@
     <div id="yieldMethod" class="col-md-12">
         <h3>Yield Method</h3>
         <label>Rules for setting how yield is calculated.</label><br />
+    </div>
+    <div id="ISMA" class="col-md-12">
+        <h4>ISMA</h4>
+        <label>
+            ISMA
+        </label>
+    </div>
+    <div id="MMDiscount" class="col-md-12">
+        <h4>MM Discount</h4>
+        <label>
+            Money Market Discount
+        </label>
+    </div>
+    <div id="MMYield" class="col-md-12">
+        <h4>MM Yield</h4>
+        <label>
+            Money Market Yield
+        </label>
+    </div>
+    <div id="SimpleYtm" class="col-md-12">
+        <h4>Simple Yield to Maturity</h4>
+        <label>
+            Simple Yield to Maturity
+        </label>
+    </div>
+    <div id="CompoundYtm" class="col-md-12">
+        <h4>Compound Yield to Maturity</h4>
+        <label>
+            Compound Yield to Maturity
+        </label>
+    </div>
+    <div id="SimpleJapan" class="col-md-12">
+        <h4>Simple Japanese</h4>
+        <label>
+            Simple Japanese
+        </label>
+    </div>
+    <div id="CurrentYield" class="col-md-12">
+        <h4>Current Yield</h4>
+        <label>
+            Current Yield
+        </label>
+    </div>
+    <div id="GreenwellMontagu" class="col-md-12">
+        <h4>Greenwell Montagu</h4>
+        <label>
+            Greenwell Montagu
+        </label>
+    </div>
+    <div id="Muni" class="col-md-12">
+        <h4>Muni</h4>
+        <label>
+            Muni
+        </label>
+    </div>
+    <div id="Corporate" class="col-md-12">
+        <h4>Corporate</h4>
+        <label>
+            Corporate
+        </label>
+    </div>
+    <div id="USTBond" class="col-md-12">
+        <h4>US TBond</h4>
+        <label>
+            United States Treasury Bond
+        </label>
+    </div>
+    <div id="Moosmueller" class="col-md-12">
+        <h4>Moosmueller</h4>
+        <label>
+            Moosmueller
+        </label>
+    </div>
+    <div id="BraessFangmeyer" class="col-md-12">
+        <h4>Braess/Fangmeyer</h4>
+        <label>
+            Braess/Fangmeyer
+        </label>
+    </div>
+    <div id="TrueYield" class="col-md-12">
+        <h4>True Yield</h4>
+        <label>
+            True Yield
+        </label>
     </div>
     <div id="technical" class="col-md-12">
         <div class="col-md-4 col-md-offset-4">
