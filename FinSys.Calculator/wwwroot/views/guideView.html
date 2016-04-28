@@ -129,6 +129,15 @@
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('Same')"><h6>Same</h6></a></li>
                         </ul>
                     </li>
+                    <li class="list-group-item borderless ">
+                        <a href="" ng-click="vm.gotoAnchor('payFreq')"><h6>Pay Frequency</h6></a>
+                        <ul class="list-group borderless">
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('Annually')"><h6>Annually</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('SemiAnnually')"><h6>Semi-Annually</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('Quarterly')"><h6>Quarterly</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('Monthly')"><h6>Monthly</h6></a></li>
+                        </ul>
+                    </li>
                 </ul>
             </li>
             <li class="list-group-item borderless "><a href="" ng-click="vm.gotoAnchor('technical')"><h4>Technical Guide</h4></a></li>
@@ -236,7 +245,7 @@
         </div>
         <div id="CustCalcYield" class="col-md-12">
             <h4>Yield/Discount</h4>
-            <label><a href="" ng-click="vm.gotoAnchor('yield')">Yield</a> or <a href="" ng-click="vm.gotoAnchor('discount')">Discount</a> corresponding to the <a href="" ng-click="vm.gotoAnchor('CustCalcCleanPrice')">Price</a>. This field is only enabled for input if <a href="" ng-click="vm.gotoAnchor('CustCalcCalculateFrom')">Calculate From</a> is set to Yield. Five per cent would be entered as 5.0.</label>
+            <label><a href="" ng-click="vm.gotoAnchor('yieldMethod')">Yield</a> or <a href="" ng-click="vm.gotoAnchor('discount')">Discount</a> corresponding to the <a href="" ng-click="vm.gotoAnchor('CustCalcCleanPrice')">Price</a>. This field is only enabled for input if <a href="" ng-click="vm.gotoAnchor('CustCalcCalculateFrom')">Calculate From</a> is set to Yield. Five per cent would be entered as 5.0.</label>
         </div>
         <div id="CustCalcCleanPrice" class="col-md-12">
             <h4>Clean Price</h4>
@@ -248,7 +257,7 @@
         </div>
         <div id="CustCalcDirtyPrice" class="col-md-12">
             <h4>Dirty Price</h4>
-            <label>The sum of the <a href="" ng-click="vm.gotoAnchor('CustCalcCleanPrice')">clean price</a> and the <a href="" ng-click="vm.gotoAnchor('CustCalcAccruedInterest')">accrued interest</a>. This is the invoice paid for the purchase of the instrument and also the present value of the future cashflows discounted by the <a href="" ng-click="vm.gotoAnchor('yield')">yield</a> according to the chosen <a href="" ng-click="vm.gotoAnchor('yieldMethod')">yield method</a>.</label>
+            <label>The sum of the <a href="" ng-click="vm.gotoAnchor('CustCalcCleanPrice')">clean price</a> and the <a href="" ng-click="vm.gotoAnchor('CustCalcAccruedInterest')">accrued interest</a>. This is the invoice paid for the purchase of the instrument and also the present value of the future cashflows discounted by the <a href="" ng-click="vm.gotoAnchor('yieldMethod')">yield</a> according to the chosen <a href="" ng-click="vm.gotoAnchor('yieldMethod')">yield method</a>.</label>
         </div>
         <div id="CustCalcExCoupon" class="col-md-12">
             <h4>Ex-Coupon</h4>
@@ -716,6 +725,30 @@
     <div id="payFreq" class="col-md-12">
         <h3>Payment Frequency</h3>
         <label>Rules for setting how often a payment occurs.</label><br />
+    </div>
+    <div id="Annually" class="col-md-12">
+        <h4>Annually</h4>
+        <label>
+            Once a year.
+        </label>
+    </div>
+    <div id="SemiAnnually" class="col-md-12">
+        <h4>Semi-Annually</h4>
+        <label>
+            Twice a year.
+        </label>
+    </div>
+    <div id="Quarterly" class="col-md-12">
+        <h4>Quarterly</h4>
+        <label>
+            Four times a year.
+        </label>
+    </div>
+    <div id="Monthly" class="col-md-12">
+        <h4>Monthly</h4>
+        <label>
+            Every month.
+        </label>
     </div>
     <div id="yield" class="col-md-12">
         <h3>Yield</h3>
