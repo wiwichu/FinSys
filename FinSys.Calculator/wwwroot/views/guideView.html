@@ -118,6 +118,17 @@
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('TrueYield')"><h6>True Yield</h6></a></li>
                         </ul>
                     </li>
+                    <li class="list-group-item borderless ">
+                        <a href="" ng-click="vm.gotoAnchor('holidayAdjust')"><h6>Holiday Adjustment</h6></a>
+                        <ul class="list-group borderless">
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('Marching')"><h6>Marching</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('Next')"><h6>Next</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('NextInMonth')"><h6>Next in Month</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('Previous')"><h6>Previous</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('PreviousNext')"><h6>Previous-Next</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('Same')"><h6>Same</h6></a></li>
+                        </ul>
+                    </li>
                 </ul>
             </li>
             <li class="list-group-item borderless "><a href="" ng-click="vm.gotoAnchor('technical')"><h4>Technical Guide</h4></a></li>
@@ -658,9 +669,45 @@
             </label>
         </div>
     </div>
-    <div id="discount" class="col-md-12">
-        <h3>Discount Rate</h3>
-        <label>Discount from par value resulting in the current price.</label><br />
+    <div id="holidayAdjust" class="col-md-12">
+        <h3>Holiday Adjustment</h3>
+        <label>Rules for adjusting a date when it falls on a nonbusiness day.</label><br />
+    </div>
+    <div id="Marching" class="col-md-12">
+        <h4>Marching</h4>
+        <label>
+            Date is adjusted to the next business day, and then that becomes the basis for future scheduled dates. Once the end of month is reached the date is the end of month for all subsequent scheduled dates.
+        </label>
+    </div>
+    <div id="Next" class="col-md-12">
+        <h4>Next</h4>
+        <label>
+            Date is adjusted to the next business day.
+        </label>
+    </div>
+    <div id="NextInMonth" class="col-md-12">
+        <h4>Next in Month</h4>
+        <label>
+            Date is adjusted to the next business day but if this is a different month then the previous business day is used.
+        </label>
+    </div>
+    <div id="Previous" class="col-md-12">
+        <h4>Previous</h4>
+        <label>
+            Date is adjusted to the previous business day.
+        </label>
+    </div>
+    <div id="PreviousNext" class="col-md-12">
+        <h4>Previous-Next</h4>
+        <label>
+            Date is adjusted to the previous business day but if this is a different month then the next business day is used.
+        </label>
+    </div>
+    <div id="Same" class="col-md-12">
+        <h4>Same</h4>
+        <label>
+            No adjustment occurs.
+        </label>
     </div>
     <div id="instrumentClass" class="col-md-12">
         <h3>Instrument Class</h3>
