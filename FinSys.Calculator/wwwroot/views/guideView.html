@@ -84,7 +84,13 @@
                         <a href="" ng-click="vm.gotoAnchor('usTBill')"><h5>US TBill</h5></a>
                         <ul class="list-group borderless">
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('USTBMaturityDate')"><h6>Maturity Date</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('USTBPrice')"><h6>Price</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('USTBDiscount')"><h6>Discount</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('USTBBondEquivalent')"><h6>Bond Equivalent Yield</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('USTBMMYield')"><h6>Money Market Yield</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('USTBValueDate')"><h6>Value Date</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('USTBCalcFrom')"><h6>Calculate From</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('USTBIncludeCashflows')"><h6>Include Cashflows</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('USTBDuration')"><h6>Duration</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('USTBModifiedDuration')"><h6>ModifiedDuration</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('USTBConvexity')"><h6>Convexity</h6></a></li>
@@ -97,7 +103,7 @@
             <li class="list-group-item borderless ">
                 <a href="" ng-click="vm.gotoAnchor('functional')"><h4>Functional Guide</h4></a>
                 <ul class="list-group borderless">
-                    <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('dateAdjust')"><h6>Date Adjustment</h6></a></li>
+                    <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('holidayAdjust')"><h6>Date Adjustment</h6></a></li>
                     <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('daycount')"><h6>Date Count</h6></a></li>
                     <li class="list-group-item borderless ">
                         <a href="" ng-click="vm.gotoAnchor('yieldMethod')"><h6>Yield Method</h6></a>
@@ -136,6 +142,22 @@
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('SemiAnnually')"><h6>Semi-Annually</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('Quarterly')"><h6>Quarterly</h6></a></li>
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('Monthly')"><h6>Monthly</h6></a></li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item borderless ">
+                        <a href="" ng-click="vm.gotoAnchor('instrumentClass')"><h6>Instrument Class</h6></a>
+                        <ul class="list-group borderless">
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('GermanBund')"><h6>German Bund</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('JapanGov')"><h6>Japanese Government Bond</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('UKGilt')"><h6>UK Gilt</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('UKCD')"><h6>UK CD</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('UKDiscount')"><h6>UK Discount</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('USCD')"><h6>US CD</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('USDiscount')"><h6>US Discount</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('USTBond')"><h6>US TBond</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CommercialPaper')"><h6>Commercial Paper</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('Finanzierungsschatz')"><h6>Finanzierungsschatz</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('USchatz')"><h6>U-Schatz</h6></a></li>
                         </ul>
                     </li>
                 </ul>
@@ -305,7 +327,7 @@
         </div>
         <div id="HolidayInput" class="col-md-12">
             <h4>Holiday Input</h4>
-            <label>Allows for holiday input. If use holidays is checked then a grid will open allowing for the input,<a href="" ng-click="vm.gotoAnchor('gridImportExport')"> import and export </a>of dates which are holidays. When the box is checked, the dates in the grid will also be used to<a href="" ng-click="vm.gotoAnchor('dateAdjust')"> adjust dates </a>for calculations.</label><br /><br />
+            <label>Allows for holiday input. If use holidays is checked then a grid will open allowing for the input,<a href="" ng-click="vm.gotoAnchor('gridImportExport')"> import and export </a>of dates which are holidays. When the box is checked, the dates in the grid will also be used to<a href="" ng-click="vm.gotoAnchor('holidayAdjust')"> adjust dates </a>for calculations.</label><br /><br />
         </div>
         <div id="CalculationDefaults" class="col-md-12">
             <h4>Defaults</h4>
@@ -346,7 +368,7 @@
             <h4>Calculation Date Adjustment</h4>
             <label>
                 Calculation
-                <a href="" ng-click="vm.gotoAnchor('dateAdjust')"> Date Adjustment</a>
+                <a href="" ng-click="vm.gotoAnchor('holidayAdjust')"> Date Adjustment</a>
                 sets how the date at the end of a period for calculating the interest is adjusted for a non business date.
             </label><br /><br />
         </div>
@@ -490,9 +512,33 @@
             <h4>Maturity Date</h4>
             <label>Date on which the instrument matures.</label><br />
         </div>
+        <div id="USTBPrice" class="col-md-12">
+            <h4>Price</h4>
+            <label>This is the invoice paid for the purchase of the instrument and also the present value of the future cashflows discounted by the <a href="" ng-click="vm.gotoAnchor('yieldMethod')">yield</a> according to the chosen yield method. Field is only editable if chosen from <a href="" ng-click="vm.gotoAnchor('USTBCalcFrom')">Calculate From</a>.</label>
+        </div>
+        <div id="USTBDiscount" class="col-md-12">
+            <h4>Discount</h4>
+            <label><a href="" ng-click="vm.gotoAnchor('MMDiscount')">Money Market Discount</a> at the <a href="" ng-click="vm.gotoAnchor('USTBPrice')">Price</a>. Field is only editable if chosen from <a href="" ng-click="vm.gotoAnchor('USTBCalcFrom')">Calculate From</a>.</label>
+        </div>
+        <div id="USTBBondEquivalent" class="col-md-12">
+            <h4>Bond Equivalent Yield</h4>
+            <label>Bond Equivalent Yield at the <a href="" ng-click="vm.gotoAnchor('USTBPrice')">Price</a>. This yield compares the TBill with a <a href="" ng-click="vm.gotoAnchor('USTBond')">USTBond</a>. Field is only editable if chosen from <a href="" ng-click="vm.gotoAnchor('USTBCalcFrom')">Calculate From</a>.</label>
+        </div>
+        <div id="USTBMMYield" class="col-md-12">
+            <h4>Money Market Yield</h4>
+            <label><a href="" ng-click="vm.gotoAnchor('MMYield')">Money Market Yield</a> at the <a href="" ng-click="vm.gotoAnchor('USTBPrice')">Price</a>. Field is only editable if chosen from <a href="" ng-click="vm.gotoAnchor('USTBCalcFrom')">Calculate From</a>.</label>
+        </div>
         <div id="USTBValueDate" class="col-md-12">
             <h4>Value Date</h4>
             <label>Also called Settlement Date. Base date used for calculating yield.</label>
+        </div>
+        <div id="USTBCalcFrom" class="col-md-12">
+            <h4>Calculate From</h4>
+            <label>Determines the base for the calculation.</label>
+        </div>
+        <div id="USTBIncludeCashflows" class="col-md-12">
+            <h4>Include Cashflows</h4>
+            <label>Checking this box will cause cash flows to be generated along with the yield related calculations. These can then be viewed by clicking the <a href="" ng-click="vm.gotoAnchor('cashFlowsButton')">Cashflows</a> button. This will not perform as well as simply requesting the yield calculations.</label>
         </div>
         <div id="USTBDuration" class="col-md-12">
             <h4>Duration</h4>
@@ -519,10 +565,6 @@
 <div id="functional" class="col-md-12">
     <div class="col-md-4 col-md-offset-4">
         <h2>Functional Guide</h2>
-    </div>
-    <div id="dateAdjust" class="col-md-12">
-        <h3>Date Adjustment</h3>
-        <label>Rules for setting how a date is adjusted if it falls on a non business date (weekends or holidays).</label><br />
     </div>
     <div id="daycount" class="col-md-12">
         <h3>Day Count</h3>
@@ -681,166 +723,228 @@
     <div id="holidayAdjust" class="col-md-12">
         <h3>Holiday Adjustment</h3>
         <label>Rules for adjusting a date when it falls on a nonbusiness day.</label><br />
-    </div>
-    <div id="Marching" class="col-md-12">
-        <h4>Marching</h4>
-        <label>
-            Date is adjusted to the next business day, and then that becomes the basis for future scheduled dates. Once the end of month is reached the date is the end of month for all subsequent scheduled dates.
-        </label>
-    </div>
-    <div id="Next" class="col-md-12">
-        <h4>Next</h4>
-        <label>
-            Date is adjusted to the next business day.
-        </label>
-    </div>
-    <div id="NextInMonth" class="col-md-12">
-        <h4>Next in Month</h4>
-        <label>
-            Date is adjusted to the next business day but if this is a different month then the previous business day is used.
-        </label>
-    </div>
-    <div id="Previous" class="col-md-12">
-        <h4>Previous</h4>
-        <label>
-            Date is adjusted to the previous business day.
-        </label>
-    </div>
-    <div id="PreviousNext" class="col-md-12">
-        <h4>Previous-Next</h4>
-        <label>
-            Date is adjusted to the previous business day but if this is a different month then the next business day is used.
-        </label>
-    </div>
-    <div id="Same" class="col-md-12">
-        <h4>Same</h4>
-        <label>
-            No adjustment occurs.
-        </label>
+        <div id="Marching" class="col-md-12">
+            <h4>Marching</h4>
+            <label>
+                Date is adjusted to the next business day, and then that becomes the basis for future scheduled dates. Once the end of month is reached the date is the end of month for all subsequent scheduled dates.
+            </label>
+        </div>
+        <div id="Next" class="col-md-12">
+            <h4>Next</h4>
+            <label>
+                Date is adjusted to the next business day.
+            </label>
+        </div>
+        <div id="NextInMonth" class="col-md-12">
+            <h4>Next in Month</h4>
+            <label>
+                Date is adjusted to the next business day but if this is a different month then the previous business day is used.
+            </label>
+        </div>
+        <div id="Previous" class="col-md-12">
+            <h4>Previous</h4>
+            <label>
+                Date is adjusted to the previous business day.
+            </label>
+        </div>
+        <div id="PreviousNext" class="col-md-12">
+            <h4>Previous-Next</h4>
+            <label>
+                Date is adjusted to the previous business day but if this is a different month then the next business day is used.
+            </label>
+        </div>
+        <div id="Same" class="col-md-12">
+            <h4>Same</h4>
+            <label>
+                No adjustment occurs.
+            </label>
+        </div>
     </div>
     <div id="instrumentClass" class="col-md-12">
         <h3>Instrument Class</h3>
         <label>Class of Instrument associated with defaults.</label><br />
+        <div id="GermanBund" class="col-md-12">
+            <h4>German Bund</h4>
+            <label>
+                German Bund
+            </label>
+        </div>
+        <div id="JapanGov" class="col-md-12">
+            <h4>Japanese Government</h4>
+            <label>
+                Japanese Goverment
+            </label>
+        </div>
+        <div id="UKGilt" class="col-md-12">
+            <h4>UK Gilt</h4>
+            <label>
+                UK Gilt
+            </label>
+        </div>
+        <div id="UKCD" class="col-md-12">
+            <h4>UK CD</h4>
+            <label>
+                UK CD
+            </label>
+        </div>
+        <div id="UKDiscount" class="col-md-12">
+            <h4>UK Discount</h4>
+            <label>
+                UK Discount
+            </label>
+        </div>
+        <div id="USCD" class="col-md-12">
+            <h4>US CD</h4>
+            <label>
+                US CD
+            </label>
+        </div>
+        <div id="USDiscount" class="col-md-12">
+            <h4>US Discount</h4>
+            <label>
+                US Discount
+            </label>
+        </div>
+        <div id="USTBond" class="col-md-12">
+            <h4>US TBond</h4>
+            <label>
+                US TBond
+            </label>
+        </div>
+        <div id="CommercialPaper" class="col-md-12">
+            <h4>Commercial Paper</h4>
+            <label>
+                Commercial Paper
+            </label>
+        </div>
+        <div id="Finanzierungsschatz" class="col-md-12">
+            <h4>Finanzierungsschatz</h4>
+            <label>
+                Finanzierungsschatz
+            </label>
+        </div>
+        <div id="USchatz" class="col-md-12">
+            <h4>U-Schatz</h4>
+            <label>
+                U-Schatz
+            </label>
+        </div>
     </div>
     <div id="payFreq" class="col-md-12">
         <h3>Payment Frequency</h3>
         <label>Rules for setting how often a payment occurs.</label><br />
-    </div>
-    <div id="Annually" class="col-md-12">
-        <h4>Annually</h4>
-        <label>
-            Once a year.
-        </label>
-    </div>
-    <div id="SemiAnnually" class="col-md-12">
-        <h4>Semi-Annually</h4>
-        <label>
-            Twice a year.
-        </label>
-    </div>
-    <div id="Quarterly" class="col-md-12">
-        <h4>Quarterly</h4>
-        <label>
-            Four times a year.
-        </label>
-    </div>
-    <div id="Monthly" class="col-md-12">
-        <h4>Monthly</h4>
-        <label>
-            Every month.
-        </label>
-    </div>
-    <div id="yield" class="col-md-12">
-        <h3>Yield</h3>
-        <label>Rate by which which the present value of future payments equls the dirty price according to the chosen yield method and conventions.</label><br />
+        <div id="Annually" class="col-md-12">
+            <h4>Annually</h4>
+            <label>
+                Once a year.
+            </label>
+        </div>
+        <div id="SemiAnnually" class="col-md-12">
+            <h4>Semi-Annually</h4>
+            <label>
+                Twice a year.
+            </label>
+        </div>
+        <div id="Quarterly" class="col-md-12">
+            <h4>Quarterly</h4>
+            <label>
+                Four times a year.
+            </label>
+        </div>
+        <div id="Monthly" class="col-md-12">
+            <h4>Monthly</h4>
+            <label>
+                Every month.
+            </label>
+        </div>
     </div>
     <div id="yieldMethod" class="col-md-12">
         <h3>Yield Method</h3>
         <label>Rules for setting how yield is calculated.</label><br />
-    </div>
-    <div id="ISMA" class="col-md-12">
-        <h4>ISMA</h4>
-        <label>
-            ISMA
-        </label>
-    </div>
-    <div id="MMDiscount" class="col-md-12">
-        <h4>MM Discount</h4>
-        <label>
-            Money Market Discount
-        </label>
-    </div>
-    <div id="MMYield" class="col-md-12">
-        <h4>MM Yield</h4>
-        <label>
-            Money Market Yield
-        </label>
-    </div>
-    <div id="SimpleYtm" class="col-md-12">
-        <h4>Simple Yield to Maturity</h4>
-        <label>
-            Simple Yield to Maturity
-        </label>
-    </div>
-    <div id="CompoundYtm" class="col-md-12">
-        <h4>Compound Yield to Maturity</h4>
-        <label>
-            Compound Yield to Maturity
-        </label>
-    </div>
-    <div id="SimpleJapan" class="col-md-12">
-        <h4>Simple Japanese</h4>
-        <label>
-            Simple Japanese
-        </label>
-    </div>
-    <div id="CurrentYield" class="col-md-12">
-        <h4>Current Yield</h4>
-        <label>
-            Current Yield
-        </label>
-    </div>
-    <div id="GreenwellMontagu" class="col-md-12">
-        <h4>Greenwell Montagu</h4>
-        <label>
-            Greenwell Montagu
-        </label>
-    </div>
-    <div id="Muni" class="col-md-12">
-        <h4>Muni</h4>
-        <label>
-            Muni
-        </label>
-    </div>
-    <div id="Corporate" class="col-md-12">
-        <h4>Corporate</h4>
-        <label>
-            Corporate
-        </label>
-    </div>
-    <div id="USTBond" class="col-md-12">
-        <h4>US TBond</h4>
-        <label>
-            United States Treasury Bond
-        </label>
-    </div>
-    <div id="Moosmueller" class="col-md-12">
-        <h4>Moosmueller</h4>
-        <label>
-            Moosmueller
-        </label>
-    </div>
-    <div id="BraessFangmeyer" class="col-md-12">
-        <h4>Braess/Fangmeyer</h4>
-        <label>
-            Braess/Fangmeyer
-        </label>
-    </div>
-    <div id="TrueYield" class="col-md-12">
-        <h4>True Yield</h4>
-        <label>
-            True Yield
-        </label>
+        <div id="ISMA" class="col-md-12">
+            <h4>ISMA</h4>
+            <label>
+                ISMA
+            </label>
+        </div>
+        <div id="MMDiscount" class="col-md-12">
+            <h4>MM Discount</h4>
+            <label>
+                Money Market Discount
+            </label>
+        </div>
+        <div id="MMYield" class="col-md-12">
+            <h4>MM Yield</h4>
+            <label>
+                Money Market Yield
+            </label>
+        </div>
+        <div id="SimpleYtm" class="col-md-12">
+            <h4>Simple Yield to Maturity</h4>
+            <label>
+                Simple Yield to Maturity
+            </label>
+        </div>
+        <div id="CompoundYtm" class="col-md-12">
+            <h4>Compound Yield to Maturity</h4>
+            <label>
+                Compound Yield to Maturity
+            </label>
+        </div>
+        <div id="SimpleJapan" class="col-md-12">
+            <h4>Simple Japanese</h4>
+            <label>
+                Simple Japanese
+            </label>
+        </div>
+        <div id="CurrentYield" class="col-md-12">
+            <h4>Current Yield</h4>
+            <label>
+                Current Yield
+            </label>
+        </div>
+        <div id="GreenwellMontagu" class="col-md-12">
+            <h4>Greenwell Montagu</h4>
+            <label>
+                Greenwell Montagu
+            </label>
+        </div>
+        <div id="Muni" class="col-md-12">
+            <h4>Muni</h4>
+            <label>
+                Muni
+            </label>
+        </div>
+        <div id="Corporate" class="col-md-12">
+            <h4>Corporate</h4>
+            <label>
+                Corporate
+            </label>
+        </div>
+        <div id="USTBond" class="col-md-12">
+            <h4>US TBond</h4>
+            <label>
+                United States Treasury Bond
+            </label>
+        </div>
+        <div id="Moosmueller" class="col-md-12">
+            <h4>Moosmueller</h4>
+            <label>
+                Moosmueller
+            </label>
+        </div>
+        <div id="BraessFangmeyer" class="col-md-12">
+            <h4>Braess/Fangmeyer</h4>
+            <label>
+                Braess/Fangmeyer
+            </label>
+        </div>
+        <div id="TrueYield" class="col-md-12">
+            <h4>True Yield</h4>
+            <label>
+                True Yield
+            </label>
+        </div>
     </div>
     <div id="technical" class="col-md-12">
         <div class="col-md-4 col-md-offset-4">
