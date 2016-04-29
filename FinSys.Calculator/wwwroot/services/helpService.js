@@ -489,6 +489,60 @@
                         };
                         break;
                     }
+                case "USTBPrice":
+                    {
+                        help = {
+                            title: "Price",
+                            text: "Price of Trade.",
+                            link: "#/Guide#USTBPrice"
+                        };
+                        break;
+                    }
+                case "USTBDiscount":
+                    {
+                        help = {
+                            title: "Discount",
+                            text: "Discount at the entered price.",
+                            link: "#/Guide#USTBDiscount"
+                        };
+                        break;
+                    }
+                case "USTBCalcFrom":
+                    {
+                        help = {
+                            title: "Calculate From",
+                            text: "Base for calculation.",
+                            link: "#/Guide#USTBCalcFrom"
+                        };
+                        break;
+                    }
+                case "USTBIncludeCashflows":
+                    {
+                        help = {
+                            title: "Include CashFlows",
+                            text: "Causes cashflows to be included in the calculation result.",
+                            link: "#/Guide#USTBIncludeCashflows"
+                        };
+                        break;
+                    }
+                case "USTBBondEquivalent":
+                    {
+                        help = {
+                            title: "Bond Equivalent Yield",
+                            text: "Yield to compare with a US TBond.",
+                            link: "#/Guide#USTBBondEquivalent"
+                        };
+                        break;
+                    }
+                case "USTBMMYield":
+                    {
+                        help = {
+                            title: "Money Market Yield",
+                            text: "Money Market Yield.",
+                            link: "#/Guide#USTBMMYield"
+                        };
+                        break;
+                    }
             }
             var options = {
                 templateUrl: "/templates/helpDialog.html",
