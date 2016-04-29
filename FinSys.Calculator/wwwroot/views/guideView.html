@@ -81,6 +81,9 @@
                         </ul>
                     </li>
                     <li class="list-group-item borderless ">
+                        <a href="" ng-click="vm.gotoAnchor('DayCountForm')"><h5>Day Count</h5></a>
+                    </li>
+                    <li class="list-group-item borderless ">
                         <a href="" ng-click="vm.gotoAnchor('usTBill')"><h5>US TBill</h5></a>
                         <ul class="list-group borderless">
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('USTBMaturityDate')"><h6>Maturity Date</h6></a></li>
@@ -501,64 +504,71 @@
             </label>
         </div>
         <br /><br />
+        <div id="DayCountForm" class="col-md-12">
+            <h3>Day Count Form</h3>
+            <label>Calculates the days between start date and end date as well as the period factor according to the <a href="" ng-click="vm.gotoAnchor('daycount')">Day Count Rules</a>.</label><br /><br />
+            <div class="col-md-7">
+                <img src="/img/DayCount.png" alt="USTBill" class="img-responsive" />
+            </div>
+        </div>
         <div id="usTBill" class="col-md-12">
             <h3>USTBill</h3>
             <label>Allows for pricing and calculating common yield methods for US Treasury Bills. All these calculations could be carried out through the <a href="" ng-click="vm.gotoAnchor('custCalc')">Custom Calculator</a>, but this form conveniently applies defaults.</label><br /><br />
             <div class="col-md-7">
                 <img src="/img/USTBill.png" alt="USTBill" class="img-responsive" />
             </div>
-        </div>
-        <div id="USTBMaturityDate" class="col-md-12">
-            <h4>Maturity Date</h4>
-            <label>Date on which the instrument matures.</label><br />
-        </div>
-        <div id="USTBPrice" class="col-md-12">
-            <h4>Price</h4>
-            <label>This is the invoice paid for the purchase of the instrument and also the present value of the future cashflows discounted by the <a href="" ng-click="vm.gotoAnchor('yieldMethod')">yield</a> according to the chosen yield method. Field is only editable if chosen from <a href="" ng-click="vm.gotoAnchor('USTBCalcFrom')">Calculate From</a>.</label>
-        </div>
-        <div id="USTBDiscount" class="col-md-12">
-            <h4>Discount</h4>
-            <label><a href="" ng-click="vm.gotoAnchor('MMDiscount')">Money Market Discount</a> at the <a href="" ng-click="vm.gotoAnchor('USTBPrice')">Price</a>. Field is only editable if chosen from <a href="" ng-click="vm.gotoAnchor('USTBCalcFrom')">Calculate From</a>.</label>
-        </div>
-        <div id="USTBBondEquivalent" class="col-md-12">
-            <h4>Bond Equivalent Yield</h4>
-            <label>Bond Equivalent Yield at the <a href="" ng-click="vm.gotoAnchor('USTBPrice')">Price</a>. This yield compares the TBill with a <a href="" ng-click="vm.gotoAnchor('USTBond')">USTBond</a>. Field is only editable if chosen from <a href="" ng-click="vm.gotoAnchor('USTBCalcFrom')">Calculate From</a>.</label>
-        </div>
-        <div id="USTBMMYield" class="col-md-12">
-            <h4>Money Market Yield</h4>
-            <label><a href="" ng-click="vm.gotoAnchor('MMYield')">Money Market Yield</a> at the <a href="" ng-click="vm.gotoAnchor('USTBPrice')">Price</a>. Field is only editable if chosen from <a href="" ng-click="vm.gotoAnchor('USTBCalcFrom')">Calculate From</a>.</label>
-        </div>
-        <div id="USTBValueDate" class="col-md-12">
-            <h4>Value Date</h4>
-            <label>Also called Settlement Date. Base date used for calculating yield.</label>
-        </div>
-        <div id="USTBCalcFrom" class="col-md-12">
-            <h4>Calculate From</h4>
-            <label>Determines the base for the calculation.</label>
-        </div>
-        <div id="USTBIncludeCashflows" class="col-md-12">
-            <h4>Include Cashflows</h4>
-            <label>Checking this box will cause cash flows to be generated along with the yield related calculations. These can then be viewed by clicking the <a href="" ng-click="vm.gotoAnchor('cashFlowsButton')">Cashflows</a> button. This will not perform as well as simply requesting the yield calculations.</label>
-        </div>
-        <div id="USTBDuration" class="col-md-12">
-            <h4>Duration</h4>
-            <label>Macaulay Duration is the time to future cashflows weighted by their present values. Mathematically it is the first order derivative of <a href="" ng-click="vm.gotoAnchor('CustCalcYield')">yield</a> and is used in the immunization of portfolios. </label>
-        </div>
-        <div id="USTBModifiedDuration" class="col-md-12">
-            <h4>Modified Duration</h4>
-            <label>Modified Duration is the price sensitivity to interest rates. </label>
-        </div>
-        <div id="USTBConvexity" class="col-md-12">
-            <h4>Convexity</h4>
-            <label>Measures the change in duration for a change in interest rates. </label>
-        </div>
-        <div id="USTBPVBP" class="col-md-12">
-            <h4>PVBP</h4>
-            <label>Change in price for a basis point (.01) change in yield. </label>
-        </div>
-        <div id="USTBConvexityPVBP" class="col-md-12">
-            <h4>Convexity Adjusted PVBP</h4>
-            <label><a href="" ng-click="vm.gotoAnchor('CustCalcPVBP')">PVBP</a> adjusted for <a href="" ng-click="vm.gotoAnchor('CustCalcConvexity')">convexity</a>. </label>
+            <div id="USTBMaturityDate" class="col-md-12">
+                <h4>Maturity Date</h4>
+                <label>Date on which the instrument matures.</label><br />
+            </div>
+            <div id="USTBPrice" class="col-md-12">
+                <h4>Price</h4>
+                <label>This is the invoice paid for the purchase of the instrument and also the present value of the future cashflows discounted by the <a href="" ng-click="vm.gotoAnchor('yieldMethod')">yield</a> according to the chosen yield method. Field is only editable if chosen from <a href="" ng-click="vm.gotoAnchor('USTBCalcFrom')">Calculate From</a>.</label>
+            </div>
+            <div id="USTBDiscount" class="col-md-12">
+                <h4>Discount</h4>
+                <label><a href="" ng-click="vm.gotoAnchor('MMDiscount')">Money Market Discount</a> at the <a href="" ng-click="vm.gotoAnchor('USTBPrice')">Price</a>. Field is only editable if chosen from <a href="" ng-click="vm.gotoAnchor('USTBCalcFrom')">Calculate From</a>.</label>
+            </div>
+            <div id="USTBBondEquivalent" class="col-md-12">
+                <h4>Bond Equivalent Yield</h4>
+                <label>Bond Equivalent Yield at the <a href="" ng-click="vm.gotoAnchor('USTBPrice')">Price</a>. This yield compares the TBill with a <a href="" ng-click="vm.gotoAnchor('USTBond')">USTBond</a>. Field is only editable if chosen from <a href="" ng-click="vm.gotoAnchor('USTBCalcFrom')">Calculate From</a>.</label>
+            </div>
+            <div id="USTBMMYield" class="col-md-12">
+                <h4>Money Market Yield</h4>
+                <label><a href="" ng-click="vm.gotoAnchor('MMYield')">Money Market Yield</a> at the <a href="" ng-click="vm.gotoAnchor('USTBPrice')">Price</a>. Field is only editable if chosen from <a href="" ng-click="vm.gotoAnchor('USTBCalcFrom')">Calculate From</a>.</label>
+            </div>
+            <div id="USTBValueDate" class="col-md-12">
+                <h4>Value Date</h4>
+                <label>Also called Settlement Date. Base date used for calculating yield.</label>
+            </div>
+            <div id="USTBCalcFrom" class="col-md-12">
+                <h4>Calculate From</h4>
+                <label>Determines the base for the calculation.</label>
+            </div>
+            <div id="USTBIncludeCashflows" class="col-md-12">
+                <h4>Include Cashflows</h4>
+                <label>Checking this box will cause cash flows to be generated along with the yield related calculations. These can then be viewed by clicking the <a href="" ng-click="vm.gotoAnchor('cashFlowsButton')">Cashflows</a> button. This will not perform as well as simply requesting the yield calculations.</label>
+            </div>
+            <div id="USTBDuration" class="col-md-12">
+                <h4>Duration</h4>
+                <label>Macaulay Duration is the time to future cashflows weighted by their present values. Mathematically it is the first order derivative of <a href="" ng-click="vm.gotoAnchor('CustCalcYield')">yield</a> and is used in the immunization of portfolios. </label>
+            </div>
+            <div id="USTBModifiedDuration" class="col-md-12">
+                <h4>Modified Duration</h4>
+                <label>Modified Duration is the price sensitivity to interest rates. </label>
+            </div>
+            <div id="USTBConvexity" class="col-md-12">
+                <h4>Convexity</h4>
+                <label>Measures the change in duration for a change in interest rates. </label>
+            </div>
+            <div id="USTBPVBP" class="col-md-12">
+                <h4>PVBP</h4>
+                <label>Change in price for a basis point (.01) change in yield. </label>
+            </div>
+            <div id="USTBConvexityPVBP" class="col-md-12">
+                <h4>Convexity Adjusted PVBP</h4>
+                <label><a href="" ng-click="vm.gotoAnchor('CustCalcPVBP')">PVBP</a> adjusted for <a href="" ng-click="vm.gotoAnchor('CustCalcConvexity')">convexity</a>. </label>
+            </div>
         </div>
     </div>
 </div>

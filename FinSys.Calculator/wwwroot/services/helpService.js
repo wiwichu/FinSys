@@ -156,6 +156,15 @@
                         };
                         break;
                     }
+                case "DayCountForm":
+                    {
+                        help = {
+                            title: "Day Count Form",
+                            text: "Calculates Day Count and Period Factor between dates.",
+                            link: "#/Guide#DayCountForm"
+                        };
+                        break;
+                    }
                 case "cashflowForm":
                     {
                         help = {
