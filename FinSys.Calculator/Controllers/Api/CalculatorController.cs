@@ -9,6 +9,7 @@ using System.Net;
 using AutoMapper;
 using FinSys.Calculator.Models;
 using System.Collections.Concurrent;
+using Microsoft.Extensions.Logging;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,10 +18,12 @@ namespace FinSys.Calculator.Controllers.Api
     [Route("api/calculator")]
     public class CalculatorController : Controller
     {
+        private ILogger _logger;
         private ICalculatorRepository _repository;
-        public CalculatorController(ICalculatorRepository repository)
+        public CalculatorController(ICalculatorRepository repository, ILoggerFactory loggerFactory)
         {
             _repository = repository;
+            _logger = loggerFactory.CreateLogger<CalculatorRepository>();
         }
         // GET: api/values
         [HttpGet]
