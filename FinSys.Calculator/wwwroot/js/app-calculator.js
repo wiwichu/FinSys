@@ -35,6 +35,11 @@
             controllerAs: "vm",
             templateUrl: "/views/custCalcView.html"
         });
+        $routeProvider.when("/QuickCalc", {
+            controller: "quickCalcController",
+            controllerAs: "vm",
+            templateUrl: "/views/quickCalcView.html"
+        });
         $routeProvider.when("/About", {
             controller: "cashflowsController",
             controllerAs: "vm",

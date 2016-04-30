@@ -54,6 +54,10 @@ namespace FinSys.Controllers.Web
         {
             return View();
         }
+        public IActionResult QuickCalc()
+        {
+            return View();
+        }
         public IActionResult CashFlows()
         {
             return View();
