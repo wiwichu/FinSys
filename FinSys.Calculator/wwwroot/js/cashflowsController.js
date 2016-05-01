@@ -201,16 +201,33 @@
             }
             )
            .then(function (response) {
-               vm.cashFlows = response.data;
-               vm.requestJson = JSON.stringify(vm.cashflowsPricing, null, 2);
-               vm.responseJson = JSON.stringify(response.data, null, 2);
-           },
-           function (err) {
-               if (err.d != null) {
-                   vm.errorMessage = "Calculation Failed: " + err.data;
+               if (response.data[0].status) {
+                   vm.errorMessage = "Calculation Failed: " + response.data[0].status;
+
                }
                else {
-                   vm.errorMessage = "Calculation Interrupted.";
+                   vm.cashFlows = response.data;
+                   vm.requestJson = JSON.stringify(vm.cashflowsPricing, null, 2);
+                   vm.responseJson = JSON.stringify(response.data, null, 2);
+               }
+           },
+           function (err) {
+               if (err.data != null) {
+                   if (err.data.message != null) {
+                       if (err.data.message.length < 200) {
+                           vm.errorMessage = "Calculation Failed: " + err.data.message;
+                       }
+                       else {
+                           alertService("An Error has occurred.", "Calculation Failed", err.data.message);
+                       }
+                   }
+                   else {
+                       alertService("An Error has occurred.", "Calculation Failed", err.data);
+                   }
+               }
+               else {
+                   vm.errorMessage = "Calculation Interrupted";
+
                }
            })
            .finally(function () {

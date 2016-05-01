@@ -118,13 +118,32 @@
            .then(function (response) {
                if (response.data[0].status) {
                    vm.errorMessage = "Calculation Failed: " + response.data[0].status;
+
                }
-               vm.dayCounts = response.data;
-               vm.requestJson = JSON.stringify(vm.dayCounts, null, 2);
-               vm.responseJson = JSON.stringify(response.data, null, 2);
+               else {
+                   vm.dayCounts = response.data;
+                   vm.requestJson = JSON.stringify(vm.dayCounts, null, 2);
+                   vm.responseJson = JSON.stringify(response.data, null, 2);
+               }
            },
            function (err) {
-               vm.errorMessage = "Calculation Failed: " + err.data;
+               if (err.data != null) {
+                   if (err.data.message != null) {
+                       if (err.data.message.length < 200) {
+                           vm.errorMessage = "Calculation Failed: " + err.data.message;
+                       }
+                       else {
+                           alertService("An Error has occurred.", "Calculation Failed", err.data.message);
+                       }
+                   }
+                   else {
+                       alertService("An Error has occurred.", "Calculation Failed", err.data);
+                   }
+               }
+               else {
+                   vm.errorMessage = "Calculation Interrupted";
+
+               }
            })
            .finally(function () {
                vm.isBusy = false;

@@ -382,11 +382,16 @@
            },
            function (err) {
                if (err.data != null) {
-                   if (err.data.message.length < 200) {
-                       vm.errorMessage = "Calculation Failed: " + err.data.message;
+                   if (err.data.message != null) {
+                       if (err.data.message.length < 200) {
+                           vm.errorMessage = "Calculation Failed: " + err.data.message;
+                       }
+                       else {
+                           alertService("An Error has occurred.", "Calculation Failed", err.data.message);
+                       }
                    }
                    else {
-                       alertService("An Error has occurred.", "Calculation Failed", err.data.message);
+                       alertService("An Error has occurred.", "Calculation Failed", err.data);
                    }
                }
                else
