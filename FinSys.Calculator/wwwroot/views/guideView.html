@@ -27,6 +27,23 @@
                         </ul>
                     </li>
                     <li class="list-group-item borderless ">
+                        <a href="" ng-click="vm.gotoAnchor('QuickCalc')"><h5>Quick Calculator</h5></a>
+                        <ul class="list-group borderless">
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('QCClass')"><h6>Instrument Class</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('QCInterestRate')"><h6>Interest Rate</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('QCMaturityDate')"><h6>Maturity Date</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('QCValueDate')"><h6>Value Date</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('QCCalculateFrom')"><h6>Calculate From</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('QCYield')"><h6>Yield/Discount</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('QCCleanPrice')"><h6>Clean Price</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('QCDuration')"><h6>Duration</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('QCModifiedDuration')"><h6>ModifiedDuration</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('QCConvexity')"><h6>Convexity</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('QCPVBP')"><h6>PVBP</h6></a></li>
+                            <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('QCConvexityPVBP')"><h6>Convexity adjusted PVBP</h6></a></li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item borderless ">
                         <a href="" ng-click="vm.gotoAnchor('custCalc')"><h5>Custom Calculator</h5></a>
                         <ul class="list-group borderless">
                             <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('CustCalcClass')"><h6>Instrument Class</h6></a></li>
@@ -189,6 +206,66 @@
             <br /><br />
         </div>
     </div>
+    <div id="QuickCalc" class="col-md-12">
+        <h3>Quick Calculator</h3>
+        <label>Allows for calculations using the mninimal input with defaults taken from the chosen <a href="" ng-click="vm.gotoAnchor('QCClass')">Instrument Class</a>. For more flexible calculations use <a href="" ng-click="vm.gotoAnchor('custCalc')">Custom Calculator</a>.</label><br /><br />
+        <div class="col-md-7">
+            <img src="/img/CustCalcFull.png" alt="Custom Calculator" class="img-responsive" />
+        </div>
+        <div id="QCClass" class="col-md-12">
+            <h4>Instrument Class</h4>
+            <label>
+                <a href="" ng-click="vm.gotoAnchor('instrumentClass')">Instrument Class</a>
+                allows the selection of a class to set defaults. The defaults can then be overridden.
+            </label><br /><br />
+        </div>
+        <div id="QCInterestRate" class="col-md-12">
+            <h4>Interest Rate</h4>
+            <label>
+                The rate of interest paid on the instrument. Five per cent would be entered as 5.0.
+            </label><br /><br />
+        </div>
+        <div id="QCMaturityDate" class="col-md-12">
+            <h4>Maturity Date</h4>
+            <label>Date on which the instrument matures.</label><br />
+        </div>
+        <div id="QCValueDate" class="col-md-12">
+            <h4>Value Date</h4>
+            <label>Also called Settlement Date. Base date used for calculating accrued interest and yield.</label>
+        </div>
+        <div id="QCCalculateFrom" class="col-md-12">
+            <h4>Calculate From</h4>
+            <label>Indicates whether the calculations are done from <a href="" ng-click="vm.gotoAnchor('QCYield')">Yield</a> or <a href="" ng-click="vm.gotoAnchor('QCPrice')">Price</a>.</label>
+        </div>
+        <div id="QCYield" class="col-md-12">
+            <h4>Yield/Discount</h4>
+            <label><a href="" ng-click="vm.gotoAnchor('yieldMethod')">Yield or Discount</a> corresponding to the <a href="" ng-click="vm.gotoAnchor('QCCleanPrice')">Price</a>. This field is only enabled for input if <a href="" ng-click="vm.gotoAnchor('QCCalculateFrom')">Calculate From</a> is set to Yield. Five per cent would be entered as 5.0.</label>
+        </div>
+        <div id="QCCleanPrice" class="col-md-12">
+            <h4>Clean Price</h4>
+            <label>The quoted price for the trade. This is a percent of the nominal amount of the instrument, 100 being 100%. For example if 1000 face value of a bond were purchased for a price of 95 the purchaser would pay 950 and receive 1000 at maturity as well as the periodic interest payments. This field is only enabled for input if <a href="" ng-click="vm.gotoAnchor('QCCalculateFrom')">Calculate From</a> is set to Price.</label>
+        </div>
+        <div id="QCDuration" class="col-md-12">
+            <h4>Duration</h4>
+            <label>Macaulay Duration is the time to future cashflows weighted by their present values. Mathematically it is the first order derivative of <a href="" ng-click="vm.gotoAnchor('QCYield')">yield</a> and is used in the immunization of portfolios. </label>
+        </div>
+        <div id="QCModifiedDuration" class="col-md-12">
+            <h4>Modified Duration</h4>
+            <label>Modified Duration is the price sensitivity to interest rates. </label>
+        </div>
+        <div id="QCConvexity" class="col-md-12">
+            <h4>Convexity</h4>
+            <label>Measures the change in duration for a change in interest rates. </label>
+        </div>
+        <div id="QCPVBP" class="col-md-12">
+            <h4>PVBP</h4>
+            <label>Change in price for a basis point (.01) change in yield. </label>
+        </div>
+        <div id="QCConvexityPVBP" class="col-md-12">
+            <h4>Convexity Adjusted PVBP</h4>
+            <label><a href="" ng-click="vm.gotoAnchor('QCPVBP')">PVBP</a> adjusted for <a href="" ng-click="vm.gotoAnchor('QCConvexity')">convexity</a>. </label>
+        </div>
+    </div>
     <div id="custCalc" class="col-md-12">
         <h3>Custom Calculator</h3>
         <label>Allows for flexible Custom Calculations.</label><br /><br />
@@ -226,7 +303,7 @@
         </div>
         <div id="CustCalcYield" class="col-md-12">
             <h4>Yield/Discount</h4>
-            <label><a href="" ng-click="vm.gotoAnchor('yieldMethod')">Yield</a> or <a href="" ng-click="vm.gotoAnchor('discount')">Discount</a> corresponding to the <a href="" ng-click="vm.gotoAnchor('CustCalcCleanPrice')">Price</a>. This field is only enabled for input if <a href="" ng-click="vm.gotoAnchor('CustCalcCalculateFrom')">Calculate From</a> is set to Yield. Five per cent would be entered as 5.0.</label>
+            <label><a href="" ng-click="vm.gotoAnchor('yieldMethod')">Yield or Discount</a> corresponding to the <a href="" ng-click="vm.gotoAnchor('CustCalcCleanPrice')">Price</a>. This field is only enabled for input if <a href="" ng-click="vm.gotoAnchor('CustCalcCalculateFrom')">Calculate From</a> is set to Yield. Five per cent would be entered as 5.0.</label>
         </div>
         <div id="CustCalcCleanPrice" class="col-md-12">
             <h4>Clean Price</h4>
