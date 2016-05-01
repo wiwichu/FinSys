@@ -21,6 +21,126 @@
             };
             switch (helpTopic)
             {
+                case "QCForm":
+                    {
+                        help = {
+                            title: "Use Holidays",
+                            text: "Form for custom calculations.",
+                            link: "#/Guide#QuickCalc"
+                        };
+                        break;
+                    }
+                case "QCinstrumentClass":
+                    {
+                        help = {
+                            title: "Instrument Class",
+                            text: "Class for applying instrument defaults.",
+                            link: "#/Guide#QCClass"
+                        };
+                        break;
+                    }
+                case "QCInterestRate":
+                    {
+                        help = {
+                            title: "Interest Rate",
+                            text: "Rate of interest paid on the instrument.",
+                            link: "#/Guide#QCInterestRate"
+                        };
+                        break;
+                    }
+                case "QCMaturityDate":
+                    {
+                        help = {
+                            title: "Maturity Date",
+                            text: "Date on which the instrument matures.",
+                            link: "#/Guide#QCMaturityDate"
+                        };
+                        break;
+                    }
+                case "QCCalculateFrom":
+                    {
+                        help = {
+                            title: "Calculate From",
+                            text: "Sets whether calculations are done from Yield or Price.",
+                            link: "#/Guide#QCCalculateFrom"
+                        };
+                        break;
+                    }
+                case "QCYield":
+                    {
+                        help = {
+                            title: "Yield or Discount",
+                            text: "Yield or Discount corresponding to Price.",
+                            link: "#/Guide#QCYield"
+                        };
+                        break;
+                    }
+                case "QCDirtyPrice":
+                    {
+                        help = {
+                            title: "Dirty Price",
+                            text: "Invoice price of the trade.",
+                            link: "#/Guide#QCDirtyPrice"
+                        };
+                        break;
+                    }
+                case "QCvaluedate":
+                    {
+                        help = {
+                            title: "Value Date",
+                            text: "Also called Settlement Date. Base date used for calculating accrued interest and yield.",
+                            link: "#/Guide#QCValueDate"
+                        };
+                        break;
+                    }
+                case "QCDuration":
+                    {
+                        help = {
+                            title: "Macaulay Duration",
+                            text: "The time to cashflows weighted by their present values.",
+                            link: "#/Guide#QCDuration"
+                        };
+                        break;
+                    }
+                case "QCModifiedDuration":
+                    {
+                        help = {
+                            title: "Modified Duration",
+                            text: "Measures the price sensitivity of a bond to interest rates.",
+                            link: "#/Guide#QCModifiedDuration"
+                        };
+                        break;
+                    }
+                case "QCConvexity":
+                    {
+                        help = {
+                            title: "Convexity",
+                            text: "Measures the change in duration for interest rates change.",
+                            link: "#/Guide#QCConvexity"
+                        };
+                        break;
+                    }
+                case "QCPVBP":
+                    {
+                        help = {
+                            title: "PVBP",
+                            text: "Price change for a basis point change in yield.",
+                            link: "#/Guide#QCPVBP"
+                        };
+                        break;
+                    }
+                case "QCConvexityPVBP":
+                    {
+                        help = {
+                            title: "Convexity Adjusted PVBP",
+                            text: "PVBP adjusted for convexity.",
+                            link: "#/Guide#QCConvexityPVBP"
+                        };
+                        break;
+                    }
+
+
+
                 case "customCalcForm":
                     {
                         help = {
