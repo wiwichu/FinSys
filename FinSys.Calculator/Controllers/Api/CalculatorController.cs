@@ -63,6 +63,7 @@ namespace FinSys.Calculator.Controllers.Api
             {
                 if (ModelState.IsValid)
                 {
+                    _logger.LogInformation($"ustbill model validated: {ModelState}");
                     var ustb = Mapper.Map<USTBill>(vm);
                     ustb.CalcSource /= 100;
                     USTBillResultViewModel result = Mapper.Map < USTBillResultViewModel > (await _repository.USTBillCalcAsync(ustb).ConfigureAwait(false));
@@ -71,6 +72,7 @@ namespace FinSys.Calculator.Controllers.Api
                     result.MMYield *= 100;
                     result.Price *= 100;
                     JsonResult jResult = new JsonResult(result);
+                    _logger.LogInformation($"ustbill rersult: {jResult.Value}");
                     return jResult; 
                 }
             }

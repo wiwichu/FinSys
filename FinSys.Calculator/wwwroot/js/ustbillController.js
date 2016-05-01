@@ -146,22 +146,44 @@
             vm.responseJson = "";
             $http.post(vm.apiPath, vm.ustbill)
             .then(function (response) {
-                vm.bondequivalent = response.data.bondEquivalent;
-                vm.convexity = response.data.convexity;
-                vm.cvxPvbp = response.data.convexityAdjustedPvbp;
-                vm.discount = response.data.discount;
-                vm.duration = response.data.duration;
-                vm.mmyield = response.data.mmYield;
-                vm.modDuration = response.data.modifiedDuration;
-                vm.price = response.data.price;
-                vm.pvbp = response.data.pvbp;
-                vm.requestJson = JSON.stringify(vm.ustbill,null,2);
-                vm.responseJson = JSON.stringify(response.data, null, 2);
-                vm.cashFlows = response.data.cashFlows;
+                if (response.data[0].status) {
+                    vm.errorMessage = "Calculation Failed: " + response.data[0].status;
+
+                }
+                else {
+                    vm.bondequivalent = response.data.bondEquivalent;
+                    vm.convexity = response.data.convexity;
+                    vm.cvxPvbp = response.data.convexityAdjustedPvbp;
+                    vm.discount = response.data.discount;
+                    vm.duration = response.data.duration;
+                    vm.mmyield = response.data.mmYield;
+                    vm.modDuration = response.data.modifiedDuration;
+                    vm.price = response.data.price;
+                    vm.pvbp = response.data.pvbp;
+                    vm.requestJson = JSON.stringify(vm.ustbill, null, 2);
+                    vm.responseJson = JSON.stringify(response.data, null, 2);
+                    vm.cashFlows = response.data.cashFlows;
+                }
              },
-            function (err) {
-                vm.errorMessage = "Calculation Failed: " +  err.data;
-            })
+           function (err) {
+               if (err.data != null) {
+                   if (err.data.message != null) {
+                       if (err.data.message.length < 200) {
+                           vm.errorMessage = "Calculation Failed: " + err.data.message;
+                       }
+                       else {
+                           alertService("An Error has occurred.", "Calculation Failed", err.data.message);
+                       }
+                   }
+                   else {
+                       alertService("An Error has occurred.", "Calculation Failed", err.data);
+                   }
+               }
+               else {
+                   vm.errorMessage = "Calculation Interrupted";
+
+               }
+           })
             .finally(function () {
                 vm.isBusy = false;
             });
