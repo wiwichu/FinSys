@@ -29,23 +29,31 @@ namespace FinSys.Calculator.Controllers.Api
         [HttpGet]
         public async Task<JsonResult> Get()
         {
+            try
+            {
+                _logger.LogVerbose("Entering [HttpGet] public async Task<JsonResult> Get()");
 
-            var instrumentClasses = await _repository.GetInstrumentClassesAsync().ConfigureAwait(false);
-            var dayCounts = await _repository.GetDayCountsAsync().ConfigureAwait(false);
-            var holidayAdjust = await _repository.GetHolidayAdjustAsync().ConfigureAwait(false);
-            var interpolationMethods = await _repository.GetInterpolationMethodsAsync().ConfigureAwait(false);
-            var payFrequency = await _repository.GetPayFreqsAsync().ConfigureAwait(false);
-            var yieldMethods = await _repository.GetYieldMethodsAsync().ConfigureAwait(false);
+                var instrumentClasses = await _repository.GetInstrumentClassesAsync().ConfigureAwait(false);
+                var dayCounts = await _repository.GetDayCountsAsync().ConfigureAwait(false);
+                var holidayAdjust = await _repository.GetHolidayAdjustAsync().ConfigureAwait(false);
+                var interpolationMethods = await _repository.GetInterpolationMethodsAsync().ConfigureAwait(false);
+                var payFrequency = await _repository.GetPayFreqsAsync().ConfigureAwait(false);
+                var yieldMethods = await _repository.GetYieldMethodsAsync().ConfigureAwait(false);
 
-            IDictionary<string, IEnumerable<object>> staticData = new Dictionary<string, IEnumerable<object>>();
-            staticData.Add("instrumentClasses", instrumentClasses);
-            staticData.Add("dayCounts", dayCounts);
-            staticData.Add("holidayAdjust", holidayAdjust);
-            staticData.Add("interpolationMethods", interpolationMethods);
-            staticData.Add("payFrequency", payFrequency);
-            staticData.Add("yieldMethods", yieldMethods);
+                IDictionary<string, IEnumerable<object>> staticData = new Dictionary<string, IEnumerable<object>>();
+                staticData.Add("instrumentClasses", instrumentClasses);
+                staticData.Add("dayCounts", dayCounts);
+                staticData.Add("holidayAdjust", holidayAdjust);
+                staticData.Add("interpolationMethods", interpolationMethods);
+                staticData.Add("payFrequency", payFrequency);
+                staticData.Add("yieldMethods", yieldMethods);
 
-            return Json(staticData);
+                return Json(staticData);
+            }
+            finally
+            {
+                _logger.LogVerbose("Exiting [HttpGet] public async Task<JsonResult> Get()");
+            }
         }
 
         // GET api/values/5
@@ -61,6 +69,7 @@ namespace FinSys.Calculator.Controllers.Api
         {
             try
             {
+                _logger.LogVerbose("Entering [HttpPost(ustbill)] public async Task<JsonResult> Post([FromBody]USTBillViewModel vm)");
                 if (ModelState.IsValid)
                 {
                     _logger.LogInformation($"ustbill model validated: {ModelState}");
@@ -75,20 +84,26 @@ namespace FinSys.Calculator.Controllers.Api
                     _logger.LogInformation($"ustbill rersult: {jResult.Value}");
                     return jResult; 
                 }
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new { Message = "Failed", ModelState = ModelState });
             }
             catch (Exception ex)
             {
+                _logger.LogError("ustbill exception. ",ex);
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json(ex.Message);
             }
-            Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            return Json(new { Message = "Failed", ModelState = ModelState });
+            finally
+            {
+                _logger.LogVerbose("Exiting [HttpPost(ustbill)] public async Task<JsonResult> Post([FromBody]USTBillViewModel vm)");
+            }
         }
         [HttpPost("instrumentdefaults")]
         public async Task<JsonResult> Post([FromBody]InstrumentClassViewModel vm)
         {
             try
             {
+                _logger.LogVerbose("Entering [HttpPost(instrumentdefaults)]  public async Task<JsonResult> Post([FromBody]InstrumentClassViewModel vm)");
                 Instrument instr = new Instrument
                 {
                     Class = vm.Class,
@@ -120,8 +135,13 @@ namespace FinSys.Calculator.Controllers.Api
             }
             catch (Exception ex)
             {
+                _logger.LogError("instrumentdefaults exception. ", ex);
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json(ex.Message);
+            }
+            finally
+            {
+                _logger.LogVerbose("Exiting [HttpPost(instrumentdefaults)]  public async Task<JsonResult> Post([FromBody]InstrumentClassViewModel vm)");
             }
         }
         [HttpPost("calculate")]
@@ -129,8 +149,10 @@ namespace FinSys.Calculator.Controllers.Api
         {
             try
             {
+                _logger.LogVerbose("Entering [HttpPost(calculate)]  public async Task<JsonResult> Post([FromBody]IEnumerable<CalculatorViewModel> vms)");
                 if (ModelState.IsValid)
                 {
+                    _logger.LogInformation($"calculate model validated: {ModelState.Values}");
                     var maxCalcsStr = Startup.Configuration["AppSettings:MaximumCalculations"];
                     int maxCalcs = 2;
                     try
@@ -140,11 +162,11 @@ namespace FinSys.Calculator.Controllers.Api
                     }
                     catch (FormatException fe)
                     {
-                        //log here
+                        _logger.LogWarning("calculation exception setting maximum calculations.", fe);
                     }
                     catch (OverflowException oe)
                     {
-                        //log here
+                        _logger.LogWarning("calculation exception setting maximum calculations.", oe);
                     }
 
                     if (vms.Count()>maxCalcs)
@@ -250,23 +272,28 @@ namespace FinSys.Calculator.Controllers.Api
                             }
                             catch (InvalidOperationException ioEx)
                             {
+                                _logger.LogWarning("calculation exception. ", ioEx);
                                 rvm.Status = ioEx.Message;
                             }
                             catch (AggregateException aex)
                             {
+                                _logger.LogError("calculation exception. ", aex);
                                 if (aex.InnerExceptions.Count==1 && aex.InnerExceptions[0] is InvalidOperationException)
                                 {
                                     InvalidOperationException ioe = aex.InnerExceptions[0] as InvalidOperationException;
+                                    _logger.LogWarning("calculation exception. ", ioe);
                                     rvm.Status = ioe.Message;
                                 }
                                 else
                                 {
                                     rvm.Status = "Calculation Error";
                                     rvm.Message = aex.Flatten().ToString();
+                                    _logger.LogWarning(rvm.Message);
                                 }
                             }
                             catch (Exception ex)
                             {
+                                _logger.LogError("calculation exception. ", ex);
                                 rvm.Status = "Calculation Error";
                                 rvm.Message = ex.ToString();
                             }
@@ -283,58 +310,78 @@ namespace FinSys.Calculator.Controllers.Api
                     
                     return jResult;
                 }
+                _logger.LogError($"calculate model not valid: {ModelState}");
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new { Message = "Failed: " + ModelState.ToString(), ModelState = ModelState });
             }
             catch (Exception ex)
             {
+                _logger.LogError("calculate exception. ",ex);
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json(ex.Message);
             }
-            Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            return Json(new { Message = "Failed: " + ModelState.ToString(), ModelState = ModelState });
+            finally
+            {
+                _logger.LogVerbose("Exiting [HttpPost(calculate)]  public async Task<JsonResult> Post([FromBody]IEnumerable<CalculatorViewModel> vms)");
+            }
         }
         private async Task<DefaultDatesResultViewModel> getDefaultDates(DefaultDatesViewModel vm)
         {
-            Instrument instr = new Instrument
+            try
             {
-                Class = vm.Class,
-                IntDayCount = vm.IntDayCount,
-                IntPayFreq = vm.IntPayFreq,
-                MaturityDate = vm.MaturityDate,
-                EndOfMonthPay = vm.EndOfMonthPay,
-                HolidayAdjust = vm.HolidayAdjust
-            };
-            Calculations calc = new Calculations
-            {
-                ValueDate = vm.ValueDate
-            };
-            IEnumerable<Holiday> holidays = Mapper.Map<IEnumerable<Holiday>>(vm.Holidays);
-            var res = await _repository.GetDefaultDatesAsync(instr, calc, holidays).ConfigureAwait(false);
-            Instrument instrResult = res.Key;
-            Calculations calcResult = res.Value;
+                _logger.LogVerbose("Entering  private async Task<DefaultDatesResultViewModel> getDefaultDates(DefaultDatesViewModel vm)");
+                Instrument instr = new Instrument
+                {
+                    Class = vm.Class,
+                    IntDayCount = vm.IntDayCount,
+                    IntPayFreq = vm.IntPayFreq,
+                    MaturityDate = vm.MaturityDate,
+                    EndOfMonthPay = vm.EndOfMonthPay,
+                    HolidayAdjust = vm.HolidayAdjust
+                };
+                Calculations calc = new Calculations
+                {
+                    ValueDate = vm.ValueDate
+                };
+                IEnumerable<Holiday> holidays = Mapper.Map<IEnumerable<Holiday>>(vm.Holidays);
+                var res = await _repository.GetDefaultDatesAsync(instr, calc, holidays).ConfigureAwait(false);
+                Instrument instrResult = res.Key;
+                Calculations calcResult = res.Value;
 
-            DefaultDatesResultViewModel result = new DefaultDatesResultViewModel
-            {
-                MaturityDate = instrResult.MaturityDate,
-                IssueDate = instrResult.IssueDate,
-                FirstPayDate = instrResult.FirstPayDate,
-                NextToLastPayDate = instrResult.NextToLastPayDate
-            };
+                DefaultDatesResultViewModel result = new DefaultDatesResultViewModel
+                {
+                    MaturityDate = instrResult.MaturityDate,
+                    IssueDate = instrResult.IssueDate,
+                    FirstPayDate = instrResult.FirstPayDate,
+                    NextToLastPayDate = instrResult.NextToLastPayDate
+                };
 
-            return result;
+                return result;
+            }
+            finally
+            {
+                _logger.LogVerbose("Exiting  private async Task<DefaultDatesResultViewModel> getDefaultDates(DefaultDatesViewModel vm)");
+            }
         }
         [HttpPost("defaultdates")]
         public async Task<JsonResult> Post([FromBody]DefaultDatesViewModel vm)
         {
             try
             {
+                _logger.LogVerbose("Entering [HttpPost(defaultdates)] public async Task<JsonResult> Post([FromBody]DefaultDatesViewModel vm)");
                 var result = await getDefaultDates(vm);
                 JsonResult jResult = new JsonResult(result);
                 return jResult;
             }
             catch (Exception ex)
             {
+                _logger.LogError("defaultdates exception. ",ex);
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json(ex.Message);
+            }
+            finally
+            {
+                _logger.LogVerbose("Exiting [HttpPost(defaultdates)] public async Task<JsonResult> Post([FromBody]DefaultDatesViewModel vm)");
             }
         }
         [HttpPost("daycounts")]
@@ -342,8 +389,10 @@ namespace FinSys.Calculator.Controllers.Api
         {
             try
             {
+                _logger.LogVerbose("Entering [HttpPost(daycounts)] public async Task<JsonResult> Post([FromBody]IEnumerable<DayCountViewModel> vms)");
                 if (ModelState.IsValid)
                 {
+                    _logger.LogInformation($"daycounts model validated: {ModelState}");
                     IEnumerable<DayCountViewModel> result = await Task.Run(async () =>
                     {
                         IEnumerable<DayCount> dcIn = Mapper.Map<IEnumerable<DayCount>>(vms);
@@ -354,36 +403,51 @@ namespace FinSys.Calculator.Controllers.Api
                     JsonResult jResult = new JsonResult(result);
                     return jResult;
                 }
+
+                _logger.LogError($"daycounts model not valid: {ModelState}");
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new { Message = "Failed", ModelState = ModelState });
             }
             catch (Exception ex)
             {
+                _logger.LogError("daycounts exception. ", ex);
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json(ex.Message);
             }
-            Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            return Json(new { Message = "Failed", ModelState = ModelState });
+            finally
+            {
+                _logger.LogVerbose("Exiting [HttpPost(daycounts)] public async Task<JsonResult> Post([FromBody]IEnumerable<DayCountViewModel> vms)");
+            }
         }
         [HttpPost("cashflows")]
         public async Task<JsonResult> Post([FromBody]CashFlowPricingViewModel vm)
         {
             try
             {
+                _logger.LogVerbose("Entering [HttpPost(cashflows)] public async Task<JsonResult> Post([FromBody]CashFlowPricingViewModel vm)");
                 if (ModelState.IsValid)
                 {
+                    _logger.LogInformation($"cashflow model validated: {ModelState}");
                     var cf = Mapper.Map<CashFlowPricing>(vm);
                     var cfOut = await _repository.PriceCashFlowsAsync(cf).ConfigureAwait(false);
                     IEnumerable<CashFlowViewModel> result = Mapper.Map<IEnumerable<CashFlowViewModel>>(cfOut);
                     JsonResult jResult = new JsonResult(result);
                     return jResult;
                 }
+                _logger.LogError($"cashflows model not valid: {ModelState}");
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new { Message = "Failed", ModelState = ModelState });
             }
             catch (Exception ex)
             {
+                _logger.LogError("cashflows exception. ", ex);
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json(ex.Message);
             }
-            Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            return Json(new { Message = "Failed", ModelState = ModelState });
+            finally
+            {
+                _logger.LogVerbose("Exiting [HttpPost(cashflows)] public async Task<JsonResult> Post([FromBody]CashFlowPricingViewModel vm)");
+            }
         }
 
         // PUT api/values/5
