@@ -128,6 +128,14 @@ input[type=text], input[type=password], textarea {
     vertical-align: middle;
     vertical-align: middle;*/
 }
+      .share-links a {
+        font-size: 1.5em;
+        margin-right: 5px;
+      }
+      .share-links a:hover {
+        text-decoration: none;
+        color: #333;
+      }
 
 /*.list-group-item
 {

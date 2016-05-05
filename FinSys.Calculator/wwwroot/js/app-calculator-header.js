@@ -2,7 +2,7 @@
 (function () {
 
     "use strict";
-    angular.module("app-calculator", [
+    angular.module("app-calculator-header", [
         "ngRoute",
         "ui.bootstrap",
         "ui.grid",

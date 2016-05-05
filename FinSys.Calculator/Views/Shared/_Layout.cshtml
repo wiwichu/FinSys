@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="~/lib/angular-ui-grid/ui-grid.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body>
+<body ng-app="app-calculator">
     <div id="sidebar">
 @*        <img src="~/img/menupicture.jpg" alt="Menu" class="menuimg" />*@ 
         <ul class="nav">
@@ -31,37 +31,47 @@
     </div>
     <div id="wrapper">
         <nav nav class="navbar navbar-inverse">
-            <div id="main" class="container-fluid">
+            <div id="main" class="container-fluid" >
                 <ul class="nav navbar-nav navbar-left">
                     <li>
                         <button id="sidebarToggle" class="btn btn-primary">
                             <i class="fa fa-angle-left"></i>
                         </button>
-
                     </li>
                 </ul>
                 <a asp-controller="App" asp-action="Index" class="navbar-brand">FinSys Home</a>
-                <ul class="nav navbar-nav navbar-right">
+                <script src="~/lib/angular/angular.min.js"></script>
+                <script src="~/lib/angular-easy-social-share/easy-social-share.js"></script>
+                <ul class="nav navbar-nav navbar-right"  >
                     <li>
-                        <a href="#/Contact" class="btn btn-lg btn-info">
-                            Contact
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#/Guide" class="btn btn-lg btn-info">
-                            Guide
-                        </a>
+                        <div class="share-links btn btn-lg btn-info" >
+                            <div share-square="true" share-links="Facebook, Twitter, LinkedIn, Google-Plus" share-title="FinSys Financial Calculator"></div>
+                        </div>
                     </li>
                     @*<li>
-                        <a href="#" class="btn btn-sm btn-info">
-                            <i class="fa fa-save"></i> Save
-                        </a>
+                        <div class=" btn btn-lg btn-info">
+                            <a href="#/Contact" class="btn btn-lg btn-info">
+                                Contact
+                            </a>
+                        </div>
                     </li>
                     <li>
-                        <a href="#" class="btn btn-sm btn-info">
-                            <i class="fa fa-print"></i> Print
-                        </a>
+                        <div class=" btn btn-lg btn-info">
+                            <a href="#/Guide" class="btn btn-lg btn-info">
+                                Guide
+                            </a>
+                        </div>
                     </li>*@
+                    @*<li>
+                <a href="#" class="btn btn-sm btn-info">
+                    <i class="fa fa-save"></i> Save
+                </a>
+            </li>
+            <li>
+                <a href="#" class="btn btn-sm btn-info">
+                    <i class="fa fa-print"></i> Print
+                </a>
+            </li>*@
                 </ul>
             </div>
         </nav>
@@ -70,7 +80,7 @@
                 @RenderBody()
             </div>
         </div>
-        <div id="footer" class="container-fluid" ng-app="app-calculator" ng-controller="layoutController">
+        <div id="footer" class="container-fluid" ng-controller="layoutController">
             <div class="navbar navbar-inverse navbar-fixed-bottom">
                 <h4 class="text-center text-info">&copy; 2016 SoftDrive Consulting Inc. DISCLAIMER: RESULTS NOT GUARANTEED. FOR DEMONSTRATION ONLY.</h4>
             </div>
@@ -80,6 +90,7 @@
     <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="~/js/site.js"></script>
+    <script src="~/lib/angular-easy-social-share/easy-social-share.js"></script>
     @RenderSection("Scripts", false)
 </body>
 </html>
