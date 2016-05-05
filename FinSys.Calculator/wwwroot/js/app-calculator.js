@@ -11,7 +11,8 @@
         "ui.grid.exporter",
         "ui.grid.edit",
         "ui.grid.resizeColumns",
-        "ui.grid.autoResize"
+        "ui.grid.autoResize",
+        "td.easySocialShare"
     ])
     .config(function ($routeProvider, $locationProvider) {
         $routeProvider.when("/", {
