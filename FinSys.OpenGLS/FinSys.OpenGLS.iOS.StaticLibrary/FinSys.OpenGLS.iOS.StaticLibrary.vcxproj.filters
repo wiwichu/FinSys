@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="..\..\Calc\Api.h" />
+    <ClInclude Include="..\..\Calc\Calc.h" />
+    <ClInclude Include="..\..\Calc\Datedec.h" />
+    <ClInclude Include="..\..\Calc\Envir.h" />
+    <ClInclude Include="..\..\Calc\Errdecs.h" />
+    <ClInclude Include="..\..\Calc\ExceptionCalc.h" />
+    <ClInclude Include="..\..\Calc\FinCalc.h" />
+    <ClInclude Include="..\..\Calc\FRADECS.H" />
+    <ClInclude Include="..\..\Calc\Gendec.h" />
+    <ClInclude Include="..\..\Calc\holicodeproc.h" />
+    <ClInclude Include="..\..\Calc\HOLIDAYS.H" />
+    <ClInclude Include="..\..\Calc\Holihead.h" />
+    <ClInclude Include="..\..\Calc\Insclass.h" />
+    <ClInclude Include="..\..\Calc\Insevent.h" />
+    <ClInclude Include="..\..\Calc\Instr.h" />
+    <ClInclude Include="..\..\Calc\Intdecs.h" />
+    <ClInclude Include="..\..\Calc\Locals.h" />
+    <ClInclude Include="..\..\Calc\PatCalc.h" />
+    <ClInclude Include="..\..\Calc\POSPROC.H" />
+    <ClInclude Include="..\..\Calc\Pydecs.h" />
+    <ClInclude Include="..\..\Calc\Pyfront.h" />
+    <ClInclude Include="..\..\Calc\RateCurve.h" />
+    <ClInclude Include="..\..\Calc\Scrdec.h" />
+    <ClInclude Include="..\..\Calc\Shrtdecs.h" />
+    <ClInclude Include="..\..\Calc\StdAfx.h" />
+    <ClInclude Include="..\..\Calc\Wordsymb.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Calc\Api.cpp" />
+    <ClCompile Include="..\..\Calc\Calc.cpp" />
+    <ClCompile Include="..\..\Calc\Coupload.cpp" />
+    <ClCompile Include="..\..\Calc\Datefunc.cpp" />
+    <ClCompile Include="..\..\Calc\Errtext.cpp" />
+    <ClCompile Include="..\..\Calc\ExceptionCalc.cpp" />
+    <ClCompile Include="..\..\Calc\FinCalc.cpp" />
+    <ClCompile Include="..\..\Calc\holicodeproc.cpp" />
+    <ClCompile Include="..\..\Calc\HOLIDAYS.CPP" />
+    <ClCompile Include="..\..\Calc\HOLIx.CPP" />
+    <ClCompile Include="..\..\Calc\insevent.cpp" />
+    <ClCompile Include="..\..\Calc\Instrument.cpp" />
+    <ClCompile Include="..\..\Calc\Intcalc.cpp" />
+    <ClCompile Include="..\..\Calc\PatCalc.cpp" />
+    <ClCompile Include="..\..\Calc\Py_calc.cpp" />
+    <ClCompile Include="..\..\Calc\Pyfront.cpp" />
+    <ClCompile Include="..\..\Calc\RateCurve.cpp" />
+    <ClCompile Include="..\..\Calc\Redmparr.cpp" />
+    <ClCompile Include="..\..\Calc\StdAfx.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Calc\HOLIDAYS.MAP" />
+    <None Include="..\..\Calc\INSEVENT.MAP" />
+    <None Include="..\..\Calc\INSTR.MAP" />
+  </ItemGroup>
+</Project>
