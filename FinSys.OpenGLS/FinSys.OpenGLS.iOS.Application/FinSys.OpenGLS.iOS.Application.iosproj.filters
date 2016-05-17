@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="FinSys.OpenGLS.iOS">
+      <UniqueIdentifier>{f45dff56-fd5f-4226-b1d4-bcc2d5a27ad6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FinSys.OpenGLS.iOS\Images.xcassets">
+      <UniqueIdentifier>{955b1448-52f9-4b66-88a4-1bda12a41c1f}</UniqueIdentifier>
+      <Extensions>FinSys.OpenGLS.iOS\Images.xcassets\*</Extensions>
+    </Filter>
+    <Filter Include="FinSys.OpenGLS.iOS\Images.xcassets\AppIcon.appiconset">
+      <UniqueIdentifier>{9f2a4be2-9225-4682-838b-10cb736c8623}</UniqueIdentifier>
+      <Extensions>FinSys.OpenGLS.iOS\Images.xcassets\AppIcon.appiconset\*</Extensions>
+    </Filter>
+    <Filter Include="FinSys.OpenGLS.iOS\Supporting Files">
+      <UniqueIdentifier>{3126a51a-de67-409a-9f00-2eeb8169f983}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="FinSys.OpenGLS.iOS\AppDelegate.mm">
+      <Filter>FinSys.OpenGLS.iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="FinSys.OpenGLS.iOS\GameViewController.mm">
+      <Filter>FinSys.OpenGLS.iOS</Filter>
+    </ClCompile>
+    <ClCompile Include="FinSys.OpenGLS.iOS\main.mm">
+      <Filter>FinSys.OpenGLS.iOS\Supporting Files</Filter>
+    </ClCompile>
+    <ClInclude Include="FinSys.OpenGLS.iOS\AppDelegate.h">
+      <Filter>FinSys.OpenGLS.iOS</Filter>
+    </ClInclude>
+    <ClInclude Include="FinSys.OpenGLS.iOS\GameViewController.h">
+      <Filter>FinSys.OpenGLS.iOS</Filter>
+    </ClInclude>
+    <Content Include="FinSys.OpenGLS.iOS\Base.lproj\Main.storyboard">
+      <Filter>FinSys.OpenGLS.iOS</Filter>
+    </Content>
+    <Content Include="FinSys.OpenGLS.iOS\Images.xcassets\AppIcon.appiconset\Contents.json">
+      <Filter>FinSys.OpenGLS.iOS\Images.xcassets\AppIcon.appiconset</Filter>
+    </Content>
+    <InfoPlist Include="FinSys.OpenGLS.iOS\Info.plist">
+      <Filter>FinSys.OpenGLS.iOS\Supporting Files</Filter>
+    </InfoPlist>
+  </ItemGroup>
+</Project>
