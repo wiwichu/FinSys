@@ -1,7 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:FinSys.Mobile;assembly=FinSys.Mobile"
+             xmlns:views="clr-namespace:FinSys.Mobile.View;assembly=FinSys.Mobile"
              x:Class="FinSys.Mobile.View.MainPage">
-<!--  <Label Text="{Binding MainText}" VerticalOptions="Center" HorizontalOptions="Center" /> -->
-  <Label Text="FinSys" VerticalOptions="Center" HorizontalOptions="Center" />
-</ContentPage>
+<!--  <Label Text="{Binding MainText}" VerticalOptions="Center" HorizontalOptions="Center" /> 
+  <Label Text="FinSys" VerticalOptions="Center" HorizontalOptions="Center" />-->
+<TabbedPage.Children>
+  <views:CustCalc/>
+  <views:DayCount/>
+  <views:USTBill/>
+</TabbedPage.Children>
+</TabbedPage>
