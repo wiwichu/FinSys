@@ -36,9 +36,18 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="Helpers\BindablePicker.cs" />
+    <Compile Include="Helpers\EnumerableExtensions.cs" />
     <Compile Include="Helpers\NotifyPropertyChanged.cs" />
     <Compile Include="Model\Calculations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CalculatorRepository.cs" />
+    <Compile Include="Services\ICalculatorRepository.cs" />
+    <Compile Include="Services\RepositoryFactory.cs" />
+    <Compile Include="ViewModel\CustCalcViewModel.cs" />
+    <Compile Include="View\CashFlow.xaml.cs">
+      <DependentUpon>CashFlow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CustCalc.xaml.cs">
       <DependentUpon>CustCalc.xaml</DependentUpon>
     </Compile>
@@ -82,9 +91,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="View\USTBill.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
@@ -93,6 +100,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="View\DayCount.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="View\CashFlow.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

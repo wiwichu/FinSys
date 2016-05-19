@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FinSys.Mobile.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,11 @@ namespace FinSys.Mobile.View
         public CustCalc()
         {
             InitializeComponent();
+            BindingContext = new CustCalcViewModel();
+        }
+        public void OnCashFlow(object o, EventArgs e)
+        {
+            Navigation.PushAsync(new CashFlow());
         }
     }
 }
