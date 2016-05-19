@@ -75,7 +75,8 @@ namespace FinSys.Wpf.ViewModel
             if (YieldMethod.Count > 0)
             {
                 SelectedYieldMethod = yieldMethod[0];
-            }           InstrumentClasses = new ObservableCollection<string>(RepositoryFactory.Calculator.GetInstrumentClassesAsync().Result.Where((c) => c != "MBS"));
+            }
+            InstrumentClasses = new ObservableCollection<string>(RepositoryFactory.Calculator.GetInstrumentClassesAsync().Result.Where((c) => c != "MBS"));
  
             if (instrumentClasses.Count>0)
             {
