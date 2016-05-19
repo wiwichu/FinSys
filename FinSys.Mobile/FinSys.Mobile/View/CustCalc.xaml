@@ -1,12 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helpers="clr-namespace:FinSys.Mobile.Helpers;assembly=FinSys.Mobile"
              x:Class="FinSys.Mobile.View.CustCalc"
              Title="Custom Calc">
   <!--<Label Text="{Binding MainText}" VerticalOptions="Center" HorizontalOptions="Center" />-->
   <ContentPage.Content>
-    <StackLayout Padding="20">
+    <StackLayout Padding="10">
       <Label Font="20" Text="Custom Calc"/>
+      <StackLayout Orientation="Horizontal">
+        <Label Font="20" Text="Instrument Class"/>
+        <helpers:BindablePicker ItemsSource="{Binding InstrumentClasses}" SelectedItem="{Binding SelectedInstrumentClass}"/>
+      </StackLayout>
+      <Button Text="Cash Flow" Clicked="OnCashFlow" />
     </StackLayout>
   </ContentPage.Content>
 </ContentPage>
