@@ -171,7 +171,6 @@ echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK</Command>
     <ClInclude Include="FRADECS.H" />
     <ClInclude Include="Gendec.h" />
     <ClInclude Include="holicodeproc.h" />
-    <ClInclude Include="HOLIDAYS.H" />
     <ClInclude Include="Holihead.h" />
     <ClInclude Include="Insclass.h" />
     <ClInclude Include="Insevent.h" />

@@ -3,7 +3,7 @@
 #if defined (WIN32)
 	#define _HUGE_
 #else
-	#define _HUGE_ __huge
+	#define __huge
 #endif
 
 const int error_text_len = 200;
@@ -254,7 +254,7 @@ const 	unsigned long	return_err_inv_scr_meth = 20001;
 const 	unsigned long	return_err_db_rec_nf = 30001;
 /*{ return_err_db_rec_nf means record not found.}*/
 
-class CALC_API _HUGE_ _errtext
+class CALC_API _errtext
 {
 public:
 

@@ -1082,9 +1082,12 @@ date_union date_hold_2;
 //      utilitoa(days_hold,date_days,10);
 //      utilitoa(months_hold,date_months,10);
 //      utilitoa(years_hold,date_years,10);
-      itoa(days_hold,date_days,10);
-      itoa(months_hold,date_months,10);
-      itoa(years_hold,date_years,10);
+      //itoa(days_hold,date_days,10);
+      //itoa(months_hold,date_months,10);
+      //itoa(years_hold,date_years,10);
+	  snprintf(date_days, 10, "%d", days_hold);
+	  snprintf(date_months, 10, "%d", months_hold);
+	  snprintf(date_years, 10, "%d", years_hold);
 
 /*
       gcvt(double(days_hold),2,date_days);
@@ -1820,9 +1823,12 @@ unsigned long Date_Funcs::findhol(date_union in_date
 	char _months[20];
 	char _days[20];
 	int fullYears = in_date.date.years + in_date.date.centuries * 100;
-	itoa(fullYears,_years,10);
-	itoa(in_date.date.months,_months,10);
-	itoa(in_date.date.days,_days,10);
+	//itoa(fullYears,_years,10);
+	//itoa(in_date.date.months,_months,10);
+	//itoa(in_date.date.days,_days,10);
+	snprintf(_years, 10, "%d", fullYears);
+	snprintf(_months, 10, "%d", in_date.date.months);
+	snprintf(_days, 10, "%d", in_date.date.days);
 	string _date(_years);
 	_date.append(_months);
 	_date.append(_days);

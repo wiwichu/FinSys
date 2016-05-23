@@ -1,7 +1,7 @@
 #if defined (WIN32)
 	#define _HUGE_
 #else
-	#define _HUGE_ __huge
+	#define __huge
 #endif
 
 #ifndef __datedec_H
@@ -527,7 +527,7 @@ char *const month_names[month_names_total] =
 		 language_december};
 //#ifndef _ANSIC
 
-class CALC_API _HUGE_ Date_Funcs {
+class Date_Funcs {
 
 public:
 //#endif

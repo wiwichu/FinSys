@@ -54,7 +54,7 @@ const int holidayyearlength = 5;
 const int holidayadjtimeslength = 4;
 const int holiday_date_max = 20;
 //
-class CALC_API _EX_IN_CLASS holidays_class : public Date_Funcs, public _errtext
+class holidays_class : public Date_Funcs, public _errtext
 {
 
 

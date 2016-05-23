@@ -5,7 +5,7 @@
 #include "scrdec.h"
 #include <math.h>
 #include "pyfront.h"
-#include <strsafe.h>
+//#include <strsafe.h>
 
 Py_Front::Py_Front()
 	:interest(0), interest_days(0)
@@ -31,19 +31,19 @@ cholicodeproc (DB_parm)
 }
 */
 
-unsigned long  FAR _export	Py_Front::getcashFlows(vector<pay_struc> &cashFlows)
+unsigned long  _export	Py_Front::getcashFlows(vector<pay_struc> &cashFlows)
 {
 	cashFlows = this->cashFlows;
 	return return_success;
 }
 
-unsigned long  FAR _export	Py_Front::action_init_cf()
+unsigned long  _export	Py_Front::action_init_cf()
 {
 	current_class = instr_cashflow_class;
 	in_instr.instr_class = instr_cashflow_class;
 	return return_success;
 }
-unsigned long  FAR _export	Py_Front::action_init_mbs()
+unsigned long  _export	Py_Front::action_init_mbs()
 {
 	current_class = instr_mbs_class;
 	in_instr.instr_class = instr_mbs_class;
@@ -80,17 +80,17 @@ unsigned long  FAR _export	Py_Front::action_init_mbs()
 
 	return return_success;
 }
-unsigned long  FAR _export	Py_Front::init_fra_holiday()
+unsigned long  _export	Py_Front::init_fra_holiday()
 {
 	current_holiday = 0;
 	return return_success;
 }
-unsigned long FAR _export Py_Front::action_init_part_pay()
+unsigned long _export Py_Front::action_init_part_pay()
 {
 	part_pays_sched[0].last_element = 0;
 	return return_success;
 }
-unsigned long  FAR _export Py_Front::action_proc_part_pay()
+unsigned long  _export Py_Front::action_proc_part_pay()
 {
 	unsigned long return_state = return_success;
 	if ((part_pays_sched[0].last_element < 0) ||
@@ -196,7 +196,7 @@ unsigned long  FAR _export Py_Front::action_proc_part_pay()
 
 	return return_success;
 }
-unsigned long  FAR _export Py_Front::action_init_excoup()
+unsigned long  _export Py_Front::action_init_excoup()
 {
 	for (int element_count = 0; element_count <
 		excoup_count; ++element_count)
@@ -208,7 +208,7 @@ unsigned long  FAR _export Py_Front::action_init_excoup()
 
 	return return_success;
 }
-unsigned long FAR _export	 Py_Front::action_proc_monthend()
+unsigned long _export	 Py_Front::action_proc_monthend()
 {
 	
 	if ( strcmp(current_monthend_name,
@@ -226,7 +226,7 @@ unsigned long FAR _export	 Py_Front::action_proc_monthend()
 	}
 	return return_success;
 }
-unsigned long FAR _export	 Py_Front::action_proc_payadj()
+unsigned long _export	 Py_Front::action_proc_payadj()
 {
 
 	if (strcmp(current_payadj_name,
@@ -244,7 +244,7 @@ unsigned long FAR _export	 Py_Front::action_proc_payadj()
 	}
 	return return_success;
 }
-unsigned long FAR _export	Py_Front::action_sink_fund_mat()
+unsigned long _export	Py_Front::action_sink_fund_mat()
 {
 
 	for (int element_count = 0; element_count <
@@ -257,7 +257,7 @@ unsigned long FAR _export	Py_Front::action_sink_fund_mat()
 
 	return return_success;
 }
-unsigned long FAR _export	 Py_Front::proc_sink_fund_mat()
+unsigned long _export	 Py_Front::proc_sink_fund_mat()
 {
 	unsigned long result = return_success;
 	if (strcmp(current_sink_fund_mat_name,
@@ -292,7 +292,7 @@ unsigned long FAR _export	 Py_Front::proc_sink_fund_mat()
 
 	return result;
 }
-unsigned long  FAR _export	Py_Front::action_proc_excoup()
+unsigned long  _export	Py_Front::action_proc_excoup()
 {
 	current_excoup = ex_coup_no;
 	if (strcmp(current_excoup_name,
@@ -304,7 +304,7 @@ unsigned long  FAR _export	Py_Front::action_proc_excoup()
 	}
 	return return_success;
 }
-unsigned long  FAR _export	Py_Front::action_proc_tradeflat()
+unsigned long  _export	Py_Front::action_proc_tradeflat()
 {
 	current_tradeflat = trade_flat_no;
 	if (strcmp(current_tradeflat_name,
@@ -316,12 +316,12 @@ unsigned long  FAR _export	Py_Front::action_proc_tradeflat()
 	}
 	return return_success;
 }
-unsigned long FAR _export	 Py_Front::action_init_frn()
+unsigned long _export	 Py_Front::action_init_frn()
 {
 	in_instr.instr_class = instr_float_class;
 	return return_success;
 }
-unsigned long  FAR _export	Py_Front::set_rerate()
+unsigned long  _export	Py_Front::set_rerate()
 {
 	rerate_sched.current_holiday_adj =
 		in_instr.pay_freq.holiday_adj;
@@ -335,7 +335,7 @@ unsigned long  FAR _export	Py_Front::set_rerate()
 	rerate_sched.current_simp_comp = simp_comp_simple;
 	return return_success;
 }
-unsigned long  FAR _export Py_Front::freq_count_init_frn()
+unsigned long  _export Py_Front::freq_count_init_frn()
 {
 	for (int element_count = 0; element_count <
 		freq_count; ++element_count)
@@ -351,12 +351,12 @@ unsigned long  FAR _export Py_Front::freq_count_init_frn()
 	return return_success;
 }
 
-unsigned long FAR _export	 Py_Front::instr_class_init()
+unsigned long _export	 Py_Front::instr_class_init()
 {
 	in_instr.instr_class = 0;
 	return return_success;
 }
-unsigned long  FAR _export Py_Front::simp_comp_init_frn()
+unsigned long  _export Py_Front::simp_comp_init_frn()
 {
 	for (int element_count = 0; element_count <
 		simp_comp_count; ++element_count)
@@ -371,8 +371,8 @@ unsigned long  FAR _export Py_Front::simp_comp_init_frn()
 	}
 	return return_success;
 }
-//void  FAR _export Py_Front::yield_meth_init(Instrument::instr &in_instr, char  yield_meth_choice[py_last_yield_meth][yield_names_len])
-unsigned long  FAR _export Py_Front::yield_meth_init()
+//void  _export Py_Front::yield_meth_init(Instrument::instr &in_instr, char  yield_meth_choice[py_last_yield_meth][yield_names_len])
+unsigned long  _export Py_Front::yield_meth_init()
 {
 	for (int element_count = 0; element_count <
 		py_last_yield_meth; ++element_count)
@@ -399,7 +399,7 @@ unsigned long  FAR _export Py_Front::yield_meth_init()
 	}
 	return return_success;
 }
-unsigned long FAR _export Py_Front::set_current()
+unsigned long _export Py_Front::set_current()
 {
 
 	unsigned long return_state = classdef(&in_instr);
@@ -560,7 +560,7 @@ unsigned long FAR _export Py_Front::set_current()
 	return return_success;
 }
 
-unsigned long FAR _export Py_Front::set_current_frn()
+unsigned long _export Py_Front::set_current_frn()
 {
 	datecpy(rerate_sched.rerate_sched.first_date.date_string,
 		in_instr.issue_date.date_string);
@@ -586,7 +586,7 @@ unsigned long FAR _export Py_Front::set_current_frn()
 	return return_success;
 }
 
-unsigned long FAR _export Py_Front::proc_pay_freq_frn_py()
+unsigned long _export Py_Front::proc_pay_freq_frn_py()
 {
 	if (strcmp(rerate_sched.current_pay_freq_name, freq_names[0]) == 0)
 	{
@@ -646,7 +646,7 @@ unsigned long FAR _export Py_Front::proc_pay_freq_frn_py()
 	return return_success;
 }
 
-unsigned long FAR _export	Py_Front::proc_simp_comp_frn_py()
+unsigned long _export	Py_Front::proc_simp_comp_frn_py()
 {
 
 	if (strcmp(rerate_sched.current_simp_comp_name,
@@ -682,7 +682,7 @@ unsigned long FAR _export	Py_Front::proc_simp_comp_frn_py()
 	}
 	return return_success;
 }
-unsigned long FAR _export	Py_Front::proc_pay_adj_py()
+unsigned long _export	Py_Front::proc_pay_adj_py()
 {
 	if (return_state != return_success)
 	{
@@ -778,7 +778,7 @@ unsigned long FAR _export	Py_Front::proc_pay_adj_py()
 	return return_success;
 
 }
-unsigned long FAR _export	Py_Front::proc_holi_py()
+unsigned long _export	Py_Front::proc_holi_py()
 {
 	if (return_state != return_success)
 	{
@@ -875,7 +875,7 @@ unsigned long FAR _export	Py_Front::proc_holi_py()
 	return return_success;
 
 }
-unsigned long FAR _export	Py_Front::proc_pay_freq_py()
+unsigned long _export	Py_Front::proc_pay_freq_py()
 {
 
 	if (strcmp(current_pay_freq_name, freq_names[0]) == 0)
@@ -941,7 +941,7 @@ unsigned long FAR _export	Py_Front::proc_pay_freq_py()
 	pyparm.comp_freq = in_instr.pay_freq.freq;
 	return return_success;
 }
-unsigned long FAR _export	Py_Front::proc_yield_freq_py()
+unsigned long _export	Py_Front::proc_yield_freq_py()
 {
 
 	if (strcmp(current_yield_freq_name, freq_names[0]) == 0)
@@ -1000,7 +1000,7 @@ unsigned long FAR _export	Py_Front::proc_yield_freq_py()
 	pyparm.parm_use = py_yes_parm_use;
 	return return_success;
 }
-unsigned long FAR _export	 	Py_Front::proc_day_count_py()
+unsigned long _export	 	Py_Front::proc_day_count_py()
 
 {
 	if (strcmp(current_day_count_name,
@@ -1169,7 +1169,7 @@ strcpy(current_yield_days_name, day_count_names[current_day_count]);
 return return_success;
 }
 
-unsigned long FAR _export	Py_Front::check_val_vs_mat_py()
+unsigned long _export	Py_Front::check_val_vs_mat_py()
 {
 	return_state = check_tenor_py();
 
@@ -1194,7 +1194,7 @@ unsigned long FAR _export	Py_Front::check_val_vs_mat_py()
 	}
 	return return_success;
 }
-unsigned long FAR _export	Py_Front::proc_yield_meth_py()
+unsigned long _export	Py_Front::proc_yield_meth_py()
 {
 	if (strcmp(current_yield_meth_name,
 		yield_meth_names[py_aibd_yield_meth]) == 0)
@@ -1363,7 +1363,7 @@ unsigned long FAR _export	Py_Front::proc_yield_meth_py()
 	}
 	return return_success;
 }
-unsigned long FAR _export	Py_Front::proc_yield_days_py()
+unsigned long _export	Py_Front::proc_yield_days_py()
 {
 
 	if (strcmp(current_yield_days_name,
@@ -1523,7 +1523,7 @@ unsigned long FAR _export	Py_Front::proc_yield_days_py()
 
 	return return_success;
 }
-unsigned long FAR _export	Py_Front::proc_mat_date_py()
+unsigned long _export	Py_Front::proc_mat_date_py()
 {
 	unsigned long return_state = datechck(mat_date);
 	if (return_state != return_success)
@@ -1532,7 +1532,7 @@ unsigned long FAR _export	Py_Front::proc_mat_date_py()
 	}
 	return return_success;
 }
-unsigned long FAR _export	Py_Front::proc_iss_date_py()
+unsigned long _export	Py_Front::proc_iss_date_py()
 {
 	unsigned long return_state = datechck(issue_date);
 	if (return_state != return_success)
@@ -1547,7 +1547,7 @@ unsigned long FAR _export	Py_Front::proc_iss_date_py()
 	}
 	return return_success;
 }
-unsigned long FAR _export	Py_Front::proc_val_date_py()
+unsigned long _export	Py_Front::proc_val_date_py()
 {
 	unsigned long return_state = datechck(val_date);
 	if (return_state != return_success)
@@ -1556,7 +1556,7 @@ unsigned long FAR _export	Py_Front::proc_val_date_py()
 	}
 	return return_success;
 }
-unsigned long FAR _export	Py_Front::proc_class_desc_py()
+unsigned long _export	Py_Front::proc_class_desc_py()
 {
 	/*{Validate class.}*/
 	int str_cmp = 1;
@@ -1590,7 +1590,7 @@ unsigned long FAR _export	Py_Front::proc_class_desc_py()
 
 	return return_success;
 }
-unsigned long FAR _export	Py_Front::check_val_vs_first_date_frn()
+unsigned long _export	Py_Front::check_val_vs_first_date_frn()
 {
 
 	int str_cmp = datecmp(&val_date.date_string,
@@ -1610,7 +1610,7 @@ unsigned long FAR _export	Py_Front::check_val_vs_first_date_frn()
 
 	return return_success;
 }			
-unsigned long FAR _export	Py_Front::check_iss_vs_mat()
+unsigned long _export	Py_Front::check_iss_vs_mat()
 {
 	return_state = check_tenor_py();
 
@@ -1635,7 +1635,7 @@ unsigned long FAR _export	Py_Front::check_iss_vs_mat()
 	}
 	return return_success;
 }
-unsigned long FAR _export	Py_Front::check_iss_vs_first()
+unsigned long _export	Py_Front::check_iss_vs_first()
 {
 
 	int str_cmp = datecmp(&first_date.date_string,
@@ -1652,7 +1652,7 @@ unsigned long FAR _export	Py_Front::check_iss_vs_first()
 	}
 	return return_success;
 }
-unsigned long FAR _export	Py_Front::check_first_vs_mat()
+unsigned long _export	Py_Front::check_first_vs_mat()
 {
 int str_cmp = datecmp(&first_date.date_string,
 	&mat_date.date_string);
@@ -1670,7 +1670,7 @@ if (str_cmp > 0)
 return return_success;
 }
 
-unsigned long FAR _export	Py_Front::check_iss_vs_penult()
+unsigned long _export	Py_Front::check_iss_vs_penult()
 {
 	int str_cmp = datecmp(&penult_date.date_string,
 		&issue_date.date_string);
@@ -1687,7 +1687,7 @@ unsigned long FAR _export	Py_Front::check_iss_vs_penult()
 
 	return return_success;
 }
-unsigned long FAR _export	Py_Front::check_iss_vs_val()
+unsigned long _export	Py_Front::check_iss_vs_val()
 {
 
 int str_cmp = datecmp(&val_date.date_string,
@@ -1705,7 +1705,7 @@ if (str_cmp < 0)
 return return_success;
 }
 
-unsigned long FAR _export	Py_Front::check_penult_vs_mat()
+unsigned long _export	Py_Front::check_penult_vs_mat()
 {
 int str_cmp = datecmp(&penult_date.date_string,
 	&mat_date.date_string);
@@ -1724,7 +1724,7 @@ if (str_cmp >= 0)
 
 return return_success;
 }
-unsigned long FAR _export	Py_Front::check_tenor_py()
+unsigned long _export	Py_Front::check_tenor_py()
 {
 	long tenor_days = 0;
 	return_state = tenor(val_date,
@@ -1753,7 +1753,7 @@ unsigned long FAR _export	Py_Front::check_tenor_py()
 	}
 	return return_success;
 }
-unsigned long FAR _export	Py_Front::set_accrue_date_py()
+unsigned long _export	Py_Front::set_accrue_date_py()
 {
 	if (in_instr.instr_class == instr_goj_class)
 	{
@@ -1780,7 +1780,7 @@ unsigned long FAR _export	Py_Front::set_accrue_date_py()
 
 	return return_success;
 }
-unsigned long FAR _export	Py_Front::proc_def_dates_py()
+unsigned long _export	Py_Front::proc_def_dates_py()
 {
 	return_state = proc_mat_date_py();
 	if (return_state != return_success)
@@ -2050,7 +2050,7 @@ unsigned long FAR _export	Py_Front::proc_def_dates_py()
 
 	return return_state;
 }
-unsigned long FAR _export	Py_Front::calc_np_py()
+unsigned long _export	Py_Front::calc_np_py()
 {
 	if (current_class != instr_cashflow_class)
 
@@ -2078,7 +2078,7 @@ unsigned long FAR _export	Py_Front::calc_np_py()
 
 return return_success;
 }
-unsigned long FAR _export	Py_Front::proc_gen_dates_frn_py()
+unsigned long _export	Py_Front::proc_gen_dates_frn_py()
 {
 
 	return_state = proc_mat_date_py();
@@ -2313,7 +2313,7 @@ unsigned long FAR _export	Py_Front::proc_gen_dates_frn_py()
 	}
 	return return_success;
 }
-unsigned long FAR _export	Py_Front::check_date_synch_py()
+unsigned long _export	Py_Front::check_date_synch_py()
 {
 	proc_day_count_py();
 
@@ -2490,7 +2490,7 @@ unsigned long FAR _export	Py_Front::check_date_synch_py()
 	}
 	return return_success;
 }					
-unsigned long FAR _export	Py_Front::proc_penult_date_py()
+unsigned long _export	Py_Front::proc_penult_date_py()
 {
 	return_state = datechck(penult_date);
 	if (return_state != return_success)
@@ -2503,7 +2503,7 @@ unsigned long FAR _export	Py_Front::proc_penult_date_py()
 	return return_success;
 }
 
-unsigned long FAR _export	Py_Front::proc_first_date_py()
+unsigned long _export	Py_Front::proc_first_date_py()
 {
 	return_state = datechck(first_date);
 	if (return_state != return_success)
@@ -2517,7 +2517,7 @@ unsigned long FAR _export	Py_Front::proc_first_date_py()
 	return return_success;
 }
 
-unsigned long FAR _export	Py_Front::proc_first_date_frn_py()
+unsigned long _export	Py_Front::proc_first_date_frn_py()
 {
 	return_state = datechck(rerate_sched.rerate_sched.first_date);
 	if (return_state != return_success)
@@ -2531,7 +2531,7 @@ unsigned long FAR _export	Py_Front::proc_first_date_frn_py()
 	return return_success;
 
 }
-unsigned long FAR _export	Py_Front::proc_all_dates_py()
+unsigned long _export	Py_Front::proc_all_dates_py()
 {
 
 	return_state = proc_val_date_py();
@@ -2611,7 +2611,7 @@ unsigned long FAR _export	Py_Front::proc_all_dates_py()
 
 	return return_success;
 }
-unsigned long FAR _export	Py_Front::proc_int_py()
+unsigned long _export	Py_Front::proc_int_py()
 {
 	if (current_class == instr_cashflow_class)
 	{
@@ -2655,11 +2655,11 @@ unsigned long FAR _export	Py_Front::proc_int_py()
 
 	return return_success;
 }
-unsigned long FAR _export	Py_Front::proc_price_py()
+unsigned long _export	Py_Front::proc_price_py()
 {
 	return return_success;
 }
-unsigned long FAR _export	Py_Front::check_price_vs_calc_py()
+unsigned long _export	Py_Front::check_price_vs_calc_py()
 {
 	if ((calc_what == py_yield_from_price_calc_what) &&
 		(in_price <= 0))
@@ -2674,7 +2674,7 @@ unsigned long FAR _export	Py_Front::check_price_vs_calc_py()
 
 	return return_success;
 }
-unsigned long FAR _export	Py_Front::py_proc_calc_what_py()
+unsigned long _export	Py_Front::py_proc_calc_what_py()
 {
 
 	pyparm.calc_what = calc_what;
@@ -2690,7 +2690,7 @@ unsigned long FAR _export	Py_Front::py_proc_calc_what_py()
 	}
 	return return_success;
 }
-unsigned long FAR _export	Py_Front::check_all_parms_py()
+unsigned long _export	Py_Front::check_all_parms_py()
 {
 	proc_all_dates_py();
 
@@ -2738,7 +2738,7 @@ unsigned long FAR _export	Py_Front::check_all_parms_py()
 
 	return return_success;
 }
-unsigned long  FAR _export	Py_Front::prepay_type_init_py()
+unsigned long  _export	Py_Front::prepay_type_init_py()
 {
 	for (int element_count = 0; element_count <
 		py_last_prepay_type; ++element_count)
@@ -2748,12 +2748,12 @@ unsigned long  FAR _export	Py_Front::prepay_type_init_py()
 	}
 	return return_success;
 }
-unsigned long  FAR _export	Py_Front::proc_service_py()
+unsigned long  _export	Py_Front::proc_service_py()
 {
 	in_instr.service_fee = service_fee;
 	return return_success;
 }
-unsigned long  FAR _export	Py_Front::proc_prepay_type_py()
+unsigned long  _export	Py_Front::proc_prepay_type_py()
 {
 	if (strcmp(prepay_type_name,
 		prepay_type_names[py_cpr_prepay_type]) == 0)
@@ -2777,7 +2777,7 @@ unsigned long  FAR _export	Py_Front::proc_prepay_type_py()
 	}
 	return return_success;
 }
-unsigned long  FAR _export	Py_Front::proc_prepay_rate_py()
+unsigned long  _export	Py_Front::proc_prepay_rate_py()
 {
 	proc_prepay_type_py();
 	if ((cpr_rate < 0) || (cpr_rate >= 100))
@@ -2790,7 +2790,7 @@ unsigned long  FAR _export	Py_Front::proc_prepay_rate_py()
 	}
 	return return_success;
 }
-unsigned long FAR _export	Py_Front::proc_lag_py()
+unsigned long _export	Py_Front::proc_lag_py()
 {
 
 	if ((lag < 0) || (lag > 100))
@@ -2806,7 +2806,7 @@ unsigned long FAR _export	Py_Front::proc_lag_py()
 
 	return return_success;
 }
-unsigned long FAR _export	Py_Front::proc_cashflow_py()
+unsigned long _export	Py_Front::proc_cashflow_py()
 {
 int element_count = 1;
 
@@ -2902,7 +2902,7 @@ while ((element_count < py_max_cashflow) &&
 
 return return_success;
 }
-unsigned long FAR _export	Py_Front::calc_int_py()
+unsigned long _export	Py_Front::calc_int_py()
 {
 
 	if (in_instr.instr_class == instr_cashflow_class)
@@ -2990,7 +2990,7 @@ unsigned long FAR _export	Py_Front::calc_int_py()
 }
 
 
-unsigned long FAR _export	Py_Front::calc_py_py()
+unsigned long _export	Py_Front::calc_py_py()
 {
 	return_state = check_all_parms_py();
 	if (return_state != return_success)
@@ -3051,7 +3051,7 @@ unsigned long FAR _export	Py_Front::calc_py_py()
 
 	return return_success;
 }
-unsigned long  FAR _export	Py_Front::freq_count_init_py()
+unsigned long  _export	Py_Front::freq_count_init_py()
 {
 	for (int element_count = 0; element_count <
 		freq_count; ++element_count)
@@ -3063,7 +3063,7 @@ unsigned long  FAR _export	Py_Front::freq_count_init_py()
 	return return_success;
 }
 
-unsigned long FAR _export	Py_Front::action_init_screen_py()
+unsigned long _export	Py_Front::action_init_screen_py()
 {
 	interest = 0;
 	interest_days = 0;
@@ -3084,7 +3084,7 @@ unsigned long FAR _export	Py_Front::action_init_screen_py()
 
 	return return_success;
 }
-unsigned long FAR _export	Py_Front::action_proc_mbs_py()
+unsigned long _export	Py_Front::action_proc_mbs_py()
 {
 	proc_service_py();
 	return_state = proc_prepay_rate_py();
@@ -3100,7 +3100,7 @@ unsigned long FAR _export	Py_Front::action_proc_mbs_py()
 	proc_prepay_type_py();
 	return return_success;
 }
-unsigned long FAR _export	Py_Front::pyproc45	(
+unsigned long _export	Py_Front::pyproc45	(
 
 	)
 
@@ -5165,17 +5165,25 @@ unsigned long _FAR_FUNC _EX_IN_FUNC		Py_Front::setHolidays(Py_Front::HOLIDAY* pH
 	for (int i = 0; i < size; i++)
 	{
 		HOLIDAY holiday = pHolidayArray[i];
-		string holString = to_string(holiday.year);
+		//string holString = to_string(holiday.year);
+		char _outChar[20];
+		snprintf(_outChar, 10, "%d", holiday.year);
+		string holString(_outChar);
 		//if (holiday.month < 10)
 		//{
 		//	holString.append("0");
 		//}
-		holString.append(to_string(holiday.month));
+		snprintf(_outChar, 10, "%d", holiday.month);
+		string m(_outChar);
+
+		holString.append(m);
 		//if (holiday.day < 10)
 		//{
 		//	holString.append("0");
 		//}
-		holString.append(to_string(holiday.day));
+		snprintf(_outChar, 10, "%d", holiday.day);
+		string d(_outChar);
+		holString.append(d);
 		holiSet.insert(holString);
 	}
 	return return_state;
@@ -5804,9 +5812,9 @@ unsigned long  _FAR_FUNC _EX_IN_FUNC   Py_Front::getpayfreqperiodyield(int *payf
 	return return_state;
 }
 
-extern void _export FAR testfunc();
+extern void _export testfunc();
 
-void FAR _export testfunc()
+void _export testfunc()
 {
 }
 

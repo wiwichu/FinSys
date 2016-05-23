@@ -14,7 +14,7 @@
 /*
 
 #define EXPORT _export
-#define FAR far
+#define far
 */
 enum booleans {isfalse, istrue}; /*{ isfalse = 0, istrue = 1. }*/
 /*
