@@ -347,7 +347,8 @@ unsigned long holidays_class::GetHolidayBaseDay(int element_count,
 	}
 	else
 	{
-	  itoa((element_count ),day_number_str,10);
+	  //itoa((element_count ),day_number_str,10);
+		snprintf(day_number_str, 10, "%d", element_count);
 	}
 	return return_state;
 }
@@ -408,7 +409,8 @@ unsigned long holidays_class::GetBaseAdjTimes(int element_count,
 	}
 	else
 	{
-	  itoa((element_count),name_str,10);
+	  //itoa((element_count),name_str,10);
+		snprintf(name_str, 10, "%d", element_count);
 	}
 	return return_state;
 }

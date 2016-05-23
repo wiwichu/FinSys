@@ -6,6 +6,7 @@
 #include "stdafx.h"
 #include "RateCurve.h"
 #include "errdecs.h"
+#include <stdlib.h>
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -1245,7 +1246,8 @@ unsigned long  _RATECURVE   GetRCTerm1Local(char RC_Term1 [rc_term_size], RateIn
 	int compare_result = 1;
 	int element_count = 0;
 
-	_itoa( LocalRateInstr.term_1, RC_Term1, 10 );
+	//_itoa( LocalRateInstr.term_1, RC_Term1, 10 );
+	snprintf(RC_Term1, 10, "%d", LocalRateInstr.term_1);
 
 //end_func:
 	return return_state;
@@ -1261,7 +1263,8 @@ unsigned long  _RATECURVE   GetRCTerm2Local(char RC_Term2 [rc_term_size], RateIn
 	int compare_result = 1;
 	int element_count = 0;
 
-	_itoa( LocalRateInstr.term_2, RC_Term2, 10 );
+	//_itoa( LocalRateInstr.term_2, RC_Term2, 10 );
+	snprintf(RC_Term2, 10, "%d", LocalRateInstr.term_2);
 
 //end_func:
 	return return_state;
@@ -1277,7 +1280,8 @@ unsigned long  _RATECURVE   GetRCRate1Local(char RC_Rate1 [rc_rate_size], RateIn
 //	int sign_int;
 
 //	utilgcvt( (LocalRateInstr.rate * 100), rate_precision, RC_Rate1 );
-	gcvt( (LocalRateInstr.rate * 100), rate_precision, RC_Rate1 );
+	//gcvt( (LocalRateInstr.rate * 100), rate_precision, RC_Rate1 );
+	snprintf(RC_Rate1, rate_precision, "%g", LocalRateInstr.rate *100);
 
 //end_func:
 	return return_state;
@@ -1798,8 +1802,10 @@ unsigned long _RATECURVE  GetRCBootDiscText(char BootTextParm[rc_max_boot_result
 		strcat(BootTextParm[element_count]," ");
 
 //		utilgcvt( BootResultArray[element_count].factor, factor_precision, BootFactor);
-		gcvt( BootResultArray[element_count].factor, factor_precision, BootFactor);
-		
+		//gcvt( BootResultArray[element_count].factor, factor_precision, BootFactor);
+		snprintf(BootFactor, factor_precision, "%g", BootResultArray[element_count].factor);
+
+
 		strcat(BootTextParm[element_count],BootFactor);
 		strcat(BootTextParm[element_count]," ");
 
