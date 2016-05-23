@@ -4,6 +4,7 @@
 #include "pydecs.h"
 #include "intdecs.h"
 #include <math.h>
+#include <stdlib.h>
 
 
 unsigned long	_PYFUNCS py_coup_load( char py_period_length, char *simp_comp_frac,

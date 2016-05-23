@@ -21,7 +21,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Calc\ExceptionCalc.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Calc\FinCalc.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Calc\holicodeproc.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Calc\HOLIDAYS.CPP" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Calc\HOLIx.CPP" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Calc\insevent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Calc\Instrument.cpp" />
@@ -35,7 +34,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Api.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Calc.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Datedec.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Envir.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Errdecs.h" />
@@ -44,7 +42,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\FRADECS.H" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Gendec.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\holicodeproc.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\HOLIDAYS.H" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Holihead.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Insclass.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Insevent.h" />
@@ -58,11 +55,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\RateCurve.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Scrdec.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Shrtdecs.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\StdAfx.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Wordsymb.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)FinSys_Mobile_Calc.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)..\..\Calc\HOLIDAYS.MAP" />
     <None Include="$(MSBuildThisFileDirectory)..\..\Calc\INSEVENT.MAP" />
     <None Include="$(MSBuildThisFileDirectory)..\..\Calc\INSTR.MAP" />
   </ItemGroup>

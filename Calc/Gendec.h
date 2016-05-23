@@ -478,15 +478,15 @@ not less than 100.}*/
 const unsigned long pyaccess_insmem_return = 25;
 /*{pyaccess_insmem_return means insufficient memory.}*/
 
-unsigned long EXPORT FAR pyaccess(instr_a FAR *,
-					pyparm_a FAR *,
-					result_a FAR *,
-					holiday_a FAR *);
+unsigned long EXPORT pyaccess(instr_a *,
+					pyparm_a *,
+					result_a *,
+					holiday_a *);
 /*
-extern unsigned long EXPORT FAR pyaccess(instr_a FAR *,
-					pyparm_a FAR *,
-					result_a FAR *,
-					holiday_a FAR *);
+extern unsigned long EXPORT pyaccess(instr_a *,
+					pyparm_a *,
+					result_a *,
+					holiday_a *);
 */
 /*{
 
@@ -536,8 +536,8 @@ unsigned long py_filter( instr,  date_union,
 				);
 */
 /*
-extern long EXPORT FAR testdll(double FAR *in_double,
-					double FAR *out_double);
+extern long EXPORT testdll(double *in_double,
+					double *out_double);
 */
 
 #endif

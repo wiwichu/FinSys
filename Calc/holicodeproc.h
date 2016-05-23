@@ -39,14 +39,14 @@ private:
 //	CDB * DB_local;
 //	CDB::DB_Handles localhandles;
 //	CDB::holiday_code_rec * holicodearray;
-	BOOL BOOL_return;
+	bool BOOL_return;
 	unsigned long return_state;
 
 public:
 	cholicodeproc();
 	~cholicodeproc();
 //	cholicodeproc(CDB * DB_parm);
-	unsigned long cholicodeproc::Setholicodearray(int * TotalCodes);
+	unsigned long Setholicodearray(int * TotalCodes);
 //	unsigned long SetHoliCode(CDB::holiday_code_rec holicode);
 //	unsigned long GetHoliCode(CDB::holiday_code_rec * holicode,unsigned int ThisCode);
 //	unsigned long GetHoliDescription(char code [holidaycodelength], char desc [holidaycodelength]);
