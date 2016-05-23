@@ -13,13 +13,13 @@
 #endif
 
 // This class is exported from the Calc.dll
-class CALC_API CCalc {
+class CCalc {
 public:
 	CCalc(void);
 	// TODO: add your methods here.
 };
 
-extern CALC_API int nCalc;
+extern int nCalc;
 
-CALC_API int fnCalc(void);
+ int fnCalc(void);
 #endif

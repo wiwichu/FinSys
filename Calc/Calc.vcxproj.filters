@@ -95,9 +95,6 @@
     <ClInclude Include="Gendec.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HOLIDAYS.H">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Holihead.h">
       <Filter>Header Files</Filter>
     </ClInclude>
