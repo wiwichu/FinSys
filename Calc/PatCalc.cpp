@@ -4,6 +4,7 @@
 
 #include "stdafx.h"
 #include "PatCalc.h"
+#include <stdlib.h>
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -207,23 +208,34 @@ string PatCalc::forecast (const string &date,int months,long days, FinCalc::_CAL
 		_outdate.assign("0");
 	else
 		_outdate.assign("");
-	string c = to_string(_returndate.date.centuries);
+	//string c = to_string(_returndate.date.centuries
+	char _outChar[20];
+
+	snprintf(_outChar, 10, "%d", _returndate.date.centuries);
+		string c(_outChar);
 	_outdate.append(c);
 	//_outdate.append(datepiece);
 	//_itoa(_returndate.date.years,datepiece,buffSize);
 	if (_returndate.date.years < 10) _outdate.append("0");
 	//_outdate.append(datepiece);
 	//_itoa(_returndate.date.months,datepiece,buffSize);
-	string y = to_string(_returndate.date.years);
+	//string y = to_string(_returndate.date.years);
+	snprintf(_outChar, 10, "%d", _returndate.date.years);
+	string y(_outChar);
 	_outdate.append(y);
 	if (_returndate.date.months < 10) _outdate.append("0");
 	//_outdate.append(datepiece);
 	//_itoa(_returndate.date.days,datepiece,buffSize);
-	string m = to_string(_returndate.date.months);
+	//string m = to_string(_returndate.date.months);
+	//char _outChar[20];
+	snprintf(_outChar, 10, "%d", _returndate.date.months);
+	string m(_outChar);
 	_outdate.append(m);
 	if (_returndate.date.days < 10) _outdate.append("0");
 	//_outdate.append(datepiece);
-	string d = to_string(_returndate.date.days);
+	//string d = to_string(_returndate.date.days);
+	snprintf(_outChar, 10, "%d", _returndate.date.days);
+	string d(_outChar);
 	_outdate.append(d);
 
 	return _outdate;
@@ -637,23 +649,32 @@ string PatCalc::getValueDate()
 		_outdate.assign("0");
 	else
 		_outdate.assign("");
-	string c = to_string(_returndate.date.centuries);
+	//string c = to_string(_returndate.date.centuries);
+	char _outChar[20];
+	snprintf(_outChar, 10, "%d", _returndate.date.centuries);
+	string c(_outChar);
 	_outdate.append(c);
 	//_outdate.append(datepiece);
 	//_itoa(_returndate.date.years,datepiece,buffSize);
 	if (_returndate.date.years < 10) _outdate.append("0");
-	string y = to_string(_returndate.date.years);
+	//string y = to_string(_returndate.date.years);
+	snprintf(_outChar, 10, "%d", _returndate.date.years);
+	string y(_outChar);
 	_outdate.append(y);
 	//_outdate.append(datepiece);
 	//_itoa(_returndate.date.months,datepiece,buffSize);
 	if (_returndate.date.months < 10) _outdate.append("0");
-	string m = to_string(_returndate.date.months);
+	//string m = to_string(_returndate.date.months);
+	snprintf(_outChar, 10, "%d", _returndate.date.months);
+	string m(_outChar);
 	_outdate.append(m);
 	//_outdate.append(datepiece);
 	//_itoa(_returndate.date.days,datepiece,buffSize);
 	if (_returndate.date.days < 10) _outdate.append("0");
 	//_outdate.append(datepiece);
-	string d = to_string(_returndate.date.days);
+	//string d = to_string(_returndate.date.days);
+	snprintf(_outChar, 10, "%d", _returndate.date.days);
+	string d(_outChar);
 	_outdate.append(d);
 
 	return _outdate;
@@ -694,22 +715,31 @@ string PatCalc::getMaturityDate()
 		_outdate.assign("0");
 	else
 		_outdate.assign("");
-	string c = to_string(_returndate.date.centuries);
+	//string c = to_string(_returndate.date.centuries);
+	char _outChar[20];
+	snprintf(_outChar, 10, "%d", _returndate.date.centuries);
+	string c(_outChar);
 	_outdate.append(c);
 	//_itoa(_returndate.date.years,datepiece,buffSize);
 	if (_returndate.date.years < 10) _outdate.append("0");
 	//_outdate.append(datepiece);
-	string y = to_string(_returndate.date.years);
+	//string y = to_string(_returndate.date.years);
+	snprintf(_outChar, 10, "%d", _returndate.date.years);
+	string y(_outChar);
 	_outdate.append(y);
 
 	//_itoa(_returndate.date.months,datepiece,buffSize);
 	if (_returndate.date.months < 10) _outdate.append("0");
-	string m = to_string(_returndate.date.months);
+	//string m = to_string(_returndate.date.months);
+	snprintf(_outChar, 10, "%d", _returndate.date.months);
+	string m(_outChar);
 	_outdate.append(m);
 	//_outdate.append(datepiece);
 	//_itoa(_returndate.date.days,datepiece,buffSize);
 	if (_returndate.date.days < 10) _outdate.append("0");
-	string d = to_string(_returndate.date.days);
+	//string d = to_string(_returndate.date.days);
+	snprintf(_outChar, 10, "%d", _returndate.date.days);
+	string d(_outChar);
 	_outdate.append(d);
 	//_outdate.append(datepiece);
 
