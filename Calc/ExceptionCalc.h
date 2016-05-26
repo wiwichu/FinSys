@@ -1,7 +1,7 @@
 // ExceptionCalc.h: interface for the ExceptionCalc class.
 //
 //////////////////////////////////////////////////////////////////////
-
+#pragma once
 #if !defined(AFX_EXCEPTIONCALC_H__7195AB83_F28C_11D5_905F_1C9BE9000000__INCLUDED_)
 #define AFX_EXCEPTIONCALC_H__7195AB83_F28C_11D5_905F_1C9BE9000000__INCLUDED_
 
@@ -16,7 +16,7 @@
 using namespace std;
 
 
-class CALC_API ExceptionCalc{
+class ExceptionCalc{
 public:
 	ExceptionCalc(string DefaultMsg = "Error in Calculator.") 
 		: ErrorMsg(DefaultMsg) {};

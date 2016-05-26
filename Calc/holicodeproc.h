@@ -1,4 +1,4 @@
-
+#pragma once
 #ifndef __holicodeproc_H
 #if defined (BUILDING_YOUR_DLL)
 	#define _EX_IN_CLASS __export
@@ -31,7 +31,7 @@
 //#include "iodec.h"
 
 //
-class CALC_API _EX_IN_CLASS cholicodeproc : virtual public _errtext
+class cholicodeproc : virtual public _errtext
 {
 
 
