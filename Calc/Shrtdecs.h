@@ -1,3 +1,4 @@
+#pragma once
 #ifndef __shrtdecs_H
 #define __shrtdecs_H
 #ifndef __datedec_H

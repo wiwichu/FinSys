@@ -152,5 +152,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="holidaysmap.h">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="inseventmap.h">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

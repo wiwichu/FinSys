@@ -1,3 +1,4 @@
+#pragma once
 #if defined (WIN32)
 	#define _HUGE_
 #else
@@ -566,7 +567,7 @@ public:
 				constant date_last_day_in_month.}*/
 		event_sched;
 
-  #include "holidays.map"
+  #include "holidaysmap.h"
 
   unsigned long GetMonth(int name_number, char name_parm[month_names_length]);
   unsigned long CheckMonth(int name_number);

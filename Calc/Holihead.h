@@ -1,4 +1,4 @@
-
+#pragma once
 #ifndef __Holidays_H
 #if defined (BUILDING_YOUR_DLL)
 	#define _EX_IN_CLASS __export
@@ -62,7 +62,7 @@ const int designatetotal = 2;
 const int designatelength = 4;
 const int MAXHOLIRECS = 5;
 //
-class CALC_API _EX_IN_CLASS holidays_class : virtual public Date_Funcs, virtual public _errtext
+class holidays_class : virtual public Date_Funcs, virtual public _errtext
 {
 
 
