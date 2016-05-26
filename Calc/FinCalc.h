@@ -1,13 +1,14 @@
 // FinCalc.h: interface for the FinCalc class.
 //
 //////////////////////////////////////////////////////////////////////
+#pragma once
 
 #if !defined(AFX_FINCALC_H__A88BA963_EBE3_11D5_9053_00105A1E6A31__INCLUDED_)
 #define AFX_FINCALC_H__A88BA963_EBE3_11D5_9053_00105A1E6A31__INCLUDED_
 
-#if _MSC_VER > 1000
-#pragma once
-#endif // _MSC_VER > 1000
+//#if _MSC_VER > 1000
+//#pragma once
+//#endif // _MSC_VER > 1000
 
 #include "stdafx.h"
 #include "Calc.h"
@@ -17,7 +18,7 @@
 
 using namespace std;
 
-class CALC_API FinCalc  
+class FinCalc  
 {
 public:
 	static enum _WEEKDAY {	_WEEKDAYNOTSET=0,_MONDAY,_TUESDAY,_WEDNESDAY,_THURSDAY,

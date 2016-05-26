@@ -1,3 +1,4 @@
+#pragma once
 #ifndef __intdecs_H
 #ifndef _ANSIC
 #define _INTCALCS Int_Calcs::
@@ -23,7 +24,7 @@ const	char    int_no_redemp_adj = 1;
 
 #ifndef _ANSIC
 
-class CALC_API Int_Calcs: public Instrument
+class Int_Calcs: public Instrument
 	{
 
 public:

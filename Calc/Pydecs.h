@@ -16,7 +16,7 @@
 #include "instr.h"
 #endif
 #ifndef __insevent_MAP
-#include "insevent.map"
+#include "inseventmap.h"
 #endif
 #ifndef __shrtdecs_H
 #include "shrtdecs.h"
@@ -133,7 +133,7 @@ char 	*const  yield_meth_names[py_last_yield_meth] =
 			"True Yield",
 			yield_MBS_meth_name};
 #ifndef _ANSIC
-class CALC_API Py_Funcs : public Int_Calcs {
+class Py_Funcs : public Int_Calcs {
 
 public:
 #endif

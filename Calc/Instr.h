@@ -1,3 +1,4 @@
+#pragma once
 #ifdef _ANSIC
 #define _INSTRUMENT
 #else
@@ -7,7 +8,6 @@
 #include "datedec.h"
 #include "shrtdecs.h"
 //#include "holihead.h"
-#include "datedec.h"
 /*
 #ifndef __intdecs_H
 #include <intdecs.h>
@@ -123,7 +123,7 @@ const	int	insevent_event_len	= 1;	/*{ insevent_event_len contains the length in 
 
 #ifndef _ANSIC
 
-class CALC_API Instrument: public Inst_Event
+class Instrument: public Inst_Event
 	{
 
 public:
