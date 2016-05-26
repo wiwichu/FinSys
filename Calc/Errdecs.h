@@ -1,3 +1,4 @@
+#pragma once
 #include "calc.h"
 #ifndef __errdecs_H
 #if defined (WIN32)
@@ -254,16 +255,16 @@ const 	unsigned long	return_err_inv_scr_meth = 20001;
 const 	unsigned long	return_err_db_rec_nf = 30001;
 /*{ return_err_db_rec_nf means record not found.}*/
 
-class CALC_API _errtext
+class _errtext
 {
 public:
 
 
-void errproc	(unsigned long,
-		char [],
-		char [],
-		char [],
-		char []);
+//void errproc	(unsigned long,
+//		char [],
+//		char [],
+//		char [],
+//		char []);
 
 /*{errproc accepts an error code, and the name of the calling module. It
 processes the error, aborting processing if necessary, displaying the message

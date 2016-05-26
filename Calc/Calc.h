@@ -1,3 +1,4 @@
+#pragma once
 #ifndef _CALC_H
 #define _CALC_H
 // The following ifdef block is the standard way of creating macros which make exporting 

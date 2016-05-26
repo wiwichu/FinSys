@@ -1,3 +1,4 @@
+#pragma once
 #ifndef __insevent_MAP
 #define __insevent_MAP
 #ifdef _ANSIC
@@ -41,7 +42,7 @@ typedef struct  insevent_key_0{
 		insevent_key_0;
 */
 #ifndef _ANSIC
-class CALC_API Inst_Event : public holidays_class {
+class Inst_Event : public holidays_class {
 
 public:
 #endif

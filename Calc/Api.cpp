@@ -447,7 +447,7 @@ int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_
 	{
 		return result;
 	}
-	if (instrument.maturityDate == null)
+	if ((instrument.maturityDate == 0) || instrument.maturityDate->day == noValue)
 	{
 		instrument.maturityDate = new DateStruct(tmpDate);
 	}
@@ -462,7 +462,7 @@ int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_
 	{
 		return result;
 	}
-	if (instrument.issueDate == null)
+	if ((instrument.issueDate == 0) ||instrument.issueDate->day == noValue)
 	{
 		instrument.issueDate = new DateStruct(tmpDate);
 	}
@@ -477,7 +477,7 @@ int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_
 	{
 		return result;
 	}
-	if (instrument.firstPayDate == null)
+	if ((instrument.firstPayDate == 0) || instrument.firstPayDate->day == noValue)
 	{
 		instrument.firstPayDate = new DateStruct(tmpDate);
 	}
@@ -493,7 +493,7 @@ int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_
 	{
 		return result;
 	}
-	if (instrument.nextToLastPayDate == null)
+	if ((instrument.nextToLastPayDate == 0) || instrument.nextToLastPayDate->day == noValue)
 	{
 		instrument.nextToLastPayDate = new DateStruct(tmpDate);
 	}
@@ -536,7 +536,7 @@ int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_
 	{
 		return result;
 	}
-	if (calculations.previousPayDate == null)
+	if (calculations.previousPayDate == 0 || calculations.previousPayDate->day == noValue)
 	{
 		calculations.previousPayDate = new DateStruct(tmpDate);
 	}
@@ -551,7 +551,7 @@ int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_
 	{
 		return result;
 	}
-	if (calculations.nextPayDate == null)
+	if ((calculations.nextPayDate == 0) || calculations.nextPayDate->day == noValue)
 	{
 		calculations.nextPayDate = new DateStruct(tmpDate);
 	}
@@ -1093,7 +1093,7 @@ int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &ca
 		return result;
 	}
 
-	if (instrument.issueDate != null)
+	if ((instrument.issueDate != 0) && instrument.issueDate->day != noValue)
 	{
 		Date_Funcs::date_union issDate;
 		issDate.date.centuries = instrument.issueDate->year / 100;
@@ -1106,7 +1106,7 @@ int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &ca
 			return result;
 		}
 	}
-	if (instrument.firstPayDate != null)
+	if ((instrument.firstPayDate != 0) && instrument.firstPayDate->day != noValue)
 	{
 		Date_Funcs::date_union fpdDate;
 		fpdDate.date.centuries = instrument.firstPayDate->year / 100;
@@ -1133,7 +1133,7 @@ int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &ca
 			return result;
 		}
 	}
-	if (instrument.nextToLastPayDate != null)
+	if ((instrument.nextToLastPayDate != 0) && instrument.nextToLastPayDate->day != noValue)
 	{
 		Date_Funcs::date_union ntlDate;
 		ntlDate.date.centuries = instrument.nextToLastPayDate->year / 100;
@@ -1300,11 +1300,14 @@ int  USTBillCalcFromPrice(DateStruct &valueDate, DateStruct &maturityDate,
 	InstrumentStruct instrument; 
 	CalculationsStruct calculations;
 	instrument.intDayCount = noValue;
-	instrument.firstPayDate = null;
+	instrument.firstPayDate = new DateStruct();
+	instrument.firstPayDate->day = noValue;
 	instrument.interestRate = 0;
 	instrument.intPayFreq = noValue;
-	instrument.issueDate = null;
-	instrument.nextToLastPayDate = null;
+	instrument.issueDate = new DateStruct();
+	instrument.issueDate->day = noValue;
+	instrument.nextToLastPayDate = new DateStruct();
+	instrument.nextToLastPayDate->day = noValue;
 	instrument.maturityDate = new DateStruct();
 	instrument.maturityDate->day = maturityDate.day;
 	instrument.maturityDate->month = maturityDate.month;
@@ -1316,8 +1319,10 @@ int  USTBillCalcFromPrice(DateStruct &valueDate, DateStruct &maturityDate,
 	instrument.instrumentClass = instr_usdsc_class;
 	instrument.holidayAdjust = event_sched_same_holiday_adj;
 	calculations.calculatePrice = py_yield_from_price_calc_what;
-	calculations.previousPayDate = null;
-	calculations.nextPayDate = null;
+	calculations.previousPayDate = new DateStruct();
+	calculations.previousPayDate->day = noValue;
+	calculations.nextPayDate = new DateStruct();
+	calculations.nextPayDate->day = noValue;
 	calculations.priceIn = price;
 	calculations.yieldDayCount = noValue;
 	calculations.yieldFreq = noValue;
@@ -1404,11 +1409,14 @@ int  USTBillCalcFromPriceWithCashFlows(DateStruct &valueDate, DateStruct &maturi
 	InstrumentStruct instrument;
 	CalculationsStruct calculations;
 	instrument.intDayCount = noValue;
-	instrument.firstPayDate = null;
+	instrument.firstPayDate = new DateStruct();
+	instrument.firstPayDate->day = noValue;
 	instrument.interestRate = 0;
 	instrument.intPayFreq = noValue;
-	instrument.issueDate = null;
-	instrument.nextToLastPayDate = null;
+	instrument.issueDate = new DateStruct();
+	instrument.issueDate->day = noValue;
+	instrument.nextToLastPayDate = new DateStruct();
+	instrument.nextToLastPayDate->day = noValue;
 	instrument.maturityDate = new DateStruct();
 	instrument.maturityDate->day = maturityDate.day;
 	instrument.maturityDate->month = maturityDate.month;
@@ -1420,8 +1428,10 @@ int  USTBillCalcFromPriceWithCashFlows(DateStruct &valueDate, DateStruct &maturi
 	instrument.instrumentClass = instr_usdsc_class;
 	instrument.holidayAdjust = event_sched_same_holiday_adj;
 	calculations.calculatePrice = py_yield_from_price_calc_what;
-	calculations.previousPayDate = null;
-	calculations.nextPayDate = null;
+	calculations.previousPayDate = new DateStruct();
+	calculations.previousPayDate->day = noValue;
+	calculations.nextPayDate = new DateStruct();
+	calculations.nextPayDate->day = noValue;
 	calculations.priceIn = price;
 	calculations.yieldDayCount = noValue;
 	calculations.yieldFreq = noValue;
@@ -1507,11 +1517,14 @@ int  USTBillCalcFromPriceWithCashFlows(DateStruct &valueDate, DateStruct &maturi
 	InstrumentStruct instrument;
 	CalculationsStruct calculations;
 	instrument.intDayCount = noValue;
-	instrument.firstPayDate = null;
+	instrument.firstPayDate = new DateStruct();
+	instrument.firstPayDate->day = noValue;
 	instrument.interestRate = 0;
 	instrument.intPayFreq = noValue;
-	instrument.issueDate = null;
-	instrument.nextToLastPayDate = null;
+	instrument.issueDate = new DateStruct();
+	instrument.issueDate->day = noValue;
+	instrument.nextToLastPayDate = new DateStruct();
+	instrument.nextToLastPayDate->day = noValue;
 	instrument.maturityDate = new DateStruct();
 	instrument.maturityDate->day = maturityDate.day;
 	instrument.maturityDate->month = maturityDate.month;
@@ -1523,8 +1536,10 @@ int  USTBillCalcFromPriceWithCashFlows(DateStruct &valueDate, DateStruct &maturi
 	instrument.instrumentClass = instr_usdsc_class;
 	instrument.holidayAdjust = event_sched_same_holiday_adj;
 	calculations.calculatePrice = py_yield_from_price_calc_what;
-	calculations.previousPayDate = null;
-	calculations.nextPayDate = null;
+	calculations.previousPayDate = new DateStruct();
+	calculations.previousPayDate->day = noValue;
+	calculations.nextPayDate = new DateStruct();
+	calculations.nextPayDate->day = noValue;
 	calculations.yieldIn = beYield;
 	calculations.yieldDayCount = noValue;
 	calculations.yieldFreq = noValue;
@@ -1617,11 +1632,14 @@ int  USTBillCalcFromDiscount(DateStruct &valueDate, DateStruct &maturityDate,
 	InstrumentStruct instrument;
 	CalculationsStruct calculations;
 	instrument.intDayCount = noValue;
-	instrument.firstPayDate = null;
+	instrument.firstPayDate = new DateStruct();
+	instrument.firstPayDate->day = noValue;
 	instrument.interestRate = 0;
 	instrument.intPayFreq = noValue;
-	instrument.issueDate = null;
-	instrument.nextToLastPayDate = null;
+	instrument.issueDate = new DateStruct();
+	instrument.issueDate->day = noValue;
+	instrument.nextToLastPayDate = new DateStruct();
+	instrument.nextToLastPayDate->day = noValue;
 	instrument.maturityDate = new DateStruct();
 	instrument.maturityDate->day = maturityDate.day;
 	instrument.maturityDate->month = maturityDate.month;
@@ -1633,8 +1651,10 @@ int  USTBillCalcFromDiscount(DateStruct &valueDate, DateStruct &maturityDate,
 	instrument.instrumentClass = instr_usdsc_class;
 	instrument.holidayAdjust = event_sched_same_holiday_adj;
 	calculations.calculatePrice = py_yield_from_price_calc_what;
-	calculations.previousPayDate = null;
-	calculations.nextPayDate = null;
+	calculations.previousPayDate = new DateStruct();
+	calculations.previousPayDate->day = noValue;
+	calculations.nextPayDate = new DateStruct();
+	calculations.nextPayDate->day = noValue;
 	calculations.yieldIn = discount;
 	calculations.yieldDayCount = noValue;
 	calculations.yieldFreq = noValue;
@@ -1725,11 +1745,14 @@ int  USTBillCalcFromMMYield(DateStruct &valueDate, DateStruct &maturityDate,
 	InstrumentStruct instrument;
 	CalculationsStruct calculations;
 	instrument.intDayCount = noValue;
-	instrument.firstPayDate = null;
+	instrument.firstPayDate = new DateStruct();
+	instrument.firstPayDate->day = noValue;
 	instrument.interestRate = 0;
 	instrument.intPayFreq = noValue;
-	instrument.issueDate = null;
-	instrument.nextToLastPayDate = null;
+	instrument.issueDate = new DateStruct();
+	instrument.issueDate->day = noValue;
+	instrument.nextToLastPayDate = new DateStruct();
+	instrument.nextToLastPayDate->day = noValue;
 	instrument.maturityDate = new DateStruct();
 	instrument.maturityDate->day = maturityDate.day;
 	instrument.maturityDate->month = maturityDate.month;
@@ -1741,8 +1764,10 @@ int  USTBillCalcFromMMYield(DateStruct &valueDate, DateStruct &maturityDate,
 	instrument.instrumentClass = instr_usdsc_class;
 	instrument.holidayAdjust = event_sched_same_holiday_adj;
 	calculations.calculatePrice = py_yield_from_price_calc_what;
-	calculations.previousPayDate = null;
-	calculations.nextPayDate = null;
+	calculations.previousPayDate = new DateStruct();
+	calculations.previousPayDate->day = noValue;
+	calculations.nextPayDate = new DateStruct();
+	calculations.nextPayDate->day = noValue;
 	calculations.yieldIn = mmYield;
 	calculations.yieldDayCount = noValue;
 	calculations.yieldFreq = noValue;
@@ -1861,7 +1886,7 @@ int  calculate(InstrumentStruct &instrument, CalculationsStruct &calculations, D
 		return result;
 	}
 
-	if (instrument.issueDate != null)
+	if ((instrument.issueDate != 0) && instrument.issueDate->day != noValue)
 	{
 		Date_Funcs::date_union issDate;
 		issDate.date.centuries = instrument.issueDate->year / 100;
@@ -1874,7 +1899,7 @@ int  calculate(InstrumentStruct &instrument, CalculationsStruct &calculations, D
 			return result;
 		}
 	}
-	if (instrument.firstPayDate != null)
+	if ((instrument.firstPayDate != 0) && instrument.firstPayDate->day != noValue)
 	{
 		Date_Funcs::date_union fpdDate;
 		fpdDate.date.centuries = instrument.firstPayDate->year / 100;
@@ -1901,7 +1926,7 @@ int  calculate(InstrumentStruct &instrument, CalculationsStruct &calculations, D
 			return result;
 		}
 	}
-	if (instrument.nextToLastPayDate != null)
+	if ((instrument.nextToLastPayDate!=0) && instrument.nextToLastPayDate->day != noValue)
 	{
 		Date_Funcs::date_union ntlDate;
 		ntlDate.date.centuries = instrument.nextToLastPayDate->year / 100;

@@ -34,6 +34,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Api.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Calc.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Datedec.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Envir.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Errdecs.h" />
@@ -42,6 +43,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\FRADECS.H" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Gendec.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\holicodeproc.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\holidaysmap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Holihead.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Insclass.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Insevent.h" />
