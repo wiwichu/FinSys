@@ -1,3 +1,4 @@
+#pragma once
 //	#define _YOURCLASS _export
 
 //
@@ -385,7 +386,7 @@ const	int	date_str_size	= 11;
 const	int	excoup_name_length = excoup_names_len;
 const	int	tradeflat_name_length = tradeflat_names_len;
 
-class CALC_API _EX_IN_CLASS _FAR_CLASS Py_Front 
+class _FAR_CLASS Py_Front 
 :public Py_Funcs, public cholicodeproc 
 //, virtual public holidays_class
 //,virtual public Instrument, 

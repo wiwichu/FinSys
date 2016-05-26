@@ -3263,10 +3263,10 @@ unsigned long Date_Funcs::tenor	(date_union start_date,
 			}
 			if (cal_type == date_30US_cal)
 			{
-				if (start_date.date.months==2 & (month_end(start_date) == start_date.date.days))
+				if ((start_date.date.months==2) & (month_end(start_date) == start_date.date.days))
 				{
 					start_date.date.days = 30;
-					if (end_date.date.months == 2 & (month_end(end_date) == end_date.date.days))
+					if ((end_date.date.months == 2) & (month_end(end_date) == end_date.date.days))
 					{
 						end_date.date.days = 30;
 					}
@@ -3284,11 +3284,11 @@ unsigned long Date_Funcs::tenor	(date_union start_date,
 				//{
 				//	end_date.date.days = 30;
 				//}
-				if (start_date.date.months == 2 & (month_end(start_date) == start_date.date.days))
+				if ((start_date.date.months == 2) & (month_end(start_date) == start_date.date.days))
 				{
 					start_date.date.days = 30;
 				}
-				if (end_date.date.months == 2 & (month_end(end_date) == end_date.date.days))
+				if ((end_date.date.months == 2) & (month_end(end_date) == end_date.date.days))
 				{
 					end_date.date.days = 30;
 				}

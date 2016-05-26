@@ -1,7 +1,5 @@
-#ifndef __holidays_MAP
-#ifndef __datedec_H
-#include <datedec.h>
-#endif
+#pragma once
+#include "datedec.h"
 
 /* {  The holiday file, holidays contains holidays corresponding to specific
 holiday codes and dates. It is also possible to define holiday rules for the
@@ -167,5 +165,3 @@ typedef struct	holi_inter
 			}
 
 		holi_inter;
-
-#endif

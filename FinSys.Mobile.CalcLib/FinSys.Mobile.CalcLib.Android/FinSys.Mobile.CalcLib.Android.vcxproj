@@ -35,9 +35,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{13a91e72-76d7-4ec7-92f8-2912fb69126e}</ProjectGuid>
+    <ProjectGuid>{2c952015-dfb0-4ee1-b9e4-552e341e9b7c}</ProjectGuid>
     <Keyword>Android</Keyword>
-    <RootNamespace>FinSys_Mobile_Calc</RootNamespace>
+    <RootNamespace>FinSys_Mobile_CalcLib</RootNamespace>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <ApplicationType>Android</ApplicationType>
     <ApplicationTypeRevision>1.0</ApplicationTypeRevision>
@@ -86,7 +86,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings" />
   <ImportGroup Label="Shared">
-    <Import Project="..\FinSys.Mobile.Calc.Shared\FinSys.Mobile.Calc.Shared.vcxitems" Label="Shared" />
+    <Import Project="..\FinSys.Mobile.CalcLib.Shared\FinSys.Mobile.CalcLib.Shared.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
@@ -109,7 +109,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalOptions>-D PLATFORM=0 -lm -v %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>-D PLATFORM=0 %(AdditionalOptions)</AdditionalOptions>
       <ExceptionHandling>Enabled</ExceptionHandling>
     </ClCompile>
     <Link>
@@ -141,12 +141,8 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalOptions>-D PLATFORM=0 -lm %(AdditionalOptions)</AdditionalOptions>
-      <ExceptionHandling>Enabled</ExceptionHandling>
+      <AdditionalOptions>-D PLATFORM=0 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
-    <Link>
-      <AdditionalOptions>-lm %(AdditionalOptions)</AdditionalOptions>
-    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
     <ClCompile>
@@ -159,7 +155,7 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FinSys.Mobile.Calc.Android.cpp" />
+    <ClCompile Include="FinSys.Mobile.CalcLib.Android.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
