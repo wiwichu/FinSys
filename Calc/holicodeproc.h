@@ -39,7 +39,7 @@ private:
 //	CDB * DB_local;
 //	CDB::DB_Handles localhandles;
 //	CDB::holiday_code_rec * holicodearray;
-	bool BOOL_return;
+	//bool BOOL_return;
 	unsigned long return_state;
 
 public:

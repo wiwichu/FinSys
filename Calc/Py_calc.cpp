@@ -1222,7 +1222,7 @@ unsigned long	_PYFUNCS py_days_in_year(long double *days_in_year,
 			break;
 		 }
 	  }
-py_days_in_year_end:
+//py_days_in_year_end:
 
 	return return_status;
 
@@ -1253,7 +1253,7 @@ unsigned long	_PYFUNCS py_days_sett_to_mat(long *days_sett_to_mat, date_union py
 	  }
 	}
 
-py_days_sett_to_mat_end:
+//py_days_sett_to_mat_end:
 
 	return return_status;
 
@@ -1311,7 +1311,7 @@ long double	disc_rate;		/*{ disc_rate is the discount rate.}*/
 
 	  }
 
-py_mmdisc_end:
+//py_mmdisc_end:
 	return return_status;
 }
 
@@ -1391,7 +1391,7 @@ long double years_to_mat;
 
 	  *pvbp = *pvbp/2;
 
-py_simp_end:
+//py_simp_end:
 	return return_status;
 }
 
@@ -1780,7 +1780,7 @@ date_union base_date;
 		  }
 
 
-py_part_pay_load_end:
+//py_part_pay_load_end:
 
 	return return_status;
 
@@ -2095,7 +2095,7 @@ long double part_pay_prime_factor;
 
 	}
 
-py_pv_part_pays_end:
+//py_pv_part_pays_end:
 
 	return return_status;
 
@@ -2414,7 +2414,7 @@ date_union next_coup;
   }
 
 
-func_end:
+//func_end:
 
   return return_status;
 

@@ -110,6 +110,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <ITunesArtwork Include="iTunesArtwork" />
     <ITunesArtwork Include="iTunesArtwork@2x" />
+    <None Include="libFinSys.Mobile.Calc.iOS.a" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,8 @@
 #ifndef __fradecs_H
 #define __fradecs_H
 #ifndef __datedec_H
-#include <datedec.h>
+#include "datedec.h"
+#include "shrtdecs.h"
 #endif
 
 const	unsigned char	fraterm_min = 1;
@@ -118,8 +119,8 @@ unsigned int	fraproc	(char action,
 	long double int_rate2,
 	long double *settlement,
 	long double nominal,
-	date_union *mat_date_parm,
-	date_union *sett_date_parm,
+	Date_Funcs::date_union *mat_date_parm,
+	Date_Funcs::date_union *sett_date_parm,
 	instr *instr_parm,
 	py_parms *pyparm,
 	fra_term fraterm,
@@ -186,8 +187,8 @@ unsigned int	fraproc	(char action,
 		insevent_struct forward_dates [], char holiday_code[3],
 		char interpolation_rule, char bid_ask_code);
 
-	unsigned long ratetabl(event_sched event_parm, insevent_struct sched_dates [],
-		date_union start_date, date_union end_date,
+	unsigned long ratetabl(Date_Funcs::event_sched event_parm, insevent_struct sched_dates [],
+		Date_Funcs::date_union start_date, Date_Funcs::date_union end_date,
 		unsigned int holi_chan, holidays_struct holi_parm [],
 		char pay_type, char rate_code, char rl_day_count,
 		insevent_struct forward_dates [], char holiday_code[3],

@@ -1205,7 +1205,7 @@ redemp_proc:
 
 	}
 
-intcalc_end:
+//intcalc_end:
 
 	return return_status;
 }
@@ -1698,7 +1698,7 @@ unsigned long _INTCALCS per_calc (instr *in_instr, unsigned int *holi_chan, unsi
 
 			 } while ((cmp_curr_calc_end < 0) && (cmp_curr_quas_nxt < 0));
 
-per_calc_end:
+//per_calc_end:
 
 	return return_status;
 
@@ -1839,7 +1839,7 @@ return return_status;
 	  *pfactor = 1;
 	}
 */
-get_pfactor_end:
+//get_pfactor_end:
 	return return_status;
 }
 
@@ -2046,7 +2046,7 @@ unsigned long   _INTCALCS get_rate (instr *in_instr,
 			break;
 	};
 
-get_rate_end:
+//get_rate_end:
 	return return_status;
 }
 
@@ -2243,7 +2243,7 @@ unsigned long	_INTCALCS excoup(instr in_instr
 
 	  }
 	}
-ex_coup_end:
+//ex_coup_end:
 	return return_status;
 
 }
@@ -3319,7 +3319,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 	  }
 	}
 
-n_p_pay_end:
+//n_p_pay_end:
 
 	return return_status;
 }
@@ -3430,7 +3430,7 @@ unsigned long	_INTCALCS findfut(instr in_instr
 
 	  }
 
-func_end:
+//func_end:
 
 	return return_status;
 
@@ -3755,7 +3755,7 @@ unsigned long   _INTCALCS redemp_adj (instr in_instr,
 
 	      }
 
-func_end:
+//func_end:
 
 	return return_status;
 }
@@ -3986,7 +3986,7 @@ unsigned long _INTCALCS schedgen(event_sched event_parm
 
 	sched_dates[0].event_date.date.centuries = date_count - 1;
 
-func_end:
+//func_end:
 
 	return return_status;
 }
@@ -4071,7 +4071,7 @@ unsigned long _INTCALCS eventchk (event_sched event_parm)
 	event_sched.month_day;
 */
 
-func_end:
+//func_end:
 
 	return return_status;
 

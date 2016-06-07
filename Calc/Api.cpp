@@ -616,8 +616,8 @@ int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_
 		return result;
 	}
 	calculations.interestDays = longHold;
-	char charArg = 0;
 	int intArg = 0;
+	//char charArg = 0;
 	//result = pyfront.getclassnumber(&charArg);
 	//if (result != return_success)
 	//{
@@ -1236,7 +1236,7 @@ int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &ca
 	vector<Instrument::pay_struc>::iterator _it_vector_pay_struc;
 	CashFlowStruct *cf = new CashFlowStruct[max_coups];
 	cashFlowsStruct.cashFlows = cf;
-	int year = 2000;
+	//int year = 2000;
 	int i = 0;
 	for (_it_vector_pay_struc = cashFlows.begin();
 	_it_vector_pay_struc < cashFlows.end();
@@ -2073,7 +2073,7 @@ int getInstrumentDefaults(InstrumentStruct &instrument)
 		return result;
 	}
 	instrument.intPayFreq = intArg;
-	Date_Funcs::date_union dateArg;
+	//Date_Funcs::date_union dateArg;
 	return result;
 }
 	int  getCashFlows(CashFlowsStruct &cashFlowsStruct, int adjustRule)
