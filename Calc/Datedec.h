@@ -1,12 +1,12 @@
 #pragma once
-#if defined (WIN32)
-	#define _HUGE_
-#else
-	#define __huge
-#endif
+//#if defined (WIN32)
+//	#define _HUGE_
+//#else
+//	#define __huge
+//#endif
 
-#ifndef __datedec_H
-#define __datedec_H
+//#ifndef __datedec_H
+//#define __datedec_H
 //#ifdef _ANSIC
 //#define _DATEFUNCS
 //#else
@@ -14,9 +14,14 @@
 //#endif
 
 #include "stdafx.h"
-#include "calc.h"
+#include "Calc.h"
+//#ifdef __APPLE__
+//#include <string.h>
+//#include <set.h>
+//#else
 #include <string>
 #include <set>
+//#endif
 #include "wordsymb.h"
 
 //#include "iokeys.h"
@@ -798,7 +803,7 @@ public:
 	 Called by:	<[forecast]
 
   }*/
-
+  //struct 	holidays_struct;
 
   unsigned long	holiload	(holidays_struct [], char mem_alloc);
 
@@ -1011,4 +1016,4 @@ private:
 
 };
 //#endif
-#endif
+//#endif

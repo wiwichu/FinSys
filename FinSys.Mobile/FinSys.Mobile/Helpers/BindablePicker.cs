@@ -15,11 +15,14 @@ namespace FinSys.Mobile.Helpers
 
         //Bindable property for the items source
         public static readonly BindableProperty ItemsSourceProperty =
-            BindableProperty.Create<BindablePicker, IEnumerable>(p => p.ItemsSource, null, propertyChanged: OnItemsSourcePropertyChanged);
+           // BindableProperty.Create<BindablePicker, IEnumerable>(p => p.ItemsSource, null, propertyChanged: OnItemsSourcePropertyChanged);
+           BindableProperty.Create(nameof(ItemsSource),typeof(IEnumerable),typeof(BindablePicker),null, propertyChanged: OnItemsSourcePropertyChanged);
+
 
         //Bindable property for the selected item
         public static readonly BindableProperty SelectedItemProperty =
-            BindableProperty.Create<BindablePicker, object>(p => p.SelectedItem, null, BindingMode.TwoWay, propertyChanged: OnSelectedItemPropertyChanged);
+           //BindableProperty.Create<BindablePicker, object>(p => p.SelectedItem, null, BindingMode.TwoWay, propertyChanged: OnSelectedItemPropertyChanged);
+           BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(BindablePicker), null, propertyChanged: OnSelectedItemPropertyChanged);
 
         #endregion
 
@@ -59,7 +62,8 @@ namespace FinSys.Mobile.Helpers
         /// <param name="bindable">The bindable.</param>
         /// <param name="value">The value.</param>
         /// <param name="newValue">The new value.</param>
-        private static void OnItemsSourcePropertyChanged(BindableObject bindable, IEnumerable value, IEnumerable newValue)
+        private static void OnItemsSourcePropertyChanged(BindableObject bindable, object oldValue, object newValue)
+//        private static void OnItemsSourcePropertyChanged(BindableObject bindable, IEnumerable value, IEnumerable newValue)
         {
             var picker = (BindablePicker)bindable;
             var notifyCollection = newValue as INotifyCollectionChanged;
@@ -90,12 +94,13 @@ namespace FinSys.Mobile.Helpers
                     }
                 };
             }
-            if (newValue == null)
+            IEnumerable ienumNewValue = newValue as IEnumerable;
+            if (ienumNewValue == null)
                 return;
 
             picker.Items.Clear();
 
-            foreach (var item in newValue)
+            foreach (var item in ienumNewValue)
                 picker.Items.Add((item ?? "").ToString());
         }
 

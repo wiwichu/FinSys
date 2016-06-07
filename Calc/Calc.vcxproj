@@ -168,7 +168,6 @@ echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK</Command>
     <ClInclude Include="Errdecs.h" />
     <ClInclude Include="ExceptionCalc.h" />
     <ClInclude Include="FinCalc.h" />
-    <ClInclude Include="FRADECS.H" />
     <ClInclude Include="Gendec.h" />
     <ClInclude Include="holicodeproc.h" />
     <ClInclude Include="Holihead.h" />
@@ -178,7 +177,6 @@ echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK</Command>
     <ClInclude Include="Intdecs.h" />
     <ClInclude Include="Locals.h" />
     <ClInclude Include="PatCalc.h" />
-    <ClInclude Include="POSPROC.H" />
     <ClInclude Include="Pydecs.h" />
     <ClInclude Include="Pyfront.h" />
     <ClInclude Include="RateCurve.h" />

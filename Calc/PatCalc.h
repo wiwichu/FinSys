@@ -13,7 +13,7 @@
 #include "Pyfront.h"
 #include "Datedec.h"
 
-class CALC_API PatCalc : public FinCalc  
+class PatCalc : public FinCalc  
 {
 public:
 	PatCalc();
