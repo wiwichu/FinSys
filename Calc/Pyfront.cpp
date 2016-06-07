@@ -4370,7 +4370,7 @@ size_t num_bytes = 0;
 	}
 
 
-func_end:
+//func_end:
 
   return return_state;
 }

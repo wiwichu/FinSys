@@ -16,7 +16,7 @@
 #endif
 
 #include <stdlib.h>
-#include <malloc.h>
+//#include <malloc.h>
 #include "datedec.h"
 #include "scrdec.h"
 //#include "convutil.h"
@@ -165,7 +165,7 @@ const char BootTextSize =
 
 #ifndef _ANSIC
 
-class CALC_API CRateCurve  : public Py_Funcs
+class CRateCurve  : public Py_Funcs
 {
 public:
 
@@ -193,7 +193,7 @@ public:
 
 		date_union date; /*{Date for which the factor is effective.}*/
 		long double factor; /*{Factor in effect on the date.}*/
-	};
+	} BootResult;
 
 	char *RateInstrText[RateInstrTextSize]; 
 	char *BootText[BootTextSize]; 
@@ -204,7 +204,7 @@ public:
 
 		date_union date; /*{Date for which the result is valid.}*/
 		long double result; /*{Result for the date.}*/
-	};
+	} RateCurve;
 
 	unsigned long InitTypeNames(char parm_list [rc_type_count] [rc_type_name_size]);
 	unsigned long InitSourceNames(char parm_list [rc_source_count] [rc_source_name_size]);

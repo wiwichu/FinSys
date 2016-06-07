@@ -18,6 +18,7 @@ holi_name
 
 /*{ holiday_rule is a constant indicating that this record contains not
 a specific date but rules for determining a holiday. }*/
+//struct event_sched;
 
 typedef struct 	holidays_struct	{
 
@@ -26,7 +27,7 @@ typedef struct 	holidays_struct	{
 			/*{ holi_code is an identifier which links to a class
 			of holidays. It can be up to 3 characters in length. }*/
 
-			event_sched 	holi_date;
+			Date_Funcs::event_sched 	holi_date;
 
 			/*{ holi_date contains the date of the holiday.
 			If the record indicates a holiday rule, and not
@@ -154,7 +155,7 @@ typedef struct	holi_inter
 
 			}*/
 
-			date_struc	base_date;
+			Date_Funcs::date_struc	base_date;
 
 			/*{ base_date depends on rule_spec. I rule_spec = holi_spec, then
 			base_date is the date specified, otherwise it is used as a term
