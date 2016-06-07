@@ -1,7 +1,7 @@
 #ifndef __insevent_MAP
 #define __insevent_MAP
 #ifndef __datedec_H
-#include <datedec.h>
+#include "datedec.h"
 #endif
 /* {  The instrument event file, insevent describes events in instruments.
 The fields are described below. Before the field descriptins, constants are defined.
@@ -49,6 +49,7 @@ typedef struct  insevent_key_0{
 
 		insevent_key_0;
 */
+
 typedef struct 	insevent_struct{
 
 			char 		instr_code[14];
@@ -62,15 +63,15 @@ typedef struct 	insevent_struct{
 			/*{Event indicates what type of event it is. See
 			the symbols insevent_xxxxx_event for choices.}*/
 
-			date_union 	eff_end_date;
+			Date_Funcs::date_union 	eff_end_date;
 
 			/*{ eff_end_date is the effective end date of the event. }*/
 
-			date_union 	eff_start_date;
+			Date_Funcs::date_union 	eff_start_date;
 
 			/*{ eff_start_date is the effective start date of the event. }*/
 
-			date_union 	event_date;
+			Date_Funcs::date_union 	event_date;
 
 			/*{ event_date is the date the event takes place. }*/
 

@@ -43,7 +43,7 @@ const	char	instr_str_pay_sched	= 1; 	/*{ instr_str_pay_sched means
 						a straight schedule (regular
 						frequency) }*/
 /*
-const	char	instr_step_pay_sched	= 2; 	/*{ instr_step_pay_sched means
+const	char	instr_step_pay_sched	= 2; 	//{ instr_step_pay_sched means
 						a stepped schedule (irregular,
 						but known frequency) }*/
 
@@ -138,7 +138,7 @@ public:
 				long double pv_factor;
 				long double prime_factor;
 				unsigned int coup_num;
-				long double time_to_pay;};
+				long double time_to_pay;} redemps_struc;
   typedef struct	pay_struc	{char last_element;
 				date_union pay_date;
 				long double payment;
@@ -146,11 +146,11 @@ public:
 				long double prime_factor;
 				long double time_to_pay;
 				long double work_double;
-				};
+				} pay_struc;
   typedef struct	rate_struc	{ date_union rate_date;
 				date_union end_date;
 				long double rate;
-				};
+				} rate_struc;
 
 typedef struct 	instr	{
 

@@ -30,12 +30,12 @@ unsigned long	_PYFUNCS py_coup_load( char py_period_length, char *simp_comp_frac
 
 #include "locals.h"
 
-char adj_hold = 0;
+//char adj_hold = 0;
 
 int date_cmp = -1;
 int date_cmp2 = -1;
-int date_cmp_real = 0;
-int element_num = 0;
+//int date_cmp_real = 0;
+//int element_num = 0;
 int pay_array_size = 0;
 int num_per = 0;
 
@@ -611,7 +611,7 @@ date_union base_date;
 	 }
 	}
 	coup_count--;
-py_coup_load_end:
+//py_coup_load_end:
 
 	return return_status;
 }
@@ -698,7 +698,7 @@ if (return_status != return_success)
 	  }
 	}
 
-py_frac_per_end:
+//py_frac_per_end:
 	return return_status;
 }
 
@@ -808,7 +808,7 @@ date_union date_hold2;
 
 	  }
 
-py_simp_comp_frac_end:
+//py_simp_comp_frac_end:
 
 	return return_status;
 
@@ -836,21 +836,21 @@ unsigned long	_PYFUNCS py_pv_coups(char py_period_length, char simp_comp_frac,
 
 #include "locals.h"
 
-int issue_cmp = 0;
-int mat_cmp = 0;
+//int issue_cmp = 0;
+//int mat_cmp = 0;
 int date_cmp = -1;
-int prime_loop = 0;
+//int prime_loop = 0;
 int cmplast = 1;
 
 long double num_pers = 0;
 long double days_in_per = 0;
 long double temp_long_double = 0;
 long double yield_adj = 0;
-long double whole_per = 0;
-long double frac_per = 0;
+//long double whole_per = 0;
+//long double frac_per = 0;
 long double pv_this_coup = 0;
 long double last_prime_factor = 1;
-long double last_pv_factor = 0;
+//long double last_pv_factor = 0;
 long double comp_pay_ratio = 0;
 /*{ Define the  variables}*/
 
@@ -1379,8 +1379,8 @@ unsigned int comp_pay_int_ratio = 0;
 
 	  cycle_adj = this_cycle - extra_cycles;
 
-	  if ((cycle_adj >=0 ) &&
-			((cycle_adj % comp_pay_int_ratio) == 0) ||
+	  if (((cycle_adj >=0 ) &&
+			((cycle_adj % comp_pay_int_ratio) == 0)) ||
 			(pay_freq > *comp_freq))
 	  {
 		 pv_this_coup = pay_array_a[this_coup].payment/ *pv_factor;
@@ -1565,7 +1565,7 @@ unsigned int comp_pay_int_ratio = 0;
 
 	}
 
-py_pv_coups_end:
+//py_pv_coups_end:
 	return return_status;
 
 }

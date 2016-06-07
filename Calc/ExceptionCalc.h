@@ -2,12 +2,6 @@
 //
 //////////////////////////////////////////////////////////////////////
 #pragma once
-#if !defined(AFX_EXCEPTIONCALC_H__7195AB83_F28C_11D5_905F_1C9BE9000000__INCLUDED_)
-#define AFX_EXCEPTIONCALC_H__7195AB83_F28C_11D5_905F_1C9BE9000000__INCLUDED_
-
-#if _MSC_VER > 1000
-#pragma once
-#endif // _MSC_VER > 1000
 
 #include "stdafx.h"
 #include "Calc.h"
@@ -26,5 +20,3 @@ public:
 protected:
 	string ErrorMsg;
 };	
-
-#endif // !defined(AFX_EXCEPTIONCALC_H__7195AB83_F28C_11D5_905F_1C9BE9000000__INCLUDED_)

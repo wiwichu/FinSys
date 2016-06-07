@@ -1,53 +1,55 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <payload>
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.iOS\ARM\Debug\FinSys.Mobile.Calc.iOS.xcodeproj\project.pbxproj" changed="2016-05-26T14:10:09.5792339-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.iOS\ARM64\Debug\FinSys.Mobile.Calc.iOS.xcodeproj\project.pbxproj" changed="2016-06-04T13:00:51.6738945-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.iOS\ARM\Debug\FinSys.Mobile.Calc.iOS.xcodeproj\project.pbxproj" changed="2016-06-04T12:59:35.0107842-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.iOS\x86\Debug\FinSys.Mobile.Calc.iOS.xcodeproj\project.pbxproj" changed="2016-06-04T11:34:36.0834548-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\FinSys_Mobile_Calc.cpp" changed="2016-05-19T09:29:11.0495991-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.iOS\FinSys.Mobile.Calc.iOS.cpp" changed="2016-05-19T10:10:21.6550174-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\FinSys_Mobile_Calc.h" changed="2016-05-19T09:29:11.0531021-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\\FinSys_Mobile_Calc.h" changed="2016-05-19T09:29:11.0531021-04:00" />
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Api.cpp" changed="2016-05-26T14:08:43.9244238-04:00" />
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Coupload.cpp" changed="2016-05-22T13:51:12.3350998-04:00" />
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Datefunc.cpp" changed="2016-05-24T19:53:50.1921898-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Api.cpp" changed="2016-06-03T08:32:05.1045679-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Coupload.cpp" changed="2016-06-03T08:38:02.644431-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Datefunc.cpp" changed="2016-06-03T10:01:23.4415364-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Errtext.cpp" changed="2015-12-05T03:28:46.5310555-05:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\ExceptionCalc.cpp" changed="2016-05-20T14:50:36.7054549-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\FinCalc.cpp" changed="2016-03-11T12:26:05.3249037-05:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\holicodeproc.cpp" changed="2001-09-29T21:46:46-04:00" />
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\HOLIx.CPP" changed="2016-05-22T12:17:00.633539-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\HOLIx.CPP" changed="2016-06-03T09:57:54.9056764-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\insevent.cpp" changed="2001-09-29T21:55:38-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Instrument.cpp" changed="2016-03-11T12:26:05.3013787-05:00" />
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Intcalc.cpp" changed="2016-03-11T12:26:05.2768538-05:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Intcalc.cpp" changed="2016-06-03T09:01:10.0475568-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\PatCalc.cpp" changed="2016-05-22T13:25:34.8143235-04:00" />
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Pyfront.cpp" changed="2016-05-22T13:31:58.7636302-04:00" />
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Py_calc.cpp" changed="2016-03-14T14:10:11.6920275-04:00" />
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\RateCurve.cpp" changed="2016-05-22T13:46:00.3024055-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Pyfront.cpp" changed="2016-06-03T09:01:09.9309785-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Py_calc.cpp" changed="2016-06-03T09:01:09.902961-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\RateCurve.cpp" changed="2016-06-02T05:07:16.1265062-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Redmparr.cpp" changed="2001-09-29T20:26:26-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Api.h" changed="2016-05-26T12:03:48.9522783-04:00" />
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Calc.h" changed="2016-05-24T15:55:28.6006573-04:00" />
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Datedec.h" changed="2016-05-24T15:54:30.5884052-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Calc.h" changed="2016-06-02T04:56:13.7341367-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Datedec.h" changed="2016-06-03T08:08:23.3142303-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Envir.h" changed="1998-03-18T09:11:56-05:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Errdecs.h" changed="2016-05-24T07:04:05.675117-04:00" />
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\ExceptionCalc.h" changed="2016-05-25T08:10:19.2925306-04:00" />
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\FinCalc.h" changed="2016-05-25T15:02:42.3554588-04:00" />
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\FRADECS.H" changed="1995-04-08T15:46:52-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\ExceptionCalc.h" changed="2016-06-02T12:46:59.8766077-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\FinCalc.h" changed="2016-06-02T10:39:24.6295229-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Gendec.h" changed="2016-05-22T11:05:20.0349173-04:00" />
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\holicodeproc.h" changed="2016-05-24T19:55:48.1265112-04:00" />
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\holidaysmap.h" changed="2016-05-25T12:50:59.1706063-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\holicodeproc.h" changed="2016-06-03T09:27:09.4990272-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\holidaysmap.h" changed="2016-06-03T07:38:07.3707547-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Holihead.h" changed="2016-05-24T07:06:52.5693793-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Insclass.h" changed="2016-02-18T22:14:33.1131499-05:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Insevent.h" changed="2016-05-24T07:01:55.8563838-04:00" />
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Instr.h" changed="2016-05-24T17:56:15.27619-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\inseventmap.h" changed="2016-06-02T06:17:57.8100923-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Instr.h" changed="2016-06-03T08:30:49.972557-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Intdecs.h" changed="2016-05-24T19:54:35.540208-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Locals.h" changed="2001-09-21T21:35:50-04:00" />
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\PatCalc.h" changed="2002-11-10T18:06:02-05:00" />
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\POSPROC.H" changed="1995-04-08T15:46:52-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\PatCalc.h" changed="2016-06-02T04:52:26.1528919-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Pydecs.h" changed="2016-05-24T19:55:10.5291789-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Pyfront.h" changed="2016-05-24T19:56:27.2264566-04:00" />
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\RateCurve.h" changed="2016-01-03T12:04:00.6385972-05:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\RateCurve.h" changed="2016-06-03T09:01:10.1326135-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Scrdec.h" changed="2015-12-08T04:46:24.1748603-05:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Shrtdecs.h" changed="2016-05-24T17:30:06.6665591-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\StdAfx.h" changed="2016-05-22T11:02:37.8140928-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Wordsymb.h" changed="1998-03-09T15:06:32-05:00" />
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.iOS\x86\Debug\FinSys.Mobile.Calc.iOS.xcodeproj\project.pbxproj" changed="2016-05-23T22:26:26.7335606-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\FRADECS.H" changed="1995-04-08T15:46:52-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\POSPROC.H" changed="1995-04-08T15:46:52-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\HOLIDAYS.CPP" changed="2001-09-15T22:44:36-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\HOLIDAYS.H" changed="2001-09-23T10:09:58-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Calc.cpp" changed="2015-12-15T21:31:19.369897-05:00" />

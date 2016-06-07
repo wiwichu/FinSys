@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM">
@@ -131,6 +131,7 @@
       </PrecompiledHeaderFile>
       <PreprocessorDefinitions>__APPLE__;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>-D PLATFORM=1 %(AdditionalOptions)</AdditionalOptions>
+      <ExceptionHandling>Enabled</ExceptionHandling>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
@@ -149,6 +150,8 @@
       </PrecompiledHeaderFile>
       <PreprocessorDefinitions>__APPLE__;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>-D PLATFORM=1 %(AdditionalOptions)</AdditionalOptions>
+      <ObjCExceptionHandling>Disabled</ObjCExceptionHandling>
+      <ExceptionHandling>Enabled</ExceptionHandling>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
@@ -167,6 +170,8 @@
       </PrecompiledHeaderFile>
       <PreprocessorDefinitions>__APPLE__;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>-D PLATFORM=1 %(AdditionalOptions)</AdditionalOptions>
+      <ObjCExceptionHandling>Disabled</ObjCExceptionHandling>
+      <ExceptionHandling>Enabled</ExceptionHandling>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">

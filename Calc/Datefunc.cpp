@@ -4,6 +4,7 @@
 #include <stdlib.h>
 //#include "iodec.h"
 
+
 /*{adj_date adjusts a date according to the indicators passed.
 
 	Usage:  unsigned long 	adj_date(date_union *in_date,
@@ -66,7 +67,7 @@ unsigned long 	Date_Funcs::adj_date(date_union *date_parm,
 
 {
 	char *holiday_code = 0;
-	#include "locals.h"
+	unsigned long return_status = 0;
 
 	char	dummy_char = 0;
 	char	bus_day = adj_date_ind;		/*{ bus_day indicates whether the current date is a business day or not.}*/
@@ -474,8 +475,8 @@ unsigned long 	Date_Funcs::adj_date(date_union *date_parm,
 
 			/*{ Next do holiday adjustment, if required.}*/
 
-			if ((holiday_ind == adj_date_yes_hol) &&
-				((bus_day != adj_date_ind) &&
+			if (((holiday_ind == adj_date_yes_hol) &&
+				(bus_day != adj_date_ind) &&
 					(adj_date_ind == adj_date_non_to_bus)) ||
 				((bus_day == adj_date_ind) &&
 					(adj_date_ind == adj_date_bus_to_non)))
@@ -751,7 +752,7 @@ unsigned long   Date_Funcs::datechck	(date_union check_date1)
 
 {
 
-	#include "locals.h"
+	unsigned long return_status = 0;
 	date_union dummy_date1;
 
 //	strcpy(module_name,"datechck");
@@ -852,7 +853,7 @@ int  Date_Funcs::datecmp 	(const void * date1,
 
 {
 
-	#include "locals.h"
+	//unsigned long return_status = 0;
 
 int cmp_result = 0;
 
@@ -905,7 +906,7 @@ unsigned long 	Date_Funcs::dateconv(char date_format, char conv_dir,
 
 {
 
-#include "locals.h"
+unsigned long return_status = 0;
 
 char *const zero_char = "0";
 
@@ -917,14 +918,14 @@ char date_years[5];
 int days_hold = 0;
 int months_hold = 0;
 int years_hold = 0;
-int centuries_hold = 0;
+//int centuries_hold = 0;
 
 int int_cmp = 0; 
 
 long julian_hold = 0;
-long in_date_hold = 0;
+//long in_date_hold = 0;
 long est_years = 0;
-long extra_years = 0;
+//long extra_years = 0;
 
 date_union date_hold;
 date_union date_hold_2;
@@ -1311,7 +1312,7 @@ void  	 Date_Funcs::datecpy	(void * dest_date,
 
 {
 
-	#include "locals.h"
+	//unsigned long return_status = 0;
 
 	size_t date_size;
 
@@ -1575,7 +1576,7 @@ unsigned long Date_Funcs::days_to_date	(long in_days,
 
 /*{variables used}*/
 
-	#include "locals.h"
+	unsigned long return_status = 0;
 	long	hold_years 	= 0;	/*{hold_years is number of years in date.}*/
 	long	hold_years_2 	= 0;	/*{hold_years is number of years in date.}*/
 	long	hold_centuries 	= 0;	/*{hold_years is number of years in date.}*/
@@ -2497,18 +2498,18 @@ unsigned long Date_Funcs::forecast	(date_union base_date,
 
 {
 
-	#include "locals.h"
+	unsigned long return_status = 0;
 
 	int	centuries_hold = 0;
 	int	years_hold = 0;
 	int	months_hold = 0;
 	long	days_hold = 0;
 
-	long	days_year	= 0; /*{days_year holds the number of days from the difference in years. Only used for date$30$cal and date$30e$cal.}*/
-	long	days_month	= 0; /*{days_year holds the number of days from the difference in months. Only used for date$30$cal and date$30e$cal.}*/
-	long	days_day	= 0; /*{days_year holds the number of days from the difference in days. Only used for date$30$cal and date$30e$cal.}*/
-	long	base_date_days	= 0; /*{start_date_days holds the number of days in start_date.}*/
-	long	out_date_days 	= 0; /*{end_date_days holds the number of days in end_date.}*/
+	//long	days_year	= 0; /*{days_year holds the number of days from the difference in years. Only used for date$30$cal and date$30e$cal.}*/
+	//long	days_month	= 0; /*{days_year holds the number of days from the difference in months. Only used for date$30$cal and date$30e$cal.}*/
+	//long	days_day	= 0; /*{days_year holds the number of days from the difference in days. Only used for date$30$cal and date$30e$cal.}*/
+	//long	base_date_days	= 0; /*{start_date_days holds the number of days in start_date.}*/
+	//long	out_date_days 	= 0; /*{end_date_days holds the number of days in end_date.}*/
 
 	date_union temp_date;
 
@@ -2905,9 +2906,9 @@ int year_hold = 0;
 unsigned long Date_Funcs::holiload(holidays_struct holi_parm [], char mem_alloc)
 {
 
-#include "locals.h"
+unsigned long return_status = 0;
 
-int str_cmp = 0;
+//int str_cmp = 0;
 /*
 	holi_parm[0].holi_date.first_date.date.centuries = 0;
 	holi_parm[0].holi_date.first_date.date.years = io_no_use;
@@ -3023,7 +3024,7 @@ return return_status;
 int Date_Funcs::month_end(date_union in_date)
 
 {
-	#include "locals.h"
+	//unsigned long return_status = 0;
 	int	month_days = 0;
 	int	actual_year = 0;
 
@@ -3165,7 +3166,7 @@ unsigned long Date_Funcs::tenor	(date_union start_date,
 			char cal_type,
 			long *tenor_days)
 {
-	#include "locals.h"
+	unsigned long return_status = 0;
 
 	char	days_sign	= 1; /*{days_sign determines whether days is negative or not. }*/
 
