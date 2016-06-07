@@ -40,18 +40,17 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Errdecs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\ExceptionCalc.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\FinCalc.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\FRADECS.H" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Gendec.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\holicodeproc.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\holidaysmap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Holihead.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Insclass.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Insevent.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\inseventmap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Instr.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Intdecs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Locals.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\PatCalc.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\POSPROC.H" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Pydecs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Pyfront.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\RateCurve.h" />
@@ -60,9 +59,5 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\StdAfx.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Wordsymb.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)FinSys_Mobile_Calc.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)..\..\Calc\INSEVENT.MAP" />
-    <None Include="$(MSBuildThisFileDirectory)..\..\Calc\INSTR.MAP" />
   </ItemGroup>
 </Project>

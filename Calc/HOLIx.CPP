@@ -273,7 +273,7 @@ unsigned long holidays_class::HolidayCheckAll()
 	 }
   }
 
-func_end:
+//func_end:
 	return return_state;
 }
 unsigned long holidays_class::HolidayFind()
@@ -474,7 +474,7 @@ unsigned long holidays_class::SetHolidayWeekday(char name_str[holidayweekdayleng
 	  current_holiday_weekday = weekday_code;
 	}
 
-func_end:
+//func_end:
 	return return_state;
 }
 unsigned long holidays_class::CheckHolidayWeekday(char name_str[holidayweekdaylength],
@@ -504,7 +504,7 @@ unsigned long holidays_class::CheckHolidayWeekday(char name_str[holidayweekdayle
 		}
 	}
 
-func_end:
+//func_end:
 	return return_state;
 }
 
@@ -555,7 +555,7 @@ unsigned long holidays_class::SetAdjustDirection(char name_str[adjustdirectionle
 	  current_adjust_direction = direction_code;
 	}
 
-func_end:
+//func_end:
 	return return_state;
 }
 unsigned long holidays_class::CheckAdjustDirection(char name_str[adjustdirectionlength],
@@ -585,7 +585,7 @@ unsigned long holidays_class::CheckAdjustDirection(char name_str[adjustdirection
 		}
 	}
 
-func_end:
+//func_end:
 	return return_state;
 }
 
@@ -638,7 +638,7 @@ unsigned long holidays_class::SetDayAdjust(char name_str[dayadjustlength])
 	  current_day_adjust = day_adjust_code;
 	}
 
-func_end:
+//func_end:
 	return return_state;
 }
 unsigned long holidays_class::CheckDayAdjust(char name_str[dayadjustlength],
@@ -668,7 +668,7 @@ unsigned long holidays_class::CheckDayAdjust(char name_str[dayadjustlength],
 		}
 	}
 
-func_end:
+//func_end:
 	return return_state;
 }
 
@@ -723,7 +723,7 @@ unsigned long holidays_class::SetBaseWeekday(char name_str[baseweekdaylength])
 	  current_base_weekday = base_weekday_code;
 	}
 
-func_end:
+//func_end:
 	return return_state;
 }
 unsigned long holidays_class::CheckBaseWeekday(unsigned char base_weekday_code)
@@ -771,7 +771,7 @@ unsigned long holidays_class::CheckBaseWeekday(char name_str[baseweekdaylength],
 		}
 	}
 
-func_end:
+//func_end:
 	return local_return;
 }
 /*
@@ -823,7 +823,7 @@ unsigned long holidays_class::SetHolidayBase(char name_str[holidaybaselength])
 	  current_base = base_code;
 	}
 
-func_end:
+//func_end:
 	return return_state;
 }
 unsigned long holidays_class::CheckHolidayBase(char name_str[holidaybaselength],
@@ -853,7 +853,7 @@ unsigned long holidays_class::CheckHolidayBase(char name_str[holidaybaselength],
 		}
 	}
 
-func_end:
+//func_end:
 	*base_code = *base_code - 1;
 	return return_state;
 }
@@ -874,7 +874,7 @@ unsigned long holidays_class::SetHolidayMonth(char name_str[month_names_length])
 	  current_month = month_code;
 	}
 
-func_end:
+//func_end:
 	return return_state;
 }
 unsigned long holidays_class::CheckHolidayMonth(char name_str[month_names_length],
@@ -904,7 +904,7 @@ unsigned long holidays_class::CheckHolidayMonth(char name_str[month_names_length
 		}
 	}
 
-func_end:
+//func_end:
 	*month_code = *month_code - 1;
 	return return_state;
 }
@@ -921,7 +921,7 @@ unsigned long holidays_class::SetHolidayYear(unsigned int base_year)
   {
 	 current_year = base_year;
   }
-func_end:
+//func_end:
 	return return_state;
 }
 unsigned long holidays_class::SetHolidayDay(char name_str[holidaybasedaylength])
@@ -954,7 +954,7 @@ unsigned long holidays_class::SetHolidayDay(char name_str[holidaybasedaylength])
 	 current_day = day_code;
 	}
 
-func_end:
+//func_end:
 	return return_state;
 }
 unsigned long holidays_class::CheckHolidayDay(int day_code)
@@ -989,7 +989,7 @@ unsigned long holidays_class::SetBaseAdj(char name_str[holidaybaseadjlength])
 	  current_base_adj = adj_code;
 	}
 
-func_end:
+//func_end:
 	return return_state;
 }
 unsigned long holidays_class::CheckBaseAdj(char name_str[holidaybaseadjlength],
@@ -1019,7 +1019,7 @@ unsigned long holidays_class::CheckBaseAdj(char name_str[holidaybaseadjlength],
 		}
 	}
 
-func_end:
+//func_end:
 	return return_state;
 }
 unsigned long holidays_class::SetBaseAdjTimes(char name_str[holidaybaseadjtimeslength])
@@ -1052,7 +1052,7 @@ unsigned long holidays_class::SetBaseAdjTimes(char name_str[holidaybaseadjtimesl
 	  current_base_adj_times = adj_times_code;
 	}
 
-func_end:
+//func_end:
 	return return_state;
 }
 unsigned long holidays_class::CheckBaseAdjTimes(int adj_times_code)
@@ -1102,7 +1102,7 @@ unsigned long holidays_class::SetHolidayAdjTimes(char name_str[holidayadjtimesle
 	  }
 	}
 
-func_end:
+//func_end:
 	return return_state;
 }
 
@@ -1239,7 +1239,7 @@ unsigned long holidays_class::SetDesignate(char designate_str[designatelength])
 	  current_designate = designate_code;
 	}
 
-func_end:
+//func_end:
 	return return_state;
 }
 unsigned long holidays_class::CheckDesignate(char designate_str[designatelength],
@@ -1269,7 +1269,7 @@ unsigned long holidays_class::CheckDesignate(char designate_str[designatelength]
 		}
 	}
 
-func_end:
+//func_end:
 //	*designate_code = *designate_code - 1;
 	return return_state;
 }
