@@ -11,10 +11,35 @@ namespace FinSys.Mobile.Services
     public class CalculatorRepository : ICalculatorRepository
     {
         private List<string> classes = new List<string>();
+        private List<string> dayCounts = new List<string>();
         public CalculatorRepository()
         {
             classes = GetInstrumentClassesAsync().Result;
+            classes = GetDayCountsAsync().Result;
         }
+
+        public async Task<List<string>> GetDayCountsAsync()
+        {
+            List<string> result = await Task.Run(() =>
+            {
+                List<string> daycounts = new List<string>();
+                int size;
+                IntPtr ptr = DependencyService.Get<ILibApi>().getDayCounts(out size);
+                IntPtr strPtr;
+                for (int i = 0; i < size; i++)
+                {
+                    strPtr = Marshal.ReadIntPtr(ptr);
+                    string name = Marshal.PtrToStringAnsi(strPtr);
+                    daycounts.Add(name);
+                    ptr += Marshal.SizeOf(typeof(IntPtr));
+                }
+                return daycounts;
+            })
+            .ConfigureAwait(false) //necessary on UI Thread
+            ;
+            return result;
+        }
+
         public async Task<List<string>> GetInstrumentClassesAsync()
         {
             List<string> result = await Task.Run(() =>

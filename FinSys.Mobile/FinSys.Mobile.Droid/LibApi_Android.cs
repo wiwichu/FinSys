@@ -21,12 +21,18 @@ namespace FinSys.Mobile.Droid
     {
         [DllImport("libCLib", EntryPoint = "getclassdescriptions")]
         public static extern IntPtr getclassdescriptions(out int size);
+        [DllImport("libCLib", EntryPoint = "getdaycounts")]
+        public static extern IntPtr getdaycounts(out int size);
         [DllImport("libCLib", EntryPoint = "iOSInfo")]
         public static extern string iOSInfo();
 
         public IntPtr getClassDescriptions(out int size)
         {
             return getclassdescriptions(out size);
+        }
+        public IntPtr getDayCounts(out int size)
+        {
+            return getdaycounts(out size);
         }
         public string getIOSInfo()
         {

@@ -13,6 +13,8 @@ namespace FinSys.Mobile.iOS
     {
         [DllImport("__Internal", EntryPoint = "getclassdescriptions")]
         public static extern IntPtr getclassdescriptions(out int size);
+        [DllImport("__Internal", EntryPoint = "getdaycounts")]
+        public static extern IntPtr getdaycounts(out int size);
 
         //[DllImport("__Internal", EntryPoint = "iOSInfo")]
         //public static extern string iOSInfo();
@@ -21,6 +23,12 @@ namespace FinSys.Mobile.iOS
         {
             return getclassdescriptions(out size);
         }
+
+        public IntPtr getDayCounts(out int size)
+        {
+            return getdaycounts(out size);
+        }
+
         public string getIOSInfo()
         {
             return "";

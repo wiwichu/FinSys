@@ -29,6 +29,11 @@ namespace FinSys.Mobile.ViewModel
                     SelectedInstrumentClass = instrumentClasses[0];
                 }
             }
+            DayCounts = new ObservableCollection<string>(RepositoryFactory.Calculator.GetDayCountsAsync().Result);
+            if (dayCounts.Count > 0)
+            {
+                SelectedDayCount = dayCounts[0];
+            }
 
         }
         private ObservableCollection<string> instrumentClasses = new ObservableCollection<string>();
@@ -56,6 +61,36 @@ namespace FinSys.Mobile.ViewModel
                 if (selectedInstrumentClass != value)
                 {
                     selectedInstrumentClass = value;
+                    //ChangeClass(selectedInstrumentClass);
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private ObservableCollection<string> dayCounts = new ObservableCollection<string>();
+        public ObservableCollection<string> DayCounts
+        {
+            get
+            {
+                return dayCounts;
+            }
+            set
+            {
+                dayCounts = value;
+                OnPropertyChanged();
+            }
+        }
+        object selectedDayCount;
+        public object SelectedDayCount
+        {
+            get
+            {
+                return selectedDayCount;
+            }
+            set
+            {
+                if (selectedDayCount != value)
+                {
+                    selectedDayCount = value;
                     //ChangeClass(selectedInstrumentClass);
                     OnPropertyChanged();
                 }

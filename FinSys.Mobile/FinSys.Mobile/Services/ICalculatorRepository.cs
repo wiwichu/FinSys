@@ -9,5 +9,6 @@ namespace FinSys.Mobile.Services
     public interface ICalculatorRepository
     {
         Task<List<string>> GetInstrumentClassesAsync();
+        Task<List<string>> GetDayCountsAsync();
     }
 }
