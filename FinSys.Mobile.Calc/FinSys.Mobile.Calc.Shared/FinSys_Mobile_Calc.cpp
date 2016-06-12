@@ -1,4 +1,5 @@
 #include "FinSys_Mobile_Calc.h"
+#include "../../Calc/Api.h"
 
 #define PLATFORM_ANDROID 0
 #define PLATFORM_IOS 1
@@ -15,7 +16,10 @@ char * FinSys_Mobile_Calc::getTemplateInfo()
 
 	return info;
 }
-
+char**  FinSys_Mobile_Calc::getclassdescriptions_internal(int& size)
+{
+	return  getclassdescriptions(size);
+}
 FinSys_Mobile_Calc::FinSys_Mobile_Calc()
 {
 }

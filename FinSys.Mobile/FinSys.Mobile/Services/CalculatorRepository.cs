@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
+using Xamarin.Forms;
 
 namespace FinSys.Mobile.Services
 {
@@ -17,31 +19,56 @@ namespace FinSys.Mobile.Services
         {
             List<string> result = await Task.Run(() =>
             {
-                if (classes.Count > 0)
+                List<string> instrumentClasses = new List<string>();
+                try
                 {
-                    return classes;
+                    //var info = DependencyService.Get<ILibApi>().getIOSInfo();
+                    int size;
+                    IntPtr ptr = DependencyService.Get<ILibApi>().getClassDescriptions(out size);
+                    IntPtr strPtr;
+                    for (int i = 0; i < size; i++)
+                    {
+                        strPtr = Marshal.ReadIntPtr(ptr);
+                        string description = Marshal.PtrToStringAnsi(strPtr);
+                        instrumentClasses.Add(description);
+                        ptr += Marshal.SizeOf(typeof(IntPtr));
+                    }
                 }
-                List<string> instrumentClasses = new List<string>()
+                catch (Exception ex)
                 {
-                    "German Bund",
-                    "Japan Gov",
-                    "UK Gilt",
-                    "UK CD",
-                    "UK Discount",
-                    "US CD",
-                    "US Discount",
-                    "US TBOND",
-                    "Commercial Paper",
-                    "Finanzierungsschatz",
-                    "U-Schatz",
-                    "Eurobond",
-                    "MBS"
-                };
+                }
                 return instrumentClasses;
             })
             .ConfigureAwait(false) //necessary on UI Thread
             ;
             return result;
+            //List<string> result = await Task.Run(() =>
+            //{
+            //    if (classes.Count > 0)
+            //    {
+            //        return classes;
+            //    }
+            //    List<string> instrumentClasses = new List<string>()
+            //    {
+            //        "German Bund",
+            //        "Japan Gov",
+            //        "UK Gilt",
+            //        "UK CD",
+            //        "UK Discount",
+            //        "US CD",
+            //        "US Discount",
+            //        "US TBOND",
+            //        "Commercial Paper",
+            //        "Finanzierungsschatz",
+            //        "U-Schatz",
+            //        "Eurobond",
+            //        "MBS"
+            //    };
+            //    return instrumentClasses;
+            //})
+            //.ConfigureAwait(false) //necessary on UI Thread
+            //;
+            //return result;
         }
 
     }
