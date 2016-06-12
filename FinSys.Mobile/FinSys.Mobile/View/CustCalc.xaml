@@ -12,6 +12,10 @@
         <Label Font="20" Text="Instrument Class"/>
         <helpers:BindablePicker ItemsSource="{Binding InstrumentClasses}" SelectedItem="{Binding SelectedInstrumentClass}"/>
       </StackLayout>
+      <StackLayout Orientation="Horizontal">
+        <Label Font="20" Text="Day Count"/>
+        <helpers:BindablePicker ItemsSource="{Binding DayCounts}" SelectedItem="{Binding SelectedDayCount}"/>
+      </StackLayout>
       <Button Text="Cash Flow" Clicked="OnCashFlow" />
     </StackLayout>
   </ContentPage.Content>
