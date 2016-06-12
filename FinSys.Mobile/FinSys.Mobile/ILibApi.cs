@@ -9,6 +9,7 @@ namespace FinSys.Mobile
     public interface ILibApi
     {
         IntPtr getClassDescriptions(out int size);
+        IntPtr getDayCounts(out int size);
         string getIOSInfo();
     }
 }
