@@ -39,6 +39,7 @@
     <Compile Include="Helpers\BindablePicker.cs" />
     <Compile Include="Helpers\EnumerableExtensions.cs" />
     <Compile Include="Helpers\NotifyPropertyChanged.cs" />
+    <Compile Include="ILibApi.cs" />
     <Compile Include="Model\Calculations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CalculatorRepository.cs" />
