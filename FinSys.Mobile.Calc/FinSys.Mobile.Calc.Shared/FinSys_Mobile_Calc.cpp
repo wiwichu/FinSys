@@ -20,6 +20,10 @@ char**  FinSys_Mobile_Calc::getclassdescriptions_internal(int& size)
 {
 	return  getclassdescriptions(size);
 }
+char**  FinSys_Mobile_Calc::getdaycounts_internal(int& size)
+{
+	return  getdaycounts(size);
+}
 FinSys_Mobile_Calc::FinSys_Mobile_Calc()
 {
 }
