@@ -2295,7 +2295,7 @@ int getInstrumentDefaults(InstrumentStruct &instrument)
 		return return_success;
 	}
 
-	int  tenor(DateStruct startDate, DateStruct endDate, int dayCountRule, int &tenor)
+	int  tenor(DateStruct &startDate, DateStruct &endDate, int dayCountRule, int &tenor)
 	{
 		Date_Funcs::date_union date1;
 		date1.date.centuries = startDate.year / 100;

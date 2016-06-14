@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <payload>
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.iOS\ARM64\Debug\FinSys.Mobile.Calc.iOS.xcodeproj\project.pbxproj" changed="2016-06-12T23:10:37.8370897-04:00" />
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.iOS\x86\Debug\FinSys.Mobile.Calc.iOS.xcodeproj\project.pbxproj" changed="2016-06-12T23:05:13.7013684-04:00" />
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.iOS\ARM\Debug\FinSys.Mobile.Calc.iOS.xcodeproj\project.pbxproj" changed="2016-06-12T22:57:51.7580545-04:00" />
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\FinSys_Mobile_Calc.cpp" changed="2016-06-12T13:03:53.7482979-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.iOS\ARM\Debug\FinSys.Mobile.Calc.iOS.xcodeproj\project.pbxproj" changed="2016-06-13T22:30:26.79802-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.iOS\ARM64\Debug\FinSys.Mobile.Calc.iOS.xcodeproj\project.pbxproj" changed="2016-06-13T22:22:26.764946-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.iOS\x86\Debug\FinSys.Mobile.Calc.iOS.xcodeproj\project.pbxproj" changed="2016-06-13T22:13:56.0019733-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\FinSys_Mobile_Calc.cpp" changed="2016-06-13T21:37:34.9742523-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.iOS\FinSys.Mobile.Calc.iOS.cpp" changed="2016-06-12T13:03:53.8633755-04:00" />
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\FinSys_Mobile_Calc.h" changed="2016-06-12T13:03:53.7883257-04:00" />
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\\FinSys_Mobile_Calc.h" changed="2016-06-12T13:03:53.7883257-04:00" />
-  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Api.cpp" changed="2016-06-03T08:32:05.1045679-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\FinSys_Mobile_Calc.h" changed="2016-06-13T22:04:17.9906157-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\\FinSys_Mobile_Calc.h" changed="2016-06-13T22:04:17.9906157-04:00" />
+  <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Api.cpp" changed="2016-06-13T14:03:53.0308303-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Coupload.cpp" changed="2016-06-03T08:38:02.644431-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Datefunc.cpp" changed="2016-06-03T10:01:23.4415364-04:00" />
   <file path="C:\Users\Patrick\Documents\Visual Studio 2015\Projects\FinSys\FinSys.Mobile.Calc\FinSys.Mobile.Calc.Shared\..\..\Calc\Errtext.cpp" changed="2015-12-05T03:28:46.5310555-05:00" />

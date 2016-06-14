@@ -9,3 +9,7 @@ char**  getclassdescriptions(int& size)
 {
 	return FinSys_Mobile_Calc::getclassdescriptions_internal(size);
 }
+char**  getdaycounts(int& size)
+{
+	return FinSys_Mobile_Calc::getdaycounts_internal(size);
+}
