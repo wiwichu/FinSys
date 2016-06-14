@@ -24,7 +24,7 @@ namespace FinSys.Mobile.Services
             {
                 List<string> daycounts = new List<string>();
                 int size;
-                IntPtr ptr = DependencyService.Get<ILibApi>().getDayCounts(out size);
+                IntPtr ptr = DependencyService.Get<ILibApi>().GetDayCounts(out size);
                 IntPtr strPtr;
                 for (int i = 0; i < size; i++)
                 {
@@ -49,7 +49,7 @@ namespace FinSys.Mobile.Services
                 {
                     //var info = DependencyService.Get<ILibApi>().getIOSInfo();
                     int size;
-                    IntPtr ptr = DependencyService.Get<ILibApi>().getClassDescriptions(out size);
+                    IntPtr ptr = DependencyService.Get<ILibApi>().GetClassDescriptions(out size);
                     IntPtr strPtr;
                     for (int i = 0; i < size; i++)
                     {

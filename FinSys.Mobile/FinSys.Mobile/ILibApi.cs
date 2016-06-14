@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FinSys.Mobile.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,9 @@ namespace FinSys.Mobile
 {
     public interface ILibApi
     {
-        IntPtr getClassDescriptions(out int size);
-        IntPtr getDayCounts(out int size);
+        IntPtr GetClassDescriptions(out int size);
+        IntPtr GetDayCounts(out int size);
+        int GetInstrumentDefaultsAndData(Instrument instrument, Calculations calculations);
         string getIOSInfo();
     }
 }
