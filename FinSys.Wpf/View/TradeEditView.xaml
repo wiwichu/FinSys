@@ -1,0 +1,13 @@
+﻿<Window x:Class="FinSys.Wpf.View.TradeEditView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:v="clr-namespace:FinSys.Wpf.View" 
+        xmlns:local="clr-namespace:FinSys.Wpf.View"
+        mc:Ignorable="d"
+        Title="TradeEditView" Height="500" Width="350">
+    <Grid>
+        <v:TradeView/>
+    </Grid>
+</Window>

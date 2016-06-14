@@ -1,0 +1,171 @@
+#ifndef __holidays_MAP
+#ifndef __datedec_H
+#include <datedec.h>
+#endif
+
+/* {  The holiday file, holidays contains holidays corresponding to specific
+holiday codes and dates. It is also possible to define holiday rules for the
+automatic generation of holidays. The fields are described below. Before the
+field descriptins, constants are defined.
+
+The keys to the Holiday file are as follows:
+
+Key 0:
+
+holi_code
+holi_date.date.string
+holi_name
+
+} */
+
+/*{ holiday_rule is a constant indicating that this record contains not
+a specific date but rules for determining a holiday. }*/
+
+typedef struct 	holidays_struct	{
+
+			char 		holi_code[3];
+
+			/*{ holi_code is an identifier which links to a class
+			of holidays. It can be up to 3 characters in length. }*/
+
+			event_sched 	holi_date;
+
+			/*{ holi_date contains the date of the holiday.
+			If the record indicates a holiday rule, and not
+			a specific date, the structure will have the
+			following significance:
+
+			If holi_date.event_sched.date.centuries = holiday_rule,
+			then a rule is indicated, not a specific date.
+
+			If holi_date.event_sched.date.years =
+			holiday_rule_simp, then this holiday is not based on
+			another (such as Monday after Easter or Boxer day;
+			First business day after Christmas holiday.).
+
+			In this case holi_date.event_sched.date.months
+			indicates the month for which the rule applies.
+
+			If holi_date.event_sched.date.days = 1 through 31 or
+			date_last_day_in_month, then this is the day of the holiday.
+			Any adjustment will be controlled by the
+			holi_date.event_sched.date.months field.
+
+			If holi_date.event.event_sched.date.days >= 100, these
+			correspond to the symbols date_xxxx_day symbols,
+			indicating the day of the week when the holiday falls.
+
+			If the date_xxxx_day symbols are in effect, the
+			holiday_adj indicator is used to show whether it is the
+			exact day, or an offset from another day. In this
+			case month_day is used to indicate the offset base.
+
+                        In cases where holi_date.event_sched.holiday_adj is not
+			event_sched_same_holiday_adj, then holi_date.event_sched.date.years
+			indicates the number of days offset. (100 to 109) - 100 = business
+			day offsets. (110 to 119) - 110 = non business day offsets.
+
+			Examples:
+
+			Always the 25th of December:
+
+			holi_date.event_sched.date.centuries = holiday_rule
+			holi_date.event_sched.date.years = holiday_rule_simp
+			holi_date.event_sched.months = 12
+			holi_date.event_sched.days = 25
+			holi_date.event_sched.holiday_adj =
+			event_sched_same_holiday_adj
+
+			Always the 25th of December, or next business date
+			if a weekend:
+
+			The same as above except:
+
+			holi_date.event_sched.date.years = holiday_rule_ref + 1
+			holi_date.event_sched.holiday_adj =
+			event_sched_next_holiday_adj
+
+			Always the 25th of December, or next business date
+			if a weekend:
+
+			holi_date.event_sched.date.centuries = holiday_rule
+			holi_date.event_sched.date.years = holiday_rule_ref + 2
+			holi_date.event_sched.months = 12
+			holi_date.event_sched.days = 24
+			holi_date.event_sched.holiday_adj =
+			event_sched_next_holiday_adj
+
+			Always the fourth Thursday of November:
+
+			holi_date.event_sched.date.centuries = holiday_rule
+			holi_date.event_sched.date.years = holiday_rule_simp
+			holi_date.event_sched.months = 11
+			holi_date.event_sched.days = date_4thurs_day
+			holi_date.event_sched.holiday_adj =
+			event_sched_same_holiday_adj
+
+			Always the first Tuesday after the first Monday in
+			October:
+
+			holi_date.event_sched.date.centuries = holiday_rule
+			holi_date.event_sched.date.years = holiday_rule_ref + 1
+			holi_date.event_sched.months = 10
+			holi_date.event_sched.days = date_1tues_day
+			holi_date.event_sched.holiday_adj =
+			event_sched_next_holiday_adj
+			holi_date.event_sched.month_days = date_1mon_day }*/
+
+			char	holi_name[80];
+
+			/* Holi_name is the name of the holiday. */
+
+			char	holi_yes_no;
+
+			/* Holi_yes_no indicates whether the specified date is a holiday or not.
+			Valid values are findhol_xxx_hol.*/
+
+			char	null;
+
+			/* The null character is for string operations.*/
+
+			}
+
+		holidays_struct;
+
+typedef union	holidays_union	{char holidays_string[13];
+				holidays_struct holiday_rec;}
+		holidays_union;
+
+/*{ Holi_inter is an interface record for mapping to holidays_struct.}*/
+
+typedef struct	holi_inter
+
+			{
+
+                        char	holi_code[3];
+
+                        /*{ holi_code is as in holidays_struct.}*/
+
+			char	rule_spec;
+
+			/*{ rule_spec indicates whether a rule is in effect or whether
+			a date is specified. It has to be one of the following.:
+
+			holi_rule
+			holi_spec
+
+			}*/
+
+			date_struc	base_date;
+
+			/*{ base_date depends on rule_spec. I rule_spec = holi_spec, then
+			base_date is the date specified, otherwise it is used as a term
+			in the rule.}*/
+
+
+
+			}
+
+		holi_inter;
+
+#endif

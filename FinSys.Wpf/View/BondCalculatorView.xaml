@@ -1,0 +1,189 @@
+﻿<Window x:Class="FinSys.Wpf.View.BondCalculatorView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:local="clr-namespace:FinSys.Wpf.View"
+        mc:Ignorable="d"
+        Title="Bond Calculator" Height="600" Width="800"
+        xmlns:h="clr-namespace:FinSys.Wpf.Helpers"
+        h:ViewModelLocator.AutoWireViewModel="True"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        >
+    <Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Instrument Class: " x:Name="lblInstrumentClasses" Margin="5"/>
+            <ComboBox x:Name="cbInstrumentClasses" SelectedIndex="0"
+				Grid.Column="1"
+				Margin="5"
+				ItemsSource="{Binding InstrumentClasses}"
+				SelectedItem="{Binding SelectedInstrumentClass}"
+				IsSynchronizedWithCurrentItem="True"
+                  
+                />
+            <TextBlock Text="Value Date: " x:Name="lblValueDate" Margin="5" Grid.Row="1"/>
+            <DatePicker x:Name="dpValueDate" Margin="5" Grid.Column="1" Grid.Row="1" 
+				SelectedDate="{Binding ValueDate, Mode=TwoWay, TargetNullValue={x:Static sys:DateTime.Now}}"
+/>
+            <TextBlock Text="Previous Pay: " x:Name="lblPreviousPay" Margin="5" Grid.Row="2"/>
+            <TextBlock  x:Name="lblPreviousPayResult" Text="{Binding PreviousPayDate}" Margin="5" Grid.Row="2" Grid.Column="1"/>
+            <TextBlock Text="Next Pay: " x:Name="lblNextPay" Margin="5" Grid.Row="3"/>
+            <TextBlock  x:Name="lblNextPayResult" Text="{Binding NextPayDate}" Margin="5" Grid.Row="3" Grid.Column="1"/>
+            <TextBlock Text="Interest Rate: " x:Name="lblInterestRate" Margin="5" Grid.Column="0" Grid.Row="4" />
+            <TextBox TextAlignment="Right" Text="{Binding InterestRate, StringFormat='#0.00############'}" Grid.Column="1" Grid.Row="4"  Margin="5"/>
+            <TextBlock Text="Clean Price: " x:Name="lblCleanPrice" Margin="5" Grid.Column="0" Grid.Row="5" />
+            <TextBox TextAlignment="Right" Text="{Binding CleanPrice, StringFormat='#0.00############'}" Grid.Column="1" Grid.Row="5"  Margin="5"/>
+            <TextBlock Text="Accrued Interest: " x:Name="lblAccruedInterest" Margin="5" Grid.Column="0" Grid.Row="6" />
+            <TextBlock TextAlignment="Right" Text="{Binding Interest, StringFormat='#0.00############'}" Grid.Column="1" Grid.Row="6"  Margin="5"/>
+            <TextBlock Text="Dirty Price: " x:Name="lblDirtyPrice" Margin="5" Grid.Column="0" Grid.Row="7" />
+            <TextBlock TextAlignment="Right" Text="{Binding DirtyPrice, StringFormat='#0.00############'}" Grid.Column="1" Grid.Row="7"  Margin="5"/>
+            <TextBlock Text="Yield/Discount: " x:Name="lblYieldDiscount" Margin="5" Grid.Column="0" Grid.Row="8" />
+            <TextBox TextAlignment="Right" Text="{Binding YieldDiscount, StringFormat='#0.00############'}" Grid.Column="1" Grid.Row="8"  Margin="5"/>
+            <TextBlock Text="Duration: " x:Name="lblDuration" Margin="5" Grid.Column="0" Grid.Row="9" />
+            <TextBlock TextAlignment="Right" Text="{Binding Duration, StringFormat='#0.##############'}" Grid.Column="1" Grid.Row="9"  Margin="5"/>
+            <TextBlock Text="Modified Duration: " x:Name="lblModifiedDuration" Margin="5" Grid.Column="0" Grid.Row="10" />
+            <TextBlock TextAlignment="Right" Text="{Binding ModifiedDuration, StringFormat='#0.##############'}" Grid.Column="1" Grid.Row="10"  Margin="5"/>
+            <TextBlock Text="Convexity: " x:Name="lblConvexity" Margin="5" Grid.Column="0" Grid.Row="11" />
+            <TextBlock TextAlignment="Right" Text="{Binding Convexity, StringFormat='#0.##############'}" Grid.Column="1" Grid.Row="11"  Margin="5"/>
+            <TextBlock Text="PVBP(+.01) ModDur: " x:Name="lblPVBP" Margin="5" Grid.Column="0" Grid.Row="12" />
+            <TextBlock TextAlignment="Right" Text="{Binding Pvbp, StringFormat='#0.##############'}" Grid.Column="1" Grid.Row="12"  Margin="5"/>
+            <TextBlock Text="PVBP(+.01) Conv Adj: " x:Name="lblPVBPConv" Margin="5" Grid.Column="2" Grid.Row="12" />
+            <TextBlock TextAlignment="Right" Text="{Binding PvbpConvexityAdjusted, StringFormat='#0.##############'}" Grid.Column="3" Grid.Row="12"  Margin="5"/>
+
+            <TextBlock Text="Maturity Date: " x:Name="lblMaturityDate" Margin="5" Grid.Column="2"/>
+            <DatePicker x:Name="dpMaturityDate" Margin="5" Grid.Column="3" 
+				SelectedDate="{Binding MaturityDate, Mode=TwoWay, TargetNullValue={x:Static sys:DateTime.Now}}"
+/>
+            <TextBlock Text="Day Count: " x:Name="lblDayCount" Margin="5" Grid.Column="2" Grid.Row="1" />
+            <ComboBox x:Name="cbDayCount" SelectedIndex="0"
+				Grid.Column="3" Grid.Row="1"
+				Margin="5"
+				ItemsSource="{Binding DayCounts}"
+				SelectedItem="{Binding SelectedDayCount}"
+				IsSynchronizedWithCurrentItem="True"
+                />
+            <TextBlock Text="Calc Date Adjust: " x:Name="lblNonBusAdj" Margin="5" Grid.Column="4" Grid.Row="1" />
+            <ComboBox x:Name="cbNonBusAdj" SelectedIndex="0"
+				Grid.Column="5" Grid.Row="1"
+				Margin="5"
+				ItemsSource="{Binding HolidayAdjusts}"
+				SelectedItem="{Binding SelectedHolidayAdjust}"
+				IsSynchronizedWithCurrentItem="True"
+                />
+            <TextBlock Text="Pay Date Adjust: " x:Name="lblPayDateAdj" Margin="5" Grid.Column="4" Grid.Row="2" />
+            <ComboBox x:Name="cbPayDateAdj" SelectedIndex="0"
+				Grid.Column="5" Grid.Row="2"
+				Margin="5"
+				ItemsSource="{Binding PayHolidayAdjusts}"
+				SelectedItem="{Binding SelectedPayHolidayAdjust}"
+				IsSynchronizedWithCurrentItem="True"
+                />
+            <TextBlock Text="Holidays: " x:Name="lblHolidays" Margin="5" Grid.Column="5" Grid.Row="3" />
+            <DataGrid x:Name="holidaysGrid"
+                  AutoGenerateColumns="False"
+                  EnableRowVirtualization="True"
+                  ItemsSource="{Binding Holidays}"
+                  Margin="5" Grid.Column="5" Grid.Row="4" Grid.RowSpan="4"
+                      CanUserAddRows="True">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Holiday Date">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding HolidayDate,StringFormat=d}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding HolidayDate , Mode=TwoWay, TargetNullValue={x:Static sys:DateTime.Now},StringFormat=d}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <TextBlock Text="Pay Frequency: " x:Name="lblPayFrequency" Margin="5" Grid.Column="2" Grid.Row="2" />
+            <ComboBox x:Name="cbPayFrequency" SelectedIndex="0"
+				Grid.Column="3" Grid.Row="2"
+				Margin="5"
+				ItemsSource="{Binding PayFreqs}"
+				SelectedItem="{Binding SelectedPayFreq}"
+				IsSynchronizedWithCurrentItem="True"
+                />
+            <TextBlock Text="Issue Date: " x:Name="lblIssueDate" Margin="5" Grid.Column="2" Grid.Row="3"/>
+            <DatePicker x:Name="dpIssueDate" Margin="5" Grid.Column="3" Grid.Row="3"
+				SelectedDate="{Binding IssueDate, Mode=TwoWay, TargetNullValue={x:Static sys:DateTime.Now}}"
+/>
+            <TextBlock Text="First Pay Date: " x:Name="lblFirstPayDate" Margin="5" Grid.Column="2" Grid.Row="4"/>
+            <DatePicker x:Name="dpFirstPayDate" Margin="5" Grid.Column="3" Grid.Row="4"
+				SelectedDate="{Binding FirstPayDate, Mode=TwoWay, TargetNullValue={x:Static sys:DateTime.Now}}"
+/>
+            <TextBlock Text="Next to Last Pay: " x:Name="lblNextToLastPayDate" Margin="5" Grid.Column="2" Grid.Row="5"/>
+            <DatePicker x:Name="dpNextToLastPayDate" Margin="5" Grid.Column="3" Grid.Row="5"
+				SelectedDate="{Binding NextToLastPayDate, Mode=TwoWay, TargetNullValue={x:Static sys:DateTime.Now}}"
+/>
+            <TextBlock Text="Interest Days: " x:Name="lblInterestDays" Margin="5" Grid.Column="2" Grid.Row="6" />
+            <TextBlock TextAlignment="Right" Text="{Binding InterestDays, StringFormat='#0'}" Grid.Column="3" Grid.Row="6"  Margin="5"/>
+            <CheckBox x:Name="cbExCoup"  Content="Ex-Coupon" IsChecked="{Binding IsExCoup, Mode=TwoWay}" Margin="5" Grid.Row="7" Grid.Column="2" />
+            <CheckBox x:Name="cbTradeFlat"  Content="Trade Flat" IsChecked="{Binding TradeFlat, Mode=TwoWay}" Margin="5" Grid.Row="7" Grid.Column="3" />
+            <GroupBox Header="Calculate" Grid.Column="2" Grid.Row="8" >
+                <StackPanel Orientation="Horizontal" >
+                 <!--   <RadioButton Content="Yield" IsChecked="True"  Grid.Column="2" Grid.Row="7" /> -->
+                   <!-- <RadioButton Content="Price"  Grid.Column="3" Grid.Row="7" IsChecked="{Binding CalculatePrice}" Margin="5,0,5,0"/> -->
+                    <RadioButton Content="Yield" IsChecked="True"  /> 
+                    <RadioButton Content="Price"  IsChecked="{Binding CalculatePrice}" Margin="5,0,5,0"/> 
+                </StackPanel>
+            </GroupBox>
+            <Button Content="Calculate" Command="{Binding CalculateCommand}" Grid.Row="8" Grid.Column="3" Margin="5,5,5,0" />
+            <Button Content="Cash Flow" Command="{Binding CashFlowCommand}" Grid.Row="8" Grid.Column="4" Margin="5,5,5,0" />
+
+            <TextBlock Text="Yield Method: " x:Name="lblYieldMethod" Margin="5" Grid.Column="2" Grid.Row="9" />
+            <ComboBox x:Name="cbYieldMethod" SelectedIndex="0"
+				Grid.Column="3" Grid.Row="9"
+				Margin="5"
+				ItemsSource="{Binding YieldMethod}"
+				SelectedItem="{Binding SelectedYieldMethod}"
+				IsSynchronizedWithCurrentItem="True"
+                />
+            <TextBlock Text="Yield Day Count: " x:Name="lblYieldDayCount" Margin="5" Grid.Column="2" Grid.Row="10" />
+            <ComboBox x:Name="cbYieldDayCount" SelectedIndex="0"
+				Grid.Column="3" Grid.Row="10"
+				Margin="5"
+				ItemsSource="{Binding YieldDayCount}"
+				SelectedItem="{Binding SelectedYieldDayCount}"
+				IsSynchronizedWithCurrentItem="True"
+                />
+            <TextBlock Text="Yield Frequency: " x:Name="lblYieldFrequency" Margin="5" Grid.Column="2" Grid.Row="11" />
+            <ComboBox x:Name="cbYieldFrequency" SelectedIndex="0"
+				Grid.Column="3" Grid.Row="11"
+				Margin="5"
+				ItemsSource="{Binding YieldFrequency}"
+				SelectedItem="{Binding SelectedYieldFrequency}"
+				IsSynchronizedWithCurrentItem="True"
+                />
+            <CheckBox x:Name="cbEndOfMonth"  Content="End of Month" IsChecked="{Binding EndOfMonthPay, Mode=TwoWay}" Margin="5" Grid.Row="0" Grid.Column="4" />
+            <Button Content="Default Dates" Command="{Binding DefaultDatesCommand}" Grid.Row="0" Grid.Column="5" Margin="5" />
+        </Grid>
+    </Grid>
+</Window>
