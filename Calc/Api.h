@@ -14,6 +14,7 @@ typedef struct CashFlowStruct
 	int adjustedDay;
 	double discountRate;
 } CashFlowStruct;
+
 typedef struct CashFlowsStruct
 {
 	CashFlowStruct *cashFlows;
