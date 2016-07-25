@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.Extensions.Configuration;
 using FinSysCore.Services;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using FinSysCore.Models;
 using AutoMapper;
 using FinSysCore.ViewModels;
+using FinSysCore.Logging;
+using Microsoft.EntityFrameworkCore;
 
 namespace FinSysCore
 {
@@ -64,7 +60,7 @@ namespace FinSysCore
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory,FinSysContext context)
         {
             var logLevelStr = _config["AppSettings:LogLevel"];
             LogLevel logLevel = LogLevel.Information;
@@ -104,6 +100,7 @@ namespace FinSysCore
                 loggerFactory.AddDebug(logLevel);
                 app.UseDeveloperExceptionPage();
             }
+            //loggerFactory.AddProvider(new EFLoggerProvider(logLevel, context));
         }
     }
 }

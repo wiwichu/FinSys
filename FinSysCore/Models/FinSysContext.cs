@@ -16,6 +16,7 @@ namespace FinSysCore.Models
                 Database.EnsureCreated();
                 dbCreated = true;
             }
+            
         }
         public DbSet<Log> Logs { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

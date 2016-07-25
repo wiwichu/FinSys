@@ -85,7 +85,7 @@ namespace FinSysCore.Controllers.Api
                     result.MMYield *= 100;
                     result.Price *= 100;
                     JsonResult jResult = new JsonResult(result);
-                    _logger.LogInformation($"ustbill rersult: {jResult.Value}");
+                    _logger.LogInformation($"ustbill result: {jResult.Value}");
                     return jResult; 
                 }
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;

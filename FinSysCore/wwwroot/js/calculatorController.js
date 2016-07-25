@@ -351,7 +351,17 @@
             )
            .then(function (response) {
                if (response.data[0].status) {
-                   vm.errorMessage = "Calculation Failed: " + response.data[0].status;
+                   if (response.data[0].message != null) {
+                       if (response.data[0].message.length < 200) {
+                           vm.errorMessage = "Calculation Failed: " + response.data[0].message;
+                       }
+                       else {
+                           alertService("An Error has occurred.", "Calculation Failed", response.data[0].message);
+                       }
+                   }
+                   else {
+                       vm.errorMessage = "Calculation Failed: " + response.data[0].status;
+                   }
 
                }
                else {

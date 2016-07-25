@@ -52,12 +52,30 @@ namespace FinSysCore.Logging
 
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
         {
-            throw new NotImplementedException();
+            Log log = new Log
+            {
+                User = "Guest",
+                Message = formatter(state, exception),
+                LogTime = DateTime.UtcNow.ToLocalTime(),
+                Severity = Enum.GetName(typeof(LogLevel), logLevel),
+                Topic = "Log"
+            };
+            lock (logLock)
+            {
+                
+                _context.Logs.Add(log);
+                _context.SaveChanges();
+                //using (FinSysContext localContext = _context)
+                //{
+                //    localContext.Logs.Add(log);
+                //    localContext.SaveChanges();
+                //}
+            }
         }
 
         public IDisposable BeginScope<TState>(TState state)
         {
-            throw new NotImplementedException();
+            return null;
         }
     }
 }

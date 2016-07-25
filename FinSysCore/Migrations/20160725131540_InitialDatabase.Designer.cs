@@ -8,9 +8,10 @@ using FinSysCore.Models;
 namespace FinSysCore.Migrations
 {
     [DbContext(typeof(FinSysContext))]
-    partial class FinSysContextModelSnapshot : ModelSnapshot
+    [Migration("20160725131540_InitialDatabase")]
+    partial class InitialDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
