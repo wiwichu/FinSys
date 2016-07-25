@@ -134,7 +134,8 @@ goto BuildEventOK
 echo POSTBUILDSTEP for $(ProjectName) FAILED
 exit 1
 :BuildEventOK
-echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK</Command>
+echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK
+echo %HOMEPATH%</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
