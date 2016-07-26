@@ -8,7 +8,7 @@ using FinSysCore.Models;
 namespace FinSysCore.Migrations
 {
     [DbContext(typeof(FinSysContext))]
-    [Migration("20160725131540_InitialDatabase")]
+    [Migration("20160726000456_InitialDatabase")]
     partial class InitialDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

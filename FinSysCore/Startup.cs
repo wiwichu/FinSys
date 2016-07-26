@@ -100,7 +100,7 @@ namespace FinSysCore
                 loggerFactory.AddDebug(logLevel);
                 app.UseDeveloperExceptionPage();
             }
-            //loggerFactory.AddProvider(new EFLoggerProvider(logLevel, context));
+            loggerFactory.AddProvider(new EFLoggerProvider(logLevel, context));
         }
     }
 }

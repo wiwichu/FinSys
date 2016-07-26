@@ -49,27 +49,50 @@ namespace FinSysCore.Logging
                 }
             }
         }
-
+        [ThreadStatic]
+        static int reentrantCount = 0;
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
         {
-            Log log = new Log
+            try
             {
-                User = "Guest",
-                Message = formatter(state, exception),
-                LogTime = DateTime.UtcNow.ToLocalTime(),
-                Severity = Enum.GetName(typeof(LogLevel), logLevel),
-                Topic = "Log"
-            };
-            lock (logLock)
+                if(reentrantCount > 0)
+                {
+                    reentrantCount = 0;
+                    return;
+                }
+                reentrantCount++;
+                Log log = new Log
+                {
+                    User = "Guest",
+                    Message = formatter(state, exception),
+                    LogTime = DateTime.UtcNow.ToLocalTime(),
+                    Severity = Enum.GetName(typeof(LogLevel), logLevel),
+                    Topic = "Log"
+                };
+                lock (logLock)
+                {
+
+                    _context.Logs.Add(log);
+                    try
+                    {
+                        _context.SaveChanges();
+                        //using (FinSysContext localContext = _context)
+                        //{
+                        //    localContext.Logs.Add(log);
+                        //    localContext.SaveChanges();
+                        //}
+                    }
+                    catch (Exception)
+                    {
+                        //avoid reentrant logging. return to allow backup logging
+                        return;
+                    }
+                }
+
+            }
+            finally
             {
-                
-                _context.Logs.Add(log);
-                _context.SaveChanges();
-                //using (FinSysContext localContext = _context)
-                //{
-                //    localContext.Logs.Add(log);
-                //    localContext.SaveChanges();
-                //}
+                reentrantCount = 0;
             }
         }
 
