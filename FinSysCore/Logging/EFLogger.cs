@@ -57,6 +57,9 @@ namespace FinSysCore.Logging
             {
                 if(reentrantCount > 0)
                 {
+                    //EF SaveChanges will try to write to ILogger, resulting in endless recursion.
+                    //This avoids it, but will also lose EF logs.
+                    //A second logger to a file could be used in this case.
                     reentrantCount = 0;
                     return;
                 }
