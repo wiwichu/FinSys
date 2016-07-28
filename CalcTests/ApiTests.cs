@@ -916,7 +916,7 @@ namespace CalcTests
         {
             List<Task> tasks = new List<Task>();
             ConcurrentBag<string> statuses = new ConcurrentBag<string>();
-            for (int x = 0; x < 100; x++)
+            for (int x = 0; x < 13; x++)
             {
                 tasks.Add( Task.Run(async () =>
                 {

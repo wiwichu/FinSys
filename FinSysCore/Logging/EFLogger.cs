@@ -27,27 +27,28 @@ namespace FinSysCore.Logging
         {
             return ((int)logLevel >= (int)this._logLevel);
         }
-        private object logLock = new object();
+        private static object logLock = new object();
         public void Log(LogLevel logLevel, int eventId, object state, Exception exception, Func<object, Exception, string> formatter)
         {
-            Log log = new Log
-            {
-                User = "Guest",
-                Message = formatter(state, exception),
-                LogTime = DateTime.UtcNow.ToLocalTime(),
-                Severity = Enum.GetName(typeof(LogLevel), logLevel),
-                Topic = "Log"
-            };
-            lock(logLock)
-            {
-                //_context.Logs.Add(log);
-                //_context.SaveChanges();
-                using (FinSysContext localContext = _context)
-                {
-                    localContext.Logs.Add(log);
-                    localContext.SaveChanges();
-                }
-            }
+            
+            //Log log = new Log
+            //{
+            //    User = "Guest",
+            //    Message = formatter(state, exception),
+            //    LogTime = DateTime.UtcNow.ToLocalTime(),
+            //    Severity = Enum.GetName(typeof(LogLevel), logLevel),
+            //    Topic = "Log"
+            //};
+            //lock(logLock)
+            //{
+            //    //_context.Logs.Add(log);
+            //    //_context.SaveChanges();
+            //    using (FinSysContext localContext = _context)
+            //    {
+            //        localContext.Logs.Add(log);
+            //        localContext.SaveChanges();
+            //    }
+            //}
         }
         [ThreadStatic]
         static int reentrantCount = 0;
@@ -57,6 +58,14 @@ namespace FinSysCore.Logging
             {
                 if(reentrantCount > 0)
                 {
+                    Log log1 = new Log
+                    {
+                        User = "Guest",
+                        Message = formatter(state, exception),
+                        LogTime = DateTime.UtcNow.ToLocalTime(),
+                        Severity = Enum.GetName(typeof(LogLevel), logLevel),
+                        Topic = "Log"
+                    };
                     //EF SaveChanges will try to write to ILogger, resulting in endless recursion.
                     //This avoids it, but will also lose EF logs.
                     //A second logger to a file could be used in this case.
@@ -72,12 +81,13 @@ namespace FinSysCore.Logging
                     Severity = Enum.GetName(typeof(LogLevel), logLevel),
                     Topic = "Log"
                 };
-                lock (logLock)
+                //lock (logLock)
+                lock (_context)
                 {
 
-                    _context.Logs.Add(log);
                     try
                     {
+                        _context.Logs.Add(log);
                         _context.SaveChanges();
                         //using (FinSysContext localContext = _context)
                         //{
