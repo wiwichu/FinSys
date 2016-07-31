@@ -66,7 +66,7 @@ namespace FinSysCore
             LogLevel logLevel = LogLevel.Information;
             if (!string.IsNullOrEmpty(logLevelStr))
             {
-                logLevel = (LogLevel)System.Enum.Parse(typeof(LogLevel), logLevelStr); loggerFactory.AddDebug(LogLevel.Information);
+                logLevel = (LogLevel)System.Enum.Parse(typeof(LogLevel), logLevelStr);
             }
             app.UseStaticFiles();
             Mapper.Initialize(config =>
@@ -97,7 +97,8 @@ namespace FinSysCore
 
             if (_env.IsDevelopment())
             {
-                loggerFactory.AddDebug(logLevel);
+                loggerFactory.AddDebug(LogLevel.Information);
+                //loggerFactory.AddDebug(logLevel);
                 app.UseDeveloperExceptionPage();
             }
             loggerFactory.AddProvider(new EFLoggerProvider(logLevel, context));

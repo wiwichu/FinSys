@@ -82,7 +82,7 @@
                 deferred.resolve();
             },
             function (err) {
-                if (err.data.length < 200) {
+                if (err.data.length < 200 && err.data.length>0) {
                     vm.errorMessage = "Calculation Failed: " + err.data;
                 }
                 else
@@ -209,7 +209,7 @@
                 vm.nextToLastDate = new Date(response.data.nextToLastPayDate);
             },
             function (err) {
-                if (err.data.length < 200) {
+                if (err.data.length < 200 && err.data.length>0) {
                     vm.errorMessage = "Calculation Failed: " + err.data;
                 }
                 else {
@@ -352,7 +352,7 @@
            .then(function (response) {
                if (response.data[0].status) {
                    if (response.data[0].message != null) {
-                       if (response.data[0].message.length < 200) {
+                       if (response.data[0].message.length < 200 && response.data[0].message.length > 0) {
                            vm.errorMessage = "Calculation Failed: " + response.data[0].message;
                        }
                        else {
@@ -393,7 +393,7 @@
            function (err) {
                if (err.data != null) {
                    if (err.data.message != null) {
-                       if (err.data.message.length < 200) {
+                       if (err.data.message.length < 200 && err.data.message.length > 0) {
                            vm.errorMessage = "Calculation Failed: " + err.data.message;
                        }
                        else {

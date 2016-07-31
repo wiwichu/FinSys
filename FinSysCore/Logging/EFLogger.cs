@@ -27,29 +27,6 @@ namespace FinSysCore.Logging
         {
             return ((int)logLevel >= (int)this._logLevel);
         }
-        private static object logLock = new object();
-        public void Log(LogLevel logLevel, int eventId, object state, Exception exception, Func<object, Exception, string> formatter)
-        {
-            
-            //Log log = new Log
-            //{
-            //    User = "Guest",
-            //    Message = formatter(state, exception),
-            //    LogTime = DateTime.UtcNow.ToLocalTime(),
-            //    Severity = Enum.GetName(typeof(LogLevel), logLevel),
-            //    Topic = "Log"
-            //};
-            //lock(logLock)
-            //{
-            //    //_context.Logs.Add(log);
-            //    //_context.SaveChanges();
-            //    using (FinSysContext localContext = _context)
-            //    {
-            //        localContext.Logs.Add(log);
-            //        localContext.SaveChanges();
-            //    }
-            //}
-        }
         [ThreadStatic]
         static int reentrantCount = 0;
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
@@ -81,7 +58,6 @@ namespace FinSysCore.Logging
                     Severity = Enum.GetName(typeof(LogLevel), logLevel),
                     Topic = "Log"
                 };
-                //lock (logLock)
                 lock (_context)
                 {
 
