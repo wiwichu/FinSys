@@ -2163,6 +2163,105 @@ namespace CalcTests
         }
 
         [TestMethod]
+        public void UKCD_DateSync_1()
+        {
+            InstrumentDescr instrument = new InstrumentDescr();
+            CalculationsDescr calculations = new CalculationsDescr();
+            instrument.instrumentClass = (int)TestHelper.instr_class_descs.instr_ukcd_class_desc;
+
+            DateDescr matDate = new DateDescr { year = 2060, month = 07, day = 31 };
+            DateDescr valueDate = new DateDescr { year = 2016, month = 7, day = 31 };
+            //DateDescr issueDate = new DateDescr { year = 2013, month = 7, day = 31 };
+            //DateDescr firstPayDate = new DateDescr { year = 2014, month = 7, day = 31 };
+            //DateDescr preLastPayDate = new DateDescr { year = 2060, month = 7, day = 30 };
+
+            instrument.maturityDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
+            //instrument.issueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            //Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
+            calculations.valueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
+
+            instrument.intPayFreq = (int)TestHelper.frequency.frequency_monthly;
+            instrument.holidayAdjust = (int)TestHelper.DateAdjustRule.event_sched_same_holiday_adj;
+
+            int status = getInstrumentDefaultsAndData(instrument, calculations);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            instrument.endOfMonthPay = 0;
+            
+            Marshal.StructureToPtr(matDate, instrument.maturityDate, false);
+            Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
+            DatesDescr holidays = new DatesDescr();
+            holidays.size = 0;
+            status = getDefaultDatesAndData(instrument, calculations, holidays);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            double result = .957;
+            calculations.priceIn = 0.95;
+            calculations.calculatePrice = 0;
+            instrument.interestRate = 0.04;
+            //calculations.yieldMethod = (int)TestHelper.yield_method.py_aibd_yield_meth;
+            // instrument.intPayFreq = (int)TestHelper.frequency.frequency_quarterly;
+            //instrument.intDayCount = (int)TestHelper.day_counts.date_30_360US_day_count;
+            //calculations.yieldDayCount = (int)TestHelper.day_counts.date_30_360US_day_count;
+            //calculations.yieldFreq = (int)TestHelper.frequency.frequency_semiannually;
+            //instrument.nextToLastPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            //Marshal.StructureToPtr(preLastPayDate, instrument.nextToLastPayDate, false);
+            //instrument.issueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            //Marshal.StructureToPtr(issueDate, instrument.issueDate, false);
+            //instrument.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            //Marshal.StructureToPtr(firstPayDate, instrument.firstPayDate, false);
+            CashFlowsDescr cashFlows = new CashFlowsDescr();
+            //cashFlows.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) );
+            calculations.payDateAdj = instrument.holidayAdjust;
+            //int status = calculate(instr, calcs);
+            status = calculateWithCashFlows(instrument, calculations, cashFlows, holidays);
+            if (status != 0)
+            {
+                StringBuilder statusText = new StringBuilder(200);
+                int textSize;
+                status = getStatusText(status, statusText, out textSize);
+                throw new InvalidOperationException(statusText.ToString());
+            }
+            TestContext.WriteLine("");
+
+            var structSize = Marshal.SizeOf(typeof(CashFlowDescr));
+            var cashFlowsOut = new List<CashFlowDescr>();
+            var cashFlowOut = cashFlows.cashFlows;
+
+            for (int i = 0; i < cashFlows.size; i++)
+            {
+                cashFlowsOut.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
+                    typeof(CashFlowDescr)));
+                cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
+            }
+            TestContext.WriteLine("");
+            TestContext.WriteLine("After CALL:");
+            TestContext.WriteLine("");
+
+            foreach (CashFlowDescr cfd in cashFlowsOut)
+            {
+                TestContext.WriteLine("Date: {0}.{1}.{2} Amount: {3} AdjDate: {4}.{5}.{6} ", cfd.year, cfd.month, cfd.day, cfd.amount, cfd.adjustedYear, cfd.adjustedMonth, cfd.adjustedDay);
+            }
+            //Assert.AreEqual(cashFlowsOut[0].day, 16);
+            //Assert.AreEqual(cashFlowsOut[0].month, 5);
+            //Assert.AreEqual(cashFlowsOut[0].year, 2016);
+            GC.KeepAlive(instrument);
+            GC.KeepAlive(calculations);
+
+        }
+        [TestMethod]
         public void UKCD_Cashflows_NextDayHolidayAdjust_1()
         {
             InstrumentDescr instrument = new InstrumentDescr();

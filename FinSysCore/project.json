@@ -4,8 +4,8 @@
     "preserveCompilationContext": true
   },
   "dependencies": {
-    "FinSysCoreCalc": "1.0.2",
     "AutoMapper": "4.2.1",
+    "FinSysCoreCalc": "1.0.3",
     "Microsoft.AspNetCore.Diagnostics": "1.0.0",
     "Microsoft.AspNetCore.Mvc": "1.0.0",
     "Microsoft.AspNetCore.Mvc.TagHelpers": "1.0.0",
@@ -26,8 +26,7 @@
     "Microsoft.NETCore.App": {
       "version": "1.0.0",
       "type": "platform"
-    },
-    "FinSysCoreCalc": "1.0.2"
+    }
   },
   "frameworks": {
     "netcoreapp1.0": {

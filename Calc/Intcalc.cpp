@@ -2900,7 +2900,18 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 
 					/*{ Adjust date to last day of month, if this is necessary. }*/
 
-					if (in_instr.pay_freq.month_day == date_last_day_in_month)
+					if (in_instr.pay_freq.month_day == date_last_day_in_month
+						||
+						(
+							prv_pay->date.days != in_instr.pay_freq.month_day
+							&&
+							in_instr.pay_freq.month_day == month_end(*prv_pay)
+							&&
+							pre_adj_date.date.days == month_end(pre_adj_date)
+							&&
+							pre_adj_date.date.days != in_instr.pay_freq.month_day
+							)
+						)
 					{
 
 						prv_pay->date.days = month_end(*prv_pay);
