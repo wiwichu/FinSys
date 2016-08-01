@@ -575,13 +575,13 @@
                                        datepicker-options="vm.dateOptions" ng-required="true" ng-readonly="!vm.overrideDefaults"
                                        close-text="Close" />
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default" ng-click="vm.open($event,'firstPayDate')" ng-focus="vm.datepickers.nextToLastDate=true"  ng-disabled="!vm.overrideDefaults">
+                                    <button class="btn btn-default" ng-click="vm.open($event,'nextToLastDate')" ng-focus="vm.datepickers.nextToLastDate=true"  ng-disabled="!vm.overrideDefaults">
                                         <i class="fa fa-calendar"></i>
                                     </button>
                                 </span>
                             </div>
-                            <span class="text-danger" ng-cloak ng-show="CustCalcForm.firstPayDate.$error.required">Required</span>
-                            <span class="text-danger" ng-cloak ng-show="!CustCalcForm.firstPayDate.$valid">Enter a Valid Date</span>
+                            <span class="text-danger" ng-cloak ng-show="CustCalcForm.nextToLastDate.$error.required">Required</span>
+                            <span class="text-danger" ng-cloak ng-show="!CustCalcForm.nextToLastDate.$valid">Enter a Valid Date</span>
                         </div>
                     </div>
                 </div>
