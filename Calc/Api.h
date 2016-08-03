@@ -1,5 +1,6 @@
 #pragma once
 #include "Pyfront.h"
+
 const int noValue = 99999;
 
 typedef struct CashFlowStruct
@@ -105,12 +106,10 @@ extern "C" CDECLEXPORT char**  getpayfreqs(int& size);
 extern "C" CDECLEXPORT int  getInstrumentDefaults(InstrumentStruct &instrument);
 extern "C" CDECLEXPORT int  getInstrumentDefaultsAndData(InstrumentStruct &instrument, CalculationsStruct &calculations);
 extern "C" CDECLEXPORT int  getStatusText(int status, char* text, int &textSize);
-//extern "C" __declspec(dllexport) int  getDefaultDates(InstrumentStruct &instrument, DateStruct &valueDate);
 extern "C" CDECLEXPORT int  getDefaultDatesAndData(InstrumentStruct &instrument, CalculationsStruct &calculations, DatesStruct &holidays);
 extern "C" CDECLEXPORT char**  getyieldmethods(int& size);
 extern "C" CDECLEXPORT int  calculate(InstrumentStruct &instrument, CalculationsStruct &calculations, DatesStruct &holidays);
 extern "C" CDECLEXPORT int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &calculations,CashFlowsStruct &cashFlowsStruct, 
-	//int adjustRule, 
 	DatesStruct &holidays);
 extern "C" CDECLEXPORT int  getCashFlows(CashFlowsStruct &cashFlowsStruct, int adjustRule);
 extern "C" CDECLEXPORT int  getNewCashFlows(CashFlowsStruct &cashFlowsStruct, int adjustRule);
@@ -126,10 +125,6 @@ extern "C" CDECLEXPORT int  priceCashFlows(CashFlowsStruct &cashFlowsStruct,
 	int interpolation
 	);
 
-
-int preProc(InstrumentStruct &instrument, CalculationsStruct &calculations,Py_Front &pyfront);
-int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_Front &pyfront);
-double RateFromCurve(DateStruct baseDate, RateCurveStruct curve,int interpolationMethod, int dayCount);
 extern "C" CDECLEXPORT int  USTBillCalcFromPrice(DateStruct &valueDate, DateStruct &maturityDate, 
 	double price,double &discount,double &mmYield,double &beYield);
 extern "C" CDECLEXPORT int  USTBillCalcFromPriceWithCashFlows(DateStruct &valueDate, DateStruct &maturityDate,
@@ -141,3 +136,8 @@ extern "C" CDECLEXPORT int  USTBillCalcFromDiscount(DateStruct &valueDate, DateS
 	double discount, double &price, double &mmYield, double &beYield);
 extern "C" CDECLEXPORT int  USTBillCalcFromBEYield(DateStruct &valueDate, DateStruct &maturityDate,
 	double beYield, double &price, double &mmYield, double &discount);
+
+int preProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_Front &pyfront);
+int postProc(InstrumentStruct &instrument, CalculationsStruct &calculations, Py_Front &pyfront);
+double RateFromCurve(DateStruct baseDate, RateCurveStruct curve, int interpolationMethod, int dayCount);
+

@@ -22,19 +22,24 @@
     "Microsoft.Extensions.Configuration.FileExtensions": "1.0.0",
     "Microsoft.Extensions.Configuration.Json": "1.0.0",
     "Microsoft.Extensions.Logging.Console": "1.0.0",
-    "Microsoft.Extensions.Logging.Debug": "1.0.0",
-    "Microsoft.NETCore.App": {
-      "version": "1.0.0",
-      "type": "platform"
-    }
+    "Microsoft.Extensions.Logging.Debug": "1.0.0"
   },
   "frameworks": {
     "netcoreapp1.0": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "version": "1.0.0"
+        }
+      },
       "imports": [
         "dotnet5.6",
         "portable-net45+win8"
       ]
-    }
+    },
+    "net461": {}
+  },
+  "runtimes": {
+    "win10-x86": {}
   },
   "publishOptions": {
     "include": [

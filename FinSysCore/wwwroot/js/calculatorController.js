@@ -191,6 +191,7 @@
         vm.defaultDates = {};
         vm.setDates = function () {
             vm.isBusy = true;
+            vm.errorMessage = "";
             vm.api = "/api/calculator/defaultDates";
             vm.apiPath = vm.protocol + vm.host + vm.port + vm.api;
             vm.defaultDates.Class = vm.selectedInstrumentClass;
@@ -223,6 +224,7 @@
         }
         vm.setDefaults = function () {
             vm.instrumentClassChanged().then(function(){
+                vm.errorMessage = "";
                 vm.setDates();
             },
             function (err) {
