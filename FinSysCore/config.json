@@ -5,6 +5,6 @@
     "LogLevel": "Information"
   },
   "Data": {
-    "FinSysConnection": "Server=(localdb)\\ProjectsV12;Database=FinSysDB;Trusted_Connection=true;MultipleActiveResultSets=true;"
+    "FinSysConnection": "Server=(localdb)\\ProjectsV13;Database=FinSysDB;Trusted_Connection=true;MultipleActiveResultSets=true;"
   }
 }
