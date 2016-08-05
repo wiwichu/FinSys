@@ -1,0 +1,9 @@
+﻿{
+  "frameworks": {
+    "dnx451": {
+      "bin": {
+        "assembly": "C:\\Users\\Patrick\\Documents\\Visual Studio 2015\\Projects\\FinSys\\Calc\\Debug\\calc.dll"
+      }
+    }
+  }
+}

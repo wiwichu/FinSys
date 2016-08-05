@@ -1,0 +1,51 @@
+// Holquick.cpp : implementation file
+//
+
+#include "stdafx.h"
+#include "gencalcmfc.h"
+#include "Holquick.h"
+
+#ifdef _DEBUG
+#define new DEBUG_NEW
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+// CHolquick dialog
+
+
+CHolquick::CHolquick(CWnd* pParent /*=NULL*/)
+	: CDialog(CHolquick::IDD, pParent)
+{
+	//{{AFX_DATA_INIT(CHolquick)
+	//}}AFX_DATA_INIT
+}
+
+
+void CHolquick::DoDataExchange(CDataExchange* pDX)
+{
+	CDialog::DoDataExchange(pDX);
+	//{{AFX_DATA_MAP(CHolquick)
+	DDX_Control(pDX, IDC_COMBO_Holiday_Code, m_Holiday_Code);
+	DDX_Control(pDX, IDC_EDIT_Holiday_Year, m_Holiday_Year);
+	DDX_Control(pDX, IDC_COMBO_Holiday_Day, m_Holiday_Day);
+	DDX_Control(pDX, IDC_COMBO_Holiday_Month, m_Holiday_Month);
+	//}}AFX_DATA_MAP
+}
+
+
+BEGIN_MESSAGE_MAP(CHolquick, CDialog)
+	//{{AFX_MSG_MAP(CHolquick)
+	ON_CBN_SELCHANGE(IDC_COMBO_Holiday_Code, OnSelchangeCOMBOHolidayCode)
+	//}}AFX_MSG_MAP
+END_MESSAGE_MAP()
+
+/////////////////////////////////////////////////////////////////////////////
+// CHolquick message handlers
+
+void CHolquick::OnSelchangeCOMBOHolidayCode() 
+{
+	// TODO: Add your control notification handler code here
+	
+}

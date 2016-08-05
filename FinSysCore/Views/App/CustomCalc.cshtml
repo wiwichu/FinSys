@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Custom Calculator";
+}
+@section Scripts {
+    <script src="~/lib/angular/angular.min.js"></script>
+    <script src="~/js/app-calculator.js"></script>
+    <script src="~/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="~/lib/angular-route/angular-route.min.js"></script>
+    <script src="~/js/calculatorController.js"></script>
+}
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <h2>Custom Calculator</h2>
+    </div>
+</div>
+@*<div class="row" ng-app="app-calculator" ng-controller="calculatorController as vm">
+    <div class="text-danger text-center" ng-show="vm.errorMessage">{{ vm.errorMessage}}</div>
+    <div class="text-center" ng-show="vm.isBusy"><i class="fa fa-spinner fa-spin"></i> Loading... </div>
+    <form>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="instrumentClassSelect">Instrument Class</label>
+                <select class="form-control" name="instrumentClassSelect" id="instrumentClassSelect"
+                        ng-options="iClass for iClass in vm.instrumentClass"
+                        ng-model="vm.selectedInstrumentClass"
+                        ng-change="vm.instrumentClassChanged()">
+                    <option value="" ng-if=!vm.selectedInstrumentClass>Select...</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Day Count</label>
+                <input class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Pay Frequency</label>
+                <input class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Calculation Date Adjust</label>
+                <input class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Payment Date Adjust</label>
+                <input class="form-control" />
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="maturityDate">Maturity Date</label>
+                <div class="input-group">
+                    <input id="maturityDate" type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                           name="maturityDate" ng-model="vm.maturityDate" is-open="vm.datepickers.maturityDate"
+                           datepicker-options="dateOptions" ng-required="true"
+                           close-text="Close" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="vm.open($event,'maturityDate')" ng-focus="vm.datepickers.maturityDate=true">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="valueDate">Value Date</label>
+                <div class="input-group">
+                    <input id="valueDate" type="text" class="form-control" uib-datepicker-popup="{{format}}"
+                           name="valueDate" ng-model="vm.valueDate" is-open="vm.datepickers.valueDate"
+                           datepicker-options="dateOptions" ng-required="true"
+                           close-text="Close" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="vm.open($event,'valueDate')" ng-focus="vm.datepickers.valueDate=true">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+
+            <div>
+                <input type="submit" value="Calculate" class="btn btn-success" />
+            </div>
+        </div>
+    </form>
+</div>*@
+
+
+
+<div class="row" ng-app="app-calculator" >
+    <div ng-view></div>
+</div>
+    

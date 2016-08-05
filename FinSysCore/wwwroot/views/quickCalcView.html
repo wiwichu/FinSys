@@ -1,0 +1,206 @@
+﻿<div class="col-md-12" ng-app="app-calculator">
+    <div class="col-md-12">
+        <div class="col-md-4  col-md-offset-4">
+            <div class="input-group">
+                <h2>Quick Calculator</h2>
+                <span class="input-group-btn">
+                    <a class="btn btn-link btn-xs" ng-click="vm.getHelp('QCForm')">
+                        <i class="fa fa-question-circle"></i>
+                    </a>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="text-danger text-center" ng-show="vm.errorMessage">{{ vm.errorMessage}}</div>
+    <div class="text-center" ng-show="vm.isBusy"><i class="fa fa-spinner fa-spin"></i> Working... </div>
+    <form novalidate name="CustCalcForm">
+        <div class="col-md-2 col-md-offset-2">
+            <div class="form-group">
+                <div class="input-group">
+                    <label for="instrumentClassSelect">Instrument Class</label>
+                    <span class="input-group-btn">
+                        <button class="btn btn-link btn-xs" ng-click="vm.getHelp('QCinstrumentClass')">
+                            <i class="fa fa-question-circle"></i>
+                        </button>
+                    </span>
+                </div>
+                <select class="form-control" name="instrumentClassSelect" id="instrumentClassSelect"
+                        ng-options="iClass for iClass in vm.instrumentClass"
+                        ng-model="vm.selectedInstrumentClass"
+                        ng-change="vm.instrumentClassChanged()">
+                    <option value="" ng-if=!vm.selectedInstrumentClass>Select...</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <label for="interestRate">Interest Rate</label>
+                    <span class="input-group-btn">
+                        <button class="btn btn-link btn-xs" ng-click="vm.getHelp('QCInterestRate')">
+                            <i class="fa fa-question-circle"></i>
+                        </button>
+                    </span>
+                </div>
+                <input type="number" class="form-control" id="interestRate" name="interestRate" ng-model="vm.interestRate"
+                       ng-required="true" ng-pattern="/^\d{0,20}(\.\d{1,20})?$/" />
+            </div>
+            <span class="text-danger" ng-cloak ng-show="CustCalcForm.interestRate.$error.required">Required</span>
+            <span class="text-danger" ng-cloak ng-show="CustCalcForm.interestRate.$error.pattern">Invalid Number</span>
+            <div class="form-group">
+                <div class="input-group">
+                    <label for="maturityDate"> Maturity Date</label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-link btn-xs" ng-click="vm.getHelp('QCMaturityDate')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
+                <div class="input-group input-group-sm">
+                    <input id="maturityDate" type="text" class="form-control" uib-datepicker-popup="{{vm.format}}"
+                           name="maturityDate" ng-model="vm.maturityDate" is-open="vm.datepickers.maturityDate"
+                           datepicker-options="vm.dateOptions" ng-required="true"
+                           close-text="Close" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="vm.open($event,'maturityDate')" ng-focus="vm.datepickers.maturityDate=true">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </span>
+                </div>
+                <span class="text-danger" ng-cloak ng-show="CustCalcForm.maturityDate.$error.required">Required</span>
+                <span class="text-danger" ng-cloak ng-show="!CustCalcForm.maturityDate.$valid">Enter a Valid Date</span>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <label for="valueDate">Value Date </label>
+                    <span class="input-group-btn">
+                        <button class="btn btn-xs btn-link" ng-click="vm.getHelp('QCvaluedate')">
+                            <i class="fa fa-question-circle"></i>
+                        </button>
+                    </span>
+                </div>
+                <div class="input-group input-group-sm">
+                    <input id="valueDate" type="text" class="form-control" uib-datepicker-popup="{{vm.format}}"
+                           name="valueDate" ng-model="vm.valueDate" is-open="vm.datepickers.valueDate"
+                           datepicker-options="vm.dateOptions" ng-required="true"
+                           close-text="Close" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="vm.open($event,'valueDate')" ng-focus="vm.datepickers.valueDate=true">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </span>
+                </div>
+                <span class="text-danger" ng-cloak ng-show="CustCalcForm.valueDate.$error.required">Required</span>
+                <span class="text-danger" ng-cloak ng-show="!CustCalcForm.valueDate.$valid">Enter a Valid Date</span>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <div class="input-group">
+                    <label for="yield">Yield/Discount</label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-link btn-xs" ng-click="vm.getHelp('QCYield')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
+                <input type="number" class="form-control" id="yield" name="yield" ng-readonly="vm.calcFrom!='yield'"
+                       ng-model="vm.yield" ng-required="true" />
+                <span class="text-danger" ng-cloak ng-show="CustCalcForm.yield.$error.required">Required</span>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <label for="price">Clean Price (Par=100)</label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-link btn-xs" ng-click="vm.getHelp('QCCleanPrice')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
+                <input type="number" class="form-control" id="price" name="price" ng-readonly="vm.calcFrom!='price'"
+                       ng-model="vm.price" ng-required="true" />
+                <span class="text-danger" ng-cloak ng-show="CustCalcForm.price.$error.required">Required</span>
+            </div>
+            <div class="input-group">
+                <label for="calcRadio">Calculate From:</label>
+                <span class="input-group-btn">
+                    <a class="btn btn-link btn-xs" ng-click="vm.getHelp('QCCalculateFrom')">
+                        <i class="fa fa-question-circle"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="form-group" ng-init="vm.calcFrom='price'">
+                <label class="radio-inline">
+                    <input type="radio" name="calcChoice" value="price" ng-model="vm.calcFrom">
+                    Price
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="calcChoice" value="yield" ng-model="vm.calcFrom">
+                    Yield
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="{{vm.calcText}}" class="btn btn-success btn-block" ng-click="vm.calculate()" ng-disabled="CustCalcForm.$invalid " />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="API" class="btn btn-primary btn-block"
+                       ng-click="vm.getApi()" ng-disabled="CustCalcForm.$invalid || !vm.requestJson" />
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <div class="input-group">
+                    <label for="duration">Duration</label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-link btn-xs" ng-click="vm.getHelp('QCDuration')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
+                <input class="form-control" id="duration" readonly ng-model="vm.duration" />
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <label for="modDuration">Modified Duration</label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcModifiedDuration')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
+                <input class="form-control" id="modDuration" readonly ng-model="vm.modDuration" />
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <label for="convexity">Convexity</label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-link btn-xs" ng-click="vm.getHelp('QCConvexity')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
+                <input class="form-control" id="convexity" readonly ng-model="vm.convexity" />
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <label for="pvbp">PVBP</label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-link btn-xs" ng-click="vm.getHelp('QCPVBP')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
+                <input class="form-control" id="pvbp" readonly ng-model="vm.pvbp" />
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <label for="cvxPvbp">Convexity Adj PVBP</label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-link btn-xs" ng-click="vm.getHelp('QCConvexityPVBP')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
+                <input class="form-control" id="cvxPvbp" readonly ng-model="vm.cvxPvbp" />
+            </div>
+        </div>
+    </form>
+</div>

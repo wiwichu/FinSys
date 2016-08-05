@@ -1,0 +1,591 @@
+﻿<div class="col-md-12" ng-app="app-calculator">
+    <div class="col-md-12">
+        <div class="col-md-4  col-md-offset-4">
+            <div class="input-group">
+                <h2>Custom Calculator</h2>
+                <span class="input-group-btn">
+                    <a class="btn btn-link btn-xs" ng-click="vm.getHelp('customCalcForm')">
+                        <i class="fa fa-question-circle"></i>
+                    </a>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="text-danger text-center" ng-show="vm.errorMessage">{{ vm.errorMessage}}</div>
+    <div class="text-center" ng-show="vm.isBusy"><i class="fa fa-spinner fa-spin"></i> Working... </div>
+    <form novalidate name="CustCalcForm">
+        <div class="col-md-2">
+            <div class="form-group">
+                <div class="input-group">
+                    <label for="instrumentClassSelect">Instrument Class</label>
+                    <span class="input-group-btn">
+                        <button class="btn btn-link btn-xs" ng-click="vm.getHelp('instrumentClass')">
+                            <i class="fa fa-question-circle"></i>
+                        </button>
+                    </span>
+                </div>
+                    <select class="form-control" name="instrumentClassSelect" id="instrumentClassSelect"
+                            ng-options="iClass for iClass in vm.instrumentClass"
+                            ng-model="vm.selectedInstrumentClass"
+                            ng-change="vm.instrumentClassChanged()">
+                        <option value="" ng-if=!vm.selectedInstrumentClass>Select...</option>
+                    </select>
+                    <!--
+        <select  class="form-control"  name="instrumentClassSelect" id="instrumentClassSelect">
+           <option ng-repeat="iClass in vm.instrumentClass" value="{{iClass}}"
+                 >{{iClass}}</option>
+        </select>
+            -->
+                </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <label for="interestRate">Interest Rate</label>
+                    <span class="input-group-btn">
+                        <button class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcInterestRate')">
+                            <i class="fa fa-question-circle"></i>
+                        </button>
+                    </span>
+                </div>
+                <input type="number" class="form-control" id="interestRate" name="interestRate" ng-model="vm.interestRate"
+                       ng-required="true" ng-pattern="/^\d{0,20}(\.\d{1,20})?$/" />
+            </div>
+            <span class="text-danger" ng-cloak ng-show="CustCalcForm.interestRate.$error.required">Required</span>
+            <span class="text-danger" ng-cloak ng-show="CustCalcForm.interestRate.$error.pattern">Invalid Number</span>
+          <div class="form-group">
+              <div class="input-group">
+                  <label for="maturityDate"> Maturity Date</label>
+                  <span class="input-group-btn">
+                      <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcMaturityDate')">
+                          <i class="fa fa-question-circle"></i>
+                      </a>
+                  </span>
+              </div>
+                <div class="input-group input-group-sm">
+                    <input id="maturityDate" type="text" class="form-control" uib-datepicker-popup="{{vm.format}}"
+                           name="maturityDate" ng-model="vm.maturityDate" is-open="vm.datepickers.maturityDate"
+                           datepicker-options="vm.dateOptions" ng-required="true"
+                           close-text="Close" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="vm.open($event,'maturityDate')" ng-focus="vm.datepickers.maturityDate=true">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </span>
+                </div>
+                <span class="text-danger" ng-cloak ng-show="CustCalcForm.maturityDate.$error.required">Required</span>
+                <span class="text-danger" ng-cloak ng-show="!CustCalcForm.maturityDate.$valid">Enter a Valid Date</span>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" name="endOfMonth" ng-model="vm.endOfMonth"> End of Month
+                    </label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcEndOfMonth')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <label for="valueDate">Value Date </label>
+                    <span class="input-group-btn">
+                        <button class="btn btn-xs btn-link" ng-click="vm.getHelp('valuedate')">
+                            <i class="fa fa-question-circle"></i>
+                        </button>
+                    </span>
+                </div>
+                <div class="input-group input-group-sm">
+                    <input id="valueDate" type="text" class="form-control" uib-datepicker-popup="{{vm.format}}"
+                           name="valueDate" ng-model="vm.valueDate" is-open="vm.datepickers.valueDate"
+                           datepicker-options="vm.dateOptions" ng-required="true"
+                           close-text="Close" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="vm.open($event,'valueDate')" ng-focus="vm.datepickers.valueDate=true">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </span>
+                </div>
+                <span class="text-danger" ng-cloak ng-show="CustCalcForm.valueDate.$error.required">Required</span>
+                <span class="text-danger" ng-cloak ng-show="!CustCalcForm.valueDate.$valid">Enter a Valid Date</span>
+            </div>
+            <div class="input-group">
+                <label for="calcRadio">Calculate From:</label>
+                <span class="input-group-btn">
+                    <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcCalculateFrom')">
+                        <i class="fa fa-question-circle"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="form-group" ng-init="vm.calcFrom='price'">
+                <label class="radio-inline">
+                    <input type="radio" name="calcChoice" value="price" ng-model="vm.calcFrom">
+                    Price
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="calcChoice" value="yield" ng-model="vm.calcFrom">
+                    Yield
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="{{vm.calcText}}" class="btn btn-success btn-block"  ng-click="vm.calculate()" ng-disabled="CustCalcForm.$invalid "/>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="API" class="btn btn-primary btn-block"
+                       ng-click="vm.getApi()" ng-disabled="CustCalcForm.$invalid || !vm.requestJson" />
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <div class="input-group">
+                    <label for="yield">Yield/Discount</label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcYield')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
+                    <input type="number" class="form-control" id="yield" name="yield" ng-readonly="vm.calcFrom!='yield'"
+                           ng-model="vm.yield" ng-required="true" />
+                <span class="text-danger" ng-cloak ng-show="CustCalcForm.yield.$error.required">Required</span>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <label for="price">Clean Price (Par=100)</label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcCleanPrice')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
+                    <input type="number" class="form-control" id="price" name="price" ng-readonly="vm.calcFrom!='price'"
+                           ng-model="vm.price" ng-required="true"  />
+                <span class="text-danger" ng-cloak ng-show="CustCalcForm.price.$error.required">Required</span>
+            </div>
+            <div class="form-group">
+                    <div class="input-group">
+                        <label for="interest">Accrued Interest</label>
+                        <span class="input-group-btn">
+                            <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcAccruedInterest')">
+                                <i class="fa fa-question-circle"></i>
+                            </a>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control" id="interest" name="interest" readonly
+                           ng-model="vm.interest" />
+            </div>
+            <div class="form-group">
+                    <div class="input-group">
+                        <label for="dirtyPrice">Dirty Price</label>
+                        <span class="input-group-btn">
+                            <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcDirtyPrice')">
+                                <i class="fa fa-question-circle"></i>
+                            </a>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control" id="dirtyPrice" name="dirtyPrice" readonly
+                           ng-model="vm.dirtyPrice" />
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" name="exCoup" ng-model="vm.exCoup"> Ex-Coupon
+                    </label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcExCoup')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" name="tradeFlat" ng-model="vm.tradeFlat"> Trade Flat
+                    </label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcTradeFlat')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" name="includeCashflows" ng-model="vm.includeCashflows"> Include Cashflows
+                    </label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcIncludeCashflows')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <div class="input-group">
+                    <label class="checkbox-inline">
+                        <label for="previousPay">Previous Pay:</label>
+                    </label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcPreviousPay')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
+                <div class="input-group input-group-sm">
+                    <input id="previousPay" type="text" class="form-control" uib-datepicker-popup="{{vm.format}}"
+                           name="peviousPay" ng-model="vm.previousPay" is-open="vm.datepickers.previousPay"
+                           datepicker-options="vm.dateOptions" readonly
+                           close-text="Close" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="vm.open($event,'previousPay')" ng-focus="vm.datepickers.previousPay=true" ng-disabled="true">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <label class="checkbox-inline">
+                        <label for="previousPay">Next Pay:</label>
+                    </label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcNextPay')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
+                <div class="input-group input-group-sm">
+                    <input id="nextPay" type="text" class="form-control" uib-datepicker-popup="{{vm.format}}"
+                           name="nextPay" ng-model="vm.nextPay" is-open="vm.datepickers.nextPay"
+                           datepicker-options="vm.dateOptions" readonly
+                           close-text="Close" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="vm.open($event,'nextPay')" ng-focus="vm.datepickers.nextPay=true" ng-disabled="true">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                    <div class="input-group">
+                        <label class="checkbox-inline">
+                            <label for="interestDays">Interest Days</label>
+                        </label>
+                        <span class="input-group-btn">
+                            <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcInterestDays')">
+                                <i class="fa fa-question-circle"></i>
+                            </a>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control" id="interestDays" name="interestDays" readonly
+                           ng-model="vm.interestDays" />
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" name="useHolidays" ng-model="vm.useHolidays" data-toggle="collapse" data-target="#holidays"> Use Holidays
+                    </label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-link btn-xs" ng-click="vm.getHelp('useHolidays')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
+            </div>
+            <div id="holidays" class="collapse">
+                <div class="form-group ">
+                    <div class="input-group">
+                        <label for="cashFlows">Holidays:YYYY-MM-DD</label>
+                        <span class="input-group-btn">
+                            <button class="btn btn-link btn-xs"  ng-click="vm.getHelp('holidays')">
+                                <i class="fa fa-question-circle"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="input-group">
+                        <button class="btn btn-primary btn-sm" ng-click="vm.addHolidays()">Add</button>
+                        <button class="btn btn-primary btn-sm" ng-click="vm.deleteSelectedHolidays()">Delete <i class="fa fa-check"></i></button>
+                    </div>
+                    <div ui-grid="vm.holidayGridOptions" ui-grid-resize-columns ui-grid-auto-resize ui-grid-selection ui-grid-importer ui-grid-exporter ui-grid-edit></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <div class="input-group">
+                    <label for="duration">Duration</label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcDuration')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
+                <input class="form-control" id="duration" readonly ng-model="vm.duration" />
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <label for="modDuration">Modified Duration</label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcModifiedDuration')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
+                <input class="form-control" id="modDuration" readonly ng-model="vm.modDuration" />
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <label for="convexity">Convexity</label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcConvexity')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
+                <input class="form-control" id="convexity" readonly ng-model="vm.convexity" />
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <label for="pvbp">PVBP</label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcPVBP')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
+                <input class="form-control" id="pvbp" readonly ng-model="vm.pvbp" />
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <label for="cvxPvbp">Convexity Adj PVBP</label>
+                    <span class="input-group-btn">
+                        <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcConvexityPVBP')">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </span>
+                </div>
+                <input class="form-control" id="cvxPvbp" readonly ng-model="vm.cvxPvbp" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="CashFlows" ng-click="vm.goToCashFlows()"
+                       class="btn btn-primary btn-block" ng-disabled="CustCalcForm.$invalid || !vm.cashFlows || vm.cashFlows.length==0" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="submit" value="{{vm.viewDefaults}}" class="btn btn-primary form-control" data-toggle="collapse" data-target="#defaults" ng-click="vm.openDefaults()" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                </div>
+            </div>
+            <div id="defaults" class="collapse">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="input-group">
+                                <label for="dayCountSelect">Day Count</label>
+                            <span class="input-group-btn">
+                                <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcDayCount')">
+                                    <i class="fa fa-question-circle"></i>
+                                </a>
+                            </span>
+                        </div>
+                        <select class="form-control" name="dayCountSelect" id="dayCountSelect"
+                                ng-options="iClass for iClass in vm.dayCount"
+                                ng-model="vm.selectedDayCount">
+                            <option value="" ng-if=!vm.selectedDayCount>Select...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                                <label for="payFrequencySelect">Pay Frequency</label>
+                            <span class="input-group-btn">
+                                <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcPayFreq')">
+                                    <i class="fa fa-question-circle"></i>
+                                </a>
+                            </span>
+                        </div>
+                        <select class="form-control" name="payFrequencySelect" id="payFrequencySelect"
+                                ng-options="iClass for iClass in vm.payFrequency"
+                                ng-model="vm.selectedPayFrequency">
+                            <option value="" ng-if=!vm.payFrequency>Select...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                             <div class="input-group">
+                                    <label for="calcDateAdjust">Calc Date Adjust</label>
+                                <span class="input-group-btn">
+                                    <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcCalcDateAdjust')">
+                                        <i class="fa fa-question-circle"></i>
+                                    </a>
+                                </span>
+                            </div>
+                        <select class="form-control" name="calcDateSelect" id="calcDateSelect"
+                                ng-options="iClass for iClass in vm.calcDateAdjust"
+                                ng-model="vm.selectedCalcDateAdjust">
+                            <option value="" ng-if=!vm.selectedCalcDateAdjust>Select...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                                <label for="payDateAdjust">Pay Date Adjust</label>
+                            <span class="input-group-btn">
+                                <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcPayDateAdjust')">
+                                    <i class="fa fa-question-circle"></i>
+                                </a>
+                            </span>
+                        </div>
+                        <select class="form-control" name="payDateSelect" id="payDateSelect"
+                                ng-options="iClass for iClass in vm.payDateAdjust"
+                                ng-model="vm.selectedPayDateAdjust">
+                            <option value="" ng-if=!vm.selectedPayDateAdjust>Select...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Set Dates" class="btn btn-primary form-control" ng-click="vm.setDates()" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Reset Defaults" class="btn btn-primary form-control"
+                               ng-click="vm.setDefaults()" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <div class="input-group">
+                                    <label for="yieldDayCountSelect">Yield Day Count</label>
+                                <span class="input-group-btn">
+                                    <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcYieldDayCount')">
+                                        <i class="fa fa-question-circle"></i>
+                                    </a>
+                                </span>
+                            </div>
+                            <select class="form-control" name="yieldDayCountSelect" id="yieldDayCountSelect"
+                                    ng-options="iClass for iClass in vm.yieldDayCount"
+                                    ng-model="vm.selectedYieldDayCount">
+                                <option value="" ng-if=!vm.selectedYieldDayCount>Select...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label for="compoundFrequencySelect">Compound Freq</label>
+                                <span class="input-group-btn">
+                                    <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcCompoundFreq')">
+                                        <i class="fa fa-question-circle"></i>
+                                    </a>
+                                </span>
+                            </div>
+                            <select class="form-control" name="compoundFrequencySelect" id="compoundFrequencySelect"
+                                    ng-options="iClass for iClass in vm.compoundFrequency"
+                                    ng-model="vm.selectedCompoundFrequency">
+                                <option value="" ng-if=!vm.selectedCompoundFrequency>Select...</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="yieldMethodSelect">Yield Method</label>
+                            <span class="input-group-btn">
+                                <button class="btn btn-link btn-xs"  ng-click="vm.getHelp('custCalcYieldMethod')">
+                                    <i class="fa fa-question-circle"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" name="yieldMethodSelect" id="yieldMethodSelect"
+                                    ng-options="iClass for iClass in vm.yieldMethod"
+                                    ng-model="vm.selectedYieldMethod">
+                                <option value="" ng-if=!vm.selectedYieldMethod>Select...</option>>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="overrideDefaults" ng-model="vm.overrideDefaults"> Override Dates
+                                </label>
+                                <span class="input-group-btn">
+                                    <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcOverrideDates')">
+                                        <i class="fa fa-question-circle"></i>
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                     <div class="form-group">
+                         <div class="input-group">
+                             <label for="issueDate">Issue Date</label>
+                             <span class="input-group-btn">
+                                 <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcIssueDate')">
+                                     <i class="fa fa-question-circle"></i>
+                                 </a>
+                             </span>
+                         </div>
+                            <div class="input-group input-group-sm">
+                                <input id="issueDate" type="text" class="form-control" uib-datepicker-popup="{{vm.format}}"
+                                       name="issueDate" ng-model="vm.issueDate" is-open="vm.datepickers.issueDate"
+                                       datepicker-options="vm.dateOptions" ng-required="true" ng-readonly="!vm.overrideDefaults"
+                                       close-text="Close" />
+                                <span class="input-group-btn input-group-sm">
+                                    <button class="btn btn-default" ng-click="vm.open($event,'issueDate')" ng-focus="vm.datepickers.issueDate=true"  ng-disabled="!vm.overrideDefaults">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <span class="text-danger" ng-cloak ng-show="CustCalcForm.issueDate.$error.required">Required</span>
+                            <span class="text-danger" ng-cloak ng-show="!CustCalcForm.issueDate.$valid">Enter a Valid Date</span>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label for="firstPayDate">First Pay Date</label>
+                                <span class="input-group-btn">
+                                    <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcFirstPayDate')">
+                                        <i class="fa fa-question-circle"></i>
+                                    </a>
+                                </span>
+                            </div>
+                            <div class="input-group input-group-sm">
+                                <input id="firstPayDate" type="text" class="form-control" uib-datepicker-popup="{{vm.format}}"
+                                       name="firstPayDate" ng-model="vm.firstPayDate" is-open="vm.datepickers.firstPayDate"
+                                       datepicker-options="vm.dateOptions" ng-required="true"  ng-readonly="!vm.overrideDefaults"
+                                       close-text="Close" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" ng-click="vm.open($event,'firstPayDate')" ng-focus="vm.datepickers.firstPayDate=true"  ng-disabled="!vm.overrideDefaults">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <span class="text-danger" ng-cloak ng-show="CustCalcForm.firstPayDate.$error.required">Required</span>
+                            <span class="text-danger" ng-cloak ng-show="!CustCalcForm.firstPayDate.$valid">Enter a Valid Date</span>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label for="nextToLastDate">Next To Last Date</label>
+                                <span class="input-group-btn">
+                                    <a class="btn btn-link btn-xs" ng-click="vm.getHelp('custCalcNextToLastPayDate')">
+                                        <i class="fa fa-question-circle"></i>
+                                    </a>
+                                </span>
+                            </div>
+                            <div class="input-group input-group-sm">
+                                <input id="nextToLastDate" type="text" class="form-control" uib-datepicker-popup="{{vm.format}}"
+                                       name="nextToLastDate" ng-model="vm.nextToLastDate" is-open="vm.datepickers.nextToLastDate"
+                                       datepicker-options="vm.dateOptions" ng-required="true" ng-readonly="!vm.overrideDefaults"
+                                       close-text="Close" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" ng-click="vm.open($event,'nextToLastDate')" ng-focus="vm.datepickers.nextToLastDate=true"  ng-disabled="!vm.overrideDefaults">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <span class="text-danger" ng-cloak ng-show="CustCalcForm.nextToLastDate.$error.required">Required</span>
+                            <span class="text-danger" ng-cloak ng-show="!CustCalcForm.nextToLastDate.$valid">Enter a Valid Date</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

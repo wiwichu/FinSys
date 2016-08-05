@@ -1,0 +1,81 @@
+﻿
+<div class="col-md-12" ng-app="app-calculator">
+    <div class="col-md-12 ">
+        <div class="col-md-3 col-md-offset-5">
+            <div class="input-group">
+                <h2>Day Count</h2>
+                <span class="input-group-btn">
+                    <button class="btn btn-link btn-xs"  ng-click="vm.getHelp('DayCountForm')">
+                        <i class="fa fa-question-circle"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="text-danger text-center" ng-cloak ng-show="vm.errorMessage">{{ vm.errorMessage}}</div>
+    <div class="text-center" ng-show="vm.isBusy"><i class="fa fa-spinner fa-spin"></i> Working... </div>
+    <form novalidate name="DayCountForm">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="row">
+                <div class="form-group ">
+                    <div class="col-md-4">
+                        <label for="startDate">Start Date</label>
+                        <div class="input-group input-group-sm">
+                            <input id="startDate" type="text" class="form-control" uib-datepicker-popup="{{vm.format}}"
+                                   name="startDate" ng-model="vm.startDate" is-open="vm.datepickers.startDate"
+                                   datepicker-options="vm.dateOptions" ng-required="true"
+                                   close-text="Close" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" ng-click="vm.open($event,'startDate')" ng-focus="vm.datepickers.startDate=true">
+                                    <i class="fa fa-calendar"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <span class="text-danger" ng-cloak ng-show="DayCountForm.startDate.$error.required">Required</span>
+                        <span class="text-danger" ng-cloak ng-show="!DayCountForm.startDate.$valid">Enter a Valid Date</span>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="endDate">End Date</label>
+                        <div class="input-group input-group-sm">
+                            <input id="endDate" type="text" class="form-control" uib-datepicker-popup="{{vm.format}}"
+                                   name="endDate" ng-model="vm.endDate" is-open="vm.datepickers.endDate"
+                                   datepicker-options="vm.dateOptions" ng-required="true"
+                                   close-text="Close" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" ng-click="vm.open($event,'endDate')" ng-focus="vm.datepickers.endDate=true">
+                                    <i class="fa fa-calendar"></i>
+                                </button>
+                            </span>
+                        </div>
+                        <span class="text-danger" ng-cloak ng-show="DayCountForm.endDate.$error.required">Required</span>
+                        <span class="text-danger" ng-cloak ng-show="!DayCountForm.endDate.$valid">Enter a Valid Date</span>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="submit" value="Calculate" class="btn btn-success btn-large form-control"
+                                   ng-click="vm.calculate()" ng-disabled="CustCalcForm.$invalid" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="API" class="btn btn-primary btn-default btn-block"
+                                   ng-click="vm.getApi()" ng-disabled="CustCalcForm.$invalid || !vm.responseJson" />
+                        </div>
+                    </div>
+                    <!--<div class="col-md-3">
+            <div class="form-group">
+                <input type="submit" value="API" class="btn btn-primary btn-default btn-block"
+                       ng-click="vm.getApi()" ng-disabled="CustCalcForm.$invalid || !vm.responseJson" />
+            </div>
+            </div>-->
+                    <div class="row">
+                        <div class="form-group ">
+                            <div class="col-md-12">
+                                <div ui-grid="vm.cfGridOptions" ui-grid-resize-columns ui-grid-selection ui-grid-exporter></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+</form>
+</div>

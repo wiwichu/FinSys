@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="FinSys.Wpf.View.PortfolioListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:v="clr-namespace:FinSys.Wpf.View"
+             xmlns:h="clr-namespace:FinSys.Wpf.Helpers"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+ <!--   <StackPanel> -->
+        <ListView x:Name="lsvPortfolioList" ItemsSource="{Binding Portfolios}" SelectedItem="{Binding SelectedPortfolio}" >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Portfolio Name" DisplayMemberBinding="{Binding Id}" Width="100"/>
+                  <!--  <GridViewColumn CellTemplate="{StaticResource RowButtons}"/> -->
+                </GridView>
+            </ListView.View>
+        </ListView>
+<!--    </StackPanel> -->
+</UserControl>

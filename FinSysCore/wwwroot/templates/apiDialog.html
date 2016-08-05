@@ -1,0 +1,26 @@
+﻿<link rel="stylesheet" href="~/css/site.css" />
+<div class="modal-header">
+    <div class="col-md-11">
+        <h3 class="modal-title">HTTP POST API</h3>
+    </div>
+    <div class="col-md-1">
+        <button class="btn btn-info btn-xs" ng-click="$close()">X</button>
+    </div>
+</div>
+<div class="modal-body">
+    <div class="form-group">
+        <label for="postApi">URL</label>
+        <input class="form-control" id="postApi" readonly ng-model="model.api.apiPath" />
+    </div>
+    <div class="form-group">
+        <label for="requestJson">REQUEST JSON</label>
+        <textarea rows="3" class="form-control" id="requestJson" readonly ng-model="model.api.requestJson" />
+    </div>
+    <div class="form-group">
+        <label for="responseJson">RESPONSE JSON</label>
+        <textarea rows="3" class="form-control" id="responseJson" readonly ng-model="model.api.responseJson" />
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-success" ng-click="$close()">Close</button>
+</div>

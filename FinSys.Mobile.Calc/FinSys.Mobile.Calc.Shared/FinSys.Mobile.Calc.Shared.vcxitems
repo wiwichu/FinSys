@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{6c49cad6-78a4-4954-841e-5f26e24aa799}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Calc\Api.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Calc\Coupload.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Calc\Datefunc.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Calc\Errtext.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Calc\ExceptionCalc.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Calc\FinCalc.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Calc\holicodeproc.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Calc\HOLIx.CPP" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Calc\insevent.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Calc\Instrument.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Calc\Intcalc.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Calc\PatCalc.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Calc\Pyfront.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Calc\Py_calc.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Calc\RateCurve.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Calc\Redmparr.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)FinSys_Mobile_Calc.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Api.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Calc.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Datedec.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Envir.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Errdecs.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\ExceptionCalc.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\FinCalc.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Gendec.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\holicodeproc.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\holidaysmap.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Holihead.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Insclass.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Insevent.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\inseventmap.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Instr.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Intdecs.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Locals.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\PatCalc.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Pydecs.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Pyfront.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\RateCurve.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Scrdec.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Shrtdecs.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\StdAfx.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Calc\Wordsymb.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)FinSys_Mobile_Calc.h" />
+  </ItemGroup>
+</Project>
