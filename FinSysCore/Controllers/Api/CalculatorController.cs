@@ -331,6 +331,7 @@ namespace FinSysCore.Controllers.Api
         }
         private async Task<DefaultDatesResultViewModel> getDefaultDates(DefaultDatesViewModel vm)
         {
+
             try
             {
                 _logger.LogInformation("Entering  private async Task<DefaultDatesResultViewModel> getDefaultDates(DefaultDatesViewModel vm)");
