@@ -142,7 +142,7 @@
                     return; 
                     break;
             }
-            vm.requestJson = "";
+            vm.requestJson = JSON.stringify(vm.ustbill, null, 2);
             vm.responseJson = "";
             $http.post(vm.apiPath, vm.ustbill)
             .then(function (response) {
@@ -160,7 +160,6 @@
                     vm.modDuration = response.data.modifiedDuration;
                     vm.price = response.data.price;
                     vm.pvbp = response.data.pvbp;
-                    vm.requestJson = JSON.stringify(vm.ustbill, null, 2);
                     vm.responseJson = JSON.stringify(response.data, null, 2);
                     vm.cashFlows = response.data.cashFlows;
                 }

@@ -345,7 +345,8 @@
             //    vm.calculations[i] = vm.calculation;
             //}
             vm.calculations[0] = vm.calculation;
-            $http.post(vm.apiPath,vm.calculations
+            vm.requestJson = JSON.stringify(vm.calculations, null, 2);
+            $http.post(vm.apiPath, vm.calculations
                 ,{
                     timeout: vm.cancelCalc.promise
                    // timeout: 10000
@@ -387,7 +388,7 @@
                    vm.firstPayDate = new Date(response.data[0].firstPayDate);
                    vm.nextToLastDate = new Date(response.data[0].nextToLastDate);
 
-                   vm.requestJson = JSON.stringify(vm.calculations, null, 2);
+                   //vm.requestJson = JSON.stringify(vm.calculations, null, 2);
                    vm.responseJson = JSON.stringify(response.data, null, 2);
                    vm.cashFlows = response.data[0].cashflows;
                }

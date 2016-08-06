@@ -195,6 +195,7 @@
                     Interpolation: vm.selectedInterpolationMethod,
                     PriceFromCurve: vm.useCurve
                 };
+            vm.requestJson = JSON.stringify(vm.cashflowsPricing, null, 2);
             $http.post(vm.apiPath, vm.cashflowsPricing, {
                 timeout: vm.cancelCalc.promise
                 // timeout: 10000
@@ -207,7 +208,6 @@
                }
                else {
                    vm.cashFlows = response.data;
-                   vm.requestJson = JSON.stringify(vm.cashflowsPricing, null, 2);
                    vm.responseJson = JSON.stringify(response.data, null, 2);
                }
            },
