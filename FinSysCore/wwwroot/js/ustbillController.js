@@ -146,8 +146,8 @@
             vm.responseJson = "";
             $http.post(vm.apiPath, vm.ustbill)
             .then(function (response) {
-                if (response.data[0].status) {
-                    vm.errorMessage = "Calculation Failed: " + response.data[0].status;
+                if (response.data.status) {
+                    vm.errorMessage = "Calculation Failed: " + response.data.status;
 
                 }
                 else {
@@ -176,7 +176,12 @@
                        }
                    }
                    else {
-                       alertService("An Error has occurred.", "Calculation Failed", err.data);
+                       if (err.data.length < 200) {
+                           vm.errorMessage = "Calculation Failed: " + err.data;
+                       }
+                       else {
+                           alertService("An Error has occurred.", "Calculation Failed", err.data);
+                       }
                    }
                }
                else {
