@@ -138,8 +138,21 @@
                     </li>
                 </ul>
             </li>
-            <li class="list-group-item borderless "><a href="" ng-click="vm.gotoAnchor('technical')"><h4>Technical Guide</h4></a></li>
+            <li class="list-group-item borderless ">
+                <a href="" ng-click="vm.gotoAnchor('technical')"><h4>Technical Guide</h4></a>
+                <ul class="list-group borderless">
+                    <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('calclib')"><h6>Calculation Library</h6></a></li>
+                    <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('website')"><h6>Web Site</h6></a></li>
+                    <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('opensource')"><h6>Open Source</h6></a></li>
+                </ul>
+            </li>
             <li class="list-group-item borderless "><a href="" ng-click="vm.gotoAnchor('references')"><h4>References</h4></a></li>
+            <li class="list-group-item borderless ">
+                <a href="" ng-click="vm.gotoAnchor('contact')"><h4>Contact</h4></a>
+                <ul class="list-group borderless">
+                    <li class="list-group-item borderless "> <a href="" ng-click="vm.gotoAnchor('email')"><h6>email</h6></a></li>
+                </ul>
+            </li>
         </ul>
     </div>
 
@@ -492,9 +505,9 @@
             <h4>Yield Method</h4>
             <label>
                 <a href="" ng-click="vm.gotoAnchor('yieldMethod')"> Yield Method</a>
-                sets the method used to discount cash flows. 
+                sets the method used to discount cash flows.
             </label><br />
-</div>
+        </div>
         <div id="CashFlowYieldDayCount" class="col-md-12">
             <h4>Yield Day Count</h4>
             <label>
@@ -774,7 +787,7 @@
             <li>Previous-Next - Date is adjusted to the previous business day but if this is a different month then the next business day is used.</li>
             <li>Same - No adjustment occurs.</li>
         </ul>
-     </div>
+    </div>
     <div id="instrumentClass" class="col-md-12">
         <h3>Instrument Class</h3>
         <label>Class of Instrument associated with defaults.</label><br />
@@ -849,6 +862,30 @@
         <div class="col-md-4 col-md-offset-4">
             <h2>Technical Guide</h2>
         </div>
+        <br />
+        <div class="col-md-12">
+            <ul>
+                <li id="calclib">
+                    <label>Calculations are performed in a C++ library.</label>
+                    <label>
+                        The api is described <a href="https://github.com/wiwichu/FinSys/blob/FinSysCore/Calc/Api.h">here</a>.
+                    </label>
+                    <label>
+                        Examples of calling the api can be found here <a href="https://github.com/wiwichu/FinSys/blob/FinSysCore/FinSysCore/Services/CalculatorRepository.cs">here</a>.
+                    </label>
+                </li>
+                <li id="website">
+                    <label>
+                        The web site is developed using Asp.Net Core, MVC 6, AngularJS and Bootstrap. DB access is through Entity Framework. The C++ library is called using pinvoke.
+                    </label>
+                </li>
+                <li id="opensource">
+                    <label>
+                        Everything is Open Source under the MIT license. The Source is located in GitHub <a href="https://github.com/wiwichu/FinSys/tree/FinSysCore">here</a>.
+                    </label>
+                </li>
+            </ul>
+        </div>
     </div>
     <div id="references" class="col-md-12">
         <div class="col-md-4 col-md-offset-4">
@@ -892,5 +929,18 @@
                 </li>-->
             </ul>
         </div>
-    </div>
+        <div id="contact" class="col-md-12">
+            <div class="col-md-4 col-md-offset-4">
+                <h2>Contact</h2>
+            </div>
+            <div class="col-md-12">
+                <ul>
+                    <li id="email">
+                        <label>
+                            email: finsys@pelesflame.com
+                        </label>
+                    </li>
+                </ul>
+            </div>
+        </div>
 </div>
