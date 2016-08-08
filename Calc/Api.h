@@ -180,6 +180,10 @@ extern "C" CDECLEXPORT char**  getpayfreqs(int& size);
 //Returns a list of valid yield methods.
 extern "C" CDECLEXPORT char**  getyieldmethods(int& size);
 
+//
+//For the following functions, if the return value is not 0, calling getStatusText
+//will return a string of the warning or error.
+//
 //Populates the InstrumentStruct with defaults for the chosen instrumentclass.
 extern "C" CDECLEXPORT int  getInstrumentDefaults(InstrumentStruct &instrument);
 
