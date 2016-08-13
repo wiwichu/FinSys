@@ -132,7 +132,7 @@ namespace FinSys.Wpf.ViewModel
         private async void DeleteTrade(object obj)
         {
             await RepositoryFactory.Trades.DeleteAsync(MakeTrade(this));
-            //Messenger.Default.Send<DataUpdate>(new DataUpdate());
+            Messenger.Default.Send<DataUpdate>(new DataUpdate());
             CancelTrade(new object());
         }
 
@@ -157,7 +157,7 @@ namespace FinSys.Wpf.ViewModel
         private async void UpdateTrade(object obj)
         {
             await RepositoryFactory.Trades.AddOrUpdateAsync(MakeTrade(this));
-            //Messenger.Default.Send<DataUpdate>(new DataUpdate());
+            Messenger.Default.Send<DataUpdate>(new DataUpdate());
             CancelTrade(new object());
         }
 
