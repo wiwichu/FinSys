@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System;
 
 namespace FinSysCore.Models
 {
@@ -13,7 +14,20 @@ namespace FinSysCore.Models
             _config = config;
             if (!dbCreated)
             {
-                Database.EnsureCreated();
+                var logSqlStr = _config["AppSettings:LogSqlBool"] ?? "False";
+                var logSqlBool = false; ;
+                try
+                {
+                    logSqlBool = bool.Parse(logSqlStr);
+                }
+                catch (FormatException)
+                {
+                    //use default false value if string is malformed.
+                }
+                if (logSqlBool)
+                {
+                    Database.EnsureCreated();
+                }
                 dbCreated = true;
             }
             

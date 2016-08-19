@@ -63,6 +63,16 @@ namespace FinSysCore
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory,FinSysContext context)
         {
             var logLevelStr = _config["AppSettings:LogLevel"];
+            var logSqlStr = _config["AppSettings:LogSqlBool"] ?? "False";
+            var logSqlBool = false; ;
+            try
+            {
+                logSqlBool = bool.Parse(logSqlStr);
+            }
+            catch (FormatException )
+            {
+                //use defaul false value if string is malformed.
+            }
             LogLevel logLevel = LogLevel.Information;
             if (!string.IsNullOrEmpty(logLevelStr))
             {
@@ -101,7 +111,10 @@ namespace FinSysCore
                 //loggerFactory.AddDebug(logLevel);
                 app.UseDeveloperExceptionPage();
             }
-            loggerFactory.AddProvider(new EFLoggerProvider(logLevel, context));
+            if (logSqlBool)
+            {
+                loggerFactory.AddProvider(new EFLoggerProvider(logLevel, context));
+            }
         }
     }
 }
