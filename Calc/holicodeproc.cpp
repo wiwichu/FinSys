@@ -31,14 +31,9 @@ cholicodeproc::~cholicodeproc()
 
 unsigned long cholicodeproc::Setholicodearray(int * TotalCodes)
 {
-//	int arraycount;
-	return_state = return_success;
 
-//	DB_local->loadholicodearray(TotalCodes, &return_state, localhandles);
-
-//func_end:
 	
-	return return_state;
+	return return_success;
  
 }
 /*

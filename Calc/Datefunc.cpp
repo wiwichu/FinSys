@@ -858,7 +858,8 @@ int  Date_Funcs::datecmp 	(const void * date1,
 int cmp_result = 0;
 
 
-	cmp_result = memcmp(date1, date2, 5);
+	//cmp_result = memcmp(date1, date2, 5);
+	cmp_result = memcmp(date1, date2, 4);
 
 
 //datecmp_end:

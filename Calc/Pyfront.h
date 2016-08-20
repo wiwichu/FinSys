@@ -834,7 +834,7 @@ set<string> holiSet;
  char excoup_choice [excoup_count] [excoup_names_len];
  char  calc_what;
  long double  int_rate;
- unsigned long return_state;
+ //unsigned long return_state;
  long double  in_price;
  long double  in_yield;
  long double  out_price;
@@ -897,7 +897,7 @@ set<string> holiSet;
 		actions;
 
 actions	actions_array [4];
-date_union date_union_hold;
+//date_union date_union_hold;
 date_union issue_date_hold;
 date_union check_date1;
 date_union dummy_date1;

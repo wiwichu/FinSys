@@ -40,7 +40,7 @@ private:
 //	CDB::DB_Handles localhandles;
 //	CDB::holiday_code_rec * holicodearray;
 	//bool BOOL_return;
-	unsigned long return_state;
+	//unsigned long return_state;
 
 public:
 	cholicodeproc();

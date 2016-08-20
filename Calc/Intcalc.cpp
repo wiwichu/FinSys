@@ -2325,11 +2325,17 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 	long	period_hold = 0;	/*{ period_hold is a work field for period calculations.}*/
 
 	date_union date_hold;	/*{ date_hold is a work field to hold the date.}*/
+	datecpy(date_hold.date_string, zero_date);
 	date_union date_hold2;	/*{ date_hold2 is a work field to hold the date.}*/
+	datecpy(date_hold2.date_string, zero_date);
 	date_union first_date_adj;/*{ first_date_adj holds the first pay date adjusted to the regular pay day.}*/
+	datecpy(first_date_adj.date_string, zero_date);
 	date_union pre_adj_date;/*{ pre_adj_date holds the date before it is adjusted.}*/
+	datecpy(pre_adj_date.date_string, zero_date);
 	date_union prv_rerate;/*{ prv_rerate is a hold field for rerate date counting.}*/
+	datecpy(prv_rerate.date_string, zero_date);
 	date_union nxt_rerate;/*{ nxt_rerate is a hold field for rerate date counting.}*/
+	datecpy(nxt_rerate.date_string, zero_date);
 
 //	strcpy(module_name,"n_p_pay");
 

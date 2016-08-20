@@ -100,7 +100,7 @@ namespace FinSysCore.Services
                     strPtr = Marshal.ReadIntPtr(ptr);
                     string name = Marshal.PtrToStringAnsi(strPtr);
                     daycounts.Add(name);
-                    ptr += Marshal.SizeOf(typeof(IntPtr));
+                    ptr += Marshal.SizeOf<IntPtr>();
                 }
                 return daycounts;
             })
@@ -193,7 +193,7 @@ namespace FinSysCore.Services
                     strPtr = Marshal.ReadIntPtr(ptr);
                     string name = Marshal.PtrToStringAnsi(strPtr);
                     payfreqs.Add(name);
-                    ptr += Marshal.SizeOf(typeof(IntPtr));
+                    ptr += Marshal.SizeOf<IntPtr>();
                 }
                 return payfreqs;
             })
@@ -272,13 +272,13 @@ namespace FinSysCore.Services
                 month = ins.NextToLastPayDate.Month,
                 day = ins.NextToLastPayDate.Day
             };
-            instr.maturityDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            instr.maturityDate = Marshal.AllocHGlobal(Marshal.SizeOf<DateDescr>());
             Marshal.StructureToPtr(maturityDate, instr.maturityDate, false);
-            instr.issueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            instr.issueDate = Marshal.AllocHGlobal(Marshal.SizeOf<DateDescr>());
             Marshal.StructureToPtr(issueDate, instr.issueDate, false);
-            instr.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            instr.firstPayDate = Marshal.AllocHGlobal(Marshal.SizeOf<DateDescr>());
             Marshal.StructureToPtr(firstPayDate, instr.firstPayDate, false);
-            instr.nextToLastPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            instr.nextToLastPayDate = Marshal.AllocHGlobal(Marshal.SizeOf<DateDescr>());
             Marshal.StructureToPtr(nextToLastPayDate, instr.nextToLastPayDate, false);
 
             return instr;
@@ -326,11 +326,11 @@ namespace FinSysCore.Services
                 month = calcs.NextPayDate.Month,
                 day = calcs.NextPayDate.Day
             };
-            calculations.valueDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            calculations.valueDate = Marshal.AllocHGlobal(Marshal.SizeOf<DateDescr>());
             Marshal.StructureToPtr(valueDate, calculations.valueDate, false);
-            calculations.previousPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            calculations.previousPayDate = Marshal.AllocHGlobal(Marshal.SizeOf<DateDescr>());
             Marshal.StructureToPtr(previousPayDate, calculations.previousPayDate, false);
-            calculations.nextPayDate = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)));
+            calculations.nextPayDate = Marshal.AllocHGlobal(Marshal.SizeOf<DateDescr>());
             Marshal.StructureToPtr(nextPayDate, calculations.nextPayDate, false);
 
             return calculations;
@@ -428,7 +428,7 @@ namespace FinSysCore.Services
                     strPtr = Marshal.ReadIntPtr(ptr);
                     string name = Marshal.PtrToStringAnsi(strPtr);
                     yieldmethods.Add(name);
-                    ptr += Marshal.SizeOf(typeof(IntPtr));
+                    ptr += Marshal.SizeOf<IntPtr>();
                 }
                 return yieldmethods;
             })
@@ -551,7 +551,7 @@ namespace FinSysCore.Services
                 }
                 ////////////////
 
-                var structSizeX = Marshal.SizeOf(typeof(CashFlowDescr));
+                var structSizeX = Marshal.SizeOf<CashFlowDescr>();
                 var cashFlowsOutX = new List<CashFlowDescr>();
                 var cashFlowOutX = cashFlows.cashFlows;
 
@@ -563,7 +563,7 @@ namespace FinSysCore.Services
                 }
 
                 ////////////////
-                var structSize = Marshal.SizeOf(typeof(CashFlowDescr));
+                var structSize = Marshal.SizeOf<CashFlowDescr>();
                 var cashFlowsOut = new List<CashFlowDescr>();
                 var cashFlowOut = cashFlows.cashFlows;
                 var cashFlowsResult = new List<CashFlow>();
@@ -648,7 +648,7 @@ namespace FinSysCore.Services
                     strPtr = Marshal.ReadIntPtr(ptr);
                     string name = Marshal.PtrToStringAnsi(strPtr);
                     adjusts.Add(name);
-                    ptr += Marshal.SizeOf(typeof(IntPtr));
+                    ptr += Marshal.SizeOf<IntPtr>();
                 }
                 return adjusts;
             })
@@ -722,12 +722,12 @@ namespace FinSysCore.Services
             ).ToList();
             CashFlowDescr[] cfArray = cfList.ToArray();
             cashFlowsDescr.size = cfList.Count;
-            cashFlowsDescr.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(CashFlowDescr)) * cfArray.Length);
+            cashFlowsDescr.cashFlows = Marshal.AllocHGlobal(Marshal.SizeOf<CashFlowDescr>() * cfArray.Length);
             IntPtr buffer = new IntPtr(cashFlowsDescr.cashFlows.ToInt64());
             for (int i = 0; i < cfArray.Length; i++)
             {
                 Marshal.StructureToPtr(cfArray[i], buffer, true);
-                buffer = new IntPtr(buffer.ToInt64() + Marshal.SizeOf(typeof(CashFlowDescr)));
+                buffer = new IntPtr(buffer.ToInt64() + Marshal.SizeOf<CashFlowDescr>());
             }
             return cashFlowsDescr;
         }
@@ -744,12 +744,12 @@ namespace FinSysCore.Services
             ).ToList();
             DateDescr[] dArray = dList.ToArray();
             datesDescr.size = dList.Count;
-            datesDescr.dates = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(DateDescr)) * dArray.Length);
+            datesDescr.dates = Marshal.AllocHGlobal(Marshal.SizeOf<DateDescr>() * dArray.Length);
             IntPtr buffer = new IntPtr(datesDescr.dates.ToInt64());
             for (int i = 0; i < dArray.Length; i++)
             {
                 Marshal.StructureToPtr(dArray[i], buffer, true);
-                buffer = new IntPtr(buffer.ToInt64() + Marshal.SizeOf(typeof(DateDescr)));
+                buffer = new IntPtr(buffer.ToInt64() + Marshal.SizeOf<DateDescr>());
             }
             return datesDescr;
         }
@@ -768,12 +768,12 @@ namespace FinSysCore.Services
             ).ToList();
             RateDescr[] rcArray = rcList.ToArray();
             rateCurveDescr.size = rcList.Count;
-            rateCurveDescr.rates = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(RateDescr)) * rcArray.Length);
+            rateCurveDescr.rates = Marshal.AllocHGlobal(Marshal.SizeOf<RateDescr>() * rcArray.Length);
             IntPtr buffer = new IntPtr(rateCurveDescr.rates.ToInt64());
             for (int i = 0; i < rcArray.Length; i++)
             {
                 Marshal.StructureToPtr(rcArray[i], buffer, true);
-                buffer = new IntPtr(buffer.ToInt64() + Marshal.SizeOf(typeof(RateDescr)));
+                buffer = new IntPtr(buffer.ToInt64() + Marshal.SizeOf<RateDescr>());
             }
             return rateCurveDescr;
         }
@@ -811,7 +811,7 @@ namespace FinSysCore.Services
                     status = getStatusText(status, statusText, out textSize);
                     throw new InvalidOperationException(statusText.ToString());
                 }
-                var structSize = Marshal.SizeOf(typeof(CashFlowDescr));
+                var structSize = Marshal.SizeOf<CashFlowDescr>();
                 for (int i = 0; i < cashFlowsDescr.size; i++)
                 {
                     CashFlowDescr cashFlowDescr = (CashFlowDescr)Marshal.PtrToStructure(cashFlowsDescr.cashFlows,
@@ -993,7 +993,7 @@ namespace FinSysCore.Services
                                 throw new InvalidOperationException(statusText.ToString());
                             }
                         }
-                        var structSize = Marshal.SizeOf(typeof(CashFlowDescr));
+                        var structSize = Marshal.SizeOf<CashFlowDescr>();
                         var cashFlowsOut = new List<CashFlowDescr>();
                         var cashFlowOut = cashFlows.cashFlows;
                         IList<CashFlow> newCf = new List<CashFlow>();

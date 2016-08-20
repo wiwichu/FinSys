@@ -96,7 +96,7 @@ private:
 
 	int dummy_int;
 	size_t dummy_size_t;
-	unsigned long return_state;
+	//unsigned long return_state;
 	unsigned char current_base;
 	unsigned char current_month;
 	unsigned char current_day;

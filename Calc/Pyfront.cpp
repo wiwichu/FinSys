@@ -11,6 +11,7 @@ Py_Front::Py_Front()
 	:interest(0), interest_days(0)
 {
 	//scr_meth = scr_meth_general;
+	rate_array[0].event_date.date.centuries = 0;
 }
 /*
 Py_Front::Py_Front(CDB * DB_parm) 
@@ -45,6 +46,7 @@ unsigned long  _export	Py_Front::action_init_cf()
 }
 unsigned long  _export	Py_Front::action_init_mbs()
 {
+	unsigned long return_state = 0;
 	current_class = instr_mbs_class;
 	in_instr.instr_class = instr_mbs_class;
 	return_state = init_fra_holiday();
@@ -684,6 +686,7 @@ unsigned long _export	Py_Front::proc_simp_comp_frn_py()
 }
 unsigned long _export	Py_Front::proc_pay_adj_py()
 {
+	unsigned long return_state = 0;
 	if (return_state != return_success)
 	{
 		return return_state;
@@ -780,10 +783,7 @@ unsigned long _export	Py_Front::proc_pay_adj_py()
 }
 unsigned long _export	Py_Front::proc_holi_py()
 {
-	if (return_state != return_success)
-	{
-		return return_state;
-	}
+	unsigned long return_state = 0;
 
 
 	if (strcmp(rerate_sched.current_holiday_adj_name,
@@ -877,6 +877,7 @@ unsigned long _export	Py_Front::proc_holi_py()
 }
 unsigned long _export	Py_Front::proc_pay_freq_py()
 {
+	unsigned long return_state = 0;
 
 	if (strcmp(current_pay_freq_name, freq_names[0]) == 0)
 	{
@@ -943,6 +944,7 @@ unsigned long _export	Py_Front::proc_pay_freq_py()
 }
 unsigned long _export	Py_Front::proc_yield_freq_py()
 {
+	unsigned long return_state = 0;
 
 	if (strcmp(current_yield_freq_name, freq_names[0]) == 0)
 	{
@@ -1171,6 +1173,7 @@ return return_success;
 
 unsigned long _export	Py_Front::check_val_vs_mat_py()
 {
+	unsigned long return_state = 0;
 	return_state = check_tenor_py();
 
 	if (return_state)
@@ -1196,6 +1199,7 @@ unsigned long _export	Py_Front::check_val_vs_mat_py()
 }
 unsigned long _export	Py_Front::proc_yield_meth_py()
 {
+	unsigned long return_state = 0;
 	if (strcmp(current_yield_meth_name,
 		yield_meth_names[py_aibd_yield_meth]) == 0)
 	{
@@ -1558,6 +1562,7 @@ unsigned long _export	Py_Front::proc_val_date_py()
 }
 unsigned long _export	Py_Front::proc_class_desc_py()
 {
+	unsigned long return_state = 0;
 	/*{Validate class.}*/
 	int str_cmp = 1;
 	for (int element_count = 0;
@@ -1592,6 +1597,7 @@ unsigned long _export	Py_Front::proc_class_desc_py()
 }
 unsigned long _export	Py_Front::check_val_vs_first_date_frn()
 {
+	unsigned long return_state = 0;
 
 	int str_cmp = datecmp(&val_date.date_string,
 		rerate_sched.rerate_sched.first_date.date_string);
@@ -1612,6 +1618,7 @@ unsigned long _export	Py_Front::check_val_vs_first_date_frn()
 }			
 unsigned long _export	Py_Front::check_iss_vs_mat()
 {
+	unsigned long return_state = 0;
 	return_state = check_tenor_py();
 
 	if (return_state)
@@ -1637,6 +1644,7 @@ unsigned long _export	Py_Front::check_iss_vs_mat()
 }
 unsigned long _export	Py_Front::check_iss_vs_first()
 {
+	unsigned long return_state = 0;
 
 	int str_cmp = datecmp(&first_date.date_string,
 		&issue_date.date_string);
@@ -1654,7 +1662,8 @@ unsigned long _export	Py_Front::check_iss_vs_first()
 }
 unsigned long _export	Py_Front::check_first_vs_mat()
 {
-int str_cmp = datecmp(&first_date.date_string,
+	unsigned long return_state = 0;
+	int str_cmp = datecmp(&first_date.date_string,
 	&mat_date.date_string);
 
 if (str_cmp > 0)
@@ -1672,6 +1681,7 @@ return return_success;
 
 unsigned long _export	Py_Front::check_iss_vs_penult()
 {
+	unsigned long return_state = 0;
 	int str_cmp = datecmp(&penult_date.date_string,
 		&issue_date.date_string);
 
@@ -1689,6 +1699,7 @@ unsigned long _export	Py_Front::check_iss_vs_penult()
 }
 unsigned long _export	Py_Front::check_iss_vs_val()
 {
+	unsigned long return_state = 0;
 
 int str_cmp = datecmp(&val_date.date_string,
 	&issue_date.date_string);
@@ -1707,7 +1718,8 @@ return return_success;
 
 unsigned long _export	Py_Front::check_penult_vs_mat()
 {
-int str_cmp = datecmp(&penult_date.date_string,
+	unsigned long return_state = 0;
+	int str_cmp = datecmp(&penult_date.date_string,
 	&mat_date.date_string);
 
 if (str_cmp >= 0)
@@ -1726,6 +1738,7 @@ return return_success;
 }
 unsigned long _export	Py_Front::check_tenor_py()
 {
+	unsigned long return_state = 0;
 	long tenor_days = 0;
 	return_state = tenor(val_date,
 		mat_date,
@@ -1755,6 +1768,7 @@ unsigned long _export	Py_Front::check_tenor_py()
 }
 unsigned long _export	Py_Front::set_accrue_date_py()
 {
+	unsigned long return_state = 0;
 	if (in_instr.instr_class == instr_goj_class)
 	{
 
@@ -1782,6 +1796,9 @@ unsigned long _export	Py_Front::set_accrue_date_py()
 }
 unsigned long _export	Py_Front::proc_def_dates_py()
 {
+	unsigned long return_state = 0;
+	date_union date_union_hold;
+	datecpy(date_union_hold.date_string, zero_date);
 	return_state = proc_mat_date_py();
 	if (return_state != return_success)
 	{
@@ -2052,6 +2069,7 @@ unsigned long _export	Py_Front::proc_def_dates_py()
 }
 unsigned long _export	Py_Front::calc_np_py()
 {
+	unsigned long return_state = 0;
 	if (current_class != instr_cashflow_class)
 
 	{
@@ -2080,6 +2098,9 @@ return return_success;
 }
 unsigned long _export	Py_Front::proc_gen_dates_frn_py()
 {
+	unsigned long return_state = 0;
+	date_union date_union_hold;
+	datecpy(date_union_hold.date_string, zero_date);
 
 	return_state = proc_mat_date_py();
 	if (return_state != return_success)
@@ -2315,6 +2336,10 @@ unsigned long _export	Py_Front::proc_gen_dates_frn_py()
 }
 unsigned long _export	Py_Front::check_date_synch_py()
 {
+	unsigned long return_state = 0;
+	date_union date_union_hold;
+	datecpy(date_union_hold.date_string, zero_date);
+
 	proc_day_count_py();
 
 	/*{ Check that the dates are synchronized.}*/
@@ -2398,8 +2423,7 @@ unsigned long _export	Py_Front::check_date_synch_py()
 			, holiSet
 			);
 
-
-		if (return_state)
+		if (return_state != return_success)
 		{
 
 			/*{ Dates are not in synch. }*/
@@ -2492,6 +2516,7 @@ unsigned long _export	Py_Front::check_date_synch_py()
 }					
 unsigned long _export	Py_Front::proc_penult_date_py()
 {
+	unsigned long return_state = 0;
 	return_state = datechck(penult_date);
 	if (return_state != return_success)
 	{
@@ -2505,6 +2530,7 @@ unsigned long _export	Py_Front::proc_penult_date_py()
 
 unsigned long _export	Py_Front::proc_first_date_py()
 {
+	unsigned long return_state = 0;
 	return_state = datechck(first_date);
 	if (return_state != return_success)
 	{
@@ -2519,6 +2545,7 @@ unsigned long _export	Py_Front::proc_first_date_py()
 
 unsigned long _export	Py_Front::proc_first_date_frn_py()
 {
+	unsigned long return_state = 0;
 	return_state = datechck(rerate_sched.rerate_sched.first_date);
 	if (return_state != return_success)
 	{
@@ -2533,6 +2560,7 @@ unsigned long _export	Py_Front::proc_first_date_frn_py()
 }
 unsigned long _export	Py_Front::proc_all_dates_py()
 {
+	unsigned long return_state = 0;
 
 	return_state = proc_val_date_py();
 	if (return_state != return_success)
@@ -2613,6 +2641,7 @@ unsigned long _export	Py_Front::proc_all_dates_py()
 }
 unsigned long _export	Py_Front::proc_int_py()
 {
+	unsigned long return_state = 0;
 	if (current_class == instr_cashflow_class)
 	{
 		return return_success;
@@ -2661,6 +2690,7 @@ unsigned long _export	Py_Front::proc_price_py()
 }
 unsigned long _export	Py_Front::check_price_vs_calc_py()
 {
+	unsigned long return_state = 0;
 	if ((calc_what == py_yield_from_price_calc_what) &&
 		(in_price <= 0))
 	{
@@ -2676,6 +2706,7 @@ unsigned long _export	Py_Front::check_price_vs_calc_py()
 }
 unsigned long _export	Py_Front::py_proc_calc_what_py()
 {
+	unsigned long return_state = 0;
 
 	pyparm.calc_what = calc_what;
 
@@ -2692,6 +2723,7 @@ unsigned long _export	Py_Front::py_proc_calc_what_py()
 }
 unsigned long _export	Py_Front::check_all_parms_py()
 {
+	unsigned long return_state = 0;
 	proc_all_dates_py();
 
 	if (return_state != return_success)
@@ -2779,6 +2811,7 @@ unsigned long  _export	Py_Front::proc_prepay_type_py()
 }
 unsigned long  _export	Py_Front::proc_prepay_rate_py()
 {
+	unsigned long return_state = 0;
 	proc_prepay_type_py();
 	if ((cpr_rate < 0) || (cpr_rate >= 100))
 	{
@@ -2792,6 +2825,7 @@ unsigned long  _export	Py_Front::proc_prepay_rate_py()
 }
 unsigned long _export	Py_Front::proc_lag_py()
 {
+	unsigned long return_state = 0;
 
 	if ((lag < 0) || (lag > 100))
 	{
@@ -2808,10 +2842,11 @@ unsigned long _export	Py_Front::proc_lag_py()
 }
 unsigned long _export	Py_Front::proc_cashflow_py()
 {
-int element_count = 1;
+	unsigned long return_state = 0;
+	int element_count = 1;
+date_union date_union_hold;
+datecpy(date_union_hold.date_string, zero_date);
 
-datecpy(date_union_hold.date_string,
-	zero_date);
 
 return_state = datechck(rate_array[element_count].event_date);
 
@@ -2904,6 +2939,7 @@ return return_success;
 }
 unsigned long _export	Py_Front::calc_int_py()
 {
+	unsigned long return_state = 0;
 
 	if (in_instr.instr_class == instr_cashflow_class)
 	{
@@ -2992,6 +3028,7 @@ unsigned long _export	Py_Front::calc_int_py()
 
 unsigned long _export	Py_Front::calc_py_py()
 {
+	unsigned long return_state = 0;
 	return_state = check_all_parms_py();
 	if (return_state != return_success)
 	{
@@ -3065,6 +3102,7 @@ unsigned long  _export	Py_Front::freq_count_init_py()
 
 unsigned long _export	Py_Front::action_init_screen_py()
 {
+	unsigned long return_status = 0;
 	interest = 0;
 	interest_days = 0;
 	instr_class_init();
@@ -3075,10 +3113,10 @@ unsigned long _export	Py_Front::action_init_screen_py()
 	action_init_excoup();
 	action_sink_fund_mat();
 	prepay_type_init_py();
-	return_state = set_current();
-	if (return_state != return_success) {
+	return_status = set_current();
+	if (return_status != return_success) {
 
-		return return_state;
+		return return_status;
 
 	}
 
@@ -3086,6 +3124,7 @@ unsigned long _export	Py_Front::action_init_screen_py()
 }
 unsigned long _export	Py_Front::action_proc_mbs_py()
 {
+	unsigned long return_state = 0;
 	proc_service_py();
 	return_state = proc_prepay_rate_py();
 	if (return_state != return_success)
@@ -3127,6 +3166,7 @@ long double	work_long_double = 0;
 
 size_t num_bytes = 0;
 
+unsigned long return_state = 0;
 
 
 	return_state = return_success;
@@ -4739,59 +4779,51 @@ unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::setfirstdate(char first_date_str
 
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::getexcoup(char excoup_name_str [excoup_name_length])
 {
-	return_state = return_success;
 	strcpy(excoup_name_str, current_excoup_name);
-	return return_state;
+	return return_success;
 }
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::getexcoup(char &excoup)
 {
-	return_state = return_success;
 	excoup = current_excoup;
-	return return_state;
+	return return_success;
 }
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::gettradeflat(char tradeflat_name_str[tradeflat_name_length])
 {
-	return_state = return_success;
 	strcpy(tradeflat_name_str, current_tradeflat_name);
-	return return_state;
+	return return_success;
 }
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::gettradeflat(char &tradeflat)
 {
-	return_state = return_success;
 	tradeflat = current_tradeflat;
-	return return_state;
+	return return_success;
 }
 
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setsimpcomp (char simp_comp_str[simp_comp_names_len])
 {
 
-	return_state = return_success;
 	strcpy(rerate_sched.current_simp_comp_name, simp_comp_str);
-	return return_state;
+	return return_success;
 
 }
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::setexcoup(char excoup_name_str [excoup_name_length])
 {
 
-	return_state = return_success;
 	strcpy(current_excoup_name, excoup_name_str);
-	return return_state;
+	return return_success;
 
 }
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::settradeflat(char tradeflat_name_str[tradeflat_name_length])
 {
 
-	return_state = return_success;
 	strcpy(current_tradeflat_name, tradeflat_name_str);
-	return return_state;
+	return return_success;
 
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getexcoupchoice(int element_count,char excoup_name_str[excoup_name_length])
 {
 
-	return_state = return_success;
 	strcpy(excoup_name_str, excoup_choice [element_count]);
-	return return_state;
+	return return_success;
 
 }
 
@@ -4799,9 +4831,8 @@ unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getsinkmatchoice(int element_co
 	char sink_mat_str[redemp_sched_names_len])
 {
 
-	return_state = return_success;
 	strcpy(sink_mat_str, sink_fund_mat_choice [element_count]);
-	return return_state;
+	return return_success;
 
 }
 
@@ -4810,68 +4841,60 @@ unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getsinkmatchoice(int element_co
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getcalcwhat(char *current_calc_what)
 {
 
-	return_state = return_success;
 	*current_calc_what = calc_what;
-	return return_state;
+	return return_success;
 
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setcalcwhat(char current_calc_what)
 {
 
-	return_state = return_success;
 	calc_what = current_calc_what;
-	return return_state;
+	return return_success;
 
 }
 
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getintrate(long double *intrateparm)
 {
 
-	return_state = return_success;
 	*intrateparm = int_rate;
-	return return_state;
+	return return_success;
 
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setintrate(long double intrateparm)
 {
 
-	return_state = return_success;
 	int_rate = intrateparm;
-	return return_state;
+	return return_success;
 
 }
 
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getinprice(long double *inpriceparm)
 {
 
-	return_state = return_success;
 	*inpriceparm = in_price;
-	return return_state;
+	return return_success;
 
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setinprice(long double inpriceparm)
 {
 
-	return_state = return_success;
 	in_price = inpriceparm;
-	return return_state;
+	return return_success;
 
 }
 
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getinyield(long double *inyieldparm)
 {
 
-	return_state = return_success;
 	*inyieldparm = in_yield;
-	return return_state;
+	return return_success;
 
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setinyield(long double inyieldparm)
 {
 
-	return_state = return_success;
 	in_yield = inyieldparm;
-	return return_state;
+	return return_success;
 
 }
 
@@ -4879,279 +4902,241 @@ unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setinyield(long double inyieldp
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getoutprice(long double *outpriceparm)
 {
 
-	return_state = return_success;
 	*outpriceparm = out_price;
-	return return_state;
+	return return_success;
 
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setoutprice(long double outpriceparm)
 {
 
-	return_state = return_success;
 	out_price = outpriceparm;
-	return return_state;
+	return return_success;
 
 }
 
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getoutyield(long double *outyieldparm)
 {
 
-	return_state = return_success;
 	*outyieldparm = out_yield;
-	return return_state;
+	return return_success;
 
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setoutyield(long double outyieldparm)
 {
 
-	return_state = return_success;
 	out_yield = outyieldparm;
-	return return_state;
+	return return_success;
 
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getcprrate(long double *cprrateparm)
 {
 
-	return_state = return_success;
 	*cprrateparm = cpr_rate;
-	return return_state;
+	return return_success;
 
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setcprrate(long double cprrateparm)
 {
 
-	return_state = return_success;
 	cpr_rate = cprrateparm;
-	return return_state;
+	return return_success;
 
 }
 
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getcurrentfactor(long double *currentfactorparm)
 {
 
-	return_state = return_success;
 	*currentfactorparm = current_factor;
-	return return_state;
+	return return_success;
 
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setcurrentfactor(long double currentfactorparm)
 {
 
-	return_state = return_success;
 	current_factor = currentfactorparm;
-	return return_state;
+	return return_success;
 
 }
 
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getservicefee(long double *servicefeeparm)
 {
 
-	return_state = return_success;
 	*servicefeeparm = service_fee;
-	return return_state;
+	return return_success;
 
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setservicefee(long double servicefeeparm)
 {
 
-	return_state = return_success;
 	service_fee = servicefeeparm;
-	return return_state;
+	return return_success;
 
 }
 
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getlag(long double *lagparm)
 {
 
-	return_state = return_success;
 	*lagparm = lag;
-	return return_state;
+	return return_success;
 
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setlag(long double lagparm)
 {
 
-	return_state = return_success;
 	lag = lagparm;
-	return return_state;
+	return return_success;
 
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setclassdesc(int class_number,
 	char classdescparm [instr_class_desc_len])
 {
-	return_state = return_success;
 	strcpy(instr_class_descs[class_number], classdescparm);
-	return return_state;
+	return return_success;
 }
 
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getprepay(char *prepaytypeparm)
 {
 
-	return_state = return_success;
 	*prepaytypeparm = prepay_type;
-	return return_state;
+	return return_success;
 
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setprepay(char prepaytypeparm)
 {
 
-	return_state = return_success;
 	prepay_type = prepaytypeparm;
-	return return_state;
+	return return_success;
 
 }
 unsigned long  _FAR_FUNC _EX_IN_FUNC   Py_Front::getprepayname( char prepayparm [prepay_type_names_len])
 {
-	return_state = return_success;
 	strcpy(prepayparm,  prepay_type_choice[prepay_type]);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setclassdesc(char classdescparm [instr_class_desc_len])
 {
-	return_state = return_success;
 	strcpy(current_class_desc, classdescparm);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getclassdesc(int class_number,
 	char classdescparm [instr_class_desc_len])
 {
-	return_state = return_success;
 	strcpy(classdescparm, instr_class_descs[class_number]);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getclassdesc(char classdescparm [instr_class_desc_len])
 {
-	return_state = return_success;
 	strcpy(classdescparm, instr_class_descs[current_class]);
-	return return_state;
+	return return_success;
 }
 
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getclassnumber(char *classnumberparm)
 {
 
-	return_state = return_success;
 	*classnumberparm = current_class;
-	return return_state;
+	return return_success;
 
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setclassnumber(char classnumberparm)
 {
 
-	return_state = return_success;
 	current_class = classnumberparm;
-	return return_state;
+	return return_success;
 
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setdaycount(int daycount_number,
 	char daycountparm [day_count_names_len])
 {
-	return_state = return_success;
 	strcpy(day_count_names[daycount_number], daycountparm);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getdaycount(int daycount_number,
 	char daycountparm [day_count_names_len])
 {
-	return_state = return_success;
 	strcpy(daycountparm, day_count_names[daycount_number]);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setdaycount(char daycountparm [day_count_names_len])
 {
-	return_state = return_success;
 	strcpy(current_day_count_name, daycountparm);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getdaycount(char daycountparm [day_count_names_len])
 {
-	return_state = return_success;
 	strcpy(daycountparm, current_day_count_name);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setdaycount(int daycount_number)
 {
-	return_state = return_success;
 	current_day_count = daycount_number;
 	strcpy(current_day_count_name,day_count_names[daycount_number]);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getdaycount(int *daycount_number)
 {
-	return_state = return_success;
 	*daycount_number = current_day_count;
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setpayfreq(int payfreq_number)
 {
-	return_state = return_success;
 	current_pay_freq = payfreq_number;
 	strcpy(current_pay_freq_name,freq_names[payfreq_number]);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getpayfreq(int *payfreq_number)
 {
-	return_state = return_success;
 	*payfreq_number = current_pay_freq;
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setpayfreq(int payfreq_number,
 	char payfreqparm [freq_names_len])
 {
-	return_state = return_success;
 	strcpy(freq_names[payfreq_number], payfreqparm);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getpayfreq(int payfreq_number,
 	char payfreqparm [freq_names_len])
 {
-	return_state = return_success;
 	strcpy(payfreqparm, freq_names[payfreq_number]);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getpayfreq(char payfreqparm [freq_names_len])
 {
-	return_state = return_success;
 	strcpy(payfreqparm, freq_names[current_pay_freq]);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setpayfreq(char payfreqparm [freq_names_len])
 {
-	return_state = return_success;
 	strcpy(current_pay_freq_name, payfreqparm);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setmonthend(char monthendparm [monthend_names_len])
 {
-	return_state = return_success;
 	strcpy(current_monthend_name, monthendparm);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setmonthend(int monthend_number,
 	char monthendparm [monthend_names_len])
 {
-	return_state = return_success;
 	strcpy(monthend_names[monthend_number], monthendparm);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getmonthend(int monthend_number,
 	char monthendparm [monthend_names_len])
 {
-	return_state = return_success;
 	strcpy(monthendparm, monthend_names[monthend_number]);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getmonthend(char monthendparm [monthend_names_len])
 {
-	return_state = return_success;
 	strcpy(monthendparm, monthend_names[current_monthend]);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setyieldmeth(int yieldmeth_number,
 	char yieldmethparm [yield_names_len])
 {
-	return_state = return_success;
 	strcpy(yield_meth_names[yieldmeth_number], yieldmethparm);
-	return return_state;
+	return return_success;
 }
 unsigned long _FAR_FUNC _EX_IN_FUNC		Py_Front::getHolidays(set<string> &holidays)
 {
@@ -5160,7 +5145,6 @@ unsigned long _FAR_FUNC _EX_IN_FUNC		Py_Front::getHolidays(set<string> &holidays
 }
 unsigned long _FAR_FUNC _EX_IN_FUNC		Py_Front::setHolidays(Py_Front::HOLIDAY* pHolidayArray, int size)
 {
-	return_state = return_success;
 	holiSet.clear();
 	for (int i = 0; i < size; i++)
 	{
@@ -5186,138 +5170,119 @@ unsigned long _FAR_FUNC _EX_IN_FUNC		Py_Front::setHolidays(Py_Front::HOLIDAY* pH
 		holString.append(d);
 		holiSet.insert(holString);
 	}
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setyieldmeth(char yieldmethparm [yield_names_len])
 {
-	return_state = return_success;
 	strcpy(current_yield_meth_name, yieldmethparm);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getyieldmeth(int yieldmeth_number,
 	char yieldmethparm [yield_names_len])
 {
-	return_state = return_success;
 	strcpy(yieldmethparm, yield_meth_names[yieldmeth_number]);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getyieldmeth(char yieldmethparm [yield_names_len])
 {
-	return_state = return_success;
 	strcpy(yieldmethparm, yield_meth_names[current_yield_meth]);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setyielddays(int yielddays_number,
 	char yielddaysparm [day_count_names_len])
 {
-	return_state = return_success;
 	strcpy(day_count_names[yielddays_number], yielddaysparm);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setyielddays(char yielddaysparm [day_count_names_len])
 {
-	return_state = return_success;
 	strcpy(current_yield_days_name,yielddaysparm);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getyielddays(int yielddays_number,
 	char yielddaysparm [day_count_names_len])
 {
-	return_state = return_success;
 	strcpy(yielddaysparm, day_count_names[yielddays_number]);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getyielddays(char yielddaysparm [day_count_names_len])
 {
-	return_state = return_success;
 	strcpy(yielddaysparm, day_count_names[current_yield_days]);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setyieldfreq(int yieldfreq_number,
 	char yieldfreqparm [freq_names_len])
 {
-	return_state = return_success;
 	strcpy(freq_names[yieldfreq_number], yieldfreqparm);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setyieldfreq(char yieldfreqparm [freq_names_len])
 {
-	return_state = return_success;
 	strcpy(current_yield_freq_name, yieldfreqparm);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getyieldfreq(int yieldfreq_number,
 	char yieldfreqparm [freq_names_len])
 {
-	return_state = return_success;
 	strcpy(yieldfreqparm, freq_names[yieldfreq_number]);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getyieldfreq(char yieldfreqparm [freq_names_len])
 {
-	return_state = return_success;
 	strcpy(yieldfreqparm, freq_names[current_yield_freq]);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setyieldmeth(int yieldmeth_number)
 {
-	return_state = return_success;
 	current_yield_meth = yieldmeth_number;
 	strcpy(current_yield_meth_name,yield_meth_names[yieldmeth_number]);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getyieldmeth(int *yieldmeth_number)
 {
-	return_state = return_success;
 	*yieldmeth_number = current_yield_meth;
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setyielddays(int yielddays_number)
 {
-	return_state = return_success;
 	current_yield_days = yielddays_number;
 	strcpy(current_yield_days_name,day_count_names[yielddays_number]);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getyielddays(int *yielddays_number)
 {
-	return_state = return_success;
 	*yielddays_number = current_yield_days;
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setyieldfreq(int yieldfreq_number)
 {
-	return_state = return_success;
 	current_yield_freq = yieldfreq_number;
 	strcpy(current_yield_freq_name,freq_names[yieldfreq_number]);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getyieldfreq(int *yieldfreq_number)
 {
-	return_state = return_success;
 	*yieldfreq_number = current_yield_freq;
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setmonthend(int monthend_number)
 {
-	return_state = return_success;
 	current_monthend = monthend_number;
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getmonthend(int *monthend_number)
 {
-	return_state = return_success;
 	*monthend_number = current_monthend;
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getpayadj(int *pay_adj_number)
 {
-	return_state = return_success;
 	*pay_adj_number = current_payadj;
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setpayadj(int pay_adj_number)
 {
+	unsigned long return_state;
 	return_state = return_success;
 	if (pay_adj_number >= holiday_adj_count)
 	{
@@ -5338,15 +5303,13 @@ unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setpayadj(int pay_adj_number)
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setexcoupdays(int excoupdays)
 {
-	return_state = return_success;
 	current_ex_coup_days = excoupdays;
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getexcoupdays(int *excoupdays)
 {
-	return_state = return_success;
 	*excoupdays = current_ex_coup_days;
-	return return_state;
+	return return_success;
 }
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::getprevcoup(char prev_coup_str [date_str_size])
 {
@@ -5377,73 +5340,64 @@ unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::getnextcoup(Date_Funcs::date_uni
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getintdays(long *intdaysparm)
 {
 
-	return_state = return_success;
 	*intdaysparm = interest_days;
-	return return_state;
+	return return_success;
 
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getinterest(long double *interestparm)
 {
 
-	return_state = return_success;
 	*interestparm = interest;
-	return return_state;
+	return return_success;
 
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getnomadj(long double *nomadjparm)
 {
 
-	return_state = return_success;
 	*nomadjparm = nominal_adjust;
-	return return_state;
+	return return_success;
 
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getduration(long double *durationparm)
 {
 
-	return_state = return_success;
 	*durationparm = duration_hold;
-	return return_state;
+	return return_success;
 
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getmodduration(long double *moddurationparm)
 {
 
-	return_state = return_success;
 	*moddurationparm = modified_duration_hold;
-	return return_state;
+	return return_success;
 
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getconvexity(long double *convexityparm)
 {
 
-	return_state = return_success;
 	*convexityparm = conv;
-	return return_state;
+	return return_success;
 
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getpvbp(long double *pvbpparm)
 {
 
-	return_state = return_success;
 	*pvbpparm = pvbp_out;
-	return return_state;
+	return return_success;
 
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getsinkcount(char *sinkcountparm)
 {
 
-	return_state = return_success;
 	*sinkcountparm = sink_fund_sched[0].last_element;
-	return return_state;
+	return return_success;
 
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setsinkcount(char sinkcountparm)
 {
 
-	return_state = return_success;
 	sink_fund_sched[0].last_element = sinkcountparm;
-	return return_state;
+	return return_success;
 
 }
 
@@ -5451,6 +5405,7 @@ unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getsinkdate(int sink_number, ch
 {
 
 
+	unsigned long return_state;
 	return_state = return_success;
 	return_state =   dateconv(date_format_1, dateconv_union_to_string,
 		sink_date_str, &sink_fund_sched[sink_number].pay_date, &work_double);
@@ -5462,6 +5417,7 @@ unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setsinkdate(int sink_number, ch
 {
 
 
+	unsigned long return_state;
 	return_state = return_success;
 	return_state =  dateconv(date_format_1, dateconv_string_to_union,
 		sink_date_str, &sink_fund_sched[sink_number].pay_date, &work_double);
@@ -5473,9 +5429,8 @@ unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getsinkpay(int sink_number, lon
 {
 
 
-	return_state = return_success;
 	*sink_pay = sink_fund_sched[sink_number].payment;
-	return return_state;
+	return return_success;
 
 }
 
@@ -5483,38 +5438,31 @@ unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setsinkpay(int sink_number, lon
 {
 
 
-	return_state = return_success;
 	sink_fund_sched[sink_number].payment = sink_pay;
-	return return_state;
+	return return_success;
 
 }
 
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setsinkmat(char sink_mat_str[redemp_sched_names_len])
 {
-	return_state = return_success;
 	strcpy(current_sink_fund_mat_name, sink_mat_str);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getsinkmat(char sink_mat_str[redemp_sched_names_len])
 {
-	return_state = return_success;
 	strcpy(sink_mat_str, current_sink_fund_mat_name);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getpartpaycount(char *partpaycountparm)
 {
-
-	return_state = return_success;
 	*partpaycountparm = part_pays_sched[0].last_element;
-	return return_state;
+	return return_success;
 
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setpartpaycount(char partpaycountparm)
 {
-
-	return_state = return_success;
 	part_pays_sched[0].last_element = partpaycountparm;
-	return return_state;
+	return return_success;
 
 }
 
@@ -5522,6 +5470,7 @@ unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getpartpaydate(int partpay_numb
 	char partpay_date_str[date_str_size])
 {
 
+	unsigned long return_state;
 
 	return_state = return_success;
 	return_state =   dateconv(date_format_1, dateconv_union_to_string,
@@ -5535,6 +5484,7 @@ unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setpartpaydate(int partpay_numb
 {
 
 
+	unsigned long return_state;
 	return_state = return_success;
 	return_state =  dateconv(date_format_1, dateconv_string_to_union,
 		partpay_date_str, &part_pays_sched[partpay_number].pay_date, &work_double);
@@ -5544,11 +5494,8 @@ unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setpartpaydate(int partpay_numb
 
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getpartpaypay(int partpay_number, long double *partpay_pay)
 {
-
-
-	return_state = return_success;
 	*partpay_pay = part_pays_sched[partpay_number].payment;
-	return return_state;
+	return return_success;
 
 }
 
@@ -5556,9 +5503,8 @@ unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setpartpaypay(int partpay_numbe
 {
 
 
-	return_state = return_success;
 	part_pays_sched[partpay_number].payment = partpay_pay;
-	return return_state;
+	return return_success;
 
 }
 
@@ -5572,46 +5518,35 @@ void   _FAR_FUNC _EX_IN_FUNC Py_Front::errtext(unsigned long errnum, char error_
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getreratecount(char *reratecountparm)
 {
 
-	return_state = return_success;
-//	*reratecountparm = rate_array[0].event_date.date.centuries - 1;
 	*reratecountparm = rate_array[0].event_date.date.centuries;
-	return return_state;
+	return return_success;
 
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setreratecount(char reratecountparm)
 {
 
-	return_state = return_success;
-//	rate_array[0].event_date.date.centuries = reratecountparm + 1;
 	rate_array[0].event_date.date.centuries = reratecountparm;
-	return return_state;
+	return return_success;
 
 }
 
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getfrnrate(int frn_number, long double *frnrate)
 {
-
-
-	return_state = return_success;
 	*frnrate = rate_array[frn_number].rate;
-	return return_state;
+	return return_success;
 
 }
 
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setfrnrate(int frn_number, long double frnrate)
 {
-
-
-	return_state = return_success;
 	rate_array[frn_number].rate = (float)frnrate;
-	return return_state;
+	return return_success;
 
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setfrnpayfreq(char frnpayfreqparm [freq_names_len])
 {
-	return_state = return_success;
 	strcpy(rerate_sched.current_pay_freq_name, frnpayfreqparm);
-	return return_state;
+	return return_success;
 }
 
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getreratedate(int frn_number,
@@ -5619,6 +5554,7 @@ unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getreratedate(int frn_number,
 {
 
 
+	unsigned long return_state;
 	return_state = return_success;
 	return_state =   dateconv(date_format_1, dateconv_union_to_string,
 //		frn_date_str, &rate_array[frn_number + 1].event_date, &work_double);
@@ -5631,6 +5567,7 @@ unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setreratedate(int frn_number,
 	char frn_date_str[date_str_size])
 {
 
+	unsigned long return_state;
 
 	return_state = return_success;
 	return_state =  dateconv(date_format_1, dateconv_string_to_union,
@@ -5641,6 +5578,7 @@ unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setreratedate(int frn_number,
 
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getholidaytotal(int *holiday_number)
 {
+	unsigned long return_state;
 	return_state = return_success;
 
 	return_state = Setholicodearray(holiday_number);
@@ -5657,15 +5595,13 @@ unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getholiday(int holiday_number, 
 */
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setholiday(int holiday_number)
 {
-	return_state = return_success;
 	current_holiday = holiday_number;
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getholiday(int *holiday_number)
 {
-	return_state = return_success;
 	*holiday_number = current_holiday;
-	return return_state;
+	return return_success;
 }
 /*
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setholiday(char holiday_str[fra_holiday_names_len])
@@ -5686,37 +5622,33 @@ unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getholiday(char holiday_str[fra
 */
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setholidayadj(	char holidayparm [holiday_adj_names_len])
 {
-	return_state = return_success;
 	strcpy(rerate_sched.current_holiday_adj_name, holidayparm);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getholidayadj(	char holidayparm [holiday_adj_names_len])
 {
-	return_state = return_success;
 	strcpy(holidayparm, rerate_sched.current_holiday_adj_name);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getfrnpayfreq(int payfreq_number,
 	char payfreqparm [freq_names_len])
 {
-	return_state = return_success;
 	strcpy(payfreqparm, rerate_sched.pay_freq_choice[payfreq_number]);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getholidayadj(int holadj_number,	char holidayparm [holiday_adj_names_len])
 {
-	return_state = return_success;
 	strcpy(holidayparm, rerate_sched.holiday_adj_choice[holadj_number]);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getholidayadj(int *holadj_number)
 {
-	return_state = return_success;
 	*holadj_number =  rerate_sched.current_holiday_adj;
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setholidayadj(int holadj_number)
 {
+	unsigned long return_state;
 	return_state = return_success;
 	if (holadj_number >= holiday_adj_count)
 	{
@@ -5737,79 +5669,60 @@ unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setholidayadj(int holadj_number
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getfrnpayfreq(char payfreqparm [freq_names_len])
 {
-	return_state = return_success;
 	strcpy(payfreqparm, rerate_sched.current_pay_freq_name);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getfrnpayfreq(int *payfreq_number )
 {
-	return_state = return_success;
 	*payfreq_number = rerate_sched.current_pay_freq;
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getsimpcomp(char simpcompparm [simp_comp_names_len])
 {
-	return_state = return_success;
 	strcpy(simpcompparm, rerate_sched.current_simp_comp_name);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getsimpcomp(int *simpcomp_number )
 {
-	return_state = return_success;
 	*simpcomp_number = rerate_sched.current_simp_comp;
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getsimpcomp(int simpcomp_number,	char simpcompparm [simp_comp_names_len])
 {
-	return_state = return_success;
 	strcpy(simpcompparm, rerate_sched.simp_comp_choice[simpcomp_number]);
-	return return_state;
+	return return_success;
 }
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getprepay(int prepay_number, char prepayparm [prepay_type_names_len])
 {
-	return_state = return_success;
 	strcpy(prepayparm, prepay_type_choice[prepay_number]);
-	return return_state;
+	return return_success;
 }
-/*
-unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getcprrate(int *cprrate)
-{
-	return_state = return_success;
-	*cprrate = cpr_rate;
-	return return_state;
-}
-*/
 unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setprepay(	char prepayparm [prepay_type_names_len])
 {
-	return_state = return_success;
 	strcpy(prepay_type_name, prepayparm);
-	return return_state;
+	return return_success;
 }
 
 unsigned long  _FAR_FUNC _EX_IN_FUNC   Py_Front::getpayfreqlength(int *payfreq_length)
 {
-	return_state = return_success;
 	*payfreq_length = in_instr.pay_freq.freq;
-	return return_state;
+	return return_success;
 }
 unsigned long  _FAR_FUNC _EX_IN_FUNC   Py_Front::getpayfreqperiod(int *payfreq_period)
 {
-	return_state = return_success;
 	*payfreq_period = in_instr.pay_freq.period;
-	return return_state;
+	return return_success;
 }
 
 unsigned long  _FAR_FUNC _EX_IN_FUNC   Py_Front::getpayfreqlengthyield(int *payfreq_length)
 {
-	return_state = return_success;
 	*payfreq_length = pyparm.comp_freq;
-	return return_state;
+	return return_success;
 }
 unsigned long  _FAR_FUNC _EX_IN_FUNC   Py_Front::getpayfreqperiodyield(int *payfreq_period)
 {
-	return_state = return_success;
 	*payfreq_period = event_sched_month_period;
-	return return_state;
+	return return_success;
 }
 
 extern void _export testfunc();

@@ -1027,6 +1027,7 @@ int  priceCashFlows(CashFlowsStruct &cashFlowsStruct,
 		calcs->serviceFee = 0;
 		calcs->yieldOut = 0;
 		DatesStruct holidays;
+		holidays.size = 0;
 		result = getDefaultDatesAndData(*instr, *calcs,holidays);
 		if (result != return_success)
 		{
@@ -1290,6 +1291,7 @@ int  calculateWithCashFlows(InstrumentStruct &instrument, CalculationsStruct &ca
 	}
 	cashFlowsStruct.size = i;
 	RateCurveStruct rcs;
+	rcs.size = 0;
 	priceCashFlows(cashFlowsStruct, calculations.yieldMethod, calculations.yieldFreq, calculations.yieldDayCount, *calculations.valueDate, rcs, Linear);
 
 	return return_success;

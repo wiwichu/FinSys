@@ -5,7 +5,7 @@
 
 holidays_class::holidays_class()
 {
-	return_state = HolidayInit();
+	HolidayInit();
 
 }
 /*
@@ -25,161 +25,28 @@ holidays_class::holidays_class(CDB * DB_parm)
  
 unsigned long holidays_class::HolidayInit()
 {
-	return_state = return_success;
-/*
-	current_base = 0;
-	current_month = month_title;
-	current_day = 0;
-	current_year = 0;
-	current_base_adj = 0;
-	current_base_adj_times = 0;
-	current_holiday_weekday = 8;
-	current_adjust_direction = 0;
-	current_day_adjust = 0;
-	current_base_weekday = 7;
-	current_holiday_adj_times = 0;
-	current_designate = 0;
-	holiday_date_count = 0;
-	holiday_counter = 0;
-//	holiday_record = new CDB::holiday_rec;
-//	if ((holiday_record = (CDB::holiday_rec *)malloc( sizeof(CDB::holiday_rec))) == NULL)
-//	if (	holiday_record = (CDB::holiday_rec *)malloc( sizeof(CDB::holiday_rec)) == NULL)
-//	if (	holiday_record == NULL)
-	{
 
-		return_state = return_err_ins_mem;
-		return return_state;
-	}
-
-	holiday_record->base = 0;
-
-
-
-
-func_end:
-*/
-	return return_state;
+	return return_success;
 
 }
 
 unsigned long holidays_class::AddHolidayRec()
 {
-//	return_state = return_err_DB_invalid;
 
-	return_state = return_success;
-/*
-	memcpy(holiday_record->code,
-			holiday_code,holidaycodelength);
-	memcpy(&holiday_record->base,
-		&current_base,sizeof(holiday_record->base));
-	memcpy(&holiday_record->month,
-		&current_month,sizeof(holiday_record->month));
-	memcpy(&holiday_record->day,
-		&current_day,sizeof(holiday_record->day));
-	memcpy(&holiday_record->year,
-		&current_year,sizeof(holiday_record->year));
-
-	strcpy(holiday_record->name,"Test");
-
-//	DB_holiday->AddHolidayRec(*holiday_record, &return_state, holidayhandles);
-
-	return return_state;
-
-	if (db_type == db_internal_array_type)
-	{
-
-		DB_holiday->AddHolidayRec(*holiday_record, &return_state, holidayhandles);
-//		return_state = AddArray();
-//		return return_state;
-
-	}
-	if (db_type == db_odbc_type)
-	{
-		return_state = return_success;
-
-		memcpy(holiday_record->code,
-				holiday_code,holidaycodelength);
-		memcpy(&holiday_record->base,
-			&current_base,sizeof(holiday_record->base));
-		memcpy(&holiday_record->month,
-			&current_month,sizeof(holiday_record->month));
-		memcpy(&holiday_record->day,
-			&current_day,sizeof(holiday_record->day));
-		memcpy(&holiday_record->year,
-			&current_year,sizeof(holiday_record->year));
-
-		DB_holiday->AddHolidayRec(*holiday_record, &return_state, holidayhandles);
-
-//		return_state = AddODBC();
-//		return return_state;
-
-	}
-	if (db_type == db_oledb_type)
-	{
-
-//		return_state = AddOLEDB();
-//		return return_state;
-		DB_holiday->AddHolidayRec(*holiday_record, &return_state, holidayhandles);
-
-	}
-
-func_end:
-*/
-	return return_state;
+	return return_success;
 
 }
 
 unsigned long holidays_class::DelHolidayRec()
 {
-	return_state = return_err_DB_invalid;
-/*
-	if (db_type == db_internal_array_type)
-	{
-
-		DB_holiday->DelHolidayRec(*holiday_record, &return_state, holidayhandles);
-//		return_state = DelArray();
-		return return_state;
-
-	}
-	if (db_type == db_odbc_type)
-	{
-		return_state = return_success;
-
-		memcpy(holiday_record->code,
-				holiday_code,holidaycodelength);
-		memcpy(&holiday_record->base,
-			&current_base,sizeof(holiday_record->base));
-		memcpy(&holiday_record->month,
-			&current_month,sizeof(holiday_record->month));
-		memcpy(&holiday_record->day,
-			&current_day,sizeof(holiday_record->day));
-		memcpy(&holiday_record->year,
-			&current_year,sizeof(holiday_record->year));
-
-//		DB_holiday->DelHolidayRec(*holiday_record, &return_state, holidayhandles);
-//		return_state = DelODBC();
-//		return return_state;
-
-	}
-	if (db_type == db_oledb_type)
-	{
-
-//		return_state = DelOLEDB();
-		DB_holiday->DelHolidayRec(*holiday_record, &return_state, holidayhandles);
-		return return_state;
-
-	}
-
-
-//func_end:
-*/
-	return return_state;
+	return return_err_DB_invalid;
 
 }
 
 unsigned long holidays_class::HolidayCheckAll()
 {
-  return_state = return_success;
+	unsigned long return_state;
+	return_state = return_success;
 
   switch (current_base)
   {
@@ -278,32 +145,24 @@ unsigned long holidays_class::HolidayCheckAll()
 }
 unsigned long holidays_class::HolidayFind()
 {
-  return_state = return_success;
 
-//func_end:
-	return return_state;
+	return return_success;
 }
 unsigned long holidays_class::HolidayAdd()
 {
-	return_state = AddHolidayRec();
-	return_state = return_success;
-
-//func_end:
-	return return_state;
+	AddHolidayRec();
+	return return_success;
 }
 unsigned long holidays_class::HolidayDelete()
 {
-  return_state = return_success;
 
-//func_end:
-	return return_state;
+	return return_success;
 }
 
 unsigned long holidays_class::GetHolidayBaseTotal(int *array_total)
 {
-	return_state = return_success;
 	*array_total = holidaybasetotal;
-	return return_state;
+	return return_success;
 
 }
 
@@ -331,16 +190,14 @@ unsigned long holidays_class::GetHolidayBase(char *base_parm)
 unsigned long holidays_class::GetCurrentMonth(char *month_parm)
 {
 
-	return_state = return_success;
 	*month_parm = current_month;
-	return return_state;
+	return return_success;
 }
 
 unsigned long holidays_class::GetHolidayBaseDay(int element_count,
 	char day_number_str[holidaybasedaylength])
 {
 
-	return_state = return_success;
 	if (element_count == 0)
 	{
 	  strcpy(day_number_str, language_pick_day);
@@ -350,22 +207,20 @@ unsigned long holidays_class::GetHolidayBaseDay(int element_count,
 	  //itoa((element_count ),day_number_str,10);
 		snprintf(day_number_str, 10, "%d", element_count);
 	}
-	return return_state;
+	return return_success;
 }
 
 unsigned long holidays_class::GetCurrentBaseDay(	char *day_parm)
 {
 
-	return_state = return_success;
 	*day_parm = current_day;
-	return return_state;
+	return return_success;
 }
 
 unsigned long holidays_class::GetBaseAdjTotal(int *array_total)
 {
-	return_state = return_success;
 	*array_total = holidaybaseadjtotal;
-	return return_state;
+	return return_success;
 
 }
 
@@ -377,24 +232,21 @@ unsigned long holidays_class::GetBaseAdj(int element_count,char name_str[holiday
 		holiday_adj_names[event_sched_next_holiday_adj],
 		holiday_adj_names[event_sched_prev_holiday_adj]};
 
-	return_state = return_success;
 
 	strcpy(name_str, holiday_base_adj_names [element_count]);
-	return return_state;
+	return return_success;
 }
 unsigned long holidays_class::GetBaseAdj(char *adj_parm)
 {
 
-	return_state = return_success;
 	*adj_parm = current_base_adj;
-	return return_state;
+	return return_success;
 }
 
 unsigned long holidays_class::GetBaseAdjTimesTotal(int *array_total)
 {
-	return_state = return_success;
 	*array_total = holidaybaseadjtimestotal;
-	return return_state;
+	return return_success;
 
 }
 
@@ -402,7 +254,6 @@ unsigned long holidays_class::GetBaseAdjTimes(int element_count,
 	char name_str[holidaybaseadjtimeslength])
 {
 
-	return_state = return_success;
 	if (element_count == 0)
 	{
 	  strcpy(name_str, language_adjust_times);
@@ -412,21 +263,19 @@ unsigned long holidays_class::GetBaseAdjTimes(int element_count,
 	  //itoa((element_count),name_str,10);
 		snprintf(name_str, 10, "%d", element_count);
 	}
-	return return_state;
+	return return_success;
 }
 unsigned long holidays_class::GetBaseAdjTimes(char *adj_parm)
 {
 
-	return_state = return_success;
 	*adj_parm = current_base_adj_times;
-	return return_state;
+	return return_success;
 }
 
 unsigned long holidays_class::GetHolidayWeekdayTotal(int *array_total)
 {
-	return_state = return_success;
 	*array_total = holidayweekdaytotal;
-	return return_state;
+	return return_success;
 
 }
 
@@ -445,22 +294,21 @@ unsigned long holidays_class::GetHolidayWeekday(int element_count,
 		language_days,
 		language_pick_unit};
 
-	return_state = return_success;
 
 	strcpy(name_str, holiday_weekday_names [element_count]);
-	return return_state;
+	return return_success;
 }
 unsigned long holidays_class::GetHolidayWeekday(char *weekday_parm)
 {
 
-	return_state = return_success;
 	*weekday_parm = current_holiday_weekday;
-	return return_state;
+	return return_success;
 }
 unsigned long holidays_class::SetHolidayWeekday(char name_str[holidayweekdaylength])
 {
 	unsigned char weekday_code;
 
+	unsigned long return_state;
 	return_state = return_success;
 
 	return_state = CheckHolidayWeekday(name_str, &weekday_code);
@@ -483,6 +331,7 @@ unsigned long holidays_class::CheckHolidayWeekday(char name_str[holidayweekdayle
 	char weekday_hold[holidayweekdaylength];
 	unsigned long local_return;
 
+	unsigned long return_state;
 	return_state = return_err_holiday_weekday_invalid;
 
 	for(*weekday_code = 0;
@@ -510,9 +359,8 @@ unsigned long holidays_class::CheckHolidayWeekday(char name_str[holidayweekdayle
 
 unsigned long holidays_class::GetAdjustDirectionTotal(int *array_total)
 {
-	return_state = return_success;
 	*array_total = adjustdirectiontotal;
-	return return_state;
+	return return_success;
 
 }
 
@@ -526,22 +374,21 @@ unsigned long holidays_class::GetAdjustDirection(int element_count,
 		language_after,
 		language_before};
 
-	return_state = return_success;
 
 	strcpy(name_str, adjust_direction_names [element_count]);
-	return return_state;
+	return return_success;
 }
 unsigned long holidays_class::GetAdjustDirection(char *direction_parm)
  {
 
-	return_state = return_success;
 	*direction_parm = current_adjust_direction;
-	return return_state;
+	return return_success;
 }
 unsigned long holidays_class::SetAdjustDirection(char name_str[adjustdirectionlength])
 {
 	unsigned char direction_code;
 
+	unsigned long return_state;
 	return_state = return_success;
 
 	return_state = CheckAdjustDirection(name_str, &direction_code);
@@ -564,6 +411,7 @@ unsigned long holidays_class::CheckAdjustDirection(char name_str[adjustdirection
 	char direction_hold[adjustdirectionlength];
 	unsigned long local_return;
 
+	unsigned long return_state;
 	return_state = return_err_adjust_direction_invalid;
 
 	for(*direction_code = 0;
@@ -591,9 +439,8 @@ unsigned long holidays_class::CheckAdjustDirection(char name_str[adjustdirection
 
 unsigned long holidays_class::GetDayAdjustTotal(int *array_total)
 {
-	return_state = return_success;
 	*array_total = dayadjusttotal;
-	return return_state;
+	return return_success;
 
 }
 
@@ -609,22 +456,21 @@ unsigned long holidays_class::GetDayAdjust(int element_count,
 		language_fourth,
 		language_last};
 
-	return_state = return_success;
 
 	strcpy(name_str, day_adjust_names [element_count]);
-	return return_state;
+	return return_success;
 }
 unsigned long holidays_class::GetDayAdjust(char *day_adjust_parm)
  {
 
-	return_state = return_success;
 	*day_adjust_parm = current_day_adjust;
-	return return_state;
+	return return_success;
 }
 unsigned long holidays_class::SetDayAdjust(char name_str[dayadjustlength])
 {
 	unsigned char day_adjust_code;
 
+	unsigned long return_state;
 	return_state = return_success;
 
 	return_state = CheckDayAdjust(name_str, &day_adjust_code);
@@ -647,6 +493,7 @@ unsigned long holidays_class::CheckDayAdjust(char name_str[dayadjustlength],
 	char day_adjust_hold[dayadjustlength];
 	unsigned long local_return;
 
+	unsigned long return_state;
 	return_state = return_err_day_adjust_invalid;
 
 	for(*day_adjust_code = 0;
@@ -674,9 +521,8 @@ unsigned long holidays_class::CheckDayAdjust(char name_str[dayadjustlength],
 
 unsigned long holidays_class::GetBaseWeekdayTotal(int *array_total)
 {
-	return_state = return_success;
 	*array_total = baseweekdaytotal;
-	return return_state;
+	return return_success;
 
 }
 
@@ -694,10 +540,9 @@ unsigned long holidays_class::GetBaseWeekday(int element_count,
 		language_saturday,
 		language_pick_weekday};
 
-	return_state = return_success;
 
 	strcpy(name_str, base_weekday_names [element_count]);
-	return return_state;
+	return return_success;
 }
 unsigned long holidays_class::GetBaseWeekday(char *base_weekday_parm)
  {
@@ -710,6 +555,7 @@ unsigned long holidays_class::SetBaseWeekday(char name_str[baseweekdaylength])
 {
 	unsigned char base_weekday_code;
 
+	unsigned long return_state;
 	return_state = return_success;
 
 	return_state = CheckBaseWeekday(name_str, &base_weekday_code);
@@ -743,7 +589,7 @@ unsigned long holidays_class::CheckBaseWeekday(unsigned char base_weekday_code)
 
   }
 //func_end:
-	return return_state;
+	return local_return;
 }
 unsigned long holidays_class::CheckBaseWeekday(char name_str[baseweekdaylength],
 	unsigned char *base_weekday_code)
@@ -760,7 +606,7 @@ unsigned long holidays_class::CheckBaseWeekday(char name_str[baseweekdaylength],
 		local_return = holidays_class::GetBaseWeekday(*base_weekday_code, base_weekday_hold);
 		if (local_return != return_success)
 		{
-		  return return_state;
+		  return local_return;
 		}
 		dummy_int = strcmp(name_str,base_weekday_hold);
 		if (dummy_int == 0)
@@ -810,6 +656,7 @@ unsigned long holidays_class::SetHolidayBase(char name_str[holidaybaselength])
 {
 	unsigned char base_code;
 
+	unsigned long return_state;
 	return_state = return_success;
 
 	return_state = CheckHolidayBase(name_str, &base_code);
@@ -832,6 +679,7 @@ unsigned long holidays_class::CheckHolidayBase(char name_str[holidaybaselength],
 	char base_hold[holidaybaselength];
 	unsigned long local_return;
 
+	unsigned long return_state;
 	return_state = return_err_holiday_base_invalid;
 
 	for(*base_code = 0;
@@ -861,6 +709,7 @@ unsigned long holidays_class::SetHolidayMonth(char name_str[month_names_length])
 {
 	unsigned char month_code;
 
+	unsigned long return_state;
 	return_state = return_success;
 
 	return_state = CheckHolidayMonth(name_str, &month_code);
@@ -883,6 +732,7 @@ unsigned long holidays_class::CheckHolidayMonth(char name_str[month_names_length
 	char month_hold[month_names_length];
 	unsigned long local_return;
 
+	unsigned long return_state;
 	return_state = return_err_holiday_month_invalid;
 
 	for(*month_code = 0;
@@ -911,7 +761,8 @@ unsigned long holidays_class::CheckHolidayMonth(char name_str[month_names_length
 unsigned long holidays_class::SetHolidayYear(unsigned int base_year)
 {
 
-  return_state = CheckYear(base_year);
+	unsigned long return_state;
+	return_state = CheckYear(base_year);
 
   if (return_state != return_success)
   {
@@ -928,6 +779,7 @@ unsigned long holidays_class::SetHolidayDay(char name_str[holidaybasedaylength])
 {
 	int day_code;
 
+	unsigned long return_state;
 	return_state = return_success;
 
 	dummy_int = strcmp(language_pick_day,name_str);
@@ -960,6 +812,7 @@ unsigned long holidays_class::SetHolidayDay(char name_str[holidaybasedaylength])
 unsigned long holidays_class::CheckHolidayDay(int day_code)
 {
 
+	unsigned long return_state;
 	return_state = return_err_holiday_day_invalid;
 
 	if ((day_code > 0) && (day_code < 32) )
@@ -976,6 +829,7 @@ unsigned long holidays_class::SetBaseAdj(char name_str[holidaybaseadjlength])
 {
 	unsigned char adj_code;
 
+	unsigned long return_state;
 	return_state = return_success;
 
 	return_state = CheckBaseAdj(name_str, &adj_code);
@@ -998,6 +852,7 @@ unsigned long holidays_class::CheckBaseAdj(char name_str[holidaybaseadjlength],
 	char adj_hold[holidaybaseadjlength];
 	unsigned long local_return;
 
+	unsigned long return_state;
 	return_state = return_err_holiday_base_adj_invalid;
 
 	for(*adj_code = 0;
@@ -1026,6 +881,7 @@ unsigned long holidays_class::SetBaseAdjTimes(char name_str[holidaybaseadjtimesl
 {
 	int adj_times_code;
 
+	unsigned long return_state;
 	return_state = return_success;
 
 	dummy_int = strcmp(language_adjust_times,name_str);
@@ -1058,6 +914,7 @@ unsigned long holidays_class::SetBaseAdjTimes(char name_str[holidaybaseadjtimesl
 unsigned long holidays_class::CheckBaseAdjTimes(int adj_times_code)
 {
 
+	unsigned long return_state;
 	return_state = return_err_adj_times_invalid;
 
 	if ((adj_times_code >= 0) && (adj_times_code <= holidaybaseadjtimestotal) )
@@ -1072,6 +929,7 @@ unsigned long holidays_class::CheckBaseAdjTimes(int adj_times_code)
 }
 unsigned long holidays_class::SetHolidayAdjTimes(char name_str[holidayadjtimeslength])
 {
+	unsigned long return_state;
 	return_state = return_success;
 
 	dummy_size_t = strlen(name_str);
@@ -1109,6 +967,7 @@ unsigned long holidays_class::SetHolidayAdjTimes(char name_str[holidayadjtimesle
 unsigned long holidays_class::AddHoliday()
 {
 
+	unsigned long return_state;
 	return_state = return_success;
 
 	return_state = AddHolidayRec();
@@ -1119,6 +978,7 @@ unsigned long holidays_class::AddHoliday()
 unsigned long holidays_class::DelHoliday()
 {
 
+	unsigned long return_state;
 	return_state = return_success;
 
 	return_state = DelHolidayRec();
@@ -1129,28 +989,7 @@ unsigned long holidays_class::DelHoliday()
 unsigned long holidays_class::GetHoliday()
 {
 
-	return_state = return_success;
-/*
-	return_state = return_err_DB_invalid;
-
-	return_state = return_success;
-
-	memcpy(holiday_record->code,
-			holiday_code,holidaycodelength);
-	memcpy(&holiday_record->base,
-		&current_base,sizeof(holiday_record->base));
-	memcpy(&holiday_record->month,
-		&current_month,sizeof(holiday_record->month));
-	memcpy(&holiday_record->day,
-		&current_day,sizeof(holiday_record->day));
-	memcpy(&holiday_record->year,
-		&current_year,sizeof(holiday_record->year));
-
-//	DB_holiday->GetHolidayRec(holiday_record, &return_state, holidayhandles);
-
-//func_end:
-*/
-	return return_state;
+	return return_success;
 }
 
 unsigned long holidays_class::TestHoliday()
@@ -1226,6 +1065,7 @@ unsigned long holidays_class::SetDesignate(char designate_str[designatelength])
 {
 	unsigned char designate_code;
 
+	unsigned long return_state;
 	return_state = return_success;
 
 	return_state = CheckDesignate(designate_str, &designate_code);
@@ -1245,6 +1085,7 @@ unsigned long holidays_class::SetDesignate(char designate_str[designatelength])
 unsigned long holidays_class::CheckDesignate(char designate_str[designatelength],
 	unsigned char *designate_code)
 {
+	unsigned long return_state;
 	char designate_hold[designatelength];
 	unsigned long local_return;
 
