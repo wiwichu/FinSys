@@ -1,7 +1,5 @@
 #pragma once
-//	#define _YOURCLASS _export
 
-//
 #if defined (BUILDING_YOUR_DLL)
 	#define _EX_IN_CLASS __export
 	#define _EX_IN_FUNC //_export
@@ -388,14 +386,10 @@ const	int	tradeflat_name_length = tradeflat_names_len;
 
 class _FAR_CLASS Py_Front 
 :public Py_Funcs, public cholicodeproc 
-//, virtual public holidays_class
-//,virtual public Instrument, 
-//,virtual public Int_Calcs 
 	{
 
 public:
 Py_Front();
-//Py_Front(CDB * DB_parm);
 
 
 unsigned long _FAR_FUNC  _EX_IN_FUNC   proc_def_dates	();
@@ -586,11 +580,8 @@ unsigned long  _FAR_FUNC _EX_IN_FUNC   getfrnpayfreq(	int *frnpayfreq_number );
 unsigned long  _FAR_FUNC _EX_IN_FUNC   getreratedate(int frn_number, char frn_date_str[date_str_size]);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   setreratedate(int frn_number, char frn_date_str[date_str_size]);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   getholidaytotal(int *holiday_number);
-//unsigned long  _FAR_FUNC _EX_IN_FUNC   getholiday(int holiday_number, char holiday_str[fra_holiday_names_len]);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   setholiday(int holiday_number);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   getholiday(int *holiday_number);
-//unsigned long  _FAR_FUNC _EX_IN_FUNC   setholiday(char holiday_str[fra_holiday_names_len]);
-//unsigned long  _FAR_FUNC _EX_IN_FUNC   getholiday(char holiday_str[fra_holiday_names_len]);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   setholidayadj(	char holidayparm [holiday_adj_names_len]);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   getholidayadj(	char holidayparm [holiday_adj_names_len]);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   getholidayadj(int holadj_number, char holidayparm [holiday_adj_names_len]);
@@ -601,7 +592,6 @@ unsigned long  _FAR_FUNC _EX_IN_FUNC   getsimpcomp(int simpcomp_number,	char sim
 unsigned long  _FAR_FUNC _EX_IN_FUNC   getsimpcomp(int *simpcomp_number);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   getsimpcomp(char simpcompparm [simp_comp_names_len]);
 unsigned long  _FAR_FUNC _EX_IN_FUNC   getcashFlows(vector<pay_struc> &cashFlows );
-//unsigned long  _FAR_FUNC _EX_IN_FUNC   getcprrate(int *cprrate);
 
 static Py_Front& getInstance()
 {
@@ -694,134 +684,23 @@ unsigned long proc_lag_py();
 unsigned long proc_cashflow_py();
 unsigned long calc_int_py();
 unsigned long calc_py_py();
-//unsigned long forceSlowCalc(bool slowCalc);
 unsigned long freq_count_init_py();
 unsigned long action_init_screen_py();
 unsigned long action_proc_mbs_py();
 unsigned long pyproc45(
-//	char action,
-//	instr *instr_parm,
-//	py_parms *py_parm,
-//	char instr_class_desc_choice [instr_last_class] [instr_class_desc_len],
-//	char *current_class,
-//	char current_class_desc [instr_class_desc_len],
-//	char day_count_choice [date_last_day_count] [day_count_names_len],
-//	char *current_day_count,
-//	char current_day_count_name [day_count_names_len],
-//	char pay_freq_choice [freq_count] [freq_names_len],
-//	char *current_pay_freq,
-//	char current_pay_freq_name [freq_names_len],
-//	char yield_meth_choice [py_last_yield_meth] [yield_names_len],
-//	char *current_yield_meth,
-//	char current_yield_meth_name [yield_names_len],
-//	char yield_days_choice [date_last_day_count] [day_count_names_len],
-//	char *current_yield_days,
-//	char current_yield_days_name [day_count_names_len],
-//	char yield_freq_choice [freq_count] [freq_names_len],
-//	char *current_yield_freq ,
-//	char current_yield_freq_name [freq_names_len],
-//	char *current_ex_coup_days,
-//	char holidays_code [holiday_code_length],
-//	holidays_struct holi_parm [],
-//	char prepay_type_name [prepay_type_names_len],
-//	char prepay_type_choice [py_last_prepay_type] [prepay_type_names_len],
-//	redemps_struc redemps_array_parm[],
-//	insevent_struct [],
-//	py_rate_parm *rerate_sched,
-//	pyproc_parm *extra_parms
 	);
-/*
-unsigned long  pyproc	(
-	char action,
-	instr *instr_parm,
-	py_parms *py_parm,
-	char instr_class_desc_choice [instr_last_class] [instr_class_desc_len],
-	char *current_class,
-	char current_class_desc [instr_class_desc_len],
-	char day_count_choice [date_last_day_count] [day_count_names_len],
-	char *current_day_count,
-	char current_day_count_name [day_count_names_len],
-	char pay_freq_choice [freq_count] [freq_names_len],
-	char *current_pay_freq,
-	char current_pay_freq_name [freq_names_len],
-	char yield_meth_choice [py_last_yield_meth] [yield_names_len],
-	char *current_yield_meth,
-	char current_yield_meth_name [yield_names_len],
-	char yield_days_choice [date_last_day_count] [day_count_names_len],
-	char *current_yield_days,
-	char current_yield_days_name [day_count_names_len],
-	char yield_freq_choice [freq_count] [freq_names_len],
-	char *current_yield_freq ,
-	char current_yield_freq_name [freq_names_len],
-	char *current_ex_coup_days,
-	char holidays_code [holiday_code_length],
-	long double *int_rate,
-	long double *in_price,
-	long double *in_yield,
-	long double *out_price,
-	long double *out_yield,
-	holidays_struct holi_parm [],
-	char *calc_what,
-	char *prepay_type,
-	long double *cpr_rate,
-	long double *current_factor,
-	long double *service_fee,
-	long double *lag,
-	  date_union *mat_date,
-	  date_union *val_date_parm,
-	  date_union *penult_date,
-	  date_union *issue_date,
-	  date_union *first_date,
-	  date_union *prev_coup,
-	  date_union *next_coup,
-	char prepay_type_name [prepay_type_names_len],
-	char prepay_type_choice [py_last_prepay_type] [prepay_type_names_len],
-	long double *interest,
-	long *interest_days,
-	long double *nominal_adjust,
-	long double *duration_hold,
-	long double *modified_duration_hold,
-	long double *conv,
-	long double *pvbp_out,
-	redemps_struc redemps_array_parm[],
-	long double *first_int,
-	insevent_struct [],
-	py_rate_parm *rerate_sched,
-	pyproc_parm *extra_parms
-	);
-*/
 
 protected:
 
-// instr in_instr;
-
 private:
 
-//CDB * DB_local;
-//CDB::DB_Handles localhandles;
 
-//char	scr_meth;
 set<string> holiSet;
-
-
-//   Date_Funcs Dates;
-//   Instrument Instr;
-//   Int_Calcs Interest;
-//   Py_Funcs Py;
 	char prepay_type_name [prepay_type_names_len];
 	char prepay_type_choice [py_last_prepay_type] [prepay_type_names_len];
-//	Instrument::insevent_struct rate_array[max_rates];
 	  insevent_struct rate_array[max_rates];
-//	char holiday_choice [fra_last_holiday] [fra_holiday_names_len];
 	char current_holiday;
-//	char current_holiday_name [fra_holiday_names_len];
-//	char current_sink_fund_mat;
-//	char total_part_pays;
 	long double  first_int;
-//	unsigned int holi_chan;
-// char action;
-// double work_double;
-// boolean ex_coup;
  booleans ex_coup;
  booleans trade_flat;
  date_union  mat_date;
@@ -834,7 +713,6 @@ set<string> holiSet;
  char excoup_choice [excoup_count] [excoup_names_len];
  char  calc_what;
  long double  int_rate;
- //unsigned long return_state;
  long double  in_price;
  long double  in_yield;
  long double  out_price;
@@ -844,14 +722,9 @@ set<string> holiSet;
  long double  current_factor;
  long double  service_fee;
  long double  lag;
- //char instr_class_desc_choice [instr_last_class] [instr_class_desc_len];
  char current_class;
- //char day_count_choice [date_last_day_count] [day_count_names_len];
  char pay_freq_choice [freq_count] [freq_names_len];
- //char monthend_choice [monthend_count] [monthend_names_len];
  char yield_meth_choice [py_last_yield_meth] [yield_names_len];
- //char yield_days_choice [date_last_day_count] [day_count_names_len];
- //char yield_freq_choice [freq_count] [freq_names_len];
  char current_day_count;
  char current_day_count_name [day_count_names_len];
  char current_pay_freq;
@@ -878,16 +751,12 @@ set<string> holiSet;
  long double  conv;
  long double  pvbp_out;
  char sink_fund_count;
-// Instrument::pay_struc	sink_fund_sched[max_sink_fund];
    pay_struc	sink_fund_sched[max_sink_fund];
  char sink_fund_mat_choice [py_last_redemp_sched] [redemp_sched_names_len];
  char current_sink_fund_mat_name [redemp_sched_names_len];
-// Instrument::pay_struc	part_pays_sched[max_part_pays];
    pay_struc	part_pays_sched[max_part_pays];
  char current_excoup;
  char current_tradeflat;
- // char holidays_code [holiday_code_length];
-// holidays_struct holi_parm [max_holidays]; //Must be changed.
  py_rate_parm rerate_sched;
 
  typedef struct 	actions		{
@@ -897,75 +766,17 @@ set<string> holiSet;
 		actions;
 
 actions	actions_array [4];
-//date_union date_union_hold;
-//date_union issue_date_hold;
-//date_union check_date1;
-//date_union dummy_date1;
 date_union prev_date;
 date_union next_date;
-//date_union val_date_loc;
-//date_union mat_date_loc;
-//date_union iss_date_loc;
-//date_union first_date_loc;
-//date_union penult_date_loc;
-//Instrument::instr in_instr;
   instr in_instr;
 py_parms pyparm;
-//Instrument::redemps_struc redemps_array_parm[5];
   redemps_struc redemps_array_parm[5];
-//Instrument::pay_struc  pay_array_a[max_coups];
   pay_struc  pay_array_a[max_coups];
-//Instrument::redemps_struc part_pay_array_a[max_part_pays];
   redemps_struc part_pay_array_a[max_part_pays];
-//Instrument::redemps_struc even_redemps[max_coups];
   redemps_struc even_redemps[max_coups];
   vector<pay_struc> cashFlows;
 typedef struct pyproc_parm
 	{
-//	char holiday_choice [fra_last_holiday] [fra_holiday_names_len];
-//	char current_holiday;
-//	char current_holiday_name [fra_holiday_names_len];
-//	char sink_fund_mat_choice [py_last_redemp_sched] [redemp_sched_names_len];
-//	char current_sink_fund_mat;
-//	char current_sink_fund_mat_name [redemp_sched_names_len];
-//	char monthend_choice [monthend_count] [monthend_names_len];
-//	char current_monthend;
-//	char current_monthend_name [monthend_names_len];
-//	char excoup_choice [excoup_count] [excoup_names_len];
-//	char current_excoup;
-//	char total_part_pays;
-//	char current_excoup_name [excoup_names_len];
-//	long double  int_rate;
-//	long double  in_price;
-//	long double  in_yield;
-//	long double  out_price;
-//	long double  out_yield;
-//	char  calc_what;
-/*
-	char  prepay_type;
-	long double  cpr_rate;
-	long double  current_factor;
-	long double  service_fee;
-	long double  lag;
-	  date_union  mat_date;
-	  date_union  val_date_parm;
-	  date_union  penult_date;
-	  date_union  issue_date;
-	  date_union  first_date;
-	  date_union  prev_coup;
-	  date_union  next_coup;
-	long double  interest;
-	long  interest_days;
-	long double  nominal_adjust;
-	long double  duration_hold;
-	long double  modified_duration_hold;
-	long double  conv;
-	long double  pvbp_out;
-	long double  first_int;
-	unsigned int holi_chan;
-	pay_struc	sink_fund_sched[max_sink_fund];
-	pay_struc	part_pays_sched[max_part_pays];
-*/
 	}
 			 pyproc_parm;
 
