@@ -3957,11 +3957,11 @@ unsigned long return_state = 0;
 
 			/*{Make sure the date is valid.}*/
 
-			return_state =  datechck(check_date1);
-			if (return_state != return_success)
-			{
-				return return_state;
-			}
+			//return_state =  datechck(check_date1);
+			//if (return_state != return_success)
+			//{
+			//	return return_state;
+			//}
 
 			actions_proc(change_step, actions_index,
 				actions_array, 0);

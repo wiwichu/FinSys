@@ -898,9 +898,9 @@ set<string> holiSet;
 
 actions	actions_array [4];
 //date_union date_union_hold;
-date_union issue_date_hold;
-date_union check_date1;
-date_union dummy_date1;
+//date_union issue_date_hold;
+//date_union check_date1;
+//date_union dummy_date1;
 date_union prev_date;
 date_union next_date;
 date_union val_date_loc;
