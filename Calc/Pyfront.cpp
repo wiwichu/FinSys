@@ -2018,7 +2018,8 @@ unsigned long _export	Py_Front::proc_def_dates_py()
 	return_state = excoup(in_instr,
 		val_date
 		, &ex_coup,
-		holi_chan
+		null
+		//holi_chan
 		//				  , holi_parm
 		, holiSet
 		);
@@ -3146,7 +3147,7 @@ unsigned long _export	Py_Front::pyproc45	(
 
 {
 
-#include "locals.h"
+unsigned long	return_status	=	0;
 
 char rule_spec = 0;
 char loop_counter = 0;
@@ -3175,7 +3176,7 @@ unsigned long return_state = 0;
 	/* Process chosen action.*/
 
 	actions_array[actions_index].prev_action = py_action_start;
-	actions_array[actions_index].curr_action = action;
+	//actions_array[actions_index].curr_action = action;
 	actions_array[actions_index].next_action = py_action_end;
 
 	while (actions_array[actions_index].curr_action != py_action_end)
@@ -4611,7 +4612,7 @@ unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::proc_gen_dates_frn()
 
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::init_frn()
 {
-action = py_init_frn;
+//action = py_init_frn;
 return pyproc45();
 
 }
@@ -4636,7 +4637,7 @@ unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::setmatdate(char mat_date_str [da
 {
 
   return  dateconv(date_format_1, dateconv_string_to_union,
-		mat_date_str, &mat_date, &work_double);
+		mat_date_str, &mat_date);
 
 }
 
@@ -4681,7 +4682,7 @@ unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::setvaldate(char val_date_str [da
 {
 
   return  dateconv(date_format_1, dateconv_string_to_union,
-		val_date_str, &val_date, &work_double);
+		val_date_str, &val_date);
 
 }
 
@@ -4704,7 +4705,7 @@ unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::getpenultdate(char penult_date_s
 
 
 	return  dateconv(date_format_1, dateconv_union_to_string,
-		penult_date_str, &penult_date, &work_double);
+		penult_date_str, &penult_date);
 
 }
 
@@ -4721,7 +4722,7 @@ unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::setpenultdate(char penult_date_s
 
 
 	return  dateconv(date_format_1, dateconv_string_to_union,
-		penult_date_str, &penult_date, &work_double);
+		penult_date_str, &penult_date);
 
 }
 
@@ -4738,7 +4739,7 @@ unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::setissuedate(char issue_date_str
 
 
 	return  dateconv(date_format_1, dateconv_string_to_union,
-		issue_date_str, &issue_date, &work_double);
+		issue_date_str, &issue_date);
 
 }
 
@@ -4747,7 +4748,7 @@ unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::getissuedate(char issue_date_str
 
 
 	return  dateconv(date_format_1, dateconv_union_to_string,
-		issue_date_str, &issue_date, &work_double);
+		issue_date_str, &issue_date);
 
 }
 
@@ -4756,7 +4757,7 @@ unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::getfirstdate(char first_date_str
 
 
 	return  dateconv(date_format_1, dateconv_union_to_string,
-		first_date_str, &first_date, &work_double);
+		first_date_str, &first_date);
 
 }
 
@@ -4773,7 +4774,7 @@ unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::setfirstdate(char first_date_str
 
 
 	return  dateconv(date_format_1, dateconv_string_to_union,
-		first_date_str, &first_date, &work_double);
+		first_date_str, &first_date);
 
 }
 
@@ -5316,7 +5317,7 @@ unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::getprevcoup(char prev_coup_str [
 
 
 	return  dateconv(date_format_1, dateconv_union_to_string,
-		prev_coup_str, &prev_coup, &work_double);
+		prev_coup_str, &prev_coup);
 
 }
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::getnextcoup(char next_coup_str [date_str_size])
@@ -5324,7 +5325,7 @@ unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::getnextcoup(char next_coup_str [
 
 
 	return  dateconv(date_format_1, dateconv_union_to_string,
-		next_coup_str, &next_coup, &work_double);
+		next_coup_str, &next_coup);
 
 }
 unsigned long   _FAR_FUNC _EX_IN_FUNC Py_Front::getprevcoup(Date_Funcs::date_union &date)
@@ -5408,7 +5409,7 @@ unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getsinkdate(int sink_number, ch
 	unsigned long return_state;
 	return_state = return_success;
 	return_state =   dateconv(date_format_1, dateconv_union_to_string,
-		sink_date_str, &sink_fund_sched[sink_number].pay_date, &work_double);
+		sink_date_str, &sink_fund_sched[sink_number].pay_date);
 	return return_state;
 
 }
@@ -5420,7 +5421,7 @@ unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setsinkdate(int sink_number, ch
 	unsigned long return_state;
 	return_state = return_success;
 	return_state =  dateconv(date_format_1, dateconv_string_to_union,
-		sink_date_str, &sink_fund_sched[sink_number].pay_date, &work_double);
+		sink_date_str, &sink_fund_sched[sink_number].pay_date);
 	return return_state;
 
 }
@@ -5474,7 +5475,7 @@ unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getpartpaydate(int partpay_numb
 
 	return_state = return_success;
 	return_state =   dateconv(date_format_1, dateconv_union_to_string,
-		partpay_date_str, &part_pays_sched[partpay_number].pay_date, &work_double);
+		partpay_date_str, &part_pays_sched[partpay_number].pay_date);
 	return return_state;
 
 }
@@ -5487,7 +5488,7 @@ unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setpartpaydate(int partpay_numb
 	unsigned long return_state;
 	return_state = return_success;
 	return_state =  dateconv(date_format_1, dateconv_string_to_union,
-		partpay_date_str, &part_pays_sched[partpay_number].pay_date, &work_double);
+		partpay_date_str, &part_pays_sched[partpay_number].pay_date);
 	return return_state;
 
 }
@@ -5558,7 +5559,7 @@ unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::getreratedate(int frn_number,
 	return_state = return_success;
 	return_state =   dateconv(date_format_1, dateconv_union_to_string,
 //		frn_date_str, &rate_array[frn_number + 1].event_date, &work_double);
-		frn_date_str, &rate_array[frn_number].event_date, &work_double);
+		frn_date_str, &rate_array[frn_number].event_date);
 	return return_state;
 
 }
@@ -5571,7 +5572,7 @@ unsigned long    _FAR_FUNC _EX_IN_FUNC Py_Front::setreratedate(int frn_number,
 
 	return_state = return_success;
 	return_state =  dateconv(date_format_1, dateconv_string_to_union,
-		frn_date_str, &rate_array[frn_number + 1].event_date, &work_double);
+		frn_date_str, &rate_array[frn_number + 1].event_date);
 	return return_state;
 
 }

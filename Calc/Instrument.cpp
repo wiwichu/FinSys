@@ -37,7 +37,7 @@ instrument class passed.
 
 {
 
-#include "locals.h"
+unsigned long	return_status	=	0;
 size_t		string_size = 0;
 
 /*{ Set general defaults.}*/

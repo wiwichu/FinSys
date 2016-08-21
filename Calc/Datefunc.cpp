@@ -902,7 +902,7 @@ indicator to determine whether the datestring or the date union will be converte
 }*/
 
 unsigned long 	Date_Funcs::dateconv(char date_format, char conv_dir,
-		char date_chars[], date_union *date_stored, double *in_date)
+		char date_chars[], date_union *date_stored)
 
 
 {
@@ -1139,8 +1139,6 @@ date_union date_hold_2;
 
       /*{ Estimate the years.}*/
 
-      est_years = (long) (*in_date / 365);
-
       /*{ Force increments of four.}*/
 
       est_years = est_years - (est_years % 4);
@@ -1176,7 +1174,7 @@ date_union date_hold_2;
 
       return_status = forecast(date_hold_2,
 			  0,
-			  (long)( *in_date - julian_hold),
+			  julian_hold,
 			  date_act_cal,
 			  &date_hold);
 
@@ -1242,8 +1240,6 @@ date_union date_hold_2;
 		goto func_end;
 
       }
-
-      *in_date = (double) julian_hold;
 
 /*
       return_status = date_to_days (date_hold, &julian_hold);

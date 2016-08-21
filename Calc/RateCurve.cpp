@@ -1753,10 +1753,9 @@ unsigned long _RATECURVE CheckRCDayAdjust(char DayAdjustParm)
 unsigned long _RATECURVE SetRCValDate(char ValDate[rc_date_len])
 {
 	unsigned long return_state = return_success;
-	double work_double;
 
 	return_state = dateconv(rc_date_format, dateconv_string_to_union,
-		ValDate, &RCValDate, &work_double);
+		ValDate, &RCValDate);
 
 //end_func:
 	return return_state;
@@ -1772,7 +1771,6 @@ unsigned long _RATECURVE  GetRCBootDiscText(char BootTextParm[rc_max_boot_result
 	unsigned long return_state = return_success;
 	char DateHold[rc_date_len];
 	char BootFactor[rc_boot_factor_size];
-	double work_double;
 	int element_count;
 
 	return_state = RCBootDisc(RCValDate,InstrArray,InstrCount, 
@@ -1791,7 +1789,7 @@ unsigned long _RATECURVE  GetRCBootDiscText(char BootTextParm[rc_max_boot_result
 	{
 
 		return_state = dateconv(rc_date_format, dateconv_union_to_string,
-			DateHold, &BootResultArray[element_count].date, &work_double);
+			DateHold, &BootResultArray[element_count].date);
 
 		if (return_state != return_success)
 		{

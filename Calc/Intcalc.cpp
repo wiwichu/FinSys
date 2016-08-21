@@ -131,7 +131,7 @@ accrued interest and number of days of interest for that date.
 
 {
 
-	#include "locals.h"
+	unsigned long	return_status	=	0;
 	booleans ex_coup = isfalse; /*{ ex_coup is true if the base date falls
 				in the ex-coupon period.}*/
 	booleans trade_flat = isfalse; 
@@ -1303,7 +1303,7 @@ long double *nom_adj, insevent_struct rate_array [max_rates])
 
 {
 
-	#include "locals.h"
+	unsigned long	return_status	=	0;
 
 	date_union quasi_prv_pay_hold;
 	date_union quasi_nxt_pay_hold;
@@ -1497,7 +1497,7 @@ unsigned long _INTCALCS per_calc (instr *in_instr, unsigned int *holi_chan, unsi
 
 {
 
-	#include "locals.h"
+	unsigned long	return_status	=	0;
 
 	char	cal_hold = 0;
 
@@ -1738,7 +1738,7 @@ unsigned long   _INTCALCS get_pfactor (instr in_instr,
 			  unsigned int event_chan)
 
 {
-	#include "locals.h"
+	unsigned long	return_status	=	0;
 
 	int	str_cmp1 = 0;
 
@@ -1894,7 +1894,7 @@ unsigned long   _INTCALCS get_rate (instr *in_instr,
 			  insevent_struct rate_array [max_rates])
 
 {
-	#include "locals.h"
+	unsigned long	return_status	=	0;
 
 	int	str_cmp1 = 0;
 
@@ -2107,7 +2107,7 @@ boundary dates for compounding around that date.
 				unsigned int holi_chan)
 
 {
-	#include "locals.h"
+	unsigned long	return_status	=	0;
 
 	switch (in_instr->comp_freq.period)
 	{
@@ -2177,7 +2177,7 @@ unsigned long	_INTCALCS excoup(instr in_instr
 			)
 
 {
-	#include "locals.h"
+	unsigned long	return_status	=	0;
 
 	int	cmp_first_per;	/*{ cmp_first_per is used for first period
 				comparison results}*/
@@ -2293,7 +2293,7 @@ unsigned long	_INTCALCS n_p_pay(instr in_instr,
 			)
 
 {
-	#include "locals.h"
+	unsigned long	return_status	=	0;
 
 	char	adj_dir = 0;	/*{ adj_dir steers the direction of date adjustment.}*/
 	unsigned char	day_hold = 0;	/*{ day_hold is used to hold a day of the month.}*/
@@ -3349,7 +3349,7 @@ unsigned long	_INTCALCS findfut(instr in_instr
 			)
 
 {
-	#include "locals.h"
+	unsigned long	return_status	=	0;
 
 	char	adj_dir = 0;	/*{ adj_dir steers the direction of date adjustment.}*/
 	char	day_hold2 = 0;	/*{ day_hold is used to hold a day of the month.}*/
@@ -3493,7 +3493,7 @@ unsigned long   _INTCALCS nom_adj (instr *in_instr,
 			  long double *curr_nom)
 
 {
-	#include "locals.h"
+	unsigned long	return_status	=	0;
 	long double temp_curr_nom = 0;
 	signed int cmp_int = -1;
 	char element_count = 0;
@@ -3601,7 +3601,7 @@ unsigned long   _INTCALCS redemp_adj (instr in_instr,
 			  date_union *average_maturity)
 
 {
-	#include "locals.h"
+	unsigned long	return_status	=	0;
 	long days_hold = 0;
 	long double temp_curr_redemp = 0;
 	long double redemps_due = 0;
@@ -3833,7 +3833,7 @@ unsigned long _INTCALCS schedgen(event_sched event_parm
 {
 
 
-	#include "locals.h"
+	unsigned long	return_status	=	0;
 
 	int date_comp = 0;
 	int start_comp = 0;
@@ -4011,7 +4011,7 @@ unsigned long _INTCALCS schedgen(event_sched event_parm
 unsigned long _INTCALCS eventchk (event_sched event_parm)
 
 {
-	#include "locals.h"
+	unsigned long	return_status	=	0;
 
 		  date_union dummy_date1;
 

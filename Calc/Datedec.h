@@ -853,7 +853,7 @@ public:
   */
 
 //#ifndef _ANSIC
-  unsigned long  dateconv(char, char, char *, date_union *, double *);
+  unsigned long  dateconv(char, char, char *, date_union *);
 
 
   /*{dateconv accepts a date format, a direction indicator and either a

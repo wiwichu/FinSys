@@ -44,7 +44,7 @@ unsigned long	_INSTRUMENT redmparr	(instr *in_instr, date_union base_date,
 					char calc_rule)
 
 {
-	#include "locals.h"
+	unsigned long	return_status	=	0;
 
 	long double temp_curr_redemp = 0;
 	signed int cmp_int = -1;

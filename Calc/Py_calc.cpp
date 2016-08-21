@@ -184,7 +184,7 @@ unsigned long 	_PYFUNCS py_calc(instr in_instr_parm, date_union py_date_parm,
 
 {
 
-#include "locals.h"
+unsigned long	return_status	=	0;
 char	eligible_result = 0;	/*{Holds result of eligibility check.}*/
 char 	py_period_length = 0;	/*{ py_period_length holds the rule for period length.}*/
 char 	simp_comp_frac = 0;	/*{ simp_comp_frac indicates whether simple or compound discounting is used in a fractional period.}*/
@@ -1176,7 +1176,7 @@ unsigned long	_PYFUNCS py_days_in_year(long double *days_in_year,
 
 {
 
-#include "locals.h"
+unsigned long	return_status	=	0;
 
 	  switch (py_cal_den)
 	  {
@@ -1233,7 +1233,7 @@ unsigned long	_PYFUNCS py_days_sett_to_mat(long *days_sett_to_mat, date_union py
 
 {
 
-#include "locals.h"
+unsigned long	return_status	=	0;
 
 
 	if ((in_instr->mat_date.date.centuries != 0) &&
@@ -1267,7 +1267,7 @@ unsigned long	_PYFUNCS py_mmdisc(long days_sett_to_mat, long double days_in_year
 
 {
 
-#include "locals.h"
+unsigned long	return_status	=	0;
 char eligible_result;
 long double	disc_rate;		/*{ disc_rate is the discount rate.}*/
 
@@ -1324,7 +1324,7 @@ unsigned long	_PYFUNCS py_simp(long days_sett_to_mat, long double days_in_year,
 
 {
 
-#include "locals.h"
+unsigned long	return_status	=	0;
 char eligible_result;
 
 long double rate;
@@ -1401,7 +1401,7 @@ unsigned long	_PYFUNCS py_cal_set(char *py_cal_num, char *py_cal_den, instr *in_
 
 {
 
-#include "locals.h"
+unsigned long	return_status	=	0;
 
 
 	*py_cal_num = in_instr->cal_num;
@@ -1438,7 +1438,7 @@ unsigned long	_PYFUNCS py_day_count_set(char *py_day_count, instr *in_instr,
 
 {
 
-#include "locals.h"
+unsigned long	return_status	=	0;
 
 
 	*py_day_count = in_instr->day_count;
@@ -1465,7 +1465,7 @@ unsigned long	py_reinvest_factor(long double *reinvest_factor)
 
 {
 
-#include "locals.h"
+unsigned long	return_status	=	0;
 
   *reinvest_factor = 1;
 
@@ -1477,7 +1477,7 @@ unsigned long	_PYFUNCS py_per_len( char *py_period_length, py_parms *py_parm)
 
 {
 
-#include "locals.h"
+unsigned long	return_status	=	0;
 
 	if ((py_parm->parm_use == py_yes_parm_use) && (py_parm->per_len != py_no_per_len))
 	{
@@ -1522,7 +1522,7 @@ unsigned long	_PYFUNCS py_force_par( char *force_par, py_parms *py_parm)
 
 {
 
-#include "locals.h"
+unsigned long	return_status	=	0;
 
 	if ((py_parm->parm_use == py_yes_parm_use) && (py_parm->force_par != py_empty_force_par))
 	{
@@ -1557,7 +1557,7 @@ unsigned long	_PYFUNCS py_skip_odd( char *skip_odd, py_parms *py_parm)
 
 {
 
-#include "locals.h"
+unsigned long	return_status	=	0;
 
 	if ((py_parm->parm_use == py_yes_parm_use) && (py_parm->skip_odd != py_empty_skip_odd))
 	{
@@ -1594,7 +1594,7 @@ unsigned long	_PYFUNCS py_comp_freq(long double *comp_freq, instr *in_instr,
 
 {
 
-#include "locals.h"
+unsigned long	return_status	=	0;
 
 
 	if (in_instr->pay_freq.freq != 0)
@@ -1653,7 +1653,7 @@ unsigned long	_PYFUNCS py_pay_adj(char *pay_adj, py_parms *py_parm,
 
 {
 
-#include "locals.h"
+unsigned long	return_status	=	0;
 
 	*pay_adj = event_sched_same_holiday_adj;
 
@@ -1702,7 +1702,7 @@ unsigned long	_PYFUNCS py_part_pay_load( unsigned int holi_chan, date_union py_d
 
 {
 
-#include "locals.h"
+unsigned long	return_status	=	0;
 
 //char adj_hold;
 
@@ -1796,7 +1796,7 @@ unsigned long	_PYFUNCS py_even_redemps_load(char *redemp_sched, unsigned int cou
 
 {
 
-#include "locals.h"
+unsigned long	return_status	=	0;
 
 
 	*redemp_sched = py_parm->redemp_sched;
@@ -1869,7 +1869,7 @@ unsigned long	_PYFUNCS py_price_var(long double *price_var, py_parms *py_parm)
 
 {
 
-#include "locals.h"
+unsigned long	return_status	=	0;
 const long double def_price_var = 0.00000001;	/*{ def_price_var is the default price variance.}*/
 
 	if (py_parm->calc_what == py_yield_from_price_calc_what)
@@ -1910,7 +1910,7 @@ unsigned long	_PYFUNCS py_start_py(long double *start_price,
 
 {
 
-#include "locals.h"
+unsigned long	return_status	=	0;
 
 	*start_price = in_price;
 
@@ -1955,7 +1955,7 @@ unsigned long	py_redemp_sched(char *redemp_sched, long double *redemp_factor,
 
 {
 
-#include "locals.h"
+unsigned long	return_status	=	0;
 
 	*redemp_sched = py_parm.redemp_sched;
 
@@ -2008,7 +2008,7 @@ unsigned long	_PYFUNCS py_pv_part_pays(long double *work_duration, char simp_com
 
 {
 
-#include "locals.h"
+unsigned long	return_status	=	0;
 int date_cmp;
 int this_pay;
 long days_to_pay;
@@ -2112,7 +2112,7 @@ unsigned long	_PYFUNCS py_pv_redemps(char redemp_sched, long double *pv_redemps,
 
 {
 
-#include "locals.h"
+unsigned long	return_status	=	0;
 unsigned int even_redemps_count;
 
 	even_redemps_count = coup_count - 1;
@@ -2193,7 +2193,7 @@ unsigned long  _PYFUNCS fast_calc_check(booleans *fast_calc, instr in_instr,
 				int coups_left)
 {
 
-#include "locals.h"
+unsigned long	return_status	=	0;
 
   return_status = return_success;
   if (calcSlow)
@@ -2265,7 +2265,7 @@ unsigned long _PYFUNCS coups_to_mat( int *coups_left,
 
 {
 
-#include "locals.h"
+unsigned long	return_status	=	0;
 
 int date_cmp;
 int years_hold;

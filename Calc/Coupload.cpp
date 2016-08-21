@@ -28,7 +28,7 @@ unsigned long	_PYFUNCS py_coup_load( char py_period_length, char *simp_comp_frac
 
 {
 
-#include "locals.h"
+unsigned long	return_status	=	0;
 
 //char adj_hold = 0;
 
@@ -55,8 +55,7 @@ date_union date_hold2;
 //date_union real_nxt_pay;
 
 date_union base_date;
-
-	datecpy(base_date.date_string,py_date.date_string);
+datecpy(base_date.date_string,py_date.date_string);
 
 		  /*{ Determine size of array necessary to hold all the payments.}*/
 
@@ -629,8 +628,8 @@ unsigned long	_PYFUNCS py_frac_per(char py_period_length, char *simp_comp_frac,
 
 {
 
-#include "locals.h"
-long days_to_next = 0;
+	unsigned long	return_status = 0;
+	long days_to_next = 0;
 
 long last_to_mat_days = 0;
 return_status = tenor(in_instr->pre_last_pay,
@@ -712,7 +711,7 @@ unsigned long	_PYFUNCS py_simp_comp_frac(char *simp_comp_frac, py_parms *py_parm
 				)
 {
 
-#include "locals.h"
+unsigned long	return_status	=	0;
 
 int	date_cmp = 1;
 
@@ -834,7 +833,7 @@ unsigned long	_PYFUNCS py_pv_coups(char py_period_length, char simp_comp_frac,
 
 {
 
-#include "locals.h"
+unsigned long	return_status	=	0;
 
 //int issue_cmp = 0;
 //int mat_cmp = 0;
@@ -1577,10 +1576,6 @@ unsigned long	_PYFUNCS py_get_disc(date_union base_date,
 
 {
 
-#include "locals.h"
-
-//py_get_disc_end:
-
-	return return_status;
+	return return_success;
 
 }
