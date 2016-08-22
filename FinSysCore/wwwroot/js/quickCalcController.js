@@ -277,7 +277,7 @@
                    vm.duration = response.data[0].duration;
                    vm.modDuration = response.data[0].modifiedDuration;
                    if (vm.calcFrom == "price") {
-                       vm.yield = response.data[0].yield;
+                       vm.yield = toFixed(response.data[0].yield);
                    }
                    else {
                        vm.price = response.data[0].cleanPrice;
@@ -314,6 +314,23 @@
                vm.calcText = "Calculate";
                vm.isBusy = false;
            });
+        }
+        function toFixed(x) {
+            if (Math.abs(x) < 1.0) {
+                var e = parseInt(x.toString().split('e-')[1]);
+                if (e) {
+                    x *= Math.pow(10, e - 1);
+                    x = '0.' + (new Array(e)).join('0') + x.toString().substring(2);
+                }
+            } else {
+                var e = parseInt(x.toString().split('+')[1]);
+                if (e > 20) {
+                    e -= 20;
+                    x /= Math.pow(10, e);
+                    x += (new Array(e + 1)).join('0');
+                }
+            }
+            return x;
         }
 
         var api = {
