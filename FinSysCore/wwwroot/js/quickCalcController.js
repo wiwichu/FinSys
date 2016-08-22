@@ -277,7 +277,7 @@
                    vm.duration = response.data[0].duration;
                    vm.modDuration = response.data[0].modifiedDuration;
                    if (vm.calcFrom == "price") {
-                       vm.yield = toFixed(response.data[0].yield);
+                       vm.yield = response.data[0].yield;
                    }
                    else {
                        vm.price = response.data[0].cleanPrice;
