@@ -33,7 +33,7 @@
         vm.endOfMonth = false;
         vm.price = 100.00;
         vm.yield = 0.00;
-        vm.interestRate = 0.00;
+        vm.interestRate = 1.00;
         vm.interest = 0.00;
         vm.dirtyPrice = 100.00;
         vm.interestDays = 0;
