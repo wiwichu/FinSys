@@ -1534,6 +1534,7 @@ unsigned long _export	Py_Front::proc_mat_date_py()
 	{
 		return return_err_mat_date_bad;
 	}
+	datecpy(in_instr.mat_date.date_string, mat_date.date_string);
 	return return_success;
 }
 unsigned long _export	Py_Front::proc_iss_date_py()

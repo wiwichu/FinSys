@@ -5,7 +5,7 @@
   },
   "dependencies": {
     "AutoMapper": "4.2.1",
-    "FinSysCoreCalc": "1.0.4",
+    "FinSysCoreCalc": "1.0.5",
     "Microsoft.NETCore.Windows.ApiSets": "1.0.1",
     "Microsoft.AspNetCore.Diagnostics": "1.0.0",
     "Microsoft.AspNetCore.Mvc": "1.0.0",
