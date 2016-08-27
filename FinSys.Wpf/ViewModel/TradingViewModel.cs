@@ -74,7 +74,7 @@ namespace FinSys.Wpf.ViewModel
         }
         private async Task GetPositionsAsync(PortfolioViewModel pvm)
         {
-            Task< ObservableCollection < PositionViewModel >> t1 = Task.Run(() =>
+            ObservableCollection < PositionViewModel > t1 = await Task.Run(() =>
                 { 
                     return new ObservableCollection<PositionViewModel>(RepositoryFactory.Positions.GetPositionsAsync().Result
                     .Where((p) => pvm.Id == p.PortfolioId)
@@ -82,7 +82,7 @@ namespace FinSys.Wpf.ViewModel
                 }
             );
 
-            pvm.Positions = t1.Result;
+            pvm.Positions = t1;
         }
         object _SelectedPortfolio;
         public static object LastSelectedPortfolio
