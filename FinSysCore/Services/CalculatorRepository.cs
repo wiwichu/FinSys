@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿//using AutoMapper;
+using AutoMapper;
 using FinSysCore.Models;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,37 +13,38 @@ namespace FinSysCore.Services
 {
     public class CalculatorRepository : ICalculatorRepository
     {
+        //const string calcPath = @"C:\FinsyscoreCode\FinSysCore\bin\Debug\netcoreapp3.0/calc.dll";
+        const string calcPath = "calc.dll";
 
-
-        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr getclassdescriptions(out int size);
-        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr getdaycounts(out int size);
-        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr getpayfreqs(out int size);
-        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern int getStatusText(int status, StringBuilder text, out int textSize);
-        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern int getInstrumentDefaults(InstrumentDescr instrument);
-        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern int getDefaultDatesAndData(InstrumentDescr instrument, CalculationsDescr calculations, DatesDescr holidays);
-        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr getyieldmethods(out int size);
-        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern int calculate(InstrumentDescr instrument, CalculationsDescr calculations, DatesDescr holidays);
-        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern int getInstrumentDefaultsAndData(InstrumentDescr instrument, CalculationsDescr calculations);
-        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern int getCashFlows(CashFlowsDescr cashFlows, ref int size);
-        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern int calculateWithCashFlows(InstrumentDescr instrument, CalculationsDescr calculations, CashFlowsDescr cashFlows, 
             //int dateAdjustRule, 
             DatesDescr holidays);
-        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr getHolidayAdjust(out int size);
-        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern int forecast(DateDescr startDate, DateDescr endDate, int dayCountRule, int months, int days);
-        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern int priceCashFlows(CashFlowsDescr cashFlowsStruct,
             int yieldMth,
             int frequency,
@@ -50,23 +52,23 @@ namespace FinSysCore.Services
             DateDescr valueDate,
             RateCurveDescr rateCurve,
             int interpolation);
-        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern int USTBillCalcFromPrice(DateDescr valueDate, DateDescr maturityDate,
             double price, out double discount, out double mmYield, out double beYield);
-        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern int USTBillCalcFromPriceWithCashFlows(DateDescr valueDate, DateDescr maturityDate,
             double price, out double discount, out double mmYield, out double beYield, CashFlowsDescr cashFlows, int dateAdjustRule, DatesDescr holidays);
-        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern int USTBillCalcFromMMYield(DateDescr valueDate, DateDescr maturityDate,
            double mmYield, out double price, out double discount, out double beYield,
                out double duration, out double modifiedDuration, out double convexity, out double pvbp, out double pvbpConvexityAdjusted);
-        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern int USTBillCalcFromDiscount(DateDescr valueDate, DateDescr maturityDate,
             double mmYield, out double price, out double discount, out double beYield);
-        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern int USTBillCalcFromBEYield(DateDescr valueDate, DateDescr maturityDate,
             double beYield, out double price, out double mmYield, out double discount);
-        [DllImport("calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern int intCalc(DateDescr startDate, DateDescr endDate, int dayCountRule, out int days, out double dayCountFraction);
 
         private List<string> classes = new List<string>();
@@ -76,8 +78,10 @@ namespace FinSysCore.Services
         private List<string> holidayAdjusts = new List<string>();
         private List<string> interpolationMethods = new List<string>();
         private ILogger _logger;
-        public CalculatorRepository(ILoggerFactory loggerFactory)
+        private IMapper _mapper;
+        public CalculatorRepository(ILoggerFactory loggerFactory,IMapper mapper)
         {
+            _mapper = mapper;
             classes = GetInstrumentClassesAsync().Result;
             dayCounts = GetDayCountsAsync().Result;
             payFreqs = GetPayFreqsAsync().Result;
@@ -855,8 +859,8 @@ namespace FinSysCore.Services
             {
                 USTBillResult result = await Task.Run(() =>
                 {
-                    DateDescr maturityDate = Mapper.Map<DateDescr>(usTbill.MaturityDate);
-                    DateDescr valueDate = Mapper.Map<DateDescr>(usTbill.ValueDate);
+                    DateDescr maturityDate = _mapper.Map<DateDescr>(usTbill.MaturityDate);
+                    DateDescr valueDate = _mapper.Map<DateDescr>(usTbill.ValueDate);
 
                     double price = usTbill.CalcSource;
                     double discount = usTbill.CalcSource;
@@ -1002,7 +1006,7 @@ namespace FinSysCore.Services
                             CashFlowDescr cfd = (CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
                                 typeof(CashFlowDescr));
                             cashFlowsOut.Add(cfd);
-                            CashFlow cf = Mapper.Map<CashFlow>(cfd);
+                            CashFlow cf = _mapper.Map<CashFlow>(cfd);
                             DateTime adt = new DateTime(cfd.adjustedYear, cfd.adjustedMonth, cfd.adjustedDay);
                             cf.AdjustedDate = adt;
                             DateTime sdt = new DateTime(cfd.year, cfd.month, cfd.day);

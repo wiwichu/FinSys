@@ -1,11 +1,6 @@
-﻿using FinSysCore.Models;
-using FinSysCore.Services;
-using Microsoft.EntityFrameworkCore;
+﻿using System;
+using FinSysCore.Models;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FinSysCore.Logging
 {
@@ -86,6 +81,16 @@ namespace FinSysCore.Logging
         }
 
         public IDisposable BeginScope<TState>(TState state)
+        {
+            return null;
+        }
+
+        //public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        IDisposable ILogger.BeginScope<TState>(TState state)
         {
             return null;
         }

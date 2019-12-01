@@ -6,10 +6,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using FinSysCore.Services;
 using FinSysCore.Models;
-using AutoMapper;
 using FinSysCore.ViewModels;
 using FinSysCore.Logging;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace FinSysCore
 {
@@ -31,21 +31,32 @@ namespace FinSysCore
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(_config);
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper); services.AddSingleton(_config);
             services.AddDbContext<FinSysContext>();
-            services.AddMvc()
+            services.AddMvc().AddMvcOptions(opt =>
+            {
+                opt.EnableEndpointRouting = false;
+            })
                 //.AddJsonOptions(opt =>
                 //{
                 //    opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
                 //})
                 ;
-            services.AddLogging();
-            //services.AddEntityFramework()
-            //    .AddSqlServer()
-            //    .AddDbContext<FinSysContext>()
-            //    ;
-
+            services.AddLogging(opt =>
+             {
+                 opt.AddConsole();
+                 if (_env.IsDevelopment())
+                 {
+                     opt.AddDebug();
+                 }
+             });
             services.AddScoped<ICalculatorRepository, CalculatorRepository>();
             if (_env.IsDevelopment())
             {
@@ -60,7 +71,9 @@ namespace FinSysCore
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory,FinSysContext context)
+        public void Configure(IApplicationBuilder app, 
+            ILoggerFactory loggerFactory,
+            FinSysContext context)
         {
             var logLevelStr = _config["AppSettings:LogLevel"];
             var logSqlStr = _config["AppSettings:LogSqlBool"] ?? "False";
@@ -79,22 +92,6 @@ namespace FinSysCore
                 logLevel = (LogLevel)System.Enum.Parse(typeof(LogLevel), logLevelStr);
             }
             app.UseStaticFiles();
-            Mapper.Initialize(config =>
-            {
-                config.CreateMap<USTBill, USTBillViewModel>().ReverseMap();
-                config.CreateMap<USTBillResult, USTBillResultViewModel>().ReverseMap();
-                config.CreateMap<CashFlow, CashFlowDescr>().ReverseMap();
-                config.CreateMap<CashFlow, CashFlowViewModel>().ReverseMap();
-                config.CreateMap<CashFlowPricing, CashFlowPricingViewModel>().ReverseMap();
-                config.CreateMap<DateTime, DateDescr>().ReverseMap();
-                config.CreateMap<RateCurve, RateCurveViewModel>().ReverseMap();
-                config.CreateMap<DefaultDates, DefaultDatesViewModel>().ReverseMap();
-                config.CreateMap<DefaultDatesResult, DefaultDatesResultViewModel>().ReverseMap();
-                config.CreateMap<DateTime, Holiday>().ReverseMap();
-                config.CreateMap<DateTime, HolidayViewModel>().ReverseMap();
-                config.CreateMap<HolidayViewModel, Holiday>().ReverseMap();
-                config.CreateMap<DayCount, DayCountViewModel>().ReverseMap();
-            });
             app.UseMvc(config =>
             {
                 config.MapRoute(
@@ -103,11 +100,11 @@ namespace FinSysCore
                     defaults: new { controller = "App", action = "Index" }
                     );
             });
-            loggerFactory.AddConsole();
+            //loggerFactory.AddConsole();
 
             if (_env.IsDevelopment())
             {
-                loggerFactory.AddDebug(LogLevel.Information);
+                //loggerFactory.AddDebug(LogLevel.Information);
                 //loggerFactory.AddDebug(logLevel);
                 app.UseDeveloperExceptionPage();
             }

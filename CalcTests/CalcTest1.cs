@@ -11,61 +11,62 @@ using System.Collections.Concurrent;
 namespace CalcTests
 {
     [TestClass]
-    [DeploymentItem("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Release/calc.dll")]
+    [DeploymentItem(CalcTest1.calcPath)]
     public class CalcTest1
     {
-        static string calcPath = "C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Release/calc.dll";
-        [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Release/calc.dll", CallingConvention = CallingConvention.Cdecl)]
+
+        const string calcPath = "C:/FinsyscoreCode/FinSysCore/bin/Debug/netcoreapp2.1/calc.dll";
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr getclassdescriptions(out int size);
-        [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Release/calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr getdaycounts(out int size);
-        [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Release/calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr getpayfreqs(out int size);
-        [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Release/calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern int getStatusText(int status, StringBuilder text, out int textSize);
-        [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Release/calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern int getInstrumentDefaults(InstrumentDescr instrument);
-        [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Release/calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern int getDefaultDatesAndData(InstrumentDescr instrument, CalculationsDescr calculations, DatesDescr holidays);
-        [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Release/calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr getyieldmethods(out int size);
-        [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Release/calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern int calculate(InstrumentDescr instrument, CalculationsDescr calculations, DatesDescr holidays);
-        [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Release/calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern int getInstrumentDefaultsAndData(InstrumentDescr instrument, CalculationsDescr calculations);
-        [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Release/calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern int getCashFlows(CashFlowsDescr cashFlows, int dateAdjustRule);
-        [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Release/calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern int getNewCashFlows(CashFlowsDescr cashFlows, int dateAdjustRule);
-        [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Release/calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern int tenor(DateDescr startDate, DateDescr endDate, int dayCountRule, out int tenor);
-        [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Release/calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern int intCalc(DateDescr startDate, DateDescr endDate, int dayCountRule,out int days,out double dayCountFraction);
-        [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Release/calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern int calculateWithCashFlows(InstrumentDescr instrument, CalculationsDescr calculations, CashFlowsDescr cashFlows, 
             //int dateAdjustRule, 
             DatesDescr holidays);
-        [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Release/calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr getHolidayAdjust(out int size);
-        [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Release/calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern int forecast(DateDescr startDate, DateDescr endDate, int dayCountRule, int months, int days);
-        [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Release/calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern int USTBillCalcFromPrice(DateDescr valueDate, DateDescr maturityDate,
             double price, out double discount, out double mmYield, out double beYield);
-        [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Release/calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern int USTBillCalcFromPriceWithCashFlows(DateDescr valueDate, DateDescr maturityDate,
             double price, out double discount, out double mmYield, out double beYield, CashFlowsDescr cashFlows, int dateAdjustRule, DatesDescr holidays);
-        [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Release/calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern int USTBillCalcFromMMYield(DateDescr valueDate, DateDescr maturityDate,
            double mmYield, out double price, out double discount,  out double beYield,
                out double duration, out double modifiedDuration,out double convexity, out double pvbp, out double pvbpConvexityAdjusted);
-        [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Release/calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern int USTBillCalcFromDiscount(DateDescr valueDate, DateDescr maturityDate,
             double mmYield, out double price, out double discount, out double beYield);
-        [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Release/calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern int USTBillCalcFromBEYield(DateDescr valueDate, DateDescr maturityDate,
             double beYield,out  double price, out double mmYield, out double discount);
-        [DllImport("C:/Users/Patrick/Documents/Visual Studio 2015/Projects/FinSys/Calc/Release/calc.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern int priceCashFlows(CashFlowsDescr cashFlowsStruct,
             int yieldMth,
             int frequency,

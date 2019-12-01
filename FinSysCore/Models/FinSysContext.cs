@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
+//using System.Data.Entity;
 
 namespace FinSysCore.Models
 {

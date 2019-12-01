@@ -8,7 +8,7 @@ namespace FinSysCore.ViewModels
 {
     public class RateCurveViewModel
     {
-        [Required]
+       // [Required]
         public DateTime RateDate { get; set; } = DateTime.UtcNow.ToLocalTime();
         [Required]
         public double Rate { get; set; }

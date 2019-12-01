@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using FinSysCore.Services;
 using FinSysCore.ViewModels;
 using System.Net;
-using AutoMapper;
 using FinSysCore.Models;
 using System.Collections.Concurrent;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using AutoMapper;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,12 +22,15 @@ namespace FinSysCore.Controllers.Api
         private ILogger _logger;
         private ICalculatorRepository _repository;
         private IConfigurationRoot _config;
+        private IMapper _mapper;
         public CalculatorController(ICalculatorRepository repository, 
-            ILoggerFactory loggerFactory, IConfigurationRoot config)
+            ILoggerFactory loggerFactory, IConfigurationRoot config
+            , IMapper mapper)
         {
             _config = config;
             _repository = repository;
             _logger = loggerFactory.CreateLogger<CalculatorRepository>();
+            _mapper = mapper;
         }
         // GET: api/values
         [HttpGet]
@@ -77,9 +80,9 @@ namespace FinSysCore.Controllers.Api
                 if (ModelState.IsValid)
                 {
                     _logger.LogInformation($"ustbill model validated: {ModelState}");
-                    var ustb = Mapper.Map<USTBill>(vm);
+                    var ustb = _mapper.Map<USTBill>(vm);
                     ustb.CalcSource /= 100;
-                    USTBillResultViewModel result = Mapper.Map < USTBillResultViewModel > (await _repository.USTBillCalcAsync(ustb).ConfigureAwait(false));
+                    USTBillResultViewModel result = _mapper.Map < USTBillResultViewModel > (await _repository.USTBillCalcAsync(ustb).ConfigureAwait(false));
                     result.BondEquivalent *= 100;
                     result.Discount *= 100;
                     result.MMYield *= 100;
@@ -247,7 +250,7 @@ namespace FinSysCore.Controllers.Api
                                 }
                                 Instrument instrResult = null;
                                 Calculations calcResult = null;
-                                IEnumerable<Holiday> holidays = Mapper.Map<IEnumerable<Holiday>>(vm.Holidays);
+                                IEnumerable<Holiday> holidays = _mapper.Map<IEnumerable<Holiday>>(vm.Holidays);
                                 var res = _repository.CalculateAsync(instr, calc, holidays, vm.IncludeCashflows);
                                 instrResult = res.Result.Key;
                                 calcResult = res.Result.Value;
@@ -257,7 +260,7 @@ namespace FinSysCore.Controllers.Api
                                     Status = "",
                                     Message = "",
                                     AccruedInterest = calcResult.Interest*100,
-                                    Cashflows = Mapper.Map<IEnumerable<CashFlowViewModel>>(calcResult.Cashflows),
+                                    Cashflows = _mapper.Map<IEnumerable<CashFlowViewModel>>(calcResult.Cashflows),
                                     CleanPrice = (vm.CalculatePrice ? calcResult.PriceOut : vm.PriceIn / 100) * 100,
                                     Convexity = calcResult.Convexity,
                                     ConvexityAdjustedPvbp = calcResult.PvbpConvexityAdjusted,
@@ -348,7 +351,7 @@ namespace FinSysCore.Controllers.Api
                 {
                     ValueDate = vm.ValueDate
                 };
-                IEnumerable<Holiday> holidays = Mapper.Map<IEnumerable<Holiday>>(vm.Holidays);
+                IEnumerable<Holiday> holidays = _mapper.Map<IEnumerable<Holiday>>(vm.Holidays);
                 var res = await _repository.GetDefaultDatesAsync(instr, calc, holidays).ConfigureAwait(false);
                 Instrument instrResult = res.Key;
                 Calculations calcResult = res.Value;
@@ -390,7 +393,8 @@ namespace FinSysCore.Controllers.Api
             }
         }
         [HttpPost("daycounts")]
-        public async Task<JsonResult> Post([FromBody]IEnumerable<DayCountViewModel> vms)
+        public async Task<JsonResult> Post([FromBody]IEnumerable<DayCountViewModel> vms
+            , IMapper mapper)
         {
             try
             {
@@ -400,9 +404,9 @@ namespace FinSysCore.Controllers.Api
                     _logger.LogInformation($"daycounts model validated: {ModelState}");
                     IEnumerable<DayCountViewModel> result = await Task.Run(async () =>
                     {
-                        IEnumerable<DayCount> dcIn = Mapper.Map<IEnumerable<DayCount>>(vms);
+                        IEnumerable<DayCount> dcIn = mapper.Map<IEnumerable<DayCount>>(vms);
                         var dcOut = await _repository.IntCalcAsync(dcIn);
-                        IEnumerable<DayCountViewModel> dcRes = Mapper.Map<IEnumerable<DayCountViewModel>>(dcOut);
+                        IEnumerable<DayCountViewModel> dcRes = mapper.Map<IEnumerable<DayCountViewModel>>(dcOut);
                         return dcRes;
                     });
                     JsonResult jResult = new JsonResult(result);
@@ -425,7 +429,8 @@ namespace FinSysCore.Controllers.Api
             }
         }
         [HttpPost("cashflows")]
-        public async Task<JsonResult> Post([FromBody]CashFlowPricingViewModel vm)
+        public async Task<JsonResult> Post([FromBody]CashFlowPricingViewModel vm
+            ,IMapper mapper)
         {
             try
             {
@@ -433,9 +438,9 @@ namespace FinSysCore.Controllers.Api
                 if (ModelState.IsValid)
                 {
                     _logger.LogInformation($"cashflow model validated: {ModelState}");
-                    var cf = Mapper.Map<CashFlowPricing>(vm);
+                    var cf = mapper.Map<CashFlowPricing>(vm);
                     var cfOut = await _repository.PriceCashFlowsAsync(cf).ConfigureAwait(false);
-                    IEnumerable<CashFlowViewModel> result = Mapper.Map<IEnumerable<CashFlowViewModel>>(cfOut);
+                    IEnumerable<CashFlowViewModel> result = mapper.Map<IEnumerable<CashFlowViewModel>>(cfOut);
                     JsonResult jResult = new JsonResult(result);
                     return jResult;
                 }

@@ -1,12 +1,9 @@
-﻿using FinSysCore;
-using FinSysCore.Models;
+﻿using FinSysCore.Models;
 using FinSysCore.Services;
 using FinSysCore.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Linq;
 
 namespace FinSys.Controllers.Web
 {
