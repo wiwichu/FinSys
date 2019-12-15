@@ -7,7 +7,7 @@
     .controller("layoutController", layoutController)
     ;
     
-    function layoutController($window) {
+    function layoutController($http, $location,$window, $rootScope) {
 
         var vm = this;
         vm.back = function () {

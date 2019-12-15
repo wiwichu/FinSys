@@ -393,8 +393,7 @@ namespace FinSysCore.Controllers.Api
             }
         }
         [HttpPost("daycounts")]
-        public async Task<JsonResult> Post([FromBody]IEnumerable<DayCountViewModel> vms
-            , IMapper mapper)
+        public async Task<JsonResult> Post([FromBody]IEnumerable<DayCountViewModel> vms)
         {
             try
             {
@@ -404,9 +403,9 @@ namespace FinSysCore.Controllers.Api
                     _logger.LogInformation($"daycounts model validated: {ModelState}");
                     IEnumerable<DayCountViewModel> result = await Task.Run(async () =>
                     {
-                        IEnumerable<DayCount> dcIn = mapper.Map<IEnumerable<DayCount>>(vms);
+                        IEnumerable<DayCount> dcIn = _mapper.Map<IEnumerable<DayCount>>(vms);
                         var dcOut = await _repository.IntCalcAsync(dcIn);
-                        IEnumerable<DayCountViewModel> dcRes = mapper.Map<IEnumerable<DayCountViewModel>>(dcOut);
+                        IEnumerable<DayCountViewModel> dcRes = _mapper.Map<IEnumerable<DayCountViewModel>>(dcOut);
                         return dcRes;
                     });
                     JsonResult jResult = new JsonResult(result);
@@ -429,8 +428,7 @@ namespace FinSysCore.Controllers.Api
             }
         }
         [HttpPost("cashflows")]
-        public async Task<JsonResult> Post([FromBody]CashFlowPricingViewModel vm
-            ,IMapper mapper)
+        public async Task<JsonResult> Post([FromBody]CashFlowPricingViewModel vm)
         {
             try
             {
@@ -438,9 +436,9 @@ namespace FinSysCore.Controllers.Api
                 if (ModelState.IsValid)
                 {
                     _logger.LogInformation($"cashflow model validated: {ModelState}");
-                    var cf = mapper.Map<CashFlowPricing>(vm);
+                    var cf = _mapper.Map<CashFlowPricing>(vm);
                     var cfOut = await _repository.PriceCashFlowsAsync(cf).ConfigureAwait(false);
-                    IEnumerable<CashFlowViewModel> result = mapper.Map<IEnumerable<CashFlowViewModel>>(cfOut);
+                    IEnumerable<CashFlowViewModel> result = _mapper.Map<IEnumerable<CashFlowViewModel>>(cfOut);
                     JsonResult jResult = new JsonResult(result);
                     return jResult;
                 }
