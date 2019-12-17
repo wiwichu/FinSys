@@ -563,7 +563,7 @@ namespace FinSysCore.Services
                 {
                     cashFlowsOutX.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOutX,
                         typeof(CashFlowDescr)));
-                    cashFlowOutX = (IntPtr)((int)cashFlowOutX + structSizeX);
+                    cashFlowOutX = new IntPtr(cashFlowOut.ToInt64()X + structSizeX);
                 }
 
                 ////////////////
@@ -597,7 +597,7 @@ namespace FinSysCore.Services
                     };
                     cashFlowsResult.Add(cf);
                     cashFlowsOut.Add(cashFlowDescr);
-                    //cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
+                    //cashFlowOut = new IntPtr(cashFlowOut.ToInt64() + structSize);
                     cashFlowOut = (IntPtr)(cashFlowOut.ToInt32() + structSize);
                 }
 
@@ -830,7 +830,7 @@ namespace FinSysCore.Services
                     };
                     cashFlowsResult.Add(cf);
                     //cashFlowsOut.Add(cashFlowDescr);
-                    //cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
+                    //cashFlowOut = new IntPtr(cashFlowOut.ToInt64() + structSize);
                     cashFlowsDescr.cashFlows = (IntPtr)(cashFlowsDescr.cashFlows.ToInt32() + structSize);
                 }
 
@@ -1012,7 +1012,7 @@ namespace FinSysCore.Services
                             DateTime sdt = new DateTime(cfd.year, cfd.month, cfd.day);
                             cf.ScheduledDate = sdt;
                             newCf.Add(cf);
-                            cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
+                            cashFlowOut = new IntPtr(cashFlowOut.ToInt64() + structSize);
                         }
                         ustbResult.CashFlows = newCf;
                     }

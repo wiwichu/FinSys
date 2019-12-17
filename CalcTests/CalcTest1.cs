@@ -15,7 +15,8 @@ namespace CalcTests
     public class CalcTest1
     {
 
-        const string calcPath = "C:/FinsyscoreCode/FinSysCore/bin/Debug/netcoreapp2.1/calc.dll";
+
+        const string calcPath = "C:/FinsyscoreCode/FinSysCore/bin/Debug/netcoreapp3.0/calc.dll";
         [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr getclassdescriptions(out int size);
         [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
@@ -127,7 +128,7 @@ namespace CalcTests
             {
                 cashFlowsOut.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
                     typeof(CashFlowDescr)));
-                cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
+                cashFlowOut = new IntPtr(cashFlowOut.ToInt64() + structSize);
             }
             TestContext.WriteLine("");
             TestContext.WriteLine("After CALL:");
@@ -172,8 +173,8 @@ namespace CalcTests
             {
                 cashFlowsOut.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
                     typeof(CashFlowDescr)));
-                //cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
-                cashFlowOut = (IntPtr)(cashFlowOut.ToInt32() + structSize);
+                //cashFlowOut = new IntPtr(cashFlowOut.ToInt64() + structSize);
+                cashFlowOut = new IntPtr(cashFlowOut.ToInt64() + structSize);
             }
             TestContext.WriteLine("");
             TestContext.WriteLine("After CALL:");
@@ -1863,7 +1864,7 @@ namespace CalcTests
             {
                 cashFlowsOut.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
                     typeof(CashFlowDescr)));
-                cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
+                cashFlowOut = new IntPtr(cashFlowOut.ToInt64() + structSize);
             }
             TestContext.WriteLine("");
             TestContext.WriteLine("After CALL:");
@@ -1887,13 +1888,13 @@ namespace CalcTests
         {
             //Use parallel when:
             //calc > 1
-            //cf > 50 && true yield
             //cf > 150 && !true yield
 
             InstrumentDescr instrument = new InstrumentDescr();
             CalculationsDescr calculations = new CalculationsDescr();
             instrument.instrumentClass = (int)TestHelper.instr_class_descs.instr_ukcd_class_desc;
-            //instrument.instrumentClass = (int)TestHelper.instr_class_descs.instr_euro_class_desc;
+            //instrument.instrumentClass = (int)TestHelper.instr_class_descs.inst
+            //cf > 50 && true yieldr_euro_class_desc;
 
             DateDescr matDate = new DateDescr { year = 2060, month = 10, day = 7 };
             DateDescr valueDate = new DateDescr { year = 2016, month = 5, day = 10 };
@@ -1966,9 +1967,9 @@ namespace CalcTests
 
                     for (int i = 0; i < cashFlows.size; i++)
                     {
-                        cashFlowsOutSer.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
+                        cashFlowsOutSer.Add((CashFlowDescr)Marshal.PtrToStructure(new IntPtr(cashFlowOut.ToInt64()),
                             typeof(CashFlowDescr)));
-                        cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
+                        cashFlowOut = new IntPtr(cashFlowOut.ToInt64() + structSize);
                     }
 
                     return true;
@@ -1993,7 +1994,7 @@ namespace CalcTests
                     {
                         cashFlowsOut.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
                             typeof(CashFlowDescr)));
-                        cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
+                        cashFlowOut = new IntPtr(cashFlowOut.ToInt64() + structSize);
                     }
 
                     return true;
@@ -2119,7 +2120,7 @@ namespace CalcTests
                 {
                     serCf.Add((CashFlowDescr)Marshal.PtrToStructure(c.cashFlows,
                         typeof(CashFlowDescr)));
-                    c.cashFlows = (IntPtr)((int)c.cashFlows + structSize);
+                    c.cashFlows = new IntPtr(c.cashFlows.ToInt64() + structSize);
                 }
 
                 return true;
@@ -2136,7 +2137,7 @@ namespace CalcTests
                 {
                     parCf.Add((CashFlowDescr)Marshal.PtrToStructure(c.cashFlows,
                         typeof(CashFlowDescr)));
-                    c.cashFlows = (IntPtr)((int)c.cashFlows + structSize);
+                    c.cashFlows = new IntPtr(c.cashFlows.ToInt64() + structSize);
                 }
 
                 return true;
@@ -2301,7 +2302,7 @@ namespace CalcTests
             {
                 cashFlowsOut.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
                     typeof(CashFlowDescr)));
-                cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
+                cashFlowOut = new IntPtr(cashFlowOut.ToInt64() + structSize);
             }
             TestContext.WriteLine("");
             TestContext.WriteLine("After CALL:");
@@ -2399,7 +2400,7 @@ namespace CalcTests
             {
                 cashFlowsOut.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
                     typeof(CashFlowDescr)));
-                cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
+                cashFlowOut = new IntPtr(cashFlowOut.ToInt64() + structSize);
             }
             TestContext.WriteLine("");
             TestContext.WriteLine("After CALL:");
@@ -2497,7 +2498,7 @@ namespace CalcTests
             {
                 cashFlowsOut.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
                     typeof(CashFlowDescr)));
-                cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
+                cashFlowOut = new IntPtr(cashFlowOut.ToInt64() + structSize);
             }
             TestContext.WriteLine("");
             TestContext.WriteLine("After CALL:");
@@ -2595,7 +2596,7 @@ namespace CalcTests
             {
                 cashFlowsOut.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
                     typeof(CashFlowDescr)));
-                cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
+                cashFlowOut = new IntPtr(cashFlowOut.ToInt64() + structSize);
             }
             TestContext.WriteLine("");
             TestContext.WriteLine("After CALL:");
@@ -2693,7 +2694,7 @@ namespace CalcTests
             {
                 cashFlowsOut.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
                     typeof(CashFlowDescr)));
-                cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
+                cashFlowOut = new IntPtr(cashFlowOut.ToInt64() + structSize);
             }
             TestContext.WriteLine("");
             TestContext.WriteLine("After CALL:");
@@ -2791,7 +2792,7 @@ namespace CalcTests
             {
                 cashFlowsOut.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
                     typeof(CashFlowDescr)));
-                cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
+                cashFlowOut = new IntPtr(cashFlowOut.ToInt64() + structSize);
             }
             TestContext.WriteLine("");
             TestContext.WriteLine("After CALL:");
@@ -2889,7 +2890,7 @@ namespace CalcTests
             {
                 cashFlowsOut.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
                     typeof(CashFlowDescr)));
-                cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
+                cashFlowOut = new IntPtr(cashFlowOut.ToInt64() + structSize);
             }
             TestContext.WriteLine("");
             TestContext.WriteLine("After CALL:");
@@ -2970,7 +2971,7 @@ namespace CalcTests
             {
                 cashFlowsOut.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
                     typeof(CashFlowDescr)));
-                cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
+                cashFlowOut = new IntPtr(cashFlowOut.ToInt64() + structSize);
             }
             TestContext.WriteLine("");
             TestContext.WriteLine("After CALL:");
@@ -3049,7 +3050,7 @@ namespace CalcTests
             {
                 cashFlowsOut.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
                     typeof(CashFlowDescr)));
-                cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
+                cashFlowOut = new IntPtr(cashFlowOut.ToInt64() + structSize);
             }
             TestContext.WriteLine("");
             TestContext.WriteLine("After CALL:");
@@ -4563,7 +4564,7 @@ namespace CalcTests
             {
                 cashFlowsOut.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOut,
                     typeof(CashFlowDescr)));
-                cashFlowOut = (IntPtr)((int)cashFlowOut + structSize);
+                cashFlowOut = new IntPtr(cashFlowOut.ToInt64() + structSize);
             }
             TestContext.WriteLine("");
             TestContext.WriteLine("After CALL:");

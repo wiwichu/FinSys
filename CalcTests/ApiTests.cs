@@ -14,9 +14,9 @@ namespace CalcTests
     [TestClass]
     public class ApiTests
     {
-        const string apiBase = "http://www.calccore.com:80";
+        //const string apiBase = "http://www.calccore.com:80";
         //const string apiBase = "http://localhost:8090";
-        //const string apiBase = "http://localhost:5000";
+        const string apiBase = "http://localhost:5000";
         //const string apiBase = "http://localhost:64074";
         const string calcApi = "api/calculator/calculate";
         const string calcUri = apiBase + "/" + calcApi;
