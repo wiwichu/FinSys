@@ -563,7 +563,7 @@ namespace FinSysCore.Services
                 {
                     cashFlowsOutX.Add((CashFlowDescr)Marshal.PtrToStructure(cashFlowOutX,
                         typeof(CashFlowDescr)));
-                    cashFlowOutX = new IntPtr(cashFlowOut.ToInt64()X + structSizeX);
+                    cashFlowOutX = new IntPtr(cashFlowOutX.ToInt64() + structSizeX);
                 }
 
                 ////////////////
