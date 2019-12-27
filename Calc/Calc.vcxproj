@@ -125,6 +125,17 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Culture>0x0409</Culture>
     </ResourceCompile>
+    <PostBuildEvent>
+      <Command>copy /Y "$(TargetDir)$(ProjectName).dll" "C:\FinsyscoreCode\FinSysCore\bin\Release\netcoreapp3.0\$(ProjectName).dll"
+
+goto BuildEventOK
+:BuildEventFailed
+echo POSTBUILDSTEP for $(ProjectName) FAILED
+exit 1
+:BuildEventOK
+echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK
+REM echo %HOMEPATH%</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -144,7 +155,6 @@
       <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
-      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>.\Release/Calc.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -162,6 +172,22 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Culture>0x0409</Culture>
     </ResourceCompile>
+    <PostBuildEvent>
+      <Command>echo POSTBUILDSTEP for $(ProjectName)
+
+REM copy /Y "$(TargetDir)$(ProjectName).dll" "%HOMEPATH%\.dnx\runtimes\dnx-clr-win-x86.1.0.0-rc1-update1\bin\$(ProjectName).dll
+REM copy /Y "$(TargetDir)$(ProjectName).dll" "C:\FinsyscoreCode\FinSysCore\bin\Release\netcoreapp3.0\$(ProjectName).dll"
+copy /Y "C:\FinsyscoreCode\Calc\Release\Calc.dll" "C:\FinsyscoreCode\FinSysCore\bin\Release\netcoreapp3.0\Calc.dll"
+
+
+goto BuildEventOK
+:BuildEventFailed
+echo POSTBUILDSTEP for $(ProjectName) FAILED
+exit 1
+:BuildEventOK
+echo POSTBUILDSTEP for $(ProjectName) COMPLETED OK
+REM echo %HOMEPATH%</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
