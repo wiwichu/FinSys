@@ -177,7 +177,9 @@ REM echo %HOMEPATH%</Command>
 
 REM copy /Y "$(TargetDir)$(ProjectName).dll" "%HOMEPATH%\.dnx\runtimes\dnx-clr-win-x86.1.0.0-rc1-update1\bin\$(ProjectName).dll
 REM copy /Y "$(TargetDir)$(ProjectName).dll" "C:\FinsyscoreCode\FinSysCore\bin\Release\netcoreapp3.0\$(ProjectName).dll"
-copy /Y "C:\FinsyscoreCode\Calc\Release\Calc.dll" "C:\FinsyscoreCode\FinSysCore\bin\Release\netcoreapp3.0\Calc.dll"
+REM copy /Y "C:\FinsyscoreCode\Calc\Release\Calc.dll" "C:\FinsyscoreCode\FinSysCore\bin\Release\netcoreapp3.0\Calc.dll"
+REM copy /Y ".\Release\Calc.dll" "C:\FinsyscoreCode\FinSysCore\bin\Release\netcoreapp3.0\Calc.dll"
+copy /Y ".\Release\Calc.dll" "$(SolutionDir)FinSysCore\native\*.*"
 
 
 goto BuildEventOK
@@ -280,8 +282,9 @@ REM echo %HOMEPATH%</Command>
 
 REM copy /Y "$(TargetDir)$(ProjectName).dll" "%HOMEPATH%\.dnx\runtimes\dnx-clr-win-x86.1.0.0-rc1-update1\bin\$(ProjectName).dll
 REM copy /Y "$(TargetDir)$(ProjectName).dll" "C:\FinsyscoreCode\FinSysCore\bin\Debug\netcoreapp3.0\$(ProjectName).dll"
-copy /Y "C:\FinsyscoreCode\Calc\Debug\Calc.dll" "C:\FinsyscoreCode\FinSysCore\bin\Debug\netcoreapp3.0\Calc.dll"
-
+REM copy /Y "C:\FinsyscoreCode\Calc\Debug\Calc.dll" "C:\FinsyscoreCode\FinSysCore\bin\Debug\netcoreapp3.0\Calc.dll"
+copy /Y ".\Debug\Calc.dll" "C:\FinsyscoreCode\FinSysCore\bin\Debug\netcoreapp3.0\Calc.dll"
+copy /Y ".\Debug\Calc.dll" "$(SolutionDir)FinSysCore\native\*.*"
 
 goto BuildEventOK
 :BuildEventFailed
