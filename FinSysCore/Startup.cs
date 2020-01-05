@@ -78,7 +78,7 @@ namespace FinSysCore
         {
             var logLevelStr = _config["AppSettings:LogLevel"];
             var logSqlStr = _config["AppSettings:LogSqlBool"] ?? "False";
-            var logSqlBool = false; ;
+            var logSqlBool = false;
             try
             {
                 logSqlBool = bool.Parse(logSqlStr);

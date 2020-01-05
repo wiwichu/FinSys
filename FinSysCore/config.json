@@ -3,7 +3,7 @@
     "SiteEmailAddress": "me@aol.com",
     "MaximumCalculations": "200",
     "LogLevel": "Information",
-    "LogSqlBool": "True"
+    "LogSqlBool": "False"
   },
   "Data": {
     "FinSysConnection": "Server=(localdb)\\ProjectsV13;Database=FinSysDB;Trusted_Connection=true;MultipleActiveResultSets=true;"

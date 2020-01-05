@@ -14,7 +14,7 @@ namespace FinSysCore.Services
     public class CalculatorRepository : ICalculatorRepository
     {
         //const string calcPath = @"C:\FinsyscoreCode\FinSysCore\bin\Debug\netcoreapp3.0/calc.dll";
-        const string calcPath = "calc.dll";
+        const string calcPath = @".\native\Calc.dll";
 
         [DllImport(calcPath, CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr getclassdescriptions(out int size);
