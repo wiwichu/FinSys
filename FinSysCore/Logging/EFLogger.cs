@@ -6,11 +6,13 @@ namespace FinSysCore.Logging
 {
     public class EFLogger : ILogger
     {
-        private FinSysContext _context;
+        //private FinSysContext _context;
         private LogLevel _logLevel;
-        public EFLogger(FinSysContext context, LogLevel logLevel)
+        public EFLogger(
+            //FinSysContext context, 
+            LogLevel logLevel)
         {
-            _context = context;
+            //_context = context;
             _logLevel = logLevel;
         }
         public IDisposable BeginScopeImpl(object state)
@@ -53,25 +55,25 @@ namespace FinSysCore.Logging
                     Severity = Enum.GetName(typeof(LogLevel), logLevel),
                     Topic = "Log"
                 };
-                lock (_context)
-                {
+                //lock (_context)
+                //{
 
-                    try
-                    {
-                        _context.Logs.Add(log);
-                        _context.SaveChanges();
-                        //using (FinSysContext localContext = _context)
-                        //{
-                        //    localContext.Logs.Add(log);
-                        //    localContext.SaveChanges();
-                        //}
-                    }
-                    catch (Exception)
-                    {
-                        //avoid reentrant logging. return to allow backup logging
-                        return;
-                    }
-                }
+                //    try
+                //    {
+                //        _context.Logs.Add(log);
+                //        _context.SaveChanges();
+                //        //using (FinSysContext localContext = _context)
+                //        //{
+                //        //    localContext.Logs.Add(log);
+                //        //    localContext.SaveChanges();
+                //        //}
+                //    }
+                //    catch (Exception)
+                //    {
+                //        //avoid reentrant logging. return to allow backup logging
+                //        return;
+                //    }
+                //}
 
             }
             finally

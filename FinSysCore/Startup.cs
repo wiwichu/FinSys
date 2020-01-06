@@ -8,7 +8,7 @@ using FinSysCore.Services;
 using FinSysCore.Models;
 using FinSysCore.ViewModels;
 using FinSysCore.Logging;
-using Microsoft.EntityFrameworkCore;
+//using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 
 namespace FinSysCore
@@ -22,7 +22,7 @@ namespace FinSysCore
             _env = env;
             var builder = new ConfigurationBuilder()
                 .SetBasePath(_env.ContentRootPath)
-               .AddJsonFile("config.json")
+               .AddJsonFile("appsettings.json")
                 .AddEnvironmentVariables();
             _config = builder.Build();
 
@@ -38,7 +38,7 @@ namespace FinSysCore
 
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper); services.AddSingleton(_config);
-            services.AddDbContext<FinSysContext>();
+            //services.AddDbContext<FinSysContext>();
             services.AddMvc().AddMvcOptions(opt =>
             {
                 opt.EnableEndpointRouting = false;
@@ -73,8 +73,9 @@ namespace FinSysCore
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, 
-            ILoggerFactory loggerFactory,
-            FinSysContext context)
+            ILoggerFactory loggerFactory
+            //,FinSysContext context
+            )
         {
             var logLevelStr = _config["AppSettings:LogLevel"];
             var logSqlStr = _config["AppSettings:LogSqlBool"] ?? "False";
@@ -102,6 +103,7 @@ namespace FinSysCore
                     );
             });
             //loggerFactory.AddConsole();
+            app.UseDeveloperExceptionPage();
 
             if (_env.IsDevelopment())
             {
@@ -111,7 +113,10 @@ namespace FinSysCore
             }
             if (logSqlBool)
             {
-                loggerFactory.AddProvider(new EFLoggerProvider(logLevel, context));
+                loggerFactory.AddProvider(new EFLoggerProvider(
+                    logLevel
+                    //, context
+                    ));
             }
         }
     }

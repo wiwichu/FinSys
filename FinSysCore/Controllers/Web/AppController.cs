@@ -12,19 +12,19 @@ namespace FinSys.Controllers.Web
         private IMailService _mailService;
         private ICalculatorRepository _calculatorRepository;
         private ILogger _logger;
-        private FinSysContext _context;
+        //private FinSysContext _context;
         private IConfigurationRoot _config;
         public AppController(ILoggerFactory loggerFactory,
             IMailService service, 
             ICalculatorRepository calculatorRepository, 
-            FinSysContext context,
+            //FinSysContext context,
             IConfigurationRoot config)
         {
             _config = config;
             _logger = loggerFactory.CreateLogger<AppController>();
             _mailService = service;
             _calculatorRepository = calculatorRepository;
-            _context = context;
+            //_context = context;
             _logger.LogInformation("AppController Constructor");
         }
         public IActionResult Index()
